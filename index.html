@@ -400,6 +400,15 @@
             }, 400);
         }
 
+        // Reset flag button styles on page load
+        window.addEventListener('pageshow', function() {
+            document.querySelectorAll('.flag-button').forEach(button => {
+                button.style.opacity = '';
+                button.style.filter = '';
+                button.style.transform = '';
+            });
+        });
+
         document.addEventListener('touchstart', function() {}, {passive: true});
     </script>
 </body>
