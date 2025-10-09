@@ -5,26 +5,239 @@
     <title>Spanish Stories</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #fff; margin: 0; padding: 0; }
-        .navbar { background: #DD1F25; color: white; height: 60px; display: flex; align-items: center; padding: 0 30px; font-size: 1.5rem; font-weight: 700; letter-spacing: 1px; }
-        .navbar a { color: white; text-decoration: none; font-size: 1rem; font-weight: 500; margin-right: 25px; }
-        .catalogue-container { max-width: 1100px; margin: 0 auto; padding: 40px 20px 20px 20px; }
-        .search-bar { width: 100%; max-width: 400px; margin: 0 auto 35px auto; display: block; font-size: 1.1rem; padding: 12px 18px; border-radius: 30px; border: 1px solid #DD1F25; outline: none; box-shadow: 0 2px 12px rgba(221, 31, 37, 0.08); transition: border-color 0.2s; }
-        .search-bar:focus { border-color: #AA151B; }
-        .stories-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 35px; }
-        .story-card { background: #fafafd; border-radius: 16px; box-shadow: 0 6px 26px rgba(221, 31, 37, 0.08); overflow: hidden; transition: box-shadow 0.2s, transform 0.2s; cursor: pointer; display: flex; flex-direction: column; align-items: stretch; text-decoration: none; color: inherit; }
-        .story-card:hover { box-shadow: 0 12px 40px rgba(221, 31, 37, 0.17); transform: translateY(-4px) scale(1.02); }
-        .story-image { width: 100%; aspect-ratio: 3/2; object-fit: cover; background: #eaeaea; border-bottom: 1px solid #eee; }
-        .story-info { padding: 18px 16px 20px 16px; flex: 1; }
-        .story-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 10px; color: #DD1F25; letter-spacing: 0.5px; }
-        .story-intro { font-size: 1rem; color: #444; opacity: 0.9; }
-        @media (max-width: 600px) { .catalogue-container { padding: 20px 8px; } .stories-grid { gap: 18px; } .story-info { padding: 14px 8px 16px 8px; } }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: linear-gradient(135deg, #fff 0%, #f8f8f8 100%);
+            margin: 0; 
+            padding: 0; 
+            overflow-x: hidden;
+        }
+        
+        /* Navbar with subtle slide-in animation */
+        .navbar { 
+            background: #DD1F25; 
+            color: white; 
+            height: 60px; 
+            display: flex; 
+            align-items: center; 
+            padding: 0 30px; 
+            font-size: 1.5rem; 
+            font-weight: 700; 
+            letter-spacing: 1px;
+            box-shadow: 0 2px 12px rgba(221, 31, 37, 0.15);
+            animation: slideDown 0.5s ease-out;
+        }
+        
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .navbar a { 
+            color: white; 
+            text-decoration: none; 
+            font-size: 1rem; 
+            font-weight: 500; 
+            margin-right: 25px;
+            transition: all 0.2s ease;
+            padding: 6px 12px;
+            border-radius: 4px;
+        }
+        
+        .navbar a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(-3px);
+        }
+        
+        /* Catalogue container with subtle fade-in */
+        .catalogue-container { 
+            max-width: 1100px; 
+            margin: 0 auto; 
+            padding: 40px 20px 20px 20px;
+            animation: fadeIn 0.6s ease-out 0.1s both;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Search bar with gentle scale animation */
+        .search-bar { 
+            width: 100%; 
+            max-width: 400px; 
+            margin: 0 auto 35px auto; 
+            display: block; 
+            font-size: 1.1rem; 
+            padding: 12px 18px; 
+            border-radius: 30px; 
+            border: 1px solid #DD1F25; 
+            outline: none; 
+            box-shadow: 0 2px 12px rgba(221, 31, 37, 0.08); 
+            transition: all 0.25s ease;
+            animation: scaleIn 0.5s ease-out 0.3s both;
+        }
+        
+        @keyframes scaleIn {
+            from {
+                transform: scale(0.95);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        
+        .search-bar:focus { 
+            border-color: #AA151B;
+            box-shadow: 0 3px 16px rgba(221, 31, 37, 0.15);
+            transform: scale(1.01);
+        }
+        
+        /* Grid with subtle staggered card animations */
+        .stories-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); 
+            gap: 35px; 
+        }
+        
+        .story-card { 
+            background: #fafafd; 
+            border-radius: 16px; 
+            box-shadow: 0 6px 26px rgba(221, 31, 37, 0.08); 
+            overflow: hidden; 
+            cursor: pointer; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: stretch; 
+            text-decoration: none; 
+            color: inherit;
+            position: relative;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: cardAppear 0.5s ease-out forwards;
+        }
+        
+        /* Subtle stagger animation for each card */
+        .story-card:nth-child(1) { animation-delay: 0.4s; }
+        .story-card:nth-child(2) { animation-delay: 0.5s; }
+        .story-card:nth-child(3) { animation-delay: 0.6s; }
+        .story-card:nth-child(4) { animation-delay: 0.7s; }
+        .story-card:nth-child(5) { animation-delay: 0.8s; }
+        .story-card:nth-child(6) { animation-delay: 0.9s; }
+        .story-card:nth-child(n+7) { animation-delay: 1s; }
+        
+        @keyframes cardAppear {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Card disappear animation for search filtering */
+        .story-card.hiding {
+            animation: cardDisappear 0.3s ease-out forwards;
+        }
+        
+        @keyframes cardDisappear {
+            to {
+                opacity: 0;
+                transform: translateY(-10px) scale(0.98);
+            }
+        }
+        
+        .story-card:hover { 
+            box-shadow: 0 10px 35px rgba(221, 31, 37, 0.14); 
+            transform: translateY(-4px);
+        }
+        
+        .story-card:active {
+            transform: translateY(-2px);
+        }
+        
+        .story-image { 
+            width: 100%; 
+            aspect-ratio: 3/2; 
+            object-fit: cover; 
+            background: #eaeaea; 
+            border-bottom: 1px solid #eee;
+            transition: transform 0.35s ease;
+        }
+        
+        .story-card:hover .story-image {
+            transform: scale(1.04);
+        }
+        
+        .story-info { 
+            padding: 18px 16px 20px 16px; 
+            flex: 1;
+            transition: all 0.25s ease;
+        }
+        
+        .story-title { 
+            font-size: 1.3rem; 
+            font-weight: 700; 
+            margin-bottom: 10px; 
+            color: #DD1F25; 
+            letter-spacing: 0.5px;
+            transition: all 0.25s ease;
+        }
+        
+        .story-card:hover .story-title {
+            transform: translateX(3px);
+            color: #AA151B;
+        }
+        
+        .story-intro { 
+            font-size: 1rem; 
+            color: #444; 
+            opacity: 0.9;
+            transition: all 0.25s ease;
+        }
+        
+        .story-card:hover .story-intro {
+            opacity: 1;
+        }
+        
+        /* No results message */
+        .no-results {
+            grid-column: 1/-1;
+            text-align: center;
+            padding: 3em 2em;
+            color: #DD1F25;
+            font-weight: 600;
+            font-size: 1.2rem;
+            animation: fadeIn 0.4s ease-out;
+        }
+        
+        @media (max-width: 600px) { 
+            .catalogue-container { padding: 20px 8px; } 
+            .stories-grid { gap: 18px; } 
+            .story-info { padding: 14px 8px 16px 8px; }
+            .navbar { font-size: 1.2rem; padding: 0 20px; }
+        }
     </style>
 </head>
 <body>
     <div class="navbar">
         <a href="spanish.html">← Back</a>
-        Spanish Stories Catalogue
+        Spanish Stories
     </div>
     <div class="catalogue-container">
         <input type="text" class="search-bar" id="searchInput" placeholder="Search stories...">
@@ -48,19 +261,49 @@
         // Add more stories here with their own url field
     ];
 
+    // Normalize text to remove accents for search
+    function normalizeText(text) {
+        return text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+    }
+
     function renderCatalogue(filter='') {
         const grid = document.getElementById('storiesGrid');
-        grid.innerHTML = '';
+        const normalizedFilter = normalizeText(filter);
+        
         let shown = 0;
-        stories.forEach(story => {
+        const currentCards = grid.querySelectorAll('.story-card');
+        
+        // Animate out cards that don't match
+        currentCards.forEach(card => {
+            const title = card.getAttribute('data-title');
+            const intro = card.getAttribute('data-intro');
+            const matchesFilter = !normalizedFilter || 
+                normalizeText(title).includes(normalizedFilter) ||
+                normalizeText(intro).includes(normalizedFilter);
+            
+            if (!matchesFilter && !card.classList.contains('hiding')) {
+                card.classList.add('hiding');
+                setTimeout(() => {
+                    renderCatalogue(filter);
+                }, 300);
+                return;
+            }
+        });
+        
+        // Build fresh grid
+        let newHTML = '';
+        stories.forEach((story, index) => {
             if (
-                !filter ||
-                story.title.toLowerCase().includes(filter.toLowerCase()) ||
-                story.intro.toLowerCase().includes(filter.toLowerCase())
+                !normalizedFilter ||
+                normalizeText(story.title).includes(normalizedFilter) ||
+                normalizeText(story.intro).includes(normalizedFilter)
             ) {
                 shown++;
-                grid.innerHTML += `
-                    <a class="story-card" href="${story.url}">
+                newHTML += `
+                    <a class="story-card" href="${story.url}" 
+                       data-title="${story.title}" 
+                       data-intro="${story.intro}"
+                       style="animation-delay: ${0.05 * index}s;">
                         <img src="${story.image}" alt="${story.title}" class="story-image">
                         <div class="story-info">
                             <div class="story-title">${story.title}</div>
@@ -69,10 +312,14 @@
                     </a>`;
             }
         });
+        
         if (shown === 0) {
-            grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:2em;color:#DD1F25;font-weight:600;">No stories found.</div>`;
+            newHTML = `<div class="no-results">No stories found.</div>`;
         }
+        
+        grid.innerHTML = newHTML;
     }
+    
     renderCatalogue();
 
     document.getElementById('searchInput').addEventListener('input', function() {
