@@ -17,7 +17,6 @@
             padding: 0;
         }
 
-
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #ffffff;
@@ -26,7 +25,6 @@
             padding-top: env(safe-area-inset-top, 0);
         }
 
-        /* Header Strip */
         .header-container {
             display: flex;
             align-items: center;
@@ -34,7 +32,7 @@
             top: 0;
             left: 0;
             width: 100vw;
-            height: 40px; /* Match logo height */
+            height: 40px;
             background-color: white;
             z-index: 100;
         }
@@ -59,7 +57,6 @@
             opacity: 1;
         }
 
-        /* Main Content */
         .container {
             flex: 1;
             display: flex;
@@ -124,7 +121,6 @@
             object-fit: cover;
         }
 
-        /* Spanish Flag Hover - Striped Red-Yellow-Red Glow */
         .flag-button:hover .flag-wrapper.spain-wrapper {
             transform: translateY(-15px);
             box-shadow: 
@@ -135,7 +131,6 @@
             border-color: #AA151B;
         }
 
-        /* French Flag Hover - Striped Blue-White-Red Glow */
         .flag-button:hover .flag-wrapper.france-wrapper {
             transform: translateY(-15px);
             box-shadow: 
@@ -146,7 +141,6 @@
             border-color: #002395;
         }
 
-        /* Labels */
         .flag-label {
             margin-top: 35px;
             font-size: 2.4rem;
@@ -179,7 +173,6 @@
             color: #666666;
         }
 
-        /* Mobile Responsive */
         @media (max-width: 1024px) {
             .button-container {
                 flex-direction: column;
@@ -294,7 +287,6 @@
             }
         }
 
-        /* Smooth entrance animations */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -343,7 +335,6 @@
     </style>
 </head>
 <body>
-    <!-- Header with Logo and Strip -->
     <div class="header-container">
         <div class="logo-container">
             <img src="Bourne_Grammar_School_Logo.jpg" alt="Bourne Grammar School">
@@ -351,13 +342,11 @@
         <div class="header-strip"></div>
     </div>
 
-    <!-- Main Content -->
     <div class="container">
         <h1 class="title">Bourne to Translate</h1>
         <p class="subtitle">Choose language</p>
 
         <div class="button-container">
-            <!-- Spanish Button -->
             <div class="flag-button" onclick="selectLanguage('spanish')">
                 <div class="flag-wrapper spain-wrapper">
                     <img src="https://flagcdn.com/w640/es.png" alt="Spanish Flag" onerror="this.src='spanishflag.png'">
@@ -366,7 +355,6 @@
                 <div class="flag-description">Simple Spanish stories and extension resources</div>
             </div>
 
-            <!-- French Button -->
             <div class="flag-button" onclick="selectLanguage('french')">
                 <div class="flag-wrapper france-wrapper">
                     <img src="https://flagcdn.com/w640/fr.png" alt="French Flag" onerror="this.src='frenchflag.png'">
@@ -380,22 +368,16 @@
     <script>
         function selectLanguage(language) {
             console.log(`Selected language: ${language}`);
-            
-            // Visual feedback
             const buttons = document.querySelectorAll('.flag-button');
             const clickedButton = event.currentTarget;
-            
             buttons.forEach(button => {
                 if (button !== clickedButton) {
                     button.style.opacity = '0.3';
                     button.style.filter = 'grayscale(100%)';
                 }
             });
-            
             clickedButton.style.transform = 'scale(1.05)';
-            
             setTimeout(() => {
-                // Navigate to the appropriate page
                 if (language === 'spanish') {
                     window.location.href = 'spanish.html';
                 } else if (language === 'french') {
@@ -404,7 +386,6 @@
             }, 400);
         }
 
-        // Prevent scrolling issues on mobile
         document.addEventListener('touchstart', function() {}, {passive: true});
     </script>
 </body>
