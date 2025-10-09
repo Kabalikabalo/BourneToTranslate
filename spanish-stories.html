@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Spanish Stories Catalogue</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #fff; margin: 0; padding: 0; }
+        .navbar { background: #DD1F25; color: white; height: 60px; display: flex; align-items: center; padding: 0 30px; font-size: 1.5rem; font-weight: 700; letter-spacing: 1px; }
+        .navbar a { color: white; text-decoration: none; font-size: 1rem; font-weight: 500; margin-right: 25px; }
+        .catalogue-container { max-width: 1100px; margin: 0 auto; padding: 40px 20px 20px 20px; }
+        .search-bar { width: 100%; max-width: 400px; margin: 0 auto 35px auto; display: block; font-size: 1.1rem; padding: 12px 18px; border-radius: 30px; border: 1px solid #DD1F25; outline: none; box-shadow: 0 2px 12px rgba(221, 31, 37, 0.08); transition: border-color 0.2s; }
+        .search-bar:focus { border-color: #AA151B; }
+        .stories-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 35px; }
+        .story-card { background: #fafafd; border-radius: 16px; box-shadow: 0 6px 26px rgba(221, 31, 37, 0.08); overflow: hidden; transition: box-shadow 0.2s, transform 0.2s; cursor: pointer; display: flex; flex-direction: column; align-items: stretch; text-decoration: none; color: inherit; }
+        .story-card:hover { box-shadow: 0 12px 40px rgba(221, 31, 37, 0.17); transform: translateY(-4px) scale(1.02); }
+        .story-image { width: 100%; aspect-ratio: 3/2; object-fit: cover; background: #eaeaea; border-bottom: 1px solid #eee; }
+        .story-info { padding: 18px 16px 20px 16px; flex: 1; }
+        .story-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 10px; color: #DD1F25; letter-spacing: 0.5px; }
+        .story-intro { font-size: 1rem; color: #444; opacity: 0.9; }
+        @media (max-width: 600px) { .catalogue-container { padding: 20px 8px; } .stories-grid { gap: 18px; } .story-info { padding: 14px 8px 16px 8px; } }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="spanish.html">← Back</a>
+        Spanish Stories Catalogue
+    </div>
+    <div class="catalogue-container">
+        <input type="text" class="search-bar" id="searchInput" placeholder="Search stories...">
+        <div class="stories-grid" id="storiesGrid"></div>
+    </div>
+    <script>
+    // Add a 'url' field to each story pointing to its HTML page
+    const stories = [
+        {
+            title: "La foto de familia",
+            intro: "Mi familia es grande. Vivimos en una casa amarilla.",
+            image: "SpanishStories/La foto de familia/FamilyPhoto1.png",
+            url: "SpanishStories/La foto de familia/index.html"
+        }
+        // Add more stories here with their own url field
+    ];
+
+    function renderCatalogue(filter='') {
+        const grid = document.getElementById('storiesGrid');
+        grid.innerHTML = '';
+        let shown = 0;
+        stories.forEach(story => {
+            if (
+                !filter ||
+                story.title.toLowerCase().includes(filter.toLowerCase()) ||
+                story.intro.toLowerCase().includes(filter.toLowerCase())
+            ) {
+                shown++;
+                grid.innerHTML += `
+                    <a class="story-card" href="${story.url}">
+                        <img src="${story.image}" alt="${story.title}" class="story-image">
+                        <div class="story-info">
+                            <div class="story-title">${story.title}</div>
+                            <div class="story-intro">${story.intro}</div>
+                        </div>
+                    </a>`;
+            }
+        });
+        if (shown === 0) {
+            grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:2em;color:#DD1F25;font-weight:600;">No stories found.</div>`;
+        }
+    }
+    renderCatalogue();
+
+    document.getElementById('searchInput').addEventListener('input', function() {
+        renderCatalogue(this.value);
+    });
+    </script>
+</body>
+</html>
