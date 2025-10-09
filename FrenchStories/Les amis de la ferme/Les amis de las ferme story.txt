@@ -1,0 +1,37 @@
+La ferme est grande.
+The farm is big.
+
+Il y a beaucoup d’animaux.
+There are many animals.
+
+Le chat dort sur le toit.
+The cat sleeps on the roof.
+
+Le chien court dans le jardin.
+The dog runs in the garden.
+
+(FarmPhoto1.png)
+
+La vache mange de l’herbe.
+The cow eats grass.
+
+Le cheval boit de l’eau.
+The horse drinks water.
+
+Le cochon joue dans la boue.
+The pig plays in the mud.
+
+La poule cherche du maïs.
+The hen looks for corn.
+
+Le canard nage dans le petit lac.
+The duck swims in the small lake.
+
+Le mouton dit “Bêêê” très fort.
+The sheep says “Baa” very loudly.
+
+Tous les animaux sont heureux.
+All the animals are happy.
+
+Ils vivent ensemble à la ferme.
+They live together on the farm.
