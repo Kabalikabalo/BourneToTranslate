@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Language Selection - Bourne Grammar School</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+        }
+
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            padding-top: env(safe-area-inset-top, 0);
+        }
+
+        /* Header Strip */
+        .header-container {
+            display: flex;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 40px; /* Match logo height */
+            background-color: white;
+            z-index: 100;
+        }
+
+        .logo-container {
+            padding: 0 15px;
+            background-color: transparent;
+            margin-left: 0;
+            border-radius: 0;
+        }
+
+        .logo-container img {
+            max-height: 70px;
+            width: auto;
+        }
+
+        .header-strip {
+            flex: 1;
+            background-color: #DD1F25;
+            height: 100%;
+            margin-left: 0;
+            opacity: 1;
+        }
+
+        /* Main Content */
+        .container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 40px;
+            overflow: hidden;
+        }
+
+        .title {
+            font-size: 4rem;
+            color: #1a1a1a;
+            margin-bottom: 20px;
+            margin-top: 20px;
+            text-align: center;
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            font-size: 1.8rem;
+            color: #666666;
+            margin-bottom: 90px;
+            text-align: center;
+            font-weight: 400;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 80px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .flag-button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .flag-button:active {
+            transform: scale(0.98);
+        }
+
+        .flag-wrapper {
+            width: 420px;
+            height: 260px;
+            border-radius: 24px;
+            overflow: hidden;
+            position: relative;
+            border: 4px solid #d1d5db;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        .flag-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Spanish Flag Hover - Striped Red-Yellow-Red Glow */
+        .flag-button:hover .flag-wrapper.spain-wrapper {
+            transform: translateY(-15px);
+            box-shadow: 
+                0 -10px 25px 6px rgba(170, 21, 27, 0.3),
+                0 0px 25px 6px rgba(241, 191, 0, 0.35),
+                0 10px 25px 6px rgba(170, 21, 27, 0.3),
+                0 20px 50px rgba(170, 21, 27, 0.15);
+            border-color: #AA151B;
+        }
+
+        /* French Flag Hover - Striped Blue-White-Red Glow */
+        .flag-button:hover .flag-wrapper.france-wrapper {
+            transform: translateY(-15px);
+            box-shadow: 
+                -10px 0 25px 6px rgba(0, 35, 149, 0.35),
+                0 0 25px 6px rgba(255, 255, 255, 0.25),
+                10px 0 25px 6px rgba(237, 41, 57, 0.35),
+                0 20px 50px rgba(0, 35, 149, 0.15);
+            border-color: #002395;
+        }
+
+        /* Labels */
+        .flag-label {
+            margin-top: 35px;
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            letter-spacing: 1px;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .flag-button:hover .spain-wrapper ~ .flag-label {
+            color: #DD1F25;
+        }
+
+        .flag-button:hover .france-wrapper ~ .flag-label {
+            color: #002395;
+        }
+
+        .flag-description {
+            margin-top: 15px;
+            font-size: 1.3rem;
+            color: #888888;
+            text-align: center;
+            max-width: 380px;
+            line-height: 1.6;
+            transition: color 0.3s ease;
+        }
+
+        .flag-button:hover .flag-description {
+            color: #666666;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 1024px) {
+            .button-container {
+                flex-direction: column;
+                gap: 70px;
+            }
+
+            .title {
+                font-size: 3rem;
+            }
+
+            .subtitle {
+                font-size: 1.4rem;
+                margin-bottom: 60px;
+            }
+
+            .flag-wrapper {
+                width: 380px;
+                height: 235px;
+            }
+
+            .flag-label {
+                font-size: 2.2rem;
+            }
+
+            .flag-description {
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .logo-container {
+                margin-left: 12px;
+                padding: 8px 12px;
+            }
+
+            .logo-container img {
+                max-height: 55px;
+            }
+
+            .header-strip {
+                margin-left: 12px;
+                height: 20px;
+            }
+
+            .title {
+                font-size: 2.5rem;
+            }
+
+            .subtitle {
+                font-size: 1.2rem;
+            }
+
+            .flag-wrapper {
+                width: 340px;
+                height: 210px;
+            }
+
+            .flag-label {
+                font-size: 2rem;
+                margin-top: 30px;
+            }
+
+            .flag-description {
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo-container {
+                margin-left: 10px;
+                padding: 6px 10px;
+            }
+
+            .logo-container img {
+                max-height: 45px;
+            }
+
+            .header-strip {
+                margin-left: 10px;
+                height: 18px;
+            }
+
+            .container {
+                padding: 40px 20px;
+            }
+
+            .title {
+                font-size: 2rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+                margin-bottom: 50px;
+            }
+
+            .flag-wrapper {
+                width: 300px;
+                height: 185px;
+            }
+
+            .flag-label {
+                font-size: 1.8rem;
+                margin-top: 25px;
+            }
+
+            .flag-description {
+                font-size: 1rem;
+            }
+
+            .button-container {
+                gap: 60px;
+            }
+        }
+
+        /* Smooth entrance animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .logo-container {
+            animation: slideInLeft 0.6s ease forwards;
+            opacity: 0;
+        }
+
+        .header-strip {
+            animation: slideInLeft 0.6s ease forwards;
+            animation-delay: 0.2s;
+            opacity: 0;
+        }
+
+        .flag-button {
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+        }
+
+        .flag-button:nth-child(1) {
+            animation-delay: 0.3s;
+        }
+
+        .flag-button:nth-child(2) {
+            animation-delay: 0.5s;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Logo and Strip -->
+    <div class="header-container">
+        <div class="logo-container">
+            <img src="Bourne_Grammar_School_Logo.jpg" alt="Bourne Grammar School">
+        </div>
+        <div class="header-strip"></div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h1 class="title">Bourne to Translate</h1>
+        <p class="subtitle">Choose language</p>
+
+        <div class="button-container">
+            <!-- Spanish Button -->
+            <div class="flag-button" onclick="selectLanguage('spanish')">
+                <div class="flag-wrapper spain-wrapper">
+                    <img src="https://flagcdn.com/w640/es.png" alt="Spanish Flag" onerror="this.src='spanishflag.png'">
+                </div>
+                <div class="flag-label">Spanish</div>
+                <div class="flag-description">Simple Spanish stories and extension resources</div>
+            </div>
+
+            <!-- French Button -->
+            <div class="flag-button" onclick="selectLanguage('french')">
+                <div class="flag-wrapper france-wrapper">
+                    <img src="https://flagcdn.com/w640/fr.png" alt="French Flag" onerror="this.src='frenchflag.png'">
+                </div>
+                <div class="flag-label">French</div>
+                <div class="flag-description">Simple French stories and extension resources</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function selectLanguage(language) {
+            console.log(`Selected language: ${language}`);
+            
+            // Visual feedback
+            const buttons = document.querySelectorAll('.flag-button');
+            const clickedButton = event.currentTarget;
+            
+            buttons.forEach(button => {
+                if (button !== clickedButton) {
+                    button.style.opacity = '0.3';
+                    button.style.filter = 'grayscale(100%)';
+                }
+            });
+            
+            clickedButton.style.transform = 'scale(1.05)';
+            
+            setTimeout(() => {
+                // Navigate to the appropriate page
+                if (language === 'spanish') {
+                    window.location.href = 'spanish.html';
+                } else if (language === 'french') {
+                    window.location.href = 'french.html';
+                }
+            }, 400);
+        }
+
+        // Prevent scrolling issues on mobile
+        document.addEventListener('touchstart', function() {}, {passive: true});
+    </script>
+</body>
+</html>
