@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>French - Bourne to Translate</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html, body {
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #ffffff;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            background-color: #002395;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            padding: 0 40px;
+            box-shadow: 0 4px 15px rgba(0, 35, 149, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .back-button {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 600;
+            padding: 10px 20px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .back-button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateX(-5px);
+        }
+
+        .back-arrow {
+            font-size: 1.5rem;
+        }
+
+        .nav-title {
+            color: white;
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .nav-spacer {
+            width: 150px;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 80px 40px;
+        }
+
+        .page-title {
+            font-size: 3.5rem;
+            color: #1a1a1a;
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .page-subtitle {
+            font-size: 1.5rem;
+            color: #666666;
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        /* Resources Grid */
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 60px;
+            margin-bottom: 80px;
+            justify-items: center;
+            align-items: stretch;
+        }
+
+        .resource-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.4s ease;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .icon-circle {
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .icon-circle img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover; /* Fill and crop to the circle */
+            border-radius: 50%;
+            background: white;
+        }
+
+        /* Stories Card - Blue */
+        .stories-circle {
+            background: linear-gradient(135deg, #002395 0%, #001a70 100%);
+        }
+
+        .resource-card:hover .stories-circle {
+            box-shadow: 0 0 40px 10px rgba(0, 35, 149, 0.6), 0 15px 50px rgba(0, 35, 149, 0.3);
+            transform: scale(1.07);
+        }
+
+        .resource-card:has(.stories-circle):hover .resource-title {
+            color: #002395;
+        }
+
+        /* Culture Card - Red */
+        .culture-circle {
+            background: linear-gradient(135deg, #ED2939 0%, #C41E3A 100%);
+        }
+
+        .culture-circle img {
+            background: white;
+            object-fit: contain;
+        }
+
+        .resource-card:hover .culture-circle {
+            box-shadow: 0 0 40px 10px rgba(237, 41, 57, 0.6), 0 15px 50px rgba(237, 41, 57, 0.3);
+            transform: scale(1.07);
+        }
+
+        .resource-card:has(.culture-circle):hover .resource-title {
+            color: #ED2939;
+        }
+
+        /* Vocab Card - Blue */
+        .vocab-circle {
+            background: linear-gradient(135deg, #003DB5 0%, #002395 100%);
+        }
+
+        .vocab-circle img {
+            background: white;
+            object-fit: contain;
+        }
+
+        .resource-card:hover .vocab-circle {
+            box-shadow: 0 0 40px 10px rgba(0, 61, 181, 0.6), 0 15px 50px rgba(0, 61, 181, 0.3);
+            transform: scale(1.07);
+        }
+
+        .resource-card:has(.vocab-circle):hover .resource-title {
+            color: #003DB5;
+        }
+
+        /* Grammar Card - Red */
+        .grammar-circle {
+            background: linear-gradient(135deg, #ED2939 0%, #C41E3A 100%);
+        }
+
+        .grammar-circle img {
+            background: white;
+            object-fit: contain;
+        }
+
+        .resource-card:hover .grammar-circle {
+            box-shadow: 0 0 40px 10px rgba(237, 41, 57, 0.6), 0 15px 50px rgba(237, 41, 57, 0.3);
+            transform: scale(1.07);
+        }
+
+        .resource-card:has(.grammar-circle):hover .resource-title {
+            color: #ED2939;
+        }
+
+        .resource-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 15px;
+            transition: color 0.3s ease;
+        }
+
+        .resource-description {
+            font-size: 1.1rem;
+            color: #666666;
+            line-height: 1.6;
+            max-width: 320px;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .navbar {
+                height: 60px;
+                padding: 0 20px;
+            }
+
+            .nav-title {
+                font-size: 1.3rem;
+            }
+
+            .back-button {
+                font-size: 1rem;
+                padding: 8px 15px;
+            }
+
+            .nav-spacer {
+                display: none;
+            }
+
+            .container {
+                padding: 50px 20px;
+            }
+
+            .page-title {
+                font-size: 2.5rem;
+            }
+
+            .page-subtitle {
+                font-size: 1.2rem;
+                margin-bottom: 60px;
+            }
+
+            .resources-grid {
+                grid-template-columns: 1fr;
+                gap: 50px;
+            }
+
+            .icon-circle {
+                width: 200px;
+                height: 200px;
+            }
+
+            .icon-circle img {
+                width: 180px;
+                height: 180px;
+            }
+
+            .resource-title {
+                font-size: 1.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .page-subtitle {
+                font-size: 1rem;
+            }
+
+            .icon-circle {
+                width: 180px;
+                height: 180px;
+            }
+
+            .icon-circle img {
+                width: 160px;
+                height: 160px;
+            }
+
+            .resource-title {
+                font-size: 1.6rem;
+            }
+
+            .resource-description {
+                font-size: 1rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .resource-card {
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+        }
+
+        .resource-card:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .resource-card:nth-child(2) {
+            animation-delay: 0.3s;
+        }
+
+        .resource-card:nth-child(3) {
+            animation-delay: 0.5s;
+        }
+
+        .resource-card:nth-child(4) {
+            animation-delay: 0.7s;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="index.html" class="back-button">
+                <span class="back-arrow">←</span>
+                <span>Back</span>
+            </a>
+            <h1 class="nav-title">French Resources</h1>
+            <div class="nav-spacer"></div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h2 class="page-title">Ressources en Français</h2>
+        <p class="page-subtitle">French language resources and materials</p>
+
+        <div class="resources-grid">
+            <!-- Stories Card - BLUE -->
+            <a href="french-stories.html" class="resource-card">
+                <div class="icon-circle stories-circle">
+                    <img 
+                        src="https://static.vecteezy.com/system/resources/previews/047/422/415/non_2x/blue-scenery-nature-minimal-flat-illustration-abstract-background-free-vector.jpg" 
+                        alt="French Stories">
+                </div>
+                <h3 class="resource-title">Stories</h3>
+                <p class="resource-description">Read simple French stories to improve your reading comprehension and vocabulary</p>
+            </a>
+
+            <!-- Culture Card - RED -->
+            <a href="french-culture.html" class="resource-card">
+                <div class="icon-circle culture-circle">
+                    <img 
+                         src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJ1OguM57IAQOgebCSYevK-Dbn5dK1Uba7GQ&s" 
+                         alt="French Culture">
+                </div>
+                <h3 class="resource-title">Culture</h3>
+                <p class="resource-description">Easy French articles and activities relating to Francophone culture</p>
+            </a>
+
+            <!-- Vocabulary Card - BLUE -->
+            <a href="french-vocab.html" class="resource-card">
+                <div class="icon-circle vocab-circle">
+                    <img 
+                        src="https://www.shutterstock.com/image-vector/promotional-advertise-cloud-international-words-260nw-125770865.jpg" 
+                        alt="French Vocabulary">
+                </div>
+                <h3 class="resource-title">Vocabulary</h3>
+                <p class="resource-description">French Vocabulary by year group, term and week</p>
+            </a>
+
+            <!-- Grammar Card - RED -->
+            <a href="french-grammar.html" class="resource-card">
+                <div class="icon-circle grammar-circle">
+                    <img 
+                        src="https://www.shutterstock.com/image-photo/white-cubes-letters-scattered-randomly-260nw-1947109630.jpg" 
+                        alt="French Grammar">
+                </div>
+                <h3 class="resource-title">Grammar</h3>
+                <p class="resource-description">Grammar notes, examples and worksheets</p>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Smooth scroll behavior
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Add active state to cards on touch devices
+        document.querySelectorAll('.resource-card').forEach(card => {
+            card.addEventListener('touchstart', function() {
+                this.style.transform = 'translateY(-10px) scale(0.98)';
+            });
+            
+            card.addEventListener('touchend', function() {
+                this.style.transform = '';
+            });
+        });
+    </script>
+</body>
+</html>
