@@ -33,3 +33,5 @@ The dog looks at the camera.
 
 Todos decimos: “¡Patata!”
 We all say: “Cheese!”
+
+(FamilyPhoto1.png)
