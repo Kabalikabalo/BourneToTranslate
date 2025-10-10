@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Spanish Vocabulary</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: linear-gradient(135deg, #fff 0%, #f8f8f8 100%);
+            margin: 0; 
+            padding: 0; 
+            overflow-x: hidden;
+        }
+        
+        /* Navbar with subtle slide-in animation */
+        .navbar { 
+            background: #DD1F25; 
+            color: white; 
+            height: 60px; 
+            display: flex; 
+            align-items: center; 
+            padding: 0 30px; 
+            font-size: 1.5rem; 
+            font-weight: 700; 
+            letter-spacing: 1px;
+            box-shadow: 0 2px 12px rgba(221, 31, 37, 0.15);
+            animation: slideDown 0.5s ease-out;
+        }
+        
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .navbar a { 
+            color: white; 
+            text-decoration: none; 
+            font-size: 1rem; 
+            font-weight: 500; 
+            margin-right: 25px;
+            transition: all 0.2s ease;
+            padding: 6px 12px;
+            border-radius: 4px;
+        }
+        
+        .navbar a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(-3px);
+        }
+        
+        /* Main container with fade-in */
+        .vocab-container { 
+            max-width: 900px; 
+            margin: 0 auto; 
+            padding: 60px 20px;
+            animation: fadeIn 0.6s ease-out 0.1s both;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #DD1F25;
+            text-align: center;
+            margin-bottom: 50px;
+            animation: scaleIn 0.5s ease-out 0.3s both;
+        }
+        
+        @keyframes scaleIn {
+            from {
+                transform: scale(0.95);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        
+        /* Download cards grid */
+        .downloads-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        /* Download card */
+        .download-card {
+            background: #DD1F25;
+            border-radius: 16px;
+            padding: 40px 16px; /* Reduced horizontal padding */
+            box-shadow: 0 6px 26px rgba(221, 31, 37, 0.2);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 200px;
+            min-width: 180px; /* Optional: set a minimum width */
+            position: relative;
+            overflow: hidden;
+            animation: cardAppear 0.5s ease-out 0.5s both;
+        }
+        
+        @keyframes cardAppear {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .download-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .download-card:hover::before {
+            opacity: 1;
+        }
+        
+        .download-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 40px rgba(221, 31, 37, 0.3);
+        }
+        
+        .download-card:active {
+            transform: translateY(-3px);
+        }
+        
+        .download-icon {
+            font-size: 3.5rem;
+            color: white;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+        
+        .download-card:hover .download-icon {
+            transform: scale(1.1);
+        }
+        
+        .download-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        
+        .download-subtitle {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.9);
+            text-align: center;
+        }
+        
+        /* Info text */
+        .info-text {
+            text-align: center;
+            color: #666;
+            font-size: 1rem;
+            margin-top: 40px;
+            animation: fadeIn 0.6s ease-out 0.7s both;
+        }
+        
+        @media (max-width: 600px) { 
+            .vocab-container { padding: 40px 15px; }
+            .page-title { font-size: 2rem; }
+            .download-card { padding: 35px 25px; min-height: 180px; }
+            .download-icon { font-size: 3rem; }
+            .download-title { font-size: 1.3rem; }
+            .navbar { font-size: 1.2rem; padding: 0 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="spanish.html">← Back</a>
+        Spanish Vocabulary
+    </div>
+    
+    <div class="vocab-container">
+        <h1 class="page-title">Download Vocabulary Lists</h1>
+        
+        <div class="downloads-grid">
+            <a href="SpanishVocabLists/Year7Vocab.pdf" class="download-card" download>
+                <div class="download-icon">📥</div>
+                <div class="download-title">Year 7 Vocabulary</div>
+                <div class="download-subtitle">Click to download PDF</div>
+            </a>
+            
+            <!-- Add more vocab cards here in the future -->
+        </div>
+        
+        <p class="info-text">More vocabulary will be added</p>
+    </div>
+</body>
+</html>
