@@ -211,10 +211,31 @@
         @media (max-width: 600px) { 
             .catalogue-container { padding: 20px 8px; } 
             .culture-grid { 
-                gap: 18px;
-                grid-template-columns: repeat(3, 1fr);
+                gap: 12px;
+                grid-template-columns: 1fr;
             }
-            .culture-info { padding: 14px 8px 16px 8px; }
+            .culture-card {
+                flex-direction: row;
+                min-height: 100px;
+            }
+            .culture-image {
+                width: 100px;
+                height: 100px;
+                aspect-ratio: 1/1;
+                border-radius: 12px;
+                border-bottom: none;
+                flex-shrink: 0;
+            }
+            .culture-info { 
+                padding: 12px 12px 12px 14px;
+                flex: 1;
+            }
+            .culture-title {
+                font-size: 1.1rem;
+            }
+            .culture-description {
+                font-size: 0.9rem;
+            }
             .navbar { font-size: 1.2rem; padding: 0 20px; }
         }
     </style>

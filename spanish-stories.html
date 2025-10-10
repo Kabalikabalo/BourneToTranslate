@@ -295,8 +295,38 @@
         
         @media (max-width: 600px) { 
             .catalogue-container { padding: 20px 8px; } 
-            .stories-grid { gap: 18px; } 
-            .story-info { padding: 14px 8px 16px 8px; }
+            .stories-grid {
+                gap: 12px;
+                grid-template-columns: 1fr;
+            }
+            .story-card {
+                flex-direction: row;
+                min-height: 100px;
+            }
+            .story-image {
+                width: 100px;
+                height: 100px;
+                aspect-ratio: 1/1;
+                border-radius: 12px;
+                border-bottom: none;
+                flex-shrink: 0;
+            }
+            .story-info { 
+                padding: 12px 12px 12px 14px;
+                flex: 1;
+            }
+            .story-title {
+                font-size: 1.1rem;
+            }
+            .story-intro {
+                font-size: 0.9rem;
+            }
+            .story-year {
+                bottom: 12px;
+                right: 12px;
+                font-size: 0.85rem;
+                padding: 4px 12px;
+            }
             .navbar { font-size: 1.2rem; padding: 0 20px; }
         }
     </style>
