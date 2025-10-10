@@ -76,12 +76,21 @@
             }
         }
         
+        /* Search and filter container */
+        .search-filter-container {
+            max-width: 700px;
+            margin: 0 auto 35px auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+            animation: scaleIn 0.5s ease-out 0.3s both;
+        }
+        
         /* Search bar with gentle scale animation */
         .search-bar { 
             width: 100%; 
             max-width: 400px; 
-            margin: 0 auto 35px auto; 
-            display: block; 
             font-size: 1.1rem; 
             padding: 12px 18px; 
             border-radius: 30px; 
@@ -89,7 +98,6 @@
             outline: none; 
             box-shadow: 0 2px 12px rgba(221, 31, 37, 0.08); 
             transition: all 0.25s ease;
-            animation: scaleIn 0.5s ease-out 0.3s both;
         }
         
         @keyframes scaleIn {
@@ -107,6 +115,48 @@
             border-color: #AA151B;
             box-shadow: 0 3px 16px rgba(221, 31, 37, 0.15);
             transform: scale(1.01);
+        }
+        
+        /* Year group filters */
+        .year-filters {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .year-filter-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1rem;
+            color: #444;
+            cursor: pointer;
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: #fafafd;
+            border: 2px solid #e0e0e0;
+            transition: all 0.25s ease;
+            user-select: none;
+        }
+        
+        .year-filter-label:hover {
+            border-color: #DD1F25;
+            background: #fff5f5;
+        }
+        
+        .year-filter-label input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: #DD1F25;
+        }
+        
+        .year-filter-label.active {
+            border-color: #DD1F25;
+            background: #fff5f5;
+            font-weight: 600;
         }
         
         /* Grid with subtle staggered card animations */
@@ -189,6 +239,23 @@
             flex: 1;
             transition: all 0.25s ease;
         }
+
+            .story-year {
+                position: absolute;
+                bottom: 12px;
+                right: 16px;
+                background: #DD1F25;
+                color: #fff;
+                font-size: 0.95rem;
+                font-weight: 600;
+                padding: 6px 16px;
+                border-radius: 16px;
+                box-shadow: 0 2px 8px rgba(221, 31, 37, 0.10);
+                letter-spacing: 0.5px;
+                z-index: 2;
+                pointer-events: none;
+                opacity: 0.93;
+            }
         
         .story-title { 
             font-size: 1.3rem; 
@@ -240,7 +307,23 @@
         Spanish Stories
     </div>
     <div class="catalogue-container">
-        <input type="text" class="search-bar" id="searchInput" placeholder="Search stories...">
+        <div class="search-filter-container">
+            <input type="text" class="search-bar" id="searchInput" placeholder="Search stories...">
+            <div class="year-filters">
+                <label class="year-filter-label">
+                    <input type="checkbox" id="year7" value="7" checked>
+                    <span>Year 7</span>
+                </label>
+                <label class="year-filter-label">
+                    <input type="checkbox" id="year8" value="8" checked>
+                    <span>Year 8</span>
+                </label>
+                <label class="year-filter-label">
+                    <input type="checkbox" id="year9" value="9" checked>
+                    <span>Year 9</span>
+                </label>
+            </div>
+        </div>
         <div class="stories-grid" id="storiesGrid"></div>
     </div>
     <script>
@@ -250,13 +333,15 @@
             title: "La foto de familia",
             intro: "Mi familia es grande. Vivimos en una casa amarilla.",
             image: "SpanishStories/La foto de familia/FamilyPhoto1.png",
-            url: "SpanishStories/La foto de familia/index.html"
+            url: "SpanishStories/La foto de familia/index.html",
+            yearGroup: 7
         },
         {
             title: "Así es mi familia",
             intro: "Mi familia es grande. Vivimos en una casa amarilla.",
             image: "SpanishStories/Asi es my familia/FamilyPhoto1.png",
-            url: "SpanishStories/Asi es my familia/index.html"
+            url: "SpanishStories/Asi es my familia/index.html",
+            yearGroup: 7
         }
         // Add more stories here with their own url field
     ];
@@ -266,9 +351,22 @@
         return text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
     }
 
+    // Get selected year groups
+    function getSelectedYearGroups() {
+        const checkboxes = document.querySelectorAll('.year-filters input[type="checkbox"]');
+        const selected = [];
+        checkboxes.forEach(cb => {
+            if (cb.checked) {
+                selected.push(parseInt(cb.value));
+            }
+        });
+        return selected;
+    }
+
     function renderCatalogue(filter='') {
         const grid = document.getElementById('storiesGrid');
         const normalizedFilter = normalizeText(filter);
+        const selectedYears = getSelectedYearGroups();
         
         let shown = 0;
         const currentCards = grid.querySelectorAll('.story-card');
@@ -277,11 +375,13 @@
         currentCards.forEach(card => {
             const title = card.getAttribute('data-title');
             const intro = card.getAttribute('data-intro');
+            const yearGroup = parseInt(card.getAttribute('data-year'));
             const matchesFilter = !normalizedFilter || 
                 normalizeText(title).includes(normalizedFilter) ||
                 normalizeText(intro).includes(normalizedFilter);
+            const matchesYear = selectedYears.length === 0 || selectedYears.includes(yearGroup);
             
-            if (!matchesFilter && !card.classList.contains('hiding')) {
+            if ((!matchesFilter || !matchesYear) && !card.classList.contains('hiding')) {
                 card.classList.add('hiding');
                 setTimeout(() => {
                     renderCatalogue(filter);
@@ -293,23 +393,26 @@
         // Build fresh grid
         let newHTML = '';
         stories.forEach((story, index) => {
-            if (
-                !normalizedFilter ||
+            const matchesFilter = !normalizedFilter ||
                 normalizeText(story.title).includes(normalizedFilter) ||
-                normalizeText(story.intro).includes(normalizedFilter)
-            ) {
+                normalizeText(story.intro).includes(normalizedFilter);
+            const matchesYear = selectedYears.length === 0 || selectedYears.includes(story.yearGroup);
+            
+            if (matchesFilter && matchesYear) {
                 shown++;
-                newHTML += `
-                    <a class="story-card" href="${story.url}" 
-                       data-title="${story.title}" 
-                       data-intro="${story.intro}"
-                       style="animation-delay: ${0.05 * index}s;">
-                        <img src="${story.image}" alt="${story.title}" class="story-image">
-                        <div class="story-info">
-                            <div class="story-title">${story.title}</div>
-                            <div class="story-intro">${story.intro}</div>
-                        </div>
-                    </a>`;
+                    newHTML += `
+                        <a class="story-card" href="${story.url}" 
+                           data-title="${story.title}" 
+                           data-intro="${story.intro}"
+                           data-year="${story.yearGroup}"
+                           style="animation-delay: ${0.05 * index}s; position: relative;">
+                            <img src="${story.image}" alt="${story.title}" class="story-image">
+                            <div class="story-info">
+                                <div class="story-title">${story.title}</div>
+                                <div class="story-intro">${story.intro}</div>
+                            </div>
+                            <div class="story-year">Year ${story.yearGroup}</div>
+                        </a>`;
             }
         });
         
@@ -324,6 +427,23 @@
 
     document.getElementById('searchInput').addEventListener('input', function() {
         renderCatalogue(this.value);
+    });
+
+    // Add event listeners to year filter checkboxes
+    const yearCheckboxes = document.querySelectorAll('.year-filters input[type="checkbox"]');
+    yearCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            // Update label styling
+            this.parentElement.classList.toggle('active', this.checked);
+            // Re-render catalogue
+            const searchValue = document.getElementById('searchInput').value;
+            renderCatalogue(searchValue);
+        });
+        
+        // Initialize active state
+        if (checkbox.checked) {
+            checkbox.parentElement.classList.add('active');
+        }
     });
     </script>
 </body>
