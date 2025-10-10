@@ -87,7 +87,7 @@
             padding: 12px 20px;
             border-radius: 8px;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.25s ease;
             font-weight: 600;
             font-size: 0.95rem;
         }
@@ -95,11 +95,33 @@
         .module-btn:hover, .week-btn:hover {
             background: #DD1F25;
             color: white;
+            transform: translateY(-1px);
+        }
+
+        /* Disable hover on touch devices */
+        @media (hover: none) {
+            .module-btn:hover, .week-btn:hover {
+                background: rgba(221, 31, 37, 0.05);
+                color: #DD1F25;
+                transform: none;
+            }
+            .module-btn.selected:hover, .week-btn.selected:hover {
+                background: #DD1F25;
+                color: white;
+            }
+            .module-btn.has-selections:hover {
+                background: rgba(221, 31, 37, 0.23);
+                color: #DD1F25;
+            }
         }
 
         .module-btn.selected, .week-btn.selected {
             background: #DD1F25;
             color: white;
+        }
+
+        .module-btn.selected:hover, .week-btn.selected:hover {
+            background: #c11a1f;
         }
 
         .module-btn.has-selections {
@@ -1155,16 +1177,31 @@ Finalmente - Finally
 
         function showResults() {
             const testContent = document.getElementById('testContent');
+            const mode = document.querySelector('input[name="mode"]:checked').value;
             const percentage = Math.round((correctAnswers / testQuestions.length) * 100);
             
-            testContent.innerHTML = `
-                <div class="results">
-                    <div class="results-title">Test Complete!</div>
-                    <div class="results-score">${correctAnswers} / ${testQuestions.length}</div>
-                    <div style="font-size: 1.5rem; color: #666; margin-bottom: 30px;">${percentage}%</div>
-                    <button class="start-btn" onclick="location.reload()">Start New Test</button>
-                </div>
-            `;
+            if (mode === 'flashcards') {
+                // Flashcard mode - no scoring
+                testContent.innerHTML = `
+                    <div class="results">
+                        <div class="results-title">All Done! 🎉</div>
+                        <div style="font-size: 1.3rem; color: #666; margin-bottom: 20px;">
+                            You reviewed <strong>${testQuestions.length}</strong> vocabulary items
+                        </div>
+                        <button class="start-btn" onclick="location.reload()">Start New Practice</button>
+                    </div>
+                `;
+            } else {
+                // Typing mode - show score
+                testContent.innerHTML = `
+                    <div class="results">
+                        <div class="results-title">Test Complete!</div>
+                        <div class="results-score">${correctAnswers} / ${testQuestions.length}</div>
+                        <div style="font-size: 1.5rem; color: #666; margin-bottom: 30px;">${percentage}%</div>
+                        <button class="start-btn" onclick="location.reload()">Start New Test</button>
+                    </div>
+                `;
+            }
         }
 
         function backToSetup() {
