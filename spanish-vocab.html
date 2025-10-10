@@ -85,11 +85,79 @@
             box-shadow: 0 4px 14px rgba(221, 31, 37, 0.09);
             padding: 28px 24px;
             margin-bottom: 36px;
-            text-align: center;
-            font-size: 1.12rem;
-            color: #444;
-            line-height: 1.7;
             animation: fadeIn 0.7s ease-out 0.2s both;
+        }
+
+        .daily-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 10px;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #fff 0%, #fffbfb 100%);
+            border-radius: 10px;
+            padding: 20px;
+            border-left: 4px solid #DD1F25;
+            box-shadow: 0 2px 10px rgba(221, 31, 37, 0.06);
+        }
+
+        .feature-header {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: #DD1F25;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .feature-main {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 8px;
+            font-style: italic;
+        }
+
+        .feature-translation {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        .feature-example {
+            background: #f8f8f8;
+            border-radius: 6px;
+            padding: 10px 12px;
+            margin-top: 10px;
+        }
+
+        .feature-example-text {
+            font-size: 0.95rem;
+            color: #444;
+            font-style: italic;
+            margin-bottom: 4px;
+        }
+
+        .feature-example-translation {
+            font-size: 0.9rem;
+            color: #777;
+        }
+
+        .feature-literal {
+            font-size: 0.85rem;
+            color: #999;
+            font-style: italic;
+            margin-bottom: 6px;
+        }
+
+        @media (max-width: 700px) {
+            .daily-features {
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
         }
 
         .downloads-grid {
@@ -229,9 +297,27 @@
         <main class="vocab-main">
             <h1 class="page-title">Download Vocabulary Lists</h1>
             <div class="about-box">
-                Welcome to the Spanish Vocabulary page! <br>
-                Here you can download vocabulary lists for different year groups.<br>
-                Vocabulary is one of the building blocks for learning a language. Use these lists to practice, revise, and expand your Spanish skills. More resources and interactive tools will be added soon.
+                <div class="daily-features">
+                    <div class="feature-card">
+                        <div class="feature-header">Word of the Day</div>
+                        <div class="feature-main" id="wordOfDay"></div>
+                        <div class="feature-translation" id="wordTranslation"></div>
+                        <div class="feature-example">
+                            <div class="feature-example-text" id="wordExampleES"></div>
+                            <div class="feature-example-translation" id="wordExampleEN"></div>
+                        </div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-header">Phrase of the Week</div>
+                        <div class="feature-main" id="phraseOfWeek"></div>
+                        <div class="feature-literal" id="phraseLiteral"></div>
+                        <div class="feature-translation" id="phraseTranslation"></div>
+                        <div class="feature-example">
+                            <div class="feature-example-text" id="phraseExampleES"></div>
+                            <div class="feature-example-translation" id="phraseExampleEN"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="downloads-grid">
                 <a href="SpanishVocabLists/Year7Vocab.pdf" class="download-card" download>
@@ -275,14 +361,158 @@
                     </span>
                 </a>
             </div>
-            <p class="info-text">More vocabulary lists will be added for other year groups and topics. Stay tuned!</p>
         </main>
         <nav class="side-nav">
             <div class="side-nav-title">Year Group Vocabulary</div>
-            <a href="SpanishVocabPages/Year7SpanishVocab.html" class="side-link active">Year 7 Spanish</a>
+            <a href="SpanishVocabPages/Year7SpanishVocab.html" class="side-link">Year 7 Spanish</a>
             <a href="SpanishVocabPages/Year8SpanishVocab.html" class="side-link">Year 8 Spanish</a>
             <a href="SpanishVocabPages/Year9SpanishVocab.html" class="side-link">Year 9 Spanish</a>
         </nav>
     </div>
+    
+    <script>
+        // Word of the Day Database
+        const wordsOfDay = [
+            {
+                word: "la biblioteca",
+                translation: "the library",
+                exampleES: "Voy a la biblioteca todos los días.",
+                exampleEN: "I go to the library every day."
+            },
+            {
+                word: "el desayuno",
+                translation: "breakfast",
+                exampleES: "Me gusta comer cereales para el desayuno.",
+                exampleEN: "I like to eat cereal for breakfast."
+            },
+            {
+                word: "la montaña",
+                translation: "the mountain",
+                exampleES: "La montaña es muy alta y hermosa.",
+                exampleEN: "The mountain is very tall and beautiful."
+            },
+            {
+                word: "el verano",
+                translation: "summer",
+                exampleES: "En el verano hace mucho calor.",
+                exampleEN: "In summer it's very hot."
+            },
+            {
+                word: "la alegría",
+                translation: "joy / happiness",
+                exampleES: "Su sonrisa llena de alegría el cuarto.",
+                exampleEN: "Her smile fills the room with joy."
+            },
+            {
+                word: "el paraguas",
+                translation: "umbrella",
+                exampleES: "Necesito un paraguas porque está lloviendo.",
+                exampleEN: "I need an umbrella because it's raining."
+            },
+            {
+                word: "la estrella",
+                translation: "star",
+                exampleES: "Las estrellas brillan en el cielo nocturno.",
+                exampleEN: "The stars shine in the night sky."
+            }
+        ];
+
+        // Phrase of the Week Database (idioms)
+        const phrasesOfWeek = [
+            {
+                phrase: "No hay mal que por bien no venga",
+                literal: "(There is no bad from which good doesn't come)",
+                translation: "Every cloud has a silver lining",
+                exampleES: "Perdí mi trabajo, pero encontré uno mejor. No hay mal que por bien no venga.",
+                exampleEN: "I lost my job, but I found a better one. Every cloud has a silver lining."
+            },
+            {
+                phrase: "Estar en las nubes",
+                literal: "(To be in the clouds)",
+                translation: "To daydream / to have one's head in the clouds",
+                exampleES: "María está en las nubes durante la clase de matemáticas.",
+                exampleEN: "María is daydreaming during math class."
+            },
+            {
+                phrase: "Costar un ojo de la cara",
+                literal: "(To cost an eye from the face)",
+                translation: "To cost an arm and a leg",
+                exampleES: "Este coche nuevo me costó un ojo de la cara.",
+                exampleEN: "This new car cost me an arm and a leg."
+            },
+            {
+                phrase: "Dar en el clavo",
+                literal: "(To hit the nail)",
+                translation: "To hit the nail on the head / to be exactly right",
+                exampleES: "Tu explicación dio en el clavo.",
+                exampleEN: "Your explanation hit the nail on the head."
+            },
+            {
+                phrase: "Llover a cántaros",
+                literal: "(To rain pitchers)",
+                translation: "To rain cats and dogs / to pour",
+                exampleES: "Ayer llovió a cántaros toda la tarde.",
+                exampleEN: "Yesterday it poured all afternoon."
+            },
+            {
+                phrase: "Tomar el pelo",
+                literal: "(To take the hair)",
+                translation: "To pull someone's leg / to tease",
+                exampleES: "No te preocupes, solo te estoy tomando el pelo.",
+                exampleEN: "Don't worry, I'm just pulling your leg."
+            },
+            {
+                phrase: "Estar como una cabra",
+                literal: "(To be like a goat)",
+                translation: "To be crazy / to be nuts",
+                exampleES: "Mi tío está como una cabra, siempre hace cosas locas.",
+                exampleEN: "My uncle is nuts, he always does crazy things."
+            }
+        ];
+
+        // Get day of year for consistent daily rotation
+        function getDayOfYear() {
+            const now = new Date();
+            const start = new Date(now.getFullYear(), 0, 0);
+            const diff = now - start;
+            const oneDay = 1000 * 60 * 60 * 24;
+            return Math.floor(diff / oneDay);
+        }
+
+        // Get week of year for consistent weekly rotation
+        function getWeekOfYear() {
+            const now = new Date();
+            const onejan = new Date(now.getFullYear(), 0, 1);
+            const millisecsInDay = 86400000;
+            return Math.ceil((((now - onejan) / millisecsInDay) + onejan.getDay() + 1) / 7);
+        }
+
+        // Display Word of the Day
+        function displayWordOfDay() {
+            const dayIndex = getDayOfYear() % wordsOfDay.length;
+            const word = wordsOfDay[dayIndex];
+            
+            document.getElementById('wordOfDay').textContent = word.word;
+            document.getElementById('wordTranslation').textContent = word.translation;
+            document.getElementById('wordExampleES').textContent = word.exampleES;
+            document.getElementById('wordExampleEN').textContent = word.exampleEN;
+        }
+
+        // Display Phrase of the Week
+        function displayPhraseOfWeek() {
+            const weekIndex = getWeekOfYear() % phrasesOfWeek.length;
+            const phrase = phrasesOfWeek[weekIndex];
+            
+            document.getElementById('phraseOfWeek').textContent = phrase.phrase;
+            document.getElementById('phraseLiteral').textContent = phrase.literal;
+            document.getElementById('phraseTranslation').textContent = phrase.translation;
+            document.getElementById('phraseExampleES').textContent = phrase.exampleES;
+            document.getElementById('phraseExampleEN').textContent = phrase.exampleEN;
+        }
+
+        // Initialize on page load
+        displayWordOfDay();
+        displayPhraseOfWeek();
+    </script>
 </body>
 </html>

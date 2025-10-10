@@ -1,4 +1,6 @@
-<html lang="en"><head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
     <title>French Vocabulary</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -83,11 +85,79 @@
             box-shadow: 0 4px 14px rgba(31, 91, 221, 0.09);
             padding: 28px 24px;
             margin-bottom: 36px;
-            text-align: center;
-            font-size: 1.12rem;
-            color: #444;
-            line-height: 1.7;
             animation: fadeIn 0.7s ease-out 0.2s both;
+        }
+
+        .daily-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 10px;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #fff 0%, #fbfcff 100%);
+            border-radius: 10px;
+            padding: 20px;
+            border-left: 4px solid #0055A4;
+            box-shadow: 0 2px 10px rgba(0, 85, 164, 0.06);
+        }
+
+        .feature-header {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: #0055A4;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .feature-main {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 8px;
+            font-style: italic;
+        }
+
+        .feature-translation {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        .feature-example {
+            background: #f8f8f8;
+            border-radius: 6px;
+            padding: 10px 12px;
+            margin-top: 10px;
+        }
+
+        .feature-example-text {
+            font-size: 0.95rem;
+            color: #444;
+            font-style: italic;
+            margin-bottom: 4px;
+        }
+
+        .feature-example-translation {
+            font-size: 0.9rem;
+            color: #777;
+        }
+
+        .feature-literal {
+            font-size: 0.85rem;
+            color: #999;
+            font-style: italic;
+            margin-bottom: 6px;
+        }
+
+        @media (max-width: 700px) {
+            .daily-features {
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
         }
 
         .downloads-grid {
@@ -120,7 +190,7 @@
         .download-card:hover {
             transform: translateY(-2px) scale(1.012);
             box-shadow: 0 10px 38px rgba(31, 113, 221, 0.18);
-            background: #0055A4;
+            background: #004080;
         }
         .download-icon {
             width: 36px;
@@ -184,7 +254,7 @@
         .side-link {
             color: #0055A4;
             text-decoration: none;
-            background: rgba(31, 113, 221, 0.05);
+            background: rgba(0, 85, 164, 0.05);
             padding: 8px 14px;
             border-radius: 6px;
             transition: background 0.18s, color 0.18s;
@@ -227,12 +297,30 @@
         <main class="vocab-main">
             <h1 class="page-title">Download Vocabulary Lists</h1>
             <div class="about-box">
-                Welcome to the French Vocabulary page! <br>
-                Here you can download vocabulary lists for Year 9.<br>
-                Vocabulary is one of the building blocks for learning a language. Use these lists to practice, revise, and expand your French skills. More resources and interactive tools will be added soon.
+                <div class="daily-features">
+                    <div class="feature-card">
+                        <div class="feature-header">Word of the Day</div>
+                        <div class="feature-main" id="wordOfDay"></div>
+                        <div class="feature-translation" id="wordTranslation"></div>
+                        <div class="feature-example">
+                            <div class="feature-example-text" id="wordExampleFR"></div>
+                            <div class="feature-example-translation" id="wordExampleEN"></div>
+                        </div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-header">Phrase of the Week</div>
+                        <div class="feature-main" id="phraseOfWeek"></div>
+                        <div class="feature-literal" id="phraseLiteral"></div>
+                        <div class="feature-translation" id="phraseTranslation"></div>
+                        <div class="feature-example">
+                            <div class="feature-example-text" id="phraseExampleFR"></div>
+                            <div class="feature-example-translation" id="phraseExampleEN"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="downloads-grid">
-                <a href="FrenchVocabLists/Year9Vocab.pdf" class="download-card" download="">
+                <a href="FrenchVocabLists/Year9Vocab.pdf" class="download-card" download>
                     <span class="download-icon">
                         <!-- Simple download SVG icon (white) -->
                         <svg class="download-svg" viewBox="0 0 24 24" fill="none">
@@ -245,13 +333,154 @@
                         <span class="download-title">Year 9 Vocabulary</span>
                         <span class="download-subtitle">Click to download PDF</span>
                     </span>
-                </a>
-                
-                
+                </a>  
             </div>
-            <p class="info-text">More vocabulary lists will be added for other year groups and topics. Stay tuned!</p>
         </main>
     </div>
 
+    <script>
+        // Word of the Day Database (French)
+        const wordsOfDay = [
+            {
+                word: "la bibliothèque",
+                translation: "the library",
+                exampleFR: "Je vais à la bibliothèque tous les jours.",
+                exampleEN: "I go to the library every day."
+            },
+            {
+                word: "le petit-déjeuner",
+                translation: "breakfast",
+                exampleFR: "J'aime manger des céréales pour le petit-déjeuner.",
+                exampleEN: "I like to eat cereal for breakfast."
+            },
+            {
+                word: "la montagne",
+                translation: "the mountain",
+                exampleFR: "La montagne est très haute et belle.",
+                exampleEN: "The mountain is very tall and beautiful."
+            },
+            {
+                word: "l'été",
+                translation: "summer",
+                exampleFR: "En été, il fait très chaud.",
+                exampleEN: "In summer, it's very hot."
+            },
+            {
+                word: "la joie",
+                translation: "joy / happiness",
+                exampleFR: "Son sourire remplit la pièce de joie.",
+                exampleEN: "Her smile fills the room with joy."
+            },
+            {
+                word: "le parapluie",
+                translation: "umbrella",
+                exampleFR: "J'ai besoin d'un parapluie car il pleut.",
+                exampleEN: "I need an umbrella because it's raining."
+            },
+            {
+                word: "l'étoile",
+                translation: "star",
+                exampleFR: "Les étoiles brillent dans le ciel nocturne.",
+                exampleEN: "The stars shine in the night sky."
+            }
+        ];
 
-</body></html>
+        // Phrase of the Week Database (French idioms)
+        const phrasesOfWeek = [
+            {
+                phrase: "Avoir le cafard",
+                literal: "(To have the cockroach)",
+                translation: "To feel down / to be depressed",
+                exampleFR: "J'ai le cafard aujourd'hui, je ne sais pas pourquoi.",
+                exampleEN: "I'm feeling down today, I don't know why."
+            },
+            {
+                phrase: "Coûter les yeux de la tête",
+                literal: "(To cost the eyes from the head)",
+                translation: "To cost an arm and a leg",
+                exampleFR: "Cette voiture coûte les yeux de la tête.",
+                exampleEN: "This car costs an arm and a leg."
+            },
+            {
+                phrase: "Poser un lapin",
+                literal: "(To put down a rabbit)",
+                translation: "To stand someone up",
+                exampleFR: "Il m'a posé un lapin hier soir!",
+                exampleEN: "He stood me up last night!"
+            },
+            {
+                phrase: "Tomber dans les pommes",
+                literal: "(To fall in the apples)",
+                translation: "To faint / to pass out",
+                exampleFR: "Il faisait si chaud qu'elle est tombée dans les pommes.",
+                exampleEN: "It was so hot that she fainted."
+            },
+            {
+                phrase: "Avoir un chat dans la gorge",
+                literal: "(To have a cat in the throat)",
+                translation: "To have a frog in one's throat",
+                exampleFR: "Excuse-moi, j'ai un chat dans la gorge.",
+                exampleEN: "Excuse me, I have a frog in my throat."
+            },
+            {
+                phrase: "Mettre son grain de sel",
+                literal: "(To put one's grain of salt)",
+                translation: "To put in one's two cents",
+                exampleFR: "Il faut toujours qu'il mette son grain de sel!",
+                exampleEN: "He always has to put in his two cents!"
+            },
+            {
+                phrase: "Raconter des salades",
+                literal: "(To tell salads)",
+                translation: "To tell lies / tall tales",
+                exampleFR: "Ne l'écoute pas, il raconte des salades.",
+                exampleEN: "Don't listen to him, he's telling lies."
+            }
+        ];
+
+        // Get day of year for consistent daily rotation
+        function getDayOfYear() {
+            const now = new Date();
+            const start = new Date(now.getFullYear(), 0, 0);
+            const diff = now - start;
+            const oneDay = 1000 * 60 * 60 * 24;
+            return Math.floor(diff / oneDay);
+        }
+
+        // Get week of year for consistent weekly rotation
+        function getWeekOfYear() {
+            const now = new Date();
+            const onejan = new Date(now.getFullYear(), 0, 1);
+            const millisecsInDay = 86400000;
+            return Math.ceil((((now - onejan) / millisecsInDay) + onejan.getDay() + 1) / 7);
+        }
+
+        // Display Word of the Day
+        function displayWordOfDay() {
+            const dayIndex = getDayOfYear() % wordsOfDay.length;
+            const word = wordsOfDay[dayIndex];
+            
+            document.getElementById('wordOfDay').textContent = word.word;
+            document.getElementById('wordTranslation').textContent = word.translation;
+            document.getElementById('wordExampleFR').textContent = word.exampleFR;
+            document.getElementById('wordExampleEN').textContent = word.exampleEN;
+        }
+
+        // Display Phrase of the Week
+        function displayPhraseOfWeek() {
+            const weekIndex = getWeekOfYear() % phrasesOfWeek.length;
+            const phrase = phrasesOfWeek[weekIndex];
+            
+            document.getElementById('phraseOfWeek').textContent = phrase.phrase;
+            document.getElementById('phraseLiteral').textContent = phrase.literal;
+            document.getElementById('phraseTranslation').textContent = phrase.translation;
+            document.getElementById('phraseExampleFR').textContent = phrase.exampleFR;
+            document.getElementById('phraseExampleEN').textContent = phrase.exampleEN;
+        }
+
+        // Initialize on page load
+        displayWordOfDay();
+        displayPhraseOfWeek();
+    </script>
+</body>
+</html>

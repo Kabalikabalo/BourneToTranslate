@@ -76,12 +76,21 @@
             }
         }
         
+        /* Search and filter container */
+        .search-filter-container {
+            max-width: 700px;
+            margin: 0 auto 35px auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+            animation: scaleIn 0.5s ease-out 0.3s both;
+        }
+        
         /* Search bar with gentle scale animation */
         .search-bar { 
             width: 100%; 
             max-width: 400px; 
-            margin: 0 auto 35px auto; 
-            display: block; 
             font-size: 1.1rem; 
             padding: 12px 18px; 
             border-radius: 30px; 
@@ -89,7 +98,6 @@
             outline: none; 
             box-shadow: 0 2px 12px rgba(0, 85, 164, 0.08); 
             transition: all 0.25s ease;
-            animation: scaleIn 0.5s ease-out 0.3s both;
         }
         
         @keyframes scaleIn {
@@ -107,6 +115,48 @@
             border-color: #003D7A;
             box-shadow: 0 3px 16px rgba(0, 85, 164, 0.15);
             transform: scale(1.01);
+        }
+        
+        /* Difficulty filters */
+        .difficulty-filters {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .difficulty-filter-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1rem;
+            color: #444;
+            cursor: pointer;
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: #fafafd;
+            border: 2px solid #e0e0e0;
+            transition: all 0.25s ease;
+            user-select: none;
+        }
+        
+        .difficulty-filter-label:hover {
+            border-color: #0055A4;
+            background: #f0f7ff;
+        }
+        
+        .difficulty-filter-label input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: #0055A4;
+        }
+        
+        .difficulty-filter-label.active {
+            border-color: #0055A4;
+            background: #f0f7ff;
+            font-weight: 600;
         }
         
         /* Grid with subtle staggered card animations */
@@ -190,6 +240,23 @@
             transition: all 0.25s ease;
         }
         
+        .story-difficulty {
+            position: absolute;
+            bottom: 12px;
+            right: 16px;
+            background: #0055A4;
+            color: #fff;
+            font-size: 0.95rem;
+            font-weight: 600;
+            padding: 6px 16px;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0, 85, 164, 0.10);
+            letter-spacing: 0.5px;
+            z-index: 2;
+            pointer-events: none;
+            opacity: 0.93;
+        }
+        
         .story-title { 
             font-size: 1.3rem; 
             font-weight: 700; 
@@ -240,7 +307,23 @@
         French Stories
     </div>
     <div class="catalogue-container">
-        <input type="text" class="search-bar" id="searchInput" placeholder="Search stories...">
+        <div class="search-filter-container">
+            <input type="text" class="search-bar" id="searchInput" placeholder="Search stories...">
+            <div class="difficulty-filters">
+                <label class="difficulty-filter-label">
+                    <input type="checkbox" id="difficulty1" value="1" checked>
+                    <span>Easy</span>
+                </label>
+                <label class="difficulty-filter-label">
+                    <input type="checkbox" id="difficulty2" value="2" checked>
+                    <span>Medium</span>
+                </label>
+                <label class="difficulty-filter-label">
+                    <input type="checkbox" id="difficulty3" value="3" checked>
+                    <span>Hard</span>
+                </label>
+            </div>
+        </div>
         <div class="stories-grid" id="storiesGrid"></div>
     </div>
     <script>
@@ -250,7 +333,8 @@
             title: "Les Amis de la Ferme",
             intro: "La ferme est grande....",
             image: "FrenchStories/Les amis de la ferme/FarmPhoto1.png",
-            url: "FrenchStories/Les amis de la ferme/index.html"
+            url: "FrenchStories/Les amis de la ferme/index.html",
+            difficulty: 1
         }
         // Add more stories here with their own url field
     ];
@@ -260,9 +344,28 @@
         return text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
     }
 
+    // Get selected difficulty levels
+    function getSelectedDifficulties() {
+        const checkboxes = document.querySelectorAll('.difficulty-filters input[type="checkbox"]');
+        const selected = [];
+        checkboxes.forEach(cb => {
+            if (cb.checked) {
+                selected.push(parseInt(cb.value));
+            }
+        });
+        return selected;
+    }
+
+    // Get difficulty label
+    function getDifficultyLabel(difficulty) {
+        const labels = { 1: 'Easy', 2: 'Medium', 3: 'Hard' };
+        return labels[difficulty] || 'Unknown';
+    }
+
     function renderCatalogue(filter='') {
         const grid = document.getElementById('storiesGrid');
         const normalizedFilter = normalizeText(filter);
+        const selectedDifficulties = getSelectedDifficulties();
         
         let shown = 0;
         const currentCards = grid.querySelectorAll('.story-card');
@@ -271,11 +374,13 @@
         currentCards.forEach(card => {
             const title = card.getAttribute('data-title');
             const intro = card.getAttribute('data-intro');
+            const difficulty = parseInt(card.getAttribute('data-difficulty'));
             const matchesFilter = !normalizedFilter || 
                 normalizeText(title).includes(normalizedFilter) ||
                 normalizeText(intro).includes(normalizedFilter);
+            const matchesDifficulty = selectedDifficulties.length === 0 || selectedDifficulties.includes(difficulty);
             
-            if (!matchesFilter && !card.classList.contains('hiding')) {
+            if ((!matchesFilter || !matchesDifficulty) && !card.classList.contains('hiding')) {
                 card.classList.add('hiding');
                 setTimeout(() => {
                     renderCatalogue(filter);
@@ -287,22 +392,25 @@
         // Build fresh grid
         let newHTML = '';
         stories.forEach((story, index) => {
-            if (
-                !normalizedFilter ||
+            const matchesFilter = !normalizedFilter ||
                 normalizeText(story.title).includes(normalizedFilter) ||
-                normalizeText(story.intro).includes(normalizedFilter)
-            ) {
+                normalizeText(story.intro).includes(normalizedFilter);
+            const matchesDifficulty = selectedDifficulties.length === 0 || selectedDifficulties.includes(story.difficulty);
+            
+            if (matchesFilter && matchesDifficulty) {
                 shown++;
                 newHTML += `
                     <a class="story-card" href="${story.url}" 
                        data-title="${story.title}" 
                        data-intro="${story.intro}"
-                       style="animation-delay: ${0.05 * index}s;">
+                       data-difficulty="${story.difficulty}"
+                       style="animation-delay: ${0.05 * index}s; position: relative;">
                         <img src="${story.image}" alt="${story.title}" class="story-image">
                         <div class="story-info">
                             <div class="story-title">${story.title}</div>
                             <div class="story-intro">${story.intro}</div>
                         </div>
+                        <div class="story-difficulty">${getDifficultyLabel(story.difficulty)}</div>
                     </a>`;
             }
         });
@@ -318,6 +426,23 @@
 
     document.getElementById('searchInput').addEventListener('input', function() {
         renderCatalogue(this.value);
+    });
+
+    // Add event listeners to difficulty filter checkboxes
+    const difficultyCheckboxes = document.querySelectorAll('.difficulty-filters input[type="checkbox"]');
+    difficultyCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            // Update label styling
+            this.parentElement.classList.toggle('active', this.checked);
+            // Re-render catalogue
+            const searchValue = document.getElementById('searchInput').value;
+            renderCatalogue(searchValue);
+        });
+        
+        // Initialize active state
+        if (checkbox.checked) {
+            checkbox.parentElement.classList.add('active');
+        }
     });
     </script>
 </body>

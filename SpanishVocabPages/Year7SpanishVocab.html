@@ -2,228 +2,1187 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Spanish Vocabulary</title>
+    <title>Year 7 Spanish Vocabulary Practice</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #fff 0%, #f8f8f8 100%);
-            margin: 0; 
-            padding: 0; 
+            margin: 0;
+            padding: 0;
             overflow-x: hidden;
         }
-        
-        /* Navbar with subtle slide-in animation */
-        .navbar { 
-            background: #DD1F25; 
-            color: white; 
-            height: 60px; 
-            display: flex; 
-            align-items: center; 
-            padding: 0 30px; 
-            font-size: 1.5rem; 
-            font-weight: 700; 
+
+        .navbar {
+            background: #DD1F25;
+            color: white;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            padding: 0 30px;
+            font-size: 1.5rem;
+            font-weight: 700;
             letter-spacing: 1px;
             box-shadow: 0 2px 12px rgba(221, 31, 37, 0.15);
-            animation: slideDown 0.5s ease-out;
         }
-        
-        @keyframes slideDown {
-            from {
-                transform: translateY(-100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-        
-        .navbar a { 
-            color: white; 
-            text-decoration: none; 
-            font-size: 1rem; 
-            font-weight: 500; 
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
             margin-right: 25px;
             transition: all 0.2s ease;
             padding: 6px 12px;
             border-radius: 4px;
         }
-        
+
         .navbar a:hover {
             background: rgba(255, 255, 255, 0.1);
             transform: translateX(-3px);
         }
-        
-        /* Main container with fade-in */
-        .vocab-container { 
-            max-width: 900px; 
-            margin: 0 auto; 
-            padding: 60px 20px;
-            animation: fadeIn 0.6s ease-out 0.1s both;
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
         }
-        
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
+
         .page-title {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             font-weight: 700;
             color: #DD1F25;
             text-align: center;
-            margin-bottom: 50px;
-            animation: scaleIn 0.5s ease-out 0.3s both;
+            margin-bottom: 40px;
         }
-        
-        @keyframes scaleIn {
-            from {
-                transform: scale(0.95);
-                opacity: 0;
-            }
-            to {
-                transform: scale(1);
-                opacity: 1;
-            }
+
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 14px rgba(221, 31, 37, 0.09);
         }
-        
-        /* Download cards grid */
-        .downloads-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-        
-        /* Download card */
-        .download-card {
-            background: #DD1F25;
-            border-radius: 16px;
-            padding: 40px 16px; /* Reduced horizontal padding */
-            box-shadow: 0 6px 26px rgba(221, 31, 37, 0.2);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: pointer;
-            text-decoration: none;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 200px;
-            min-width: 180px; /* Optional: set a minimum width */
-            position: relative;
-            overflow: hidden;
-            animation: cardAppear 0.5s ease-out 0.5s both;
-        }
-        
-        @keyframes cardAppear {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .download-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-        
-        .download-card:hover::before {
-            opacity: 1;
-        }
-        
-        .download-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 12px 40px rgba(221, 31, 37, 0.3);
-        }
-        
-        .download-card:active {
-            transform: translateY(-3px);
-        }
-        
-        .download-icon {
-            font-size: 3.5rem;
-            color: white;
-            margin-bottom: 20px;
-            transition: transform 0.3s ease;
-        }
-        
-        .download-card:hover .download-icon {
-            transform: scale(1.1);
-        }
-        
-        .download-title {
+
+        .section-title {
             font-size: 1.5rem;
             font-weight: 700;
-            color: white;
-            text-align: center;
-            margin-bottom: 10px;
+            color: #DD1F25;
+            margin-bottom: 20px;
         }
-        
-        .download-subtitle {
+
+        .module-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .module-btn, .week-btn {
+            background: rgba(221, 31, 37, 0.05);
+            border: 2px solid #DD1F25;
+            color: #DD1F25;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 600;
             font-size: 0.95rem;
-            color: rgba(255, 255, 255, 0.9);
-            text-align: center;
         }
-        
-        /* Info text */
-        .info-text {
-            text-align: center;
-            color: #666;
+
+        .module-btn:hover, .week-btn:hover {
+            background: #DD1F25;
+            color: white;
+        }
+
+        .module-btn.selected, .week-btn.selected {
+            background: #DD1F25;
+            color: white;
+        }
+
+        .module-btn.has-selections {
+            background: rgba(221, 31, 37, 0.23);
+            border-color: #DD1F25;
+            color: #DD1F25;
+            font-weight: 700;
+        }
+
+        .settings-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .setting-card {
+            background: #f8f8f8;
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .setting-label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            padding: 12px 16px;
+            border-radius: 8px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            transition: all 0.2s;
+        }
+
+        .radio-option:hover {
+            border-color: #DD1F25;
+            background: rgba(221, 31, 37, 0.02);
+        }
+
+        .radio-option input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: #DD1F25;
+        }
+
+        .radio-option input[type="radio"]:checked + span {
+            color: #DD1F25;
+            font-weight: 600;
+        }
+
+        .radio-option:has(input[type="radio"]:checked) {
+            border-color: #DD1F25;
+            background: rgba(221, 31, 37, 0.05);
+        }
+
+        .start-btn {
+            background: #DD1F25;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+            display: block;
+            margin: 30px auto 0;
+            transition: all 0.3s;
+        }
+
+        .start-btn:hover {
+            background: #c11a1f;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(221, 31, 37, 0.3);
+        }
+
+        .start-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Test Interface */
+        .test-container {
+            display: none;
+        }
+
+        .test-container.active {
+            display: block;
+        }
+
+        .test-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .back-to-setup-btn {
+            background: #DD1F25;
+            color: white;
+            border: none;
+            padding: 10px 20px;
             font-size: 1rem;
-            margin-top: 40px;
-            animation: fadeIn 0.6s ease-out 0.7s both;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
-        
-        @media (max-width: 600px) { 
-            .vocab-container { padding: 40px 15px; }
-            .page-title { font-size: 2rem; }
-            .download-card { padding: 35px 25px; min-height: 180px; }
-            .download-icon { font-size: 3rem; }
-            .download-title { font-size: 1.3rem; }
-            .navbar { font-size: 1.2rem; padding: 0 20px; }
+
+        .back-to-setup-btn:hover {
+            background: #c11a1f;
+            transform: translateX(-3px);
+        }
+
+        .progress-bar {
+            background: #e0e0e0;
+            height: 10px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: #DD1F25;
+            height: 100%;
+            transition: width 0.3s;
+        }
+
+        .flashcard {
+            background: white;
+            border-radius: 12px;
+            padding: 60px 40px;
+            text-align: center;
+            box-shadow: 0 6px 24px rgba(221, 31, 37, 0.15);
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .flashcard:hover {
+            transform: scale(1.02);
+        }
+
+        .flashcard-question {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #DD1F25;
+            margin-bottom: 20px;
+        }
+
+        .flashcard-answer {
+            font-size: 1.5rem;
+            color: #666;
+            display: none;
+        }
+
+        .flashcard.revealed .flashcard-answer {
+            display: block;
+        }
+
+        .typing-test {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 6px 24px rgba(221, 31, 37, 0.15);
+        }
+
+        .typing-question {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #DD1F25;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .typing-input {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.2rem;
+            border: 2px solid #DD1F25;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .submit-btn {
+            background: #DD1F25;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .submit-btn:hover {
+            background: #c11a1f;
+        }
+
+        .feedback {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .feedback.correct {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .feedback.incorrect {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .next-btn {
+            background: #DD1F25;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: all 0.2s;
+        }
+
+        .next-btn:hover {
+            background: #c11a1f;
+        }
+
+        .results {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 6px 24px rgba(221, 31, 37, 0.15);
+        }
+
+        .results-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #DD1F25;
+            margin-bottom: 20px;
+        }
+
+        .results-score {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .settings-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
     <div class="navbar">
-        <a href="spanish.html">← Back</a>
-        Spanish Vocabulary
+        <a href="../spanish-vocab.html">← Back</a>
+        Year 7 Spanish Vocabulary Practice
     </div>
-    
-    <div class="vocab-container">
-        <h1 class="page-title">Download Vocabulary Lists</h1>
-        
-        <div class="downloads-grid">
-            <a href="SpanishVocabLists/Year7Vocab.pdf" class="download-card" download>
-                <div class="download-icon">📥</div>
-                <div class="download-title">Year 7 Vocabulary</div>
-                <div class="download-subtitle">Click to download PDF</div>
-            </a>
-            
-            <!-- Add more vocab cards here in the future -->
+
+    <div class="container">
+        <!-- Setup Interface -->
+        <div id="setupInterface">
+            <h1 class="page-title">Vocabulary Practice</h1>
+
+            <div class="section">
+                <h2 class="section-title">Select Modules</h2>
+                <div class="module-grid" id="moduleSelection"></div>
+            </div>
+
+            <div class="section" id="weekSection" style="display: none;">
+                <h2 class="section-title">Select Weeks</h2>
+                <div class="module-grid" id="weekSelection"></div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">Test Settings</h2>
+                <div class="settings-grid">
+                    <div class="setting-card">
+                        <label class="setting-label">Direction</label>
+                        <div class="radio-group">
+                            <label class="radio-option">
+                                <input type="radio" name="direction" value="es-en" checked>
+                                <span>Spanish → English</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="direction" value="en-es">
+                                <span>English → Spanish</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="setting-card">
+                        <label class="setting-label">Mode</label>
+                        <div class="radio-group">
+                            <label class="radio-option">
+                                <input type="radio" name="mode" value="flashcards" checked>
+                                <span>Flashcards</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="mode" value="typing">
+                                <span>Type Answers</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="start-btn" id="startBtn" disabled>Start Practice</button>
         </div>
-        
-        <p class="info-text">More vocabulary will be added</p>
+
+        <!-- Test Interface -->
+        <div class="test-container" id="testInterface">
+            <div class="test-header">
+                <button class="back-to-setup-btn" onclick="backToSetup()">
+                    <span>←</span>
+                    <span>Back to Year 7 Vocab</span>
+                </button>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div id="testContent"></div>
+        </div>
     </div>
+
+    <script>
+        // Vocabulary Data Structure
+        const VOCAB_DATA = `
+Module 1:
+Week 1:
+Hola - Hello
+¿Cómo te llamas? - What are you called?
+Me llamo... - I am called...
+¿Qué tal? - How are you?
+Fenomenal - Great
+Bien - Good
+Regular - Not bad/Okay
+Fatal - Awful
+Hasta luego - See you later
+Adiós - Goodbye
+
+Week 2:
+¿Qué tipo de persona eres? - What sort of person are you?
+Soy... - I am...
+Sincero/a - Sincere
+Tímido/a - Shy
+Tranquilo/a - Calm/Quiet
+Divertido/a - Fun
+Serio/a - Serious
+Simpático/a - Nice/Kind
+Tonto/a - Silly
+Generoso/a - Generous
+
+Week 3:
+¿Tienes hermanos? - Do you have any siblings?
+Tengo... - I have...
+Un hermano - A brother
+Una hermana - A sister
+Un hermanastro - A stepbrother/Half-brother
+Una hermanastra - A stepsister/Half-sister
+¿Cuántos años tienes? - How old are you?
+Tengo once años - I am eleven years old
+Enero - January
+Febrero - February
+
+Week 4:
+Marzo - March
+Abril - April
+Mayo - May
+Junio - June
+Julio - July
+Agosto - August
+Septiembre - September
+Octubre - October
+Noviembre - November
+Diciembre - December
+
+Week 5:
+¿Tienes mascotas? - Do you have any pets?
+Un perro - A dog
+Un gato - A cat
+Un pez - A fish
+Un conejo - A rabbit
+Un ratón - A mouse
+Una Serpiente - A snake
+Una cobaya - A guinea pig
+Una tortuga - A tortoise/Turtle
+No tengo mascotas - I don't have any pets
+
+Week 6:
+Blanco/a - White
+Negro/a - Black
+Rojo/a - Red
+Azul - Blue
+Amarillio/a - Yellow
+Naranja - Orange
+Marrón - Brown
+Gris - Grey
+Rosa - Pink
+Verde - Green
+
+Module 2:
+Week 1:
+¿Qué te gusta hacer? - What do you like to do?
+Me gusta... - I like...
+Me gusta mucho... - I really like...
+No me gusta... - I do not like...
+No me gusta nada... - I do not like at all...
+Navegar por internet - To surf the internet
+Chatear - To chat
+Escuchar música - To listen to music
+Jugar a los videojuegos - To play videogames
+Ver la televisión - To watch television
+Leer - To read
+Escribir correos - To write emails
+Salir con mis amigos - To go out with my friends
+Pero - But
+Porque - Because
+
+Week 2:
+¿Qué haces en tu tiempo libre? - What do you do in your free time?
+Bailo - I dance
+Toco la guitarra - I play the guitar
+Saco fotos - I take photos
+Hablo con mis amigos - I talk with my friends
+Canto - I sing
+Hablo - I talk
+Hablas - You talk
+Habla - He/She/It talks
+Hablamos - We talk
+Habláis - You (pl) talk
+Hablan - They talk
+Es interesante - It is interesting
+Es aburrido - It is boring
+Es divertido - It is fun
+
+Week 3:
+Hace buen tiempo - It's nice weather
+Hace mal tiempo - It's bad weather
+Hace calor - It's hot
+Hace frío - It's cold
+Hace sol - It's sunny
+Llueve - It's raining
+Nieva - It's snowing
+¿Qué deportes haces? - What sports do you do?
+Hago gimnasia - I do gymnastics
+Hago artes marciales - I do martial arts
+Hago natación - I do/go swimming
+Juego al fútbol - I play football
+Juego al tenis - I play tennis
+Juego al veleibol - I play volleyball
+Juego al baloncesto - I play basketball
+
+Week 4:
+Lunes - Monday
+Martes - Tuesday
+Miércoles - Wednesday
+Jueves - Thursday
+Viernes - Friday
+Sábado - Saturday
+Domingo - Sunday
+Los lunes - On Mondays
+Juego - I play
+Juegas - You play
+Juega - He/She/It plays
+Jugamos - We play
+Jugáis - You (pl) play
+Juegan - They play
+Me encanta - I love (it)
+
+Week 5:
+¿Qué? - What?
+¿Cuando? - When?
+¿Dónde? - Where?
+¿Cómo? - How/What?
+¿Cuántos? - How many?
+Hago - I do/make
+Haces - You do/make
+Hace - He/She/It does/makes
+Hacemos - We do/make
+Hacéis - You (pl) do/make
+Hacen - They do/make
+Todos los días - Every day
+A veces - Sometimes
+Nunca - Never
+De vez en cuando - From time to time
+
+Module 3:
+Week 1:
+¿Qué estudias? - What do you study?
+El inglés - English
+El español - Spanish
+El francés - French
+El dibujo - Art
+El teatro - Drama
+La informática - Computing
+La geografía - Geography
+La historia - History
+La educación física - P.E.
+La música - Music
+La religión - E.P.R
+La technologíá - Design Technology (D.E.)
+Las matemáticas - Mathematics
+Las ciencias - Science
+
+Week 2:
+¿Cuál es tu día favorito? - What is your favourite day?
+Mi día favorito es... - My favourite day is...
+El lunes - Monday
+Los lunes - On Mondays
+¿Por qué? - Why?
+Porque... - Because
+Estudio - I study
+Estudiamos - We study
+No estudio - I don't study
+¿Te gusta(n)...? - Do you like...?
+Me gusta(n)... - I like...
+Me gusta(n) mucho... - I really like...
+Me encanta(n)... - I love...
+No me gusta(n)... - I don't like...
+No me gusta(n) nada... - I don't like at all...
+
+Week 3:
+¿Te gusta el dibujo? - Do you like art?
+Me gusta el inglés - I like English
+Me gustan las matemáticas - I like mathematics
+Es... - It is...
+Son... - They are...
+Aburrido - Boring
+Divertido - Fun
+Práctico - Practical
+Difícil - Difficult
+Fácil - Easy
+Útil - Useful
+Raro - Strange
+Severo - Strict
+Mi profesora de historia - My (female) history teacher
+Mi profesor de ciencias - My (male) Science teacher
+
+Week 4:
+En mi instituto hay... - In my school there is...
+Un campo de fútbol - A football pitch
+Un comedor - A dining room
+Un gimnasio - A gym
+Un patio - A playground
+Una clase de informática - A computing classroom
+Una piscina - A pool
+Una biblioteca - A library
+Unos laboratorios - Some laboratories
+Moderno - Modern
+Antiguo - Old
+Bonito - Nice (looking)
+Feo - Ugly
+Pequeño - Small
+Grande - Big
+
+Week 5:
+¿Qué haces durante el recreo? - What do you do during break?
+Como... - I eat...
+Un bocadillo - A sandwich
+Una pizza - A pizza
+Una chocolatina - A chocolate bar
+Unos caramelos - Some sweets
+Unas patatas fritas - Some crisps
+Fruta - Fruit
+Bebo... - I drink
+Agua - Water
+Zumo (de narana) - (Orange) juice
+Un refresco - A fizzy drink
+Escucho música - I listen to music
+Leo un libro - I read a book
+Escribo SMS/Mensajes - I write text messages
+
+Module 4:
+Week 1:
+¿Cuántas personas hay en tu familia? - How many people are there in your family?
+Hay... - There are...
+Mi madre - My mum
+Mi padre - My dad
+Mis hermanos - My siblings
+Mi tía - My aunt
+Mi tío - My uncle
+Mis primos - My cousins
+Mi abuela - My grandma
+Mi abuelo - My grandpa
+Mi bisabuela - My great grandma
+Se llama... - It is called
+Tiene ... años - He/She is ... years old
+Tu(s) - Your
+Su(s) - His/Her
+
+Week 2:
+¿De qué color tienes los ojos? - What colour are your eyes?
+Tengo los ojos... - I have ... eyes
+Azules - Blue
+Marrones - Brown
+Grises - Grey
+Verdes - Green
+Llevo gafas - I wear glasses
+¿Comó tienes el pelo? - What is your hair like?
+Tengo el pelo... - I have ... hair
+Rubio - Blonde
+Castaño - Brown (Brunette)
+Liso - Straight
+Rizado - Curly
+Largo - Long
+Corto - Short
+
+Week 3:
+Tener - To have
+Tengo - I have
+Tienes - You have
+Tiene - He/She/It has
+Tenemos - We have
+Tenéis - You(pl) have
+Tienen - They have
+Ser - To be
+Soy - I am
+Eres - You are
+Es - He/She/It is
+Somos - We are
+Sois - You(pl) are
+Son - They are
+Además - Also/In addition
+
+Week 4:
+¿Comó es? - What is he/she like?
+Alto - Tall
+Bajo - Short
+Joven - Young
+Viejo - Old
+Guapo - Good looking
+Feo - Ugly
+Delgado - Thin
+Gordo - Fat
+El bigote - Moustache
+La barba - Beard
+Las pecas - Freckles
+Muy - Very
+Bastante - Quite
+Un poco - A bit
+
+Week 5:
+¿Comó es tu casa o tu piso? - What is your house or your flat like?
+Vivo en... - I live in...
+Una casa bonita - A pretty house
+Una casa antigua - An old house
+Una casa grande - A big house
+Una casa moderna - A modern house
+Un piso cómodo - A comfortable flat
+Un piso pequeño - A small flat
+Está en... - It is in...
+La montaña - The mountain
+Un pueblo - A town
+Una ciudad - A city
+La costa - The coast
+El campo - The countryside
+El desierto - The desert
+
+Module 5:
+Week 1:
+¿Qué hay en tu pueblo? - What is in your town?
+Hay... - There is/are...
+Un castillo - A castle
+Un mercado - A market
+Un estadio - A stadium
+Un centro comercial - A shopping centre
+Un polideportivo - A sports centre
+Una piscina - A swimming pool
+Unos museos - Some museums
+Unas plazas - Some squares
+Muchos parques - Many/Lots of parks
+Muchos restaurantes - Many/Lots of restaurants
+Muchas tiendas - Many/Lots of shops
+No hay nada - There isn't anything
+
+Week 2:
+¿Qué hora es? - What time is it?
+Es la una - It's one o'clock
+Son las dos - It's two o'clock
+Son las tres y cuarto - It's quarter past three
+Son las cuatro y media - It's half past four
+Son las cinco menos cuarto - It's a quarter to five
+Son las seis y cinco - It's five past six
+Son las siete y diez - It's ten past seven
+Son los ocho y viente - It's twenty past eight
+Son las nueve menos veinticinco - It's twenty-five to nine
+Son las diez menos cinco - It's five to ten
+Son las once menos diez - It's ten to eleven
+Son las doce menos viente - It's twenty to twelve
+...de la mañana - ...In the morning (A.M.)
+...de la tarde - ...In the afternoon (P.M.)
+
+Week 3:
+¿Qué haces en la ciudad? - What do you do in the city?
+Salgo con mis amigos - I go out with my friends
+Voy al cine - I go to the cinema
+Voy al parque - I go to the park
+Voy a la cafetería - I go to the café
+Voy a la bolera - I go to the bowling alley
+Voy a la playa - I go to the beach
+Voy de paseo con mi familia - I go on a walk with my family
+Voy de compras - I go shopping
+No hago nada - I don't do anything
+Vas - You go
+Va - He/She/It goes
+Vamos - We go
+Vais - You(pl) go
+Van - They go
+
+Week 4:
+¿Qué queires? - What do you want?
+Quiero... - I want...
+Una bebida - A drink
+Un café - A coffee
+Un Té - A tea
+Una fanta limón/narana - A lemon/orange fanta
+Un batido de chocolate/fresa - A chocolate/strawberry milkshake
+Una Coca-Cola - A Coca-Cola
+Un granizado de limón - A lemon slush/snow cone
+Una ración de... - A portion of...
+Gambas - Prawns
+Jamón - Ham
+Calamares - Squid rings
+Croquetas - Croquettes
+Tortilla - Omelette
+
+Week 5:
+Patatas bravas - Spicy (brave!) potatoes
+Pan con tomate - Bread with tomato
+A ver... - Let's see...
+Bueno - Well...
+¿Algo más? - Anything else?
+¿Qué vas a hacer? - What are you going to do?
+Voy a jugar - I am going to play
+Voy a bailar - You are going to dance
+Va a ser - He/She/It is going to be
+Vamos a ver - We are going to see/watch
+Vais a ir - You(pl) are going to go
+Van a comer - They are going to eat
+Primero - First
+Luego - Then
+Finalmente - Finally
+`;
+
+        // Parse vocabulary data
+        function parseVocabData(text) {
+            const modules = {};
+            const lines = text.trim().split('\n');
+            let currentModule = null;
+            let currentWeek = null;
+
+            for (let line of lines) {
+                line = line.trim();
+                if (!line) continue;
+
+                if (line.startsWith('Module ')) {
+                    const moduleNum = line.match(/Module (\d+):/)[1];
+                    currentModule = `Module ${moduleNum}`;
+                    modules[currentModule] = {};
+                } else if (line.startsWith('Week ')) {
+                    const weekNum = line.match(/Week (\d+):/)[1];
+                    currentWeek = `Week ${weekNum}`;
+                    modules[currentModule][currentWeek] = [];
+                } else if (line.includes(' - ')) {
+                    const [spanish, english] = line.split(' - ').map(s => s.trim());
+                    modules[currentModule][currentWeek].push({ spanish, english });
+                }
+            }
+
+            return modules;
+        }
+
+        const vocabData = parseVocabData(VOCAB_DATA);
+        let currentModule = null;  // Track currently selected module
+        let selectedWeeksByModule = {};  // Store selected weeks for each module
+        let testQuestions = [];
+        let currentQuestion = 0;
+        let correctAnswers = 0;
+
+        // Initialize UI
+        function initializeUI() {
+            const moduleSelection = document.getElementById('moduleSelection');
+            
+            Object.keys(vocabData).forEach(module => {
+                const btn = document.createElement('button');
+                btn.className = 'module-btn';
+                btn.textContent = module;
+                btn.onclick = () => toggleModule(module, btn);
+                moduleSelection.appendChild(btn);
+            });
+        }
+
+        function toggleModule(module, btn) {
+            // Deselect all other module buttons
+            const allModuleBtns = document.querySelectorAll('.module-btn');
+            allModuleBtns.forEach(b => {
+                b.classList.remove('selected');
+                // Check if this module has selections and isn't the current one
+                const moduleName = b.textContent;
+                if (selectedWeeksByModule[moduleName] && selectedWeeksByModule[moduleName].size > 0) {
+                    b.classList.add('has-selections');
+                } else {
+                    b.classList.remove('has-selections');
+                }
+            });
+            
+            // Select this module and remove has-selections class (selected takes priority)
+            currentModule = module;
+            btn.classList.add('selected');
+            btn.classList.remove('has-selections');
+            
+            updateWeekSelection();
+            updateStartButton();
+        }
+
+        function updateWeekSelection() {
+            const weekSection = document.getElementById('weekSection');
+            const weekSelection = document.getElementById('weekSelection');
+            
+            if (!currentModule) {
+                weekSection.style.display = 'none';
+                return;
+            }
+
+            weekSection.style.display = 'block';
+            weekSelection.innerHTML = '';
+
+            // Initialize selected weeks for this module if not exists
+            if (!selectedWeeksByModule[currentModule]) {
+                selectedWeeksByModule[currentModule] = new Set();
+            }
+
+            // Show only weeks for the current module
+            Object.keys(vocabData[currentModule]).forEach(week => {
+                const btn = document.createElement('button');
+                btn.className = 'week-btn';
+                btn.textContent = `${currentModule} - ${week}`;
+                btn.dataset.module = currentModule;
+                btn.dataset.week = week;
+                
+                // Check if this week was previously selected
+                const key = `${currentModule}-${week}`;
+                if (selectedWeeksByModule[currentModule].has(week)) {
+                    btn.classList.add('selected');
+                }
+                
+                btn.onclick = () => toggleWeek(currentModule, week, btn);
+                weekSelection.appendChild(btn);
+            });
+        }
+
+        function toggleWeek(module, week, btn) {
+            if (!selectedWeeksByModule[module]) {
+                selectedWeeksByModule[module] = new Set();
+            }
+            
+            if (selectedWeeksByModule[module].has(week)) {
+                selectedWeeksByModule[module].delete(week);
+                btn.classList.remove('selected');
+            } else {
+                selectedWeeksByModule[module].add(week);
+                btn.classList.add('selected');
+            }
+            
+            updateStartButton();
+            updateModuleStates();
+        }
+
+        function updateModuleStates() {
+            // Update all module buttons to show has-selections state
+            const allModuleBtns = document.querySelectorAll('.module-btn');
+            allModuleBtns.forEach(btn => {
+                const moduleName = btn.textContent;
+                if ((moduleName !== currentModule) && selectedWeeksByModule[moduleName] && selectedWeeksByModule[moduleName].size > 0) {
+                    btn.classList.add('has-selections');
+                } else if (moduleName !== currentModule) {
+                    btn.classList.remove('has-selections');
+                }
+            });
+        }
+
+        function updateStartButton() {
+            const startBtn = document.getElementById('startBtn');
+            // Check if any weeks are selected across all modules
+            let totalSelected = 0;
+            Object.values(selectedWeeksByModule).forEach(weekSet => {
+                totalSelected += weekSet.size;
+            });
+            startBtn.disabled = totalSelected === 0;
+        }
+
+        // Test functionality
+        function startTest() {
+            const direction = document.querySelector('input[name="direction"]:checked').value;
+            const mode = document.querySelector('input[name="mode"]:checked').value;
+
+            // Collect questions from all selected weeks across all modules
+            testQuestions = [];
+            Object.keys(selectedWeeksByModule).forEach(module => {
+                selectedWeeksByModule[module].forEach(week => {
+                    const vocab = vocabData[module][week];
+                    
+                    vocab.forEach(item => {
+                        testQuestions.push({
+                            question: direction === 'es-en' ? item.spanish : item.english,
+                            answer: direction === 'es-en' ? item.english : item.spanish,
+                            spanish: item.spanish,
+                            english: item.english
+                        });
+                    });
+                });
+            });
+
+            // Shuffle questions
+            testQuestions = testQuestions.sort(() => Math.random() - 0.5);
+            currentQuestion = 0;
+            correctAnswers = 0;
+
+            // Show test interface
+            document.getElementById('setupInterface').style.display = 'none';
+            document.getElementById('testInterface').classList.add('active');
+
+            if (mode === 'flashcards') {
+                showFlashcard();
+            } else {
+                showTypingTest();
+            }
+        }
+
+        function showFlashcard() {
+            const testContent = document.getElementById('testContent');
+            const question = testQuestions[currentQuestion];
+            
+            testContent.innerHTML = `
+                <div class="flashcard" onclick="this.classList.toggle('revealed')">
+                    <div class="flashcard-question">${question.question}</div>
+                    <div class="flashcard-answer">${question.answer}</div>
+                    <p style="margin-top: 30px; color: #999; font-size: 0.9rem;">Click to reveal answer</p>
+                </div>
+                <button class="next-btn" onclick="nextQuestion()" style="display: block; margin: 20px auto;">Next</button>
+            `;
+            
+            updateProgress();
+        }
+
+        function showTypingTest() {
+            const testContent = document.getElementById('testContent');
+            const question = testQuestions[currentQuestion];
+            
+            testContent.innerHTML = `
+                <div class="typing-test">
+                    <div class="typing-question">${question.question}</div>
+                    <input type="text" class="typing-input" id="answerInput" placeholder="Type your answer..." autocomplete="off">
+                    <button class="submit-btn" onclick="checkAnswer()">Submit</button>
+                    <div id="feedback"></div>
+                </div>
+            `;
+            
+            document.getElementById('answerInput').focus();
+            document.getElementById('answerInput').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') checkAnswer();
+            });
+            
+            updateProgress();
+        }
+
+        function normalizeAnswer(text) {
+            return text.toLowerCase()
+                .trim()
+                .replace(/\?/g, '')
+                .replace(/¿/g, '')
+                .replace(/\!/g, '')
+                .replace(/¡/g, '')
+                .replace(/\./g, '')
+                .replace(/\.\.\./g, '')
+                .replace(/\(.*?\)/g, '')
+                .replace(/\s+/g, ' ')
+                .trim();
+        }
+
+        function checkAnswer() {
+            const input = document.getElementById('answerInput');
+            const feedback = document.getElementById('feedback');
+            const userAnswer = normalizeAnswer(input.value);
+            const correctAnswer = normalizeAnswer(testQuestions[currentQuestion].answer);
+            
+            // Handle multiple possible answers separated by /
+            const possibleAnswers = correctAnswer.split('/').map(a => normalizeAnswer(a));
+            const isCorrect = possibleAnswers.some(ans => userAnswer === ans);
+            
+            if (isCorrect) {
+                correctAnswers++;
+                feedback.className = 'feedback correct';
+                feedback.innerHTML = `✓ Correct! <br><button class="next-btn" onclick="nextQuestion()">Next</button>`;
+            } else {
+                feedback.className = 'feedback incorrect';
+                feedback.innerHTML = `✗ Incorrect. The answer is: ${testQuestions[currentQuestion].answer}<br><button class="next-btn" onclick="nextQuestion()">Next</button>`;
+            }
+            
+            input.disabled = true;
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            
+            if (currentQuestion >= testQuestions.length) {
+                showResults();
+            } else {
+                const mode = document.querySelector('input[name="mode"]:checked').value;
+                if (mode === 'flashcards') {
+                    showFlashcard();
+                } else {
+                    showTypingTest();
+                }
+            }
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestion + 1) / testQuestions.length) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+        }
+
+        function showResults() {
+            const testContent = document.getElementById('testContent');
+            const percentage = Math.round((correctAnswers / testQuestions.length) * 100);
+            
+            testContent.innerHTML = `
+                <div class="results">
+                    <div class="results-title">Test Complete!</div>
+                    <div class="results-score">${correctAnswers} / ${testQuestions.length}</div>
+                    <div style="font-size: 1.5rem; color: #666; margin-bottom: 30px;">${percentage}%</div>
+                    <button class="start-btn" onclick="location.reload()">Start New Test</button>
+                </div>
+            `;
+        }
+
+        function backToSetup() {
+            // Hide test interface and show setup interface
+            document.getElementById('testInterface').classList.remove('active');
+            document.getElementById('setupInterface').style.display = 'block';
+            
+            // Reset test state
+            currentQuestion = 0;
+            correctAnswers = 0;
+            testQuestions = [];
+        }
+
+        // Event listeners
+        document.getElementById('startBtn').onclick = startTest;
+
+        // Initialize
+        initializeUI();
+    </script>
 </body>
 </html>
