@@ -210,7 +210,10 @@
         
         @media (max-width: 600px) { 
             .catalogue-container { padding: 20px 8px; } 
-            .culture-grid { gap: 18px; } 
+            .culture-grid { 
+                gap: 18px;
+                grid-template-columns: repeat(3, 1fr);
+            }
             .culture-info { padding: 14px 8px 16px 8px; }
             .navbar { font-size: 1.2rem; padding: 0 20px; }
         }
@@ -233,38 +236,7 @@
             description: "The world's biggest food fight festival held annually in Buñol, Valencia.",
             image: "https://via.placeholder.com/400x267/DD1F25/FFFFFF?text=La+Tomatina",
             url: "SpanishCulturePages/la-tomatina.html"
-        },
-        {
-            title: "Flamenco",
-            description: "Traditional Spanish art form combining singing, guitar playing, dancing, and handclaps.",
-            image: "https://via.placeholder.com/400x267/DD1F25/FFFFFF?text=Flamenco",
-            url: "SpanishCulturePages/flamenco.html"
-        },
-        {
-            title: "Tapas Culture",
-            description: "Small Spanish savory dishes, typically served with drinks at bars.",
-            image: "https://via.placeholder.com/400x267/DD1F25/FFFFFF?text=Tapas",
-            url: "SpanishCulturePages/tapas.html"
-        },
-        {
-            title: "Running of the Bulls",
-            description: "The famous San Fermín festival in Pamplona featuring bull running through the streets.",
-            image: "https://via.placeholder.com/400x267/DD1F25/FFFFFF?text=San+Fermin",
-            url: "SpanishCulturePages/running-of-bulls.html"
-        },
-        {
-            title: "Siesta Tradition",
-            description: "The traditional Spanish afternoon rest period during the hottest hours of the day.",
-            image: "https://via.placeholder.com/400x267/DD1F25/FFFFFF?text=Siesta",
-            url: "SpanishCulturePages/siesta.html"
-        },
-        {
-            title: "La Sagrada Familia",
-            description: "Gaudí's iconic unfinished basilica in Barcelona, a UNESCO World Heritage Site.",
-            image: "https://via.placeholder.com/400x267/DD1F25/FFFFFF?text=Sagrada+Familia",
-            url: "SpanishCulturePages/sagrada-familia.html"
         }
-        // Add more culture topics as needed
     ];
 
     // Normalize text to remove accents for search
