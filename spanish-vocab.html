@@ -6,201 +6,217 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #fff 0%, #f8f8f8 100%);
-            margin: 0; 
-            padding: 0; 
+            margin: 0;
+            padding: 0;
             overflow-x: hidden;
         }
-        
-        /* Navbar with subtle slide-in animation */
-        .navbar { 
-            background: #DD1F25; 
-            color: white; 
-            height: 60px; 
-            display: flex; 
-            align-items: center; 
-            padding: 0 30px; 
-            font-size: 1.5rem; 
-            font-weight: 700; 
+
+        .navbar {
+            background: #DD1F25;
+            color: white;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            padding: 0 30px;
+            font-size: 1.5rem;
+            font-weight: 700;
             letter-spacing: 1px;
             box-shadow: 0 2px 12px rgba(221, 31, 37, 0.15);
             animation: slideDown 0.5s ease-out;
         }
-        
         @keyframes slideDown {
-            from {
-                transform: translateY(-100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
+            from { transform: translateY(-100%); opacity: 0; }
+            to   { transform: translateY(0); opacity: 1; }
         }
-        
-        .navbar a { 
-            color: white; 
-            text-decoration: none; 
-            font-size: 1rem; 
-            font-weight: 500; 
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
             margin-right: 25px;
             transition: all 0.2s ease;
             padding: 6px 12px;
             border-radius: 4px;
         }
-        
         .navbar a:hover {
             background: rgba(255, 255, 255, 0.1);
             transform: translateX(-3px);
         }
-        
-        /* Main container with fade-in */
-        .vocab-container { 
-            max-width: 900px; 
-            margin: 0 auto; 
-            padding: 60px 20px;
+
+        .content-wrapper {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 42px;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 60px 16px;
             animation: fadeIn 0.6s ease-out 0.1s both;
         }
-        
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px);}
+            to   { opacity: 1; transform: translateY(0);}
         }
-        
+
+        .vocab-main {
+            flex: 1 1 420px;
+            min-width: 0;
+        }
         .page-title {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             font-weight: 700;
             color: #DD1F25;
             text-align: center;
-            margin-bottom: 50px;
+            margin-bottom: 28px;
             animation: scaleIn 0.5s ease-out 0.3s both;
         }
-        
         @keyframes scaleIn {
-            from {
-                transform: scale(0.95);
-                opacity: 0;
-            }
-            to {
-                transform: scale(1);
-                opacity: 1;
-            }
+            from { transform: scale(0.97); opacity: 0;}
+            to   { transform: scale(1); opacity: 1;}
         }
-        
-        /* Download cards grid */
+        .about-box {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 14px rgba(221, 31, 37, 0.09);
+            padding: 28px 24px;
+            margin-bottom: 36px;
+            text-align: center;
+            font-size: 1.12rem;
+            color: #444;
+            line-height: 1.7;
+            animation: fadeIn 0.7s ease-out 0.2s both;
+        }
+
         .downloads-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
+            grid-template-columns: 1fr;
+            gap: 18px;
+            margin-top: 10px;
+            margin-bottom: 18px;
         }
-        
-        /* Download card */
         .download-card {
             background: #DD1F25;
-            border-radius: 16px;
-            padding: 40px 16px; /* Reduced horizontal padding */
-            box-shadow: 0 6px 26px rgba(221, 31, 37, 0.2);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 12px;
+            padding: 18px 14px;
+            box-shadow: 0 6px 26px rgba(221, 31, 37, 0.16);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
             text-decoration: none;
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             align-items: center;
-            justify-content: center;
-            min-height: 200px;
-            min-width: 180px; /* Optional: set a minimum width */
+            min-height: 62px;
             position: relative;
             overflow: hidden;
             animation: cardAppear 0.5s ease-out 0.5s both;
         }
-        
         @keyframes cardAppear {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(14px);}
+            to   { opacity: 1; transform: translateY(0);}
         }
-        
-        .download-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-        
-        .download-card:hover::before {
-            opacity: 1;
-        }
-        
         .download-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 12px 40px rgba(221, 31, 37, 0.3);
+            transform: translateY(-2px) scale(1.012);
+            box-shadow: 0 10px 38px rgba(221, 31, 37, 0.18);
+            background: #d11520;
         }
-        
-        .download-card:active {
-            transform: translateY(-3px);
-        }
-        
         .download-icon {
-            font-size: 3.5rem;
-            color: white;
-            margin-bottom: 20px;
-            transition: transform 0.3s ease;
+            width: 36px;
+            height: 36px;
+            margin-right: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        
-        .download-card:hover .download-icon {
-            transform: scale(1.1);
+        .download-svg {
+            display: block;
+            width: 28px;
+            height: 28px;
         }
-        
         .download-title {
-            font-size: 1.5rem;
+            font-size: 1.15rem;
             font-weight: 700;
             color: white;
-            text-align: center;
-            margin-bottom: 10px;
+            margin-bottom: 3px;
         }
-        
         .download-subtitle {
-            font-size: 0.95rem;
-            color: rgba(255, 255, 255, 0.9);
-            text-align: center;
+            font-size: 0.97rem;
+            color: rgba(255,255,255,0.93);
         }
-        
-        /* Info text */
+        .download-info {
+            display: flex;
+            flex-direction: column;
+        }
         .info-text {
             text-align: center;
             color: #666;
             font-size: 1rem;
-            margin-top: 40px;
+            margin-top: 26px;
             animation: fadeIn 0.6s ease-out 0.7s both;
         }
-        
-        @media (max-width: 600px) { 
-            .vocab-container { padding: 40px 15px; }
-            .page-title { font-size: 2rem; }
-            .download-card { padding: 35px 25px; min-height: 180px; }
-            .download-icon { font-size: 3rem; }
-            .download-title { font-size: 1.3rem; }
-            .navbar { font-size: 1.2rem; padding: 0 20px; }
+
+        /* Side nav */
+        .side-nav {
+            width: 188px;
+            min-width: 140px;
+            background: #fff;
+            border-radius: 14px;
+            box-shadow: 0 2px 14px rgba(221, 31, 37, 0.09);
+            padding: 22px 16px;
+            margin-top: 8px;
+            margin-bottom: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            font-size: 1.05rem;
+            animation: fadeIn 0.8s ease 0.18s both;
+            height: fit-content;
+        }
+        .side-nav-title {
+            color: #DD1F25;
+            font-weight: 700;
+            font-size: 1.09rem;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+        .side-link {
+            color: #DD1F25;
+            text-decoration: none;
+            background: rgba(221,31,37,0.05);
+            padding: 8px 14px;
+            border-radius: 6px;
+            transition: background 0.18s, color 0.18s;
+            font-weight: 500;
+        }
+        .side-link:hover,
+        .side-link.active {
+            background: #DD1F25;
+            color: #fff;
+        }
+        @media (max-width: 900px) {
+            .content-wrapper {
+                flex-direction: column;
+                gap: 0;
+                padding: 36px 5px;
+            }
+            .side-nav {
+                flex-direction: row;
+                width: 100%;
+                margin-bottom: 28px;
+                margin-top: 0;
+                padding: 16px 4px;
+                justify-content: center;
+                gap: 8px;
+            }
+        }
+        @media (max-width: 600px) {
+            .page-title { font-size: 1.18rem;}
+            .about-box { font-size: 1rem; padding: 16px 6px; }
+            .side-nav { font-size: 0.95rem; padding: 8px 2px;}
         }
     </style>
 </head>
@@ -209,21 +225,64 @@
         <a href="spanish.html">← Back</a>
         Spanish Vocabulary
     </div>
-    
-    <div class="vocab-container">
-        <h1 class="page-title">Download Vocabulary Lists</h1>
-        
-        <div class="downloads-grid">
-            <a href="SpanishVocabLists/Year7Vocab.pdf" class="download-card" download>
-                <div class="download-icon">📥</div>
-                <div class="download-title">Year 7 Vocabulary</div>
-                <div class="download-subtitle">Click to download PDF</div>
-            </a>
-            
-            <!-- Add more vocab cards here in the future -->
-        </div>
-        
-        <p class="info-text">More vocabulary will be added</p>
+    <div class="content-wrapper">
+        <main class="vocab-main">
+            <h1 class="page-title">Download Vocabulary Lists</h1>
+            <div class="about-box">
+                Welcome to the Spanish Vocabulary page! <br>
+                Here you can download vocabulary lists for different year groups.<br>
+                Vocabulary is one of the building blocks for learning a language. Use these lists to practice, revise, and expand your Spanish skills. More resources and interactive tools will be added soon.
+            </div>
+            <div class="downloads-grid">
+                <a href="SpanishVocabLists/Year7Vocab.pdf" class="download-card" download>
+                    <span class="download-icon">
+                        <!-- Simple download SVG icon (white) -->
+                        <svg class="download-svg" viewBox="0 0 24 24" fill="none">
+                            <rect x="6" y="18" width="12" height="2" rx="1" fill="white"/>
+                            <path d="M12 5v9" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M8 12l4 4 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </span>
+                    <span class="download-info">
+                        <span class="download-title">Year 7 Vocabulary</span>
+                        <span class="download-subtitle">Click to download PDF</span>
+                    </span>
+                </a>
+                <a href="#" class="download-card">
+                    <span class="download-icon">
+                        <svg class="download-svg" viewBox="0 0 24 24" fill="none">
+                            <rect x="6" y="18" width="12" height="2" rx="1" fill="white"/>
+                            <path d="M12 5v9" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M8 12l4 4 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </span>
+                    <span class="download-info">
+                        <span class="download-title">Year 8 Vocabulary</span>
+                        <span class="download-subtitle">Yet to be uploaded</span>
+                    </span>
+                </a>
+                <a href="#" class="download-card">
+                    <span class="download-icon">
+                        <svg class="download-svg" viewBox="0 0 24 24" fill="none">
+                            <rect x="6" y="18" width="12" height="2" rx="1" fill="white"/>
+                            <path d="M12 5v9" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M8 12l4 4 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </span>
+                    <span class="download-info">
+                        <span class="download-title">Year 9 Vocabulary</span>
+                        <span class="download-subtitle">Yet to be uploaded</span>
+                    </span>
+                </a>
+            </div>
+            <p class="info-text">More vocabulary lists will be added for other year groups and topics. Stay tuned!</p>
+        </main>
+        <nav class="side-nav">
+            <div class="side-nav-title">Year Group Vocabulary</div>
+            <a href="SpanishVocabPages/Year7SpanishVocab.html" class="side-link active">Year 7 Spanish</a>
+            <a href="SpanishVocabPages/Year8SpanishVocab.html" class="side-link">Year 8 Spanish</a>
+            <a href="SpanishVocabPages/Year9SpanishVocab.html" class="side-link">Year 9 Spanish</a>
+        </nav>
     </div>
 </body>
 </html>
