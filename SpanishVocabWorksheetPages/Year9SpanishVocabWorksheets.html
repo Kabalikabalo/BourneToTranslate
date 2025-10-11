@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Year 9 Spanish Vocabulary Worksheets</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #fff 0%, #f8f8f8 100%);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        .navbar {
+            background: #DD1F25;
+            color: white;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            padding: 0 30px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            box-shadow: 0 2px 12px rgba(221, 31, 37, 0.15);
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            margin-right: 25px;
+            transition: all 0.2s ease;
+            padding: 6px 12px;
+            border-radius: 4px;
+        }
+
+        .navbar a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(-3px);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .page-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #DD1F25;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .page-description {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 14px rgba(221, 31, 37, 0.09);
+            text-align: center;
+            color: #444;
+            font-size: 1.05rem;
+            line-height: 1.6;
+        }
+
+        .category-section {
+            margin-bottom: 25px;
+        }
+
+        .category-header {
+            background: rgba(221, 31, 37, 0.08);
+            padding: 18px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.2s;
+            user-select: none;
+            box-shadow: 0 2px 8px rgba(221, 31, 37, 0.06);
+        }
+
+        .category-header:hover {
+            background: rgba(221, 31, 37, 0.15);
+        }
+
+        .category-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #DD1F25;
+        }
+
+        .category-arrow {
+            font-size: 1.2rem;
+            color: #DD1F25;
+            transition: transform 0.3s;
+        }
+
+        .category-header.expanded .category-arrow {
+            transform: rotate(90deg);
+        }
+
+        .category-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.3s ease;
+            padding: 0 10px;
+        }
+
+        .category-content.expanded {
+            max-height: 2000px;
+            padding: 20px 10px;
+        }
+
+        .downloads-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+
+        .download-card {
+            background: #DD1F25;
+            border-radius: 12px;
+            padding: 18px 14px;
+            box-shadow: 0 6px 26px rgba(221, 31, 37, 0.16);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            min-height: 62px;
+            opacity: 0;
+            transform: translateX(40px);
+            animation: slideIn 0.5s ease-out forwards;
+        }
+
+        .download-card:nth-child(1) { animation-delay: 0.1s; }
+        .download-card:nth-child(2) { animation-delay: 0.2s; }
+        .download-card:nth-child(3) { animation-delay: 0.3s; }
+        .download-card:nth-child(4) { animation-delay: 0.4s; }
+        .download-card:nth-child(5) { animation-delay: 0.5s; }
+        .download-card:nth-child(n+6) { animation-delay: 0.6s; }
+
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .download-card:hover {
+            transform: translateY(-2px) scale(1.01);
+            box-shadow: 0 10px 38px rgba(221, 31, 37, 0.22);
+            background: #c91a20;
+        }
+
+        .download-icon {
+            width: 36px;
+            height: 36px;
+            margin-right: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .download-svg {
+            display: block;
+            width: 28px;
+            height: 28px;
+        }
+
+        .download-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 3px;
+        }
+
+        .download-subtitle {
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.9);
+        }
+
+        .download-info {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        @media (max-width: 600px) {
+            .page-title { font-size: 1.5rem; }
+            .page-description { font-size: 0.95rem; padding: 18px; }
+            .category-title { font-size: 1.1rem; }
+            .download-title { font-size: 1rem; }
+            .download-subtitle { font-size: 0.85rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="../spanish-vocab.html">← Back</a>
+        Year 9 Spanish Worksheets
+    </div>
+
+    <div class="container">
+        <h1 class="page-title">Year 9 Spanish Vocabulary Worksheets</h1>
+        
+        <div class="page-description">
+            Download comprehensive vocabulary worksheets organized by modules and topics. 
+            Each worksheet provides exercises to practice and reinforce your Spanish vocabulary skills.
+            Click on any category below to view available worksheets.
+        </div>
+
+        <div id="categoriesContainer"></div>
+    </div>
+
+    <script>
+        // Data structure for worksheets - easy to modify and extend
+        const worksheetData = {
+            "Module 1": [
+                {
+                    title: "Greetings & Introductions",
+                    subtitle: "Worksheet 1",
+                    link: "#"
+                },
+                {
+                    title: "Numbers 1-100",
+                    subtitle: "Worksheet 2",
+                    link: "#"
+                },
+                {
+                    title: "Days & Months",
+                    subtitle: "Worksheet 3",
+                    link: "#"
+                }
+            ],
+            "Module 2": [
+                {
+                    title: "Family Members",
+                    subtitle: "Worksheet 1",
+                    link: "#"
+                },
+                {
+                    title: "Physical Descriptions",
+                    subtitle: "Worksheet 2",
+                    link: "#"
+                }
+            ],
+            "Module 3": [
+                {
+                    title: "School Subjects",
+                    subtitle: "Worksheet 1",
+                    link: "#"
+                },
+                {
+                    title: "Classroom Objects",
+                    subtitle: "Worksheet 2",
+                    link: "#"
+                }
+            ],
+            "Module 4": [
+                {
+                    title: "Free Time Activities",
+                    subtitle: "Worksheet 1",
+                    link: "#"
+                },
+                {
+                    title: "Sports & Hobbies",
+                    subtitle: "Worksheet 2",
+                    link: "#"
+                }
+            ],
+            "Module 5": [
+                {
+                    title: "Town & Directions",
+                    subtitle: "Worksheet 1",
+                    link: "#"
+                },
+                {
+                    title: "Places in Town",
+                    subtitle: "Worksheet 2",
+                    link: "#"
+                }
+            ],
+            "Culture": [
+                {
+                    title: "Spanish Festivals",
+                    subtitle: "Cultural Worksheet",
+                    link: "#"
+                },
+                {
+                    title: "Famous Spanish Figures",
+                    subtitle: "Cultural Worksheet",
+                    link: "#"
+                }
+            ]
+        };
+
+        // Function to toggle category expansion
+        function toggleCategory(categoryName) {
+            const header = document.querySelector(`[data-category="${categoryName}"]`);
+            const content = header.nextElementSibling;
+            
+            header.classList.toggle('expanded');
+            content.classList.toggle('expanded');
+        }
+
+        // Generate HTML for all categories
+        function renderCategories() {
+            const container = document.getElementById('categoriesContainer');
+            let html = '';
+
+            for (const [categoryName, worksheets] of Object.entries(worksheetData)) {
+                html += `
+                    <div class="category-section">
+                        <div class="category-header" data-category="${categoryName}" onclick="toggleCategory('${categoryName}')">
+                            <span class="category-title">${categoryName}</span>
+                            <span class="category-arrow">►</span>
+                        </div>
+                        <div class="category-content">
+                            <div class="downloads-grid">
+                                ${worksheets.map(worksheet => `
+                                    <a href="${worksheet.link}" class="download-card" ${worksheet.link !== '#' ? 'download' : ''}>
+                                        <span class="download-icon">
+                                            <svg class="download-svg" viewBox="0 0 24 24" fill="none">
+                                                <rect x="6" y="18" width="12" height="2" rx="1" fill="white"/>
+                                                <path d="M12 5v9" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                                                <path d="M8 12l4 4 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                        </span>
+                                        <span class="download-info">
+                                            <span class="download-title">${worksheet.title}</span>
+                                            <span class="download-subtitle">${worksheet.subtitle}</span>
+                                        </span>
+                                    </a>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            container.innerHTML = html;
+        }
+
+        // Initialize page
+        renderCategories();
+    </script>
+</body>
+</html>
