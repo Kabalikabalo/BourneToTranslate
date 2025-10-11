@@ -187,7 +187,26 @@
             min-height: 62px;
             position: relative;
             overflow: hidden;
-            animation: cardAppear 0.5s ease-out 0.5s both;
+            animation: slideInFromRight 0.6s ease-out backwards;
+        }
+        .download-card:nth-child(1) {
+            animation-delay: 0.2s;
+        }
+        .download-card:nth-child(2) {
+            animation-delay: 0.35s;
+        }
+        .download-card:nth-child(3) {
+            animation-delay: 0.5s;
+        }
+        @keyframes slideInFromRight {
+            from {
+                opacity: 0;
+                transform: translateX(60px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
         }
         @keyframes cardAppear {
             from { opacity: 0; transform: translateY(14px);}
@@ -249,6 +268,7 @@
             font-size: 1.05rem;
             animation: fadeIn 0.8s ease 0.18s both;
             height: fit-content;
+            text-align: center;
         }
         .side-nav-title {
             color: #0055A4;
@@ -280,6 +300,7 @@
             }
             .side-nav {
                 flex-direction: row;
+                flex-wrap: wrap;
                 width: 100%;
                 margin-bottom: 28px;
                 margin-top: 0;
@@ -287,11 +308,58 @@
                 justify-content: center;
                 gap: 8px;
             }
+            .side-nav-title {
+                width: 100%;
+                text-align: center;
+            }
+            .side-nav-title:not(:first-child) {
+                margin-top: 16px;
+            }
+        }
+        /* Dropdown toggle for mobile */
+        .dropdown-toggle {
+            display: none;
+            background: #0055A4;
+            color: white;
+            padding: 18px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1.15rem;
+            text-align: center;
+            box-shadow: 0 6px 26px rgba(31, 97, 221, 0.16);
+            margin-bottom: 18px;
+            transition: all 0.25s;
+        }
+        .dropdown-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 38px rgba(31, 113, 221, 0.18);
+        }
+        .dropdown-toggle.active::after {
+            content: ' ▼';
+        }
+        .dropdown-toggle::after {
+            content: ' ►';
+        }
+        
+        @media (max-width: 700px) {
+            .navbar {
+                font-size: 1.08rem;
+            }
         }
         @media (max-width: 600px) {
             .page-title { font-size: 1.18rem;}
             .about-box { font-size: 1rem; padding: 16px 6px; }
             .side-nav { font-size: 0.95rem; padding: 8px 2px;}
+            .dropdown-toggle {
+                display: block;
+            }
+            .downloads-grid {
+                display: none;
+            }
+            .downloads-grid.expanded {
+                display: grid;
+            }
         }
     </style>
 </head>
@@ -326,7 +394,8 @@
                     </div>
                 </div>
             </div>
-            <div class="downloads-grid">
+            <div class="dropdown-toggle" onclick="toggleDropdown()">Download Vocab Lists</div>
+            <div class="downloads-grid collapsed" id="downloadsGrid">
                 <a href="FrenchVocabLists/Year9Vocab.pdf" class="download-card" download>
                     <span class="download-icon">
                         <!-- Simple download SVG icon (white) -->
@@ -346,6 +415,12 @@
                 </div>
             </div>
         </main>
+        <nav class="side-nav">
+            <div class="side-nav-title">Vocab Quiz</div>
+            <a href="FrenchVocabPages/Year9FrenchVocab.html" class="side-link">Year 9 Quiz</a>
+            <div class="side-nav-title" style="margin-top: 20px;">Worksheets</div>
+            <a href="#" class="side-link">Year 9</a>
+        </nav>
     </div>
 
     <script>
@@ -491,6 +566,21 @@
         // Initialize on page load
         displayWordOfDay();
         displayPhraseOfWeek();
+
+        // Toggle dropdown for mobile
+        function toggleDropdown() {
+            const dropdown = document.getElementById('downloadsGrid');
+            const toggle = document.querySelector('.dropdown-toggle');
+            if (dropdown.classList.contains('collapsed')) {
+                dropdown.classList.remove('collapsed');
+                dropdown.classList.add('expanded');
+                toggle.classList.add('active');
+            } else {
+                dropdown.classList.add('collapsed');
+                dropdown.classList.remove('expanded');
+                toggle.classList.remove('active');
+            }
+        }
     </script>
 </body>
 </html>
