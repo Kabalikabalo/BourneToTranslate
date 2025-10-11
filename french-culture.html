@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Culture Française</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: linear-gradient(135deg, #fff 0%, #f8f8f8 100%);
+            margin: 0; 
+            padding: 0; 
+            overflow-x: hidden;
+        }
+        
+        /* Navbar with subtle slide-in animation */
+        .navbar { 
+            background: #0055A4; 
+            color: white; 
+            height: 60px; 
+            display: flex; 
+            align-items: center; 
+            padding: 0 30px; 
+            font-size: 1.5rem; 
+            font-weight: 700; 
+            letter-spacing: 1px;
+            box-shadow: 0 2px 12px rgba(0, 85, 164, 0.15);
+            animation: slideDown 0.5s ease-out;
+        }
+        
+        @keyframes slideDown {
+            from { transform: translateY(-100%); opacity: 0; }
+            to   { transform: translateY(0); opacity: 1; }
+        }
+        
+        .navbar a { 
+            color: white; 
+            text-decoration: none; 
+            font-size: 1rem; 
+            font-weight: 500; 
+            margin-right: 25px;
+            transition: all 0.2s ease;
+            padding: 6px 12px;
+            border-radius: 4px;
+        }
+        
+        .navbar a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(-3px);
+        }
+        
+        /* Catalogue container with subtle fade-in */
+        .catalogue-container { 
+            max-width: 1100px; 
+            margin: 0 auto; 
+            padding: 40px 20px 20px 20px;
+            animation: fadeIn 0.6s ease-out 0.1s both;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px);}
+            to   { opacity: 1; transform: translateY(0);}
+        }
+        
+        /* Search bar with gentle scale animation */
+        .search-bar { 
+            width: 100%; 
+            max-width: 400px; 
+            margin: 0 auto 35px auto; 
+            display: block; 
+            font-size: 1.1rem; 
+            padding: 12px 18px; 
+            border-radius: 30px; 
+            border: 1px solid #0055A4; 
+            outline: none; 
+            box-shadow: 0 2px 12px rgba(0, 85, 164, 0.08); 
+            transition: all 0.25s ease;
+            animation: scaleIn 0.5s ease-out 0.3s both;
+        }
+        
+        @keyframes scaleIn {
+            from { transform: scale(0.95); opacity: 0;}
+            to   { transform: scale(1); opacity: 1;}
+        }
+        
+        .search-bar:focus { 
+            border-color: #003366;
+            box-shadow: 0 3px 16px rgba(0, 85, 164, 0.15);
+            transform: scale(1.01);
+        }
+        
+        /* Grid with subtle staggered card animations */
+        .culture-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); 
+            gap: 35px; 
+        }
+        
+        .culture-card { 
+            background: #fafafd; 
+            border-radius: 16px; 
+            box-shadow: 0 6px 26px rgba(0, 85, 164, 0.08); 
+            overflow: hidden; 
+            cursor: pointer; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: stretch; 
+            text-decoration: none; 
+            color: inherit;
+            position: relative;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: cardAppear 0.5s ease-out forwards;
+        }
+        
+        /* Subtle stagger animation for each card */
+        .culture-card:nth-child(1) { animation-delay: 0.4s; }
+        .culture-card:nth-child(2) { animation-delay: 0.5s; }
+        .culture-card:nth-child(3) { animation-delay: 0.6s; }
+        .culture-card:nth-child(4) { animation-delay: 0.7s; }
+        .culture-card:nth-child(5) { animation-delay: 0.8s; }
+        .culture-card:nth-child(6) { animation-delay: 0.9s; }
+        .culture-card:nth-child(n+7) { animation-delay: 1s; }
+        
+        @keyframes cardAppear {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Card disappear animation for search filtering */
+        .culture-card.hiding {
+            animation: cardDisappear 0.3s ease-out forwards;
+        }
+        
+        @keyframes cardDisappear {
+            to {
+                opacity: 0;
+                transform: translateY(-10px) scale(0.98);
+            }
+        }
+        
+        .culture-card:hover { 
+            box-shadow: 0 10px 35px rgba(0, 85, 164, 0.14); 
+            transform: translateY(-4px);
+        }
+        
+        .culture-card:active {
+            transform: translateY(-2px);
+        }
+        
+        .culture-image { 
+            width: 100%; 
+            aspect-ratio: 3/2; 
+            object-fit: cover; 
+            background: #eaeaea; 
+            border-bottom: 1px solid #eee;
+            transition: transform 0.35s ease;
+        }
+        
+        .culture-card:hover .culture-image {
+            transform: scale(1.04);
+        }
+        
+        .culture-info { 
+            padding: 18px 16px 20px 16px; 
+            flex: 1;
+            transition: all 0.25s ease;
+        }
+        
+        .culture-title { 
+            font-size: 1.3rem; 
+            font-weight: 700; 
+            margin-bottom: 10px; 
+            color: #0055A4; 
+            letter-spacing: 0.5px;
+            transition: all 0.25s ease;
+        }
+        
+        .culture-card:hover .culture-title {
+            transform: translateX(3px);
+            color: #003366;
+        }
+        
+        .culture-description { 
+            font-size: 1rem; 
+            color: #444; 
+            opacity: 0.9;
+            transition: all 0.25s ease;
+        }
+        
+        .culture-card:hover .culture-description {
+            opacity: 1;
+        }
+        
+        /* No results message */
+        .no-results {
+            grid-column: 1/-1;
+            text-align: center;
+            padding: 3em 2em;
+            color: #0055A4;
+            font-weight: 600;
+            font-size: 1.2rem;
+            animation: fadeIn 0.4s ease-out;
+        }
+        
+        @media (max-width: 600px) { 
+            .catalogue-container { padding: 20px 8px; } 
+            .culture-grid { 
+                gap: 12px;
+                grid-template-columns: 1fr;
+            }
+            .culture-card {
+                flex-direction: row;
+                min-height: 100px;
+            }
+            .culture-image {
+                width: 100px;
+                height: 100px;
+                aspect-ratio: 1/1;
+                border-radius: 12px;
+                border-bottom: none;
+                flex-shrink: 0;
+            }
+            .culture-info { 
+                padding: 12px 12px 12px 14px;
+                flex: 1;
+            }
+            .culture-title {
+                font-size: 1.1rem;
+            }
+            .culture-description {
+                font-size: 0.9rem;
+            }
+            .navbar { font-size: 1.2rem; padding: 0 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="french.html">← Retour</a>
+        Culture Française
+    </div>
+    <div class="catalogue-container">
+        <input type="text" class="search-bar" id="searchInput" placeholder="Rechercher des thèmes culturels...">
+        <div class="culture-grid" id="cultureGrid"></div>
+    </div>
+    <script>
+    // Culture topics data
+    const cultureTopics = [
+        {
+            title: "La Fête de la Musique",
+            description: "Un festival de musique gratuit célébré chaque année partout en France.",
+            image: "https://via.placeholder.com/400x267/0055A4/FFFFFF?text=Fête+de+la+Musique",
+            url: "FrenchCulturePages/fete-de-la-musique.html"
+        }
+    ];
+
+    // Normalize text to remove accents for search
+    function normalizeText(text) {
+        return text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+    }
+
+    function renderCulture(filter='') {
+        const grid = document.getElementById('cultureGrid');
+        const normalizedFilter = normalizeText(filter);
+        
+        let shown = 0;
+        const currentCards = grid.querySelectorAll('.culture-card');
+        
+        // Animate out cards that don't match
+        currentCards.forEach(card => {
+            const title = card.getAttribute('data-title');
+            const description = card.getAttribute('data-description');
+            const matchesFilter = !normalizedFilter || 
+                normalizeText(title).includes(normalizedFilter) ||
+                normalizeText(description).includes(normalizedFilter);
+            
+            if (!matchesFilter && !card.classList.contains('hiding')) {
+                card.classList.add('hiding');
+                setTimeout(() => {
+                    renderCulture(filter);
+                }, 300);
+                return;
+            }
+        });
+        
+        // Build fresh grid
+        let newHTML = '';
+        cultureTopics.forEach((topic, index) => {
+            if (
+                !normalizedFilter ||
+                normalizeText(topic.title).includes(normalizedFilter) ||
+                normalizeText(topic.description).includes(normalizedFilter)
+            ) {
+                shown++;
+                newHTML += `
+                    <a class="culture-card" href="${topic.url}" 
+                       data-title="${topic.title}" 
+                       data-description="${topic.description}"
+                       style="animation-delay: ${0.05 * index}s;">
+                        <img src="${topic.image}" alt="${topic.title}" class="culture-image">
+                        <div class="culture-info">
+                            <div class="culture-title">${topic.title}</div>
+                            <div class="culture-description">${topic.description}</div>
+                        </div>
+                    </a>`;
+            }
+        });
+        
+        if (shown === 0) {
+            newHTML = `<div class="no-results">Aucun thème culturel trouvé.</div>`;
+        }
+        
+        grid.innerHTML = newHTML;
+    }
+    
+    renderCulture();
+
+    document.getElementById('searchInput').addEventListener('input', function() {
+        renderCulture(this.value);
+    });
+    </script>
+</body>
+</html>
