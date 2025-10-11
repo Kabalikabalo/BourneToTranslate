@@ -451,6 +451,28 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        @media (max-width: 600px) {
+          .container {
+            padding: 20px 10px;
+          }
+          .section {
+            padding: 20px 15px;
+          }
+          .category-content {
+            max-height: 2000px;
+          }
+          .module-grid {
+            grid-template-columns: 1fr;
+            gap: 10px;
+          }
+          .module-btn, .week-btn {
+            width: 100%;
+            box-sizing: border-box;
+            font-size: 1rem;
+            padding: 14px 10px;
+          }
+        }
     </style>
 </head>
 <body>
