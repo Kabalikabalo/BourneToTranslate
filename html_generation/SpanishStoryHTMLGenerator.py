@@ -1,20 +1,97 @@
-<!DOCTYPE html>
+# Paste this script and run it in your terminal.
+# It uses a multi-line string for the story (edit as needed).
+
+story_title = "Aventura en Escocia"
+
+story_text = """
+El verano pasado fuimos de vacaciones a Escocia.
+Last summer we went on holiday to Scotland.
+
+Fuimos en coche porque queríamos ver los lagos y las montañas.
+We went by car because we wanted to see the lakes and the mountains.
+
+(MuddyFrog1.png)
+
+El primer día fuimos a caminar por un bosque muy grande.
+On the first day we went to walk through a very big forest.
+
+Papá fue delante con el mapa.
+Dad went in front with the map.
+
+Yo fui con mi hermana y mamá detrás.
+I went with my sister and Mum behind.
+
+De repente, empezó a llover mucho.
+Suddenly, it started to rain a lot.
+
+(MuddyFrog2.png)
+
+Cuando miramos adelante, papá no estaba.
+When we looked ahead, Dad wasn’t there.
+
+Buscamos y gritamos: “¡Papá! ¡Papá!”
+We searched and shouted: “Dad! Dad!”
+
+Escuchamos un ruido entre los árboles.
+We heard a noise among the trees.
+
+Papá salió cubierto de barro y con una rana en la mano.
+Dad came out covered in mud and with a frog in his hand.
+
+(MuddyFrog3.png)
+
+Dijo: “¡Miren, encontré un amigo nuevo!”
+He said: “Look, I found a new friend!”
+
+Todos reímos tanto que olvidamos la lluvia.
+We all laughed so much that we forgot the rain.
+
+Fuimos al hotel, nos secamos y bebimos chocolate caliente.
+We went back to the hotel, dried off, and drank hot chocolate.
+
+Fue una aventura un poco loca, pero muy feliz.
+It was a little crazy adventure, but a very happy one.
+"""
+
+
+def parse_story(story_txt):
+    lines = [l.strip() for l in story_txt.split('\n') if l.strip()]
+    i = 0
+    blocks = []
+    first_image = None
+    while i < len(lines):
+        if lines[i].startswith('(') and lines[i].endswith(')'):
+            img_path = lines[i][1:-1].strip()
+            if not first_image:
+                first_image = img_path
+            blocks.append(('img', img_path))
+            i += 1
+        else:
+            sentence = lines[i]
+            translation = lines[i + 1] if (i + 1) < len(lines) else ''
+            blocks.append(('text', sentence, translation))
+            i += 2
+    return blocks, first_image
+
+
+def story_to_html(title, blocks, banner_image):
+    html = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>La foto de familia</title>
+    <title>{title}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
+        * {{ margin: 0; padding: 0; box-sizing: border-box; }}
+        body {{ 
             font-family: Georgia, 'Times New Roman', serif;
             background: #f5f5f5; 
             color: #2a2a2a;
             line-height: 1.8;
-        }
+        }}
 
         /* Red Navigation Bar */
-        .navbar {
+        .navbar {{
             background-color: #DD1F25;
             height: 65px;
             display: flex;
@@ -25,8 +102,8 @@
             position: sticky;
             top: 0;
             z-index: 1000;
-        }
-        .back-button {
+        }}
+        .back-button {{
             display: flex;
             align-items: center;
             gap: 10px;
@@ -38,21 +115,21 @@
             border-radius: 6px;
             transition: all 0.3s ease;
             background-color: rgba(255, 255, 255, 0.1);
-        }
-        .back-button:hover {
+        }}
+        .back-button:hover {{
             background-color: rgba(255, 255, 255, 0.2);
             transform: translateX(-5px);
-        }
-        .back-arrow { font-size: 1.3rem; }
+        }}
+        .back-arrow {{ font-size: 1.3rem; }}
 
         /* Toggle Container */
-        .toggle-container {
+        .toggle-container {{
             display: flex;
             align-items: center;
             gap: 12px;
-        }
-        .toggle-label { color: white; font-size: 0.95rem; font-weight: 400; }
-        .toggle-switch {
+        }}
+        .toggle-label {{ color: white; font-size: 0.95rem; font-weight: 400; }}
+        .toggle-switch {{
             position: relative;
             width: 55px;
             height: 28px;
@@ -60,9 +137,9 @@
             border-radius: 30px;
             cursor: pointer;
             transition: background-color 0.3s;
-        }
-        .toggle-switch.active { background-color: rgba(255, 255, 255, 0.5); }
-        .toggle-slider {
+        }}
+        .toggle-switch.active {{ background-color: rgba(255, 255, 255, 0.5); }}
+        .toggle-slider {{
             position: absolute;
             top: 3px;
             left: 3px;
@@ -72,23 +149,23 @@
             border-radius: 50%;
             transition: transform 0.3s;
             box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-        }
-        .toggle-switch.active .toggle-slider { transform: translateX(27px); }
+        }}
+        .toggle-switch.active .toggle-slider {{ transform: translateX(27px); }}
 
         /* Hero Banner */
-        .hero-banner {
+        .hero-banner {{
             position: relative;
             width: 100%;
             height: 320px;
-            background-image: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url('FamilyPhoto1.png');
+            background-image: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url('{banner_image}');
             background-size: cover;
             background-position: center;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 50px;
-        }
-        .story-title {
+        }}
+        .story-title {{
             font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
             font-size: 3.5rem;
             font-weight: 400;
@@ -96,25 +173,25 @@
             text-align: center;
             text-shadow: 0 4px 12px rgba(0,0,0,0.4);
             letter-spacing: 1px;
-        }
+        }}
 
         /* Story Content */
-        .container { 
+        .container {{ 
             max-width: 750px; 
             margin: 0 auto; 
             padding: 20px 30px 60px 30px; 
-        }
-        .story-block { 
+        }}
+        .story-block {{ 
             margin-bottom: 1.8em;
             position: relative;
-        }
-        .sentence { 
+        }}
+        .sentence {{ 
             font-size: 1.25rem;
             font-weight: 400;
             color: #1a1a1a;
             display: inline;
-        }
-        .translate-btn {
+        }}
+        .translate-btn {{
             display: inline-block;
             margin-left: 8px;
             font-size: 0.75rem;
@@ -128,13 +205,13 @@
             font-family: 'Segoe UI', sans-serif;
             font-weight: 500;
             opacity: 0.7;
-        }
-        .translate-btn:hover {
+        }}
+        .translate-btn:hover {{
             opacity: 1;
             background: #DD1F25;
             color: white;
-        }
-        .translation { 
+        }}
+        .translation {{ 
             color: #666;
             font-size: 1.05rem;
             display: none;
@@ -142,24 +219,24 @@
             font-style: italic;
             padding-left: 20px;
             border-left: 2px solid #DD1F25;
-        }
-        .translation.show { display: block; }
-        .story-image { 
+        }}
+        .translation.show {{ display: block; }}
+        .story-image {{ 
             display: block; 
             margin: 3em auto; 
             max-width: 100%; 
             height: auto;
             border-radius: 8px; 
             box-shadow: 0 6px 24px rgba(0,0,0,0.12); 
-        }
+        }}
 
-        @media (max-width: 768px) {
-            .navbar { height: 60px; padding: 0 20px; }
-            .hero-banner { height: 250px; }
-            .story-title { font-size: 2.5rem; }
-            .container { padding: 20px 20px 50px 20px; }
-            .sentence { font-size: 1.15rem; }
-        }
+        @media (max-width: 768px) {{
+            .navbar {{ height: 60px; padding: 0 20px; }}
+            .hero-banner {{ height: 250px; }}
+            .story-title {{ font-size: 2.5rem; }}
+            .container {{ padding: 20px 20px 50px 20px; }}
+            .sentence {{ font-size: 1.15rem; }}
+        }}
     </style>
 </head>
 <body>
@@ -179,73 +256,27 @@
 
     <!-- Hero Banner with Story Title -->
     <div class="hero-banner">
-        <h1 class="story-title">La foto de familia</h1>
+        <h1 class="story-title">{title}</h1>
     </div>
 
     <!-- Story Content -->
     <div class="container">
-        <div class="story-block">
-            <span class="sentence">Mi familia es grande.</span>
-            <button class="translate-btn" onclick="toggleTranslation(0)">translate?</button>
-            <div class="translation" id="trans-0">My family is big.</div>
+"""
+
+    sentence_id = 0
+    for block in blocks:
+        if block[0] == 'img':
+            html += f'        <img src="{block[1]}" class="story-image" alt="Story illustration">\n'
+        else:
+            html += f"""        <div class="story-block">
+            <span class="sentence">{block[1]}</span>
+            <button class="translate-btn" onclick="toggleTranslation({sentence_id})">TRANSLATE</button>
+            <div class="translation" id="trans-{sentence_id}">{block[2]}</div>
         </div>
-        <div class="story-block">
-            <span class="sentence">Vivimos en una casa amarilla.</span>
-            <button class="translate-btn" onclick="toggleTranslation(1)">translate?</button>
-            <div class="translation" id="trans-1">We live in a yellow house.</div>
-        </div>
-        <div class="story-block">
-            <span class="sentence">Mamá tiene una cámara.</span>
-            <button class="translate-btn" onclick="toggleTranslation(2)">translate?</button>
-            <div class="translation" id="trans-2">Mom has a camera.</div>
-        </div>
-        <div class="story-block">
-            <span class="sentence">Ella dice: "¡Vamos a tomar una foto!"</span>
-            <button class="translate-btn" onclick="toggleTranslation(3)">translate?</button>
-            <div class="translation" id="trans-3">She says: "Let's take a photo!"</div>
-        </div>
-        <div class="story-block">
-            <span class="sentence">Papá se sienta en la silla.</span>
-            <button class="translate-btn" onclick="toggleTranslation(4)">translate?</button>
-            <div class="translation" id="trans-4">Dad sits on the chair.</div>
-        </div>
-        <div class="story-block">
-            <span class="sentence">Mi hermano está con el perro.</span>
-            <button class="translate-btn" onclick="toggleTranslation(5)">translate?</button>
-            <div class="translation" id="trans-5">My brother is with the dog.</div>
-        </div>
-        <div class="story-block">
-            <span class="sentence">Mi hermana tiene un juguete.</span>
-            <button class="translate-btn" onclick="toggleTranslation(6)">translate?</button>
-            <div class="translation" id="trans-6">My sister has a toy.</div>
-        </div>
-        <div class="story-block">
-            <span class="sentence">La abuela sonríe mucho.</span>
-            <button class="translate-btn" onclick="toggleTranslation(7)">translate?</button>
-            <div class="translation" id="trans-7">Grandma smiles a lot.</div>
-        </div>
-        <div class="story-block">
-            <span class="sentence">El abuelo bebe café.</span>
-            <button class="translate-btn" onclick="toggleTranslation(8)">translate?</button>
-            <div class="translation" id="trans-8">Grandpa drinks coffee.</div>
-        </div>
-        <div class="story-block">
-            <span class="sentence">Yo estoy entre mamá y papá.</span>
-            <button class="translate-btn" onclick="toggleTranslation(9)">translate?</button>
-            <div class="translation" id="trans-9">I am between mom and dad.</div>
-        </div>
-        <div class="story-block">
-            <span class="sentence">El perro mira la cámara.</span>
-            <button class="translate-btn" onclick="toggleTranslation(10)">translate?</button>
-            <div class="translation" id="trans-10">The dog looks at the camera.</div>
-        </div>
-        <div class="story-block">
-            <span class="sentence">Todos decimos: "¡Patata!"</span>
-            <button class="translate-btn" onclick="toggleTranslation(11)">translate?</button>
-            <div class="translation" id="trans-11">We all say: "Cheese!"</div>
-        </div>
-        <img src="FamilyPhoto1.png" class="story-image" alt="Story illustration">
-    </div>
+"""
+            sentence_id += 1
+
+    html += """    </div>
 
     <script>
         let allTranslationsVisible = false;
@@ -272,4 +303,15 @@
         }}
     </script>
 </body>
-</html>
+</html>"""
+    return html
+
+
+if __name__ == "__main__":
+    blocks, banner_image = parse_story(story_text)
+    html = story_to_html(story_title, blocks, banner_image if banner_image else 'FamilyPhoto1.png')
+    # Print to stdout (copy-paste into your HTML file)
+    print(html)
+    # Or write to a file (uncomment below)
+    # with open("index.html", "w", encoding="utf-8") as f:
+    #     f.write(html)
