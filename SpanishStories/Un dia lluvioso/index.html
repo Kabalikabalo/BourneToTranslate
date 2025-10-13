@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>El León de Nemea</title>
+    <title>Un día lluvioso</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -80,7 +80,7 @@
             position: relative;
             width: 100%;
             height: 320px;
-            background-image: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url('hercules.png');
+            background-image: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url('rainyday.png');
             background-size: cover;
             background-position: center;
             display: flex;
@@ -179,116 +179,51 @@
 
     <!-- Hero Banner with Story Title -->
     <div class="hero-banner">
-        <h1 class="story-title">El León de Nemea</h1>
+        <h1 class="story-title">Un día lluvioso</h1>
     </div>
 
     <!-- Story Content -->
     <div class="container">
         <div class="story-block">
-            <span class="sentence">Hércules era un hombre muy fuerte y valiente.</span>
+            <span class="sentence">Es domingo y llueve mucho.</span>
             <button class="translate-btn" onclick="toggleTranslation(0)">TRANSLATE</button>
-            <div class="translation" id="trans-0">Hercules was a very strong and brave man.</div>
+            <div class="translation" id="trans-0">It’s Sunday and it’s raining a lot.</div>
         </div>
-        <img src="hercules.png" class="story-image" alt="Story illustration">
         <div class="story-block">
-            <span class="sentence">Un día, el rey Euristeo le dio doce trabajos difíciles.</span>
+            <span class="sentence">Hace mal tiempo y hace mucho frío.</span>
             <button class="translate-btn" onclick="toggleTranslation(1)">TRANSLATE</button>
-            <div class="translation" id="trans-1">One day, King Eurystheus gave him twelve difficult tasks.</div>
+            <div class="translation" id="trans-1">It’s bad weather and very cold.</div>
         </div>
         <div class="story-block">
-            <span class="sentence">El primer trabajo era matar al león de Nemea.</span>
+            <span class="sentence">No me gusta este tiempo.</span>
             <button class="translate-btn" onclick="toggleTranslation(2)">TRANSLATE</button>
-            <div class="translation" id="trans-2">The first task was to kill the Nemean Lion.</div>
+            <div class="translation" id="trans-2">I do not like this weather.</div>
         </div>
         <div class="story-block">
-            <span class="sentence">El león vivía en las montañas de Nemea.</span>
+            <span class="sentence">Me quedo en casa con mi perro.</span>
             <button class="translate-btn" onclick="toggleTranslation(3)">TRANSLATE</button>
-            <div class="translation" id="trans-3">The lion lived in the mountains of Nemea.</div>
+            <div class="translation" id="trans-3">I stay at home with my dog.</div>
         </div>
+        <img src="rainyday.png" class="story-image" alt="Story illustration">
         <div class="story-block">
-            <span class="sentence">Era un animal terrible con piel dorada.</span>
+            <span class="sentence">Navego por internet y chateo con mis amigos.</span>
             <button class="translate-btn" onclick="toggleTranslation(4)">TRANSLATE</button>
-            <div class="translation" id="trans-4">It was a terrible animal with golden skin.</div>
+            <div class="translation" id="trans-4">I surf the Internet and chat with my friends.</div>
         </div>
-        <img src="lion1.png" class="story-image" alt="Story illustration">
         <div class="story-block">
-            <span class="sentence">Su piel era tan dura que ninguna arma podía herirlo.</span>
+            <span class="sentence">A veces hablo con mi primo.</span>
             <button class="translate-btn" onclick="toggleTranslation(5)">TRANSLATE</button>
-            <div class="translation" id="trans-5">Its skin was so tough that no weapon could hurt it.</div>
+            <div class="translation" id="trans-5">Sometimes I talk with my cousin.</div>
         </div>
         <div class="story-block">
-            <span class="sentence">Hércules tomó su arco y sus flechas y fue a Nemea.</span>
+            <span class="sentence">Leo un libro y también escribo correos.</span>
             <button class="translate-btn" onclick="toggleTranslation(6)">TRANSLATE</button>
-            <div class="translation" id="trans-6">Hercules took his bow and arrows and went to Nemea.</div>
+            <div class="translation" id="trans-6">I read a book and write emails too.</div>
         </div>
         <div class="story-block">
-            <span class="sentence">Buscó al león durante muchos días.</span>
+            <span class="sentence">Es interesante pero un poco aburrido.</span>
             <button class="translate-btn" onclick="toggleTranslation(7)">TRANSLATE</button>
-            <div class="translation" id="trans-7">He looked for the lion for many days.</div>
-        </div>
-        <img src="tothemountains.png" class="story-image" alt="Story illustration">
-        <div class="story-block">
-            <span class="sentence">Finalmente lo vio cerca de una cueva oscura.</span>
-            <button class="translate-btn" onclick="toggleTranslation(8)">TRANSLATE</button>
-            <div class="translation" id="trans-8">Finally, he saw it near a dark cave.</div>
-        </div>
-        <div class="story-block">
-            <span class="sentence">Disparó sus flechas, pero rebotaron en la piel del león.</span>
-            <button class="translate-btn" onclick="toggleTranslation(9)">TRANSLATE</button>
-            <div class="translation" id="trans-9">He shot his arrows, but they bounced off the lion’s skin.</div>
-        </div>
-        <div class="story-block">
-            <span class="sentence">El león rugió muy fuerte y atacó a Hércules.</span>
-            <button class="translate-btn" onclick="toggleTranslation(10)">TRANSLATE</button>
-            <div class="translation" id="trans-10">The lion roared loudly and attacked Hercules.</div>
-        </div>
-        <img src="lion2.png" class="story-image" alt="Story illustration">
-        <div class="story-block">
-            <span class="sentence">Hércules corrió dentro de la cueva para luchar con sus manos.</span>
-            <button class="translate-btn" onclick="toggleTranslation(11)">TRANSLATE</button>
-            <div class="translation" id="trans-11">Hercules ran into the cave to fight with his hands.</div>
-        </div>
-        <div class="story-block">
-            <span class="sentence">La cueva tenía dos entradas, así que cerró una con piedras.</span>
-            <button class="translate-btn" onclick="toggleTranslation(12)">TRANSLATE</button>
-            <div class="translation" id="trans-12">The cave had two entrances, so he blocked one with stones.</div>
-        </div>
-        <div class="story-block">
-            <span class="sentence">Luego se enfrentó al león y luchó con valentía.</span>
-            <button class="translate-btn" onclick="toggleTranslation(13)">TRANSLATE</button>
-            <div class="translation" id="trans-13">Then he faced the lion and fought bravely.</div>
-        </div>
-        <div class="story-block">
-            <span class="sentence">Después de una larga pelea, estranguló al león con sus brazos fuertes.</span>
-            <button class="translate-btn" onclick="toggleTranslation(14)">TRANSLATE</button>
-            <div class="translation" id="trans-14">After a long fight, he strangled the lion with his strong arms.</div>
-        </div>
-        <img src="strangling" class="story-image" alt="Story illustration">
-        <div class="story-block">
-            <span class="sentence">Cuando el león murió, Hércules intentó cortar su piel.</span>
-            <button class="translate-btn" onclick="toggleTranslation(15)">TRANSLATE</button>
-            <div class="translation" id="trans-15">When the lion died, Hercules tried to cut its skin.</div>
-        </div>
-        <div class="story-block">
-            <span class="sentence">Pero su cuchillo no funcionó.</span>
-            <button class="translate-btn" onclick="toggleTranslation(16)">TRANSLATE</button>
-            <div class="translation" id="trans-16">But his knife didn’t work.</div>
-        </div>
-        <div class="story-block">
-            <span class="sentence">Entonces la diosa Atenea apareció y le dijo que usara las garras del león.</span>
-            <button class="translate-btn" onclick="toggleTranslation(17)">TRANSLATE</button>
-            <div class="translation" id="trans-17">Then the goddess Athena appeared and told him to use the lion’s claws.</div>
-        </div>
-        <div class="story-block">
-            <span class="sentence">Hércules usó las garras y finalmente quitó la piel.</span>
-            <button class="translate-btn" onclick="toggleTranslation(18)">TRANSLATE</button>
-            <div class="translation" id="trans-18">Hercules used the claws and finally removed the skin.</div>
-        </div>
-        <img src="lioncloak.png" class="story-image" alt="Story illustration">
-        <div class="story-block">
-            <span class="sentence">Llevó la piel del león como un manto, y lo hizo parecer aún más poderoso.</span>
-            <button class="translate-btn" onclick="toggleTranslation(19)">TRANSLATE</button>
-            <div class="translation" id="trans-19">He wore the lion’s skin as a cloak, and it made him look even more powerful.</div>
+            <div class="translation" id="trans-7">It’s interesting but a little boring.</div>
         </div>
     </div>
 
