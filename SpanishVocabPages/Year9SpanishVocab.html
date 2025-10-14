@@ -4668,11 +4668,10 @@ Tengo catarro porque me duele la pierna y me duelen los dientes - I have a cold 
             const feedback = document.getElementById('feedback');
             let userAnswer = normalizeAnswer(input.value);
 
-            // Replace certain words with hardcoded phrases (dictionary style)
             const replacements = {
                 "his": "his/her",
                 "her": "his/her",
-                // add more replacements as needed
+                "pe": "p.e."
             };
             // Replace each word in userAnswer if it matches a key in replacements
             Object.keys(replacements).forEach(word => {
