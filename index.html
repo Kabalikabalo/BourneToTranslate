@@ -174,6 +174,48 @@
             color: #666666;
         }
 
+        /* Contributors Section */
+        .contributors-section {
+            width: 100%;
+            background-color: #DD1F25;
+            padding: 40px 20px;
+            margin-top: 60px;
+        }
+
+        .contributors-title {
+            text-align: center;
+            color: white;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            letter-spacing: 0.5px;
+        }
+
+        .contributors-list {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .contributor {
+            background-color: rgba(255, 255, 255, 0.15);
+            padding: 15px 25px;
+            border-radius: 12px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .contributor:hover {
+            background-color: rgba(255, 255, 255, 0.25);
+            transform: translateY(-3px);
+        }
+
         @media (max-width: 1024px) {
             .button-container {
                 flex-direction: column;
@@ -200,6 +242,14 @@
 
             .flag-description {
                 font-size: 1.2rem;
+            }
+
+            .contributors-title {
+                font-size: 1.8rem;
+            }
+
+            .contributor {
+                font-size: 1rem;
             }
         }
 
@@ -238,6 +288,15 @@
 
             .flag-description {
                 font-size: 1.1rem;
+            }
+
+            .contributors-title {
+                font-size: 1.6rem;
+            }
+
+            .contributor {
+                font-size: 0.95rem;
+                padding: 12px 20px;
             }
         }
 
@@ -285,6 +344,20 @@
 
             .button-container {
                 gap: 60px;
+            }
+
+            .contributors-section {
+                padding: 30px 15px;
+            }
+
+            .contributors-title {
+                font-size: 1.4rem;
+                margin-bottom: 20px;
+            }
+
+            .contributor {
+                font-size: 0.9rem;
+                padding: 10px 15px;
             }
         }
 
@@ -377,6 +450,18 @@
                 <div class="flag-label">French</div>
                 <div class="flag-description">Simple French stories and extension resources</div>
             </div>
+        </div>
+    </div>
+
+    <!-- Contributors Section -->
+    <div class="contributors-section">
+        <h2 class="contributors-title">Made by</h2>
+        <div class="contributors-list">
+            <div class="contributor">Lucas Eling</div>
+            <div class="contributor">Sebastien Louzolo</div>
+            <div class="contributor">Jed Longden</div>
+            <div class="contributor">Roxana Wasilewska</div>
+            <!-- Add more contributors here -->
         </div>
     </div>
 
