@@ -393,12 +393,25 @@
         position: absolute;
         top: 18px;
         right: 22px;
-        font-size: 1.7rem;
+        width: 36px;
+        height: 36px;
+        font-size: 1.5rem;
         color: #DD1F25;
-        background: none;
+        background: #fff;
         border: none;
+        border-radius: 50%;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         cursor: pointer;
         z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: box-shadow 0.2s;
+    }
+    .popup-close:hover {
+        box-shadow: 0 4px 16px rgba(221,31,37,0.15);
+        background: #fff5f5;
+        color: #b8000f;
     }
     @media (max-width: 600px) {
         .popup-content {
