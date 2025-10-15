@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Flamenco en España</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: Georgia, 'Times New Roman', serif;
+            background: #f5f5f5; 
+            color: #2a2a2a;
+            line-height: 1.8;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            background-color: #DD1F25;
+            height: 65px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .back-button {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 8px 18px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        .back-button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateX(-5px);
+        }
+        .back-arrow { font-size: 1.3rem; }
+
+        /* Toggle Container */
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .toggle-label { color: white; font-size: 0.95rem; font-weight: 400; }
+        .toggle-switch {
+            position: relative;
+            width: 55px;
+            height: 28px;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .toggle-switch.active { background-color: rgba(255, 255, 255, 0.5); }
+        .toggle-slider {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 22px;
+            height: 22px;
+            background-color: white;
+            border-radius: 50%;
+            transition: transform 0.3s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .toggle-switch.active .toggle-slider { transform: translateX(27px); }
+
+        /* Hero Banner */
+        .hero-banner {
+            position: relative;
+            width: 100%;
+            height: 320px;
+            background-image: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url('Flamenco4.png');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 50px;
+        }
+        .page-title {
+            font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+            font-size: 3.5rem;
+            font-weight: 400;
+            color: white;
+            text-align: center;
+            text-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            letter-spacing: 1px;
+        }
+
+        /* Content */
+        .container { 
+            max-width: 800px; 
+            margin: 0 auto; 
+            padding: 20px 30px 60px 30px; 
+        }
+        .content-block { 
+            margin-bottom: 2.5em;
+            position: relative;
+        }
+        .paragraph { 
+            font-size: 1.15rem;
+            font-weight: 400;
+            color: #1a1a1a;
+            line-height: 1.9;
+            margin-bottom: 12px;
+        }
+        .paragraph.translation {
+            display: none;
+            padding-left: 20px;
+            border-left: 3px solid #DD1F25;
+            color: #555;
+            font-style: italic;
+        }
+        .paragraph.translation.show {
+            display: block;
+        }
+        .translate-btn {
+            display: inline-block;
+            margin-top: 8px;
+            font-size: 0.7rem;
+            color: #DD1F25;
+            background: transparent;
+            border: 1px solid #DD1F25;
+            padding: 4px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Segoe UI', sans-serif;
+            font-weight: 600;
+            opacity: 0.7;
+            letter-spacing: 0.5px;
+        }
+        .translate-btn:hover {
+            opacity: 1;
+            background: #DD1F25;
+            color: white;
+        }
+        .content-image { 
+            display: block; 
+            margin: 3em auto; 
+            max-width: 100%; 
+            height: auto;
+            border-radius: 8px; 
+            box-shadow: 0 6px 24px rgba(0,0,0,0.12); 
+        }
+
+        @media (max-width: 768px) {
+            .navbar { height: 60px; padding: 0 20px; }
+            .hero-banner { height: 250px; }
+            .page-title { font-size: 2.5rem; }
+            .container { padding: 20px 20px 50px 20px; }
+            .paragraph { font-size: 1.05rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <a href="../../spanish-culture.html" class="back-button">
+            <span class="back-arrow">←</span>
+            <span>Back</span>
+        </a>
+        <div class="toggle-container">
+            <span class="toggle-label" id="toggleLabel">View in Spanish</span>
+            <div class="toggle-switch" id="toggleSwitch" onclick="toggleAllTranslations()">
+                <div class="toggle-slider"></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Banner with Page Title -->
+    <div class="hero-banner">
+        <h1 class="page-title">Flamenco en España</h1>
+    </div>
+
+    <!-- Page Content -->
+    <div class="container">
+        <div class="content-block">
+            <p class="paragraph main" id="main-0">Flamenco is a passionate art form originating from Andalusia, Spain, combining singing, guitar playing, and dance. Recognized by UNESCO as Intangible Cultural Heritage, Flamenco conveys deep emotion and tells stories of love, hardship, and celebration. From the lively tablaos of Seville to the intimate performances in small villages, this cultural expression captivates audiences worldwide.</p>
+            <p class="paragraph translation" id="trans-0">El flamenco es una forma de arte apasionada originaria de Andalucía, España, que combina canto, toque de guitarra y baile. Reconocido por la UNESCO como Patrimonio Cultural Inmaterial, el flamenco transmite emociones profundas y narra historias de amor, sufrimiento y celebración. Desde los animados tablaos de Sevilla hasta las actuaciones íntimas en pequeños pueblos, esta expresión cultural cautiva al público en todo el mundo.</p>
+            <button class="translate-btn" id="btn-0" onclick="toggleTranslation(0)">TRANSLATE</button>
+        </div>
+        <img src="Flamenco2.png" class="content-image" alt="Flamenco performance">
+        <div class="content-block">
+            <p class="paragraph main" id="main-1">Flamenco performances feature intricate guitar rhythms, soulful singing known as “cante,” and expressive dance, or “baile.” Dancers communicate emotion through hand movements, footwork, and dramatic gestures, while guitarists and singers provide dynamic accompaniment. Every performance is unique, reflecting the personal style and feelings of the artists, making Flamenco a living, evolving tradition.</p>
+            <p class="paragraph translation" id="trans-1">Las actuaciones de flamenco incluyen ritmos intrincados de guitarra, el canto apasionado conocido como “cante” y el baile expresivo o “baile.” Los bailarines comunican emociones mediante movimientos de manos, zapateado y gestos dramáticos, mientras guitarristas y cantantes proporcionan un acompañamiento dinámico. Cada actuación es única, reflejando el estilo personal y los sentimientos de los artistas, convirtiendo al flamenco en una tradición viva y en constante evolución.</p>
+            <button class="translate-btn" id="btn-1" onclick="toggleTranslation(1)">TRANSLATE</button>
+        </div>
+        <div class="content-block">
+            <p class="paragraph main" id="main-2">The origins of Flamenco are complex, influenced by Andalusian, Romani, Moorish, and Jewish cultures. Initially an oral and performance tradition, Flamenco developed through generations as an emotional outlet for marginalized communities. Over time, it gained global recognition, inspiring festivals, schools, and professional performers dedicated to preserving and innovating this art form.</p>
+            <p class="paragraph translation" id="trans-2">Los orígenes del flamenco son complejos, influenciados por las culturas andaluza, gitana, mora y judía. Inicialmente una tradición oral y de interpretación, el flamenco se desarrolló durante generaciones como una vía de expresión emocional para comunidades marginadas. Con el tiempo, ganó reconocimiento mundial, inspirando festivales, escuelas y artistas profesionales dedicados a preservar e innovar esta forma de arte.</p>
+            <button class="translate-btn" id="btn-2" onclick="toggleTranslation(2)">TRANSLATE</button>
+        </div>
+
+        <div class="content-block">
+            <p class="paragraph main" id="main-3">Today, Flamenco is celebrated in theaters, festivals, and cultural centers across Spain and worldwide. Audiences experience the intensity of the music, the rhythm of the dance, and the raw emotion in the singing. Each performance honors tradition while allowing for personal interpretation, ensuring that Flamenco continues to thrive as a vibrant and evolving symbol of Spanish cultural identity.</p>
+            <p class="paragraph translation" id="trans-3">Hoy en día, el flamenco se celebra en teatros, festivales y centros culturales en toda España y en el mundo. El público experimenta la intensidad de la música, el ritmo del baile y la emoción cruda del canto. Cada actuación honra la tradición al mismo tiempo que permite la interpretación personal, asegurando que el flamenco siga prosperando como un símbolo vibrante y en evolución de la identidad cultural española.</p>
+            <button class="translate-btn" id="btn-3" onclick="toggleTranslation(3)">TRANSLATE</button>
+        </div>
+    </div>
+
+    <script>
+        let viewMode = 'english'; // 'english' or 'target'
+        const langName = 'Spanish';
+        const totalParagraphs = 4;
+
+        function toggleTranslation(id) {
+            const translation = document.getElementById('trans-' + id);
+            const btn = document.getElementById('btn-' + id);
+
+            if (translation.classList.contains('show')) {
+                translation.classList.remove('show');
+                if (viewMode === 'english') {
+                    btn.textContent = 'TRANSLATE';
+                } else {
+                    btn.textContent = 'SHOW ENGLISH';
+                }
+            } else {
+                translation.classList.add('show');
+                btn.textContent = 'HIDE';
+            }
+        }
+
+        function toggleAllTranslations() {
+            const toggle = document.getElementById('toggleSwitch');
+            const toggleLabel = document.getElementById('toggleLabel');
+
+            viewMode = viewMode === 'english' ? 'target' : 'english';
+            toggle.classList.toggle('active');
+
+            // Swap content for all paragraphs
+            for (let i = 0; i < totalParagraphs; i++) {
+                const mainPara = document.getElementById('main-' + i);
+                const transPara = document.getElementById('trans-' + i);
+                const btn = document.getElementById('btn-' + i);
+
+                // Swap the text content
+                const temp = mainPara.textContent;
+                mainPara.textContent = transPara.textContent;
+                transPara.textContent = temp;
+
+                // Hide translation and reset button
+                transPara.classList.remove('show');
+
+                if (viewMode === 'target') {
+                    btn.textContent = 'SHOW ENGLISH';
+                    toggleLabel.textContent = 'View in English';
+                } else {
+                    btn.textContent = 'TRANSLATE';
+                    toggleLabel.textContent = 'View in ' + langName;
+                }
+            }
+        }
+    </script>
+</body>
+</html>
