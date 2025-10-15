@@ -56,6 +56,37 @@
             height: 100%;
             margin-left: 0;
             opacity: 1;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 20px;
+        }
+
+
+        .resources-button {
+            display: inline-block;
+            color: #DD1F25;
+            background: #fff;
+            text-decoration: none;
+            font-size: 1.15rem;
+            font-weight: 700;
+            padding: 10px 18px;
+            border-radius: 8px;
+            border: 5px solid #DD1F25;
+            box-shadow: 0 2px 10px rgba(221, 31, 37, 0.08);
+            letter-spacing: 0.5px;
+            transition: all 0.2s cubic-bezier(.4,0,.2,1);
+            max-width: 220px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .resources-button:hover {
+            background: #fff5f5;
+            color: #b8000f;
+            border-color: #b8000f;
+            box-shadow: 0 4px 16px rgba(221, 31, 37, 0.15);
+            transform: scale(1.04);
         }
 
         .container {
@@ -313,6 +344,16 @@
             .header-strip {
                 margin-left: 10px;
                 height: 18px;
+                padding-right: 10px;
+            }
+
+            .resources-button {
+                font-size: 0.85rem;
+                padding: 6px 12px;
+            }
+
+            .resources-icon {
+                font-size: 1rem;
             }
 
             .container {
@@ -427,7 +468,9 @@
                 <img src="Bourne_Grammar_School_Logo.jpg" alt="Bourne Grammar School">
             </a>
         </div>
-        <div class="header-strip"></div>
+        <div class="header-strip">
+            <a href="general-resources.html" class="resources-button">Useful Resources</a>
+        </div>
     </div>
 
     <div class="container">
