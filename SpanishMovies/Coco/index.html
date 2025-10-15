@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Coco</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: Georgia, 'Times New Roman', serif;
+            background: #f5f5f5; 
+            color: #2a2a2a;
+            line-height: 1.8;
+        }
+
+        /* Red Navigation Bar */
+        .navbar {
+            background-color: #DD1F25;
+            height: 65px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .back-button {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 8px 18px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        .back-button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateX(-5px);
+        }
+        .back-arrow { font-size: 1.3rem; }
+
+        /* Toggle Container */
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .toggle-label { color: white; font-size: 0.95rem; font-weight: 400; }
+        .toggle-switch {
+            position: relative;
+            width: 55px;
+            height: 28px;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .toggle-switch.active { background-color: rgba(255, 255, 255, 0.5); }
+        .toggle-slider {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 22px;
+            height: 22px;
+            background-color: white;
+            border-radius: 50%;
+            transition: transform 0.3s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .toggle-switch.active .toggle-slider { transform: translateX(27px); }
+
+        /* Hero Banner */
+        .hero-banner {
+            position: relative;
+            width: 100%;
+            height: 320px;
+            background-image: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url('Coco1.png');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 50px;
+        }
+        .story-title {
+            font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+            font-size: 3.5rem;
+            font-weight: 400;
+            color: white;
+            text-align: center;
+            text-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            letter-spacing: 1px;
+        }
+
+        /* Story Content */
+        .container { 
+            max-width: 750px; 
+            margin: 0 auto; 
+            padding: 20px 30px 60px 30px; 
+        }
+        .story-block { 
+            margin-bottom: 1.8em;
+            position: relative;
+        }
+        .sentence { 
+            font-size: 1.25rem;
+            font-weight: 400;
+            color: #1a1a1a;
+            display: inline;
+        }
+        .translate-btn {
+            display: inline-block;
+            margin-left: 8px;
+            font-size: 0.75rem;
+            color: #DD1F25;
+            background: transparent;
+            border: 1px solid #DD1F25;
+            padding: 2px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Segoe UI', sans-serif;
+            font-weight: 500;
+            opacity: 0.7;
+        }
+        .translate-btn:hover {
+            opacity: 1;
+            background: #DD1F25;
+            color: white;
+        }
+        .translation { 
+            color: #666;
+            font-size: 1.05rem;
+            display: none;
+            margin-top: 6px;
+            font-style: italic;
+            padding-left: 20px;
+            border-left: 2px solid #DD1F25;
+        }
+        .translation.show { display: block; }
+        .story-image { 
+            display: block; 
+            margin: 3em auto; 
+            max-width: 100%; 
+            height: auto;
+            border-radius: 8px; 
+            box-shadow: 0 6px 24px rgba(0,0,0,0.12); 
+        }
+
+        @media (max-width: 768px) {
+            .navbar { height: 60px; padding: 0 20px; }
+            .hero-banner { height: 250px; }
+            .story-title { font-size: 2.5rem; }
+            .container { padding: 20px 20px 50px 20px; }
+            .sentence { font-size: 1.15rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <a href="../../spanish-general-resources.html" class="back-button">
+            <span class="back-arrow">←</span>
+            <span>Back</span>
+        </a>
+    </nav>
+
+    <!-- Hero Banner with Story Title -->
+    <div class="hero-banner">
+        <h1 class="story-title">Coco</h1>
+    </div>
+
+    <!-- Story Content -->
+    <div class="container">
+        <img src="Coco3.png" class="story-image" alt="Story illustration">
+        <div class="story-block">
+            <span class="sentence">Despite his family's generations-old ban on music, young Miguel dreams of becoming an accomplished musician like his idol Ernesto de la Cruz.<br><br> Desperate to prove his talent, Miguel finds himself in the stunning and colorful Land of the Dead.<br><br> After meeting a charming trickster named Héctor, the two new friends embark on an extraordinary journey to unlock the real story behind Miguel's family history.</span>
+        </div>
+        <div class="story-block">
+            <span class="sentence"><a href="https://www.disneyplus.com/en-gb/browse/entity-ce1ccdca-f468-4960-b67c-026b01ba42ab">Watch Coco on Disney Plus</a></span>
+        </div>
+        <img src="Coco2.png" class="story-image" alt="Story illustration">
+    </div>
+</body>
+</html>

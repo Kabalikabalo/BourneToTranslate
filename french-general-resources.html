@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>French general resources</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: linear-gradient(135deg, #fff 0%, #f8f8f8 100%);
+            margin: 0; 
+            padding: 0; 
+            overflow-x: hidden;
+        }
+        
+        /* Navbar with subtle slide-in animation */
+        .navbar { 
+            background: #DD1F25; 
+            color: white; 
+            height: 60px; 
+            display: flex; 
+            align-items: center; 
+            padding: 0 30px; 
+            font-size: 1.5rem; 
+            font-weight: 700; 
+            letter-spacing: 1px;
+            box-shadow: 0 2px 12px rgba(221, 31, 37, 0.15);
+            animation: slideDown 0.5s ease-out;
+        }
+        
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .navbar a { 
+            color: white; 
+            text-decoration: none; 
+            font-size: 1rem; 
+            font-weight: 500; 
+            margin-right: 25px;
+            transition: all 0.2s ease;
+            padding: 6px 12px;
+            border-radius: 4px;
+        }
+        
+        .navbar a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(-3px);
+        }
+        
+        /* Catalogue container with subtle fade-in */
+        .catalogue-container { 
+            max-width: 1100px; 
+            margin: 0 auto; 
+            padding: 40px 20px 20px 20px;
+            animation: fadeIn 0.6s ease-out 0.1s both;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Search and filter container */
+        .search-filter-container {
+            max-width: 700px;
+            margin: 0 auto 35px auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+            animation: scaleIn 0.5s ease-out 0.3s both;
+        }
+        
+        /* Search bar with gentle scale animation */
+        .search-bar { 
+            width: 100%; 
+            max-width: 400px; 
+            font-size: 1.1rem; 
+            padding: 12px 18px; 
+            border-radius: 30px; 
+            border: 1px solid #DD1F25; 
+            outline: none; 
+            box-shadow: 0 2px 12px rgba(221, 31, 37, 0.08); 
+            transition: all 0.25s ease;
+        }
+        
+        @keyframes scaleIn {
+            from {
+                transform: scale(0.95);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        
+        .search-bar:focus { 
+            border-color: #AA151B;
+            box-shadow: 0 3px 16px rgba(221, 31, 37, 0.15);
+            transform: scale(1.01);
+        }
+        
+        /* Topic filters */
+        .topic-filters {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .topic-filter-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1rem;
+            color: #444;
+            cursor: pointer;
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: #fafafd;
+            border: 2px solid #e0e0e0;
+            transition: all 0.25s ease;
+            user-select: none;
+        }
+        
+        .topic-filter-label:hover {
+            border-color: #DD1F25;
+            background: #fff5f5;
+        }
+        
+        .topic-filter-label input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: #DD1F25;
+        }
+        
+        .topic-filter-label.active {
+            border-color: #DD1F25;
+            background: #fff5f5;
+            font-weight: 600;
+        }
+        
+        /* Grid with subtle staggered card animations */
+        .movies-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); 
+            gap: 15px; 
+        }
+        
+        .movie-card { 
+            background: #fafafd; 
+            border-radius: 20px; 
+            box-shadow: 0 6px 26px rgba(221, 31, 37, 0.08); 
+            overflow: hidden; 
+            cursor: pointer; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: stretch; 
+            text-decoration: none; 
+            color: inherit;
+            position: relative;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: cardAppear 0.5s ease-out forwards;
+        }
+        
+        /* Subtle stagger animation for each card */
+        .movie-card:nth-child(1) { animation-delay: 0.4s; }
+        .movie-card:nth-child(2) { animation-delay: 0.5s; }
+        .movie-card:nth-child(3) { animation-delay: 0.6s; }
+        .movie-card:nth-child(4) { animation-delay: 0.7s; }
+        .movie-card:nth-child(5) { animation-delay: 0.8s; }
+        .movie-card:nth-child(6) { animation-delay: 0.9s; }
+        .movie-card:nth-child(n+7) { animation-delay: 1s; }
+        
+        @keyframes cardAppear {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Card disappear animation for search filtering */
+        .movie-card.hiding {
+            animation: cardDisappear 0.3s ease-out forwards;
+        }
+        
+        @keyframes cardDisappear {
+            to {
+                opacity: 0;
+                transform: translateY(-10px) scale(0.98);
+            }
+        }
+        
+        .movie-card:hover { 
+            box-shadow: 0 10px 35px rgba(221, 31, 37, 0.14); 
+            transform: translateY(-4px);
+        }
+        
+        .movie-card:active {
+            transform: translateY(-2px);
+        }
+        
+        .movie-image { 
+            width: 100%; 
+            aspect-ratio: 3/2; 
+            object-fit: cover; 
+            background: #eaeaea; 
+            border-bottom: 1px solid #eee;
+            transition: transform 0.35s ease;
+        }
+        
+        .movie-card:hover .movie-image {
+            transform: scale(1.04);
+        }
+        
+        .movie-info { 
+            padding: 18px 16px 70px 16px; /* Increased bottom padding for more gap */
+            flex: 1;
+            transition: all 0.25s ease;
+            position: relative;
+        }
+
+            .movie-year {
+                position: absolute;
+                bottom: 12px;
+                right: 16px;
+                background: #DD1F25;
+                color: #fff;
+                font-size: 0.95rem;
+                font-weight: 600;
+                padding: 6px 16px;
+                border-radius: 16px;
+                box-shadow: 0 2px 8px rgba(221, 31, 37, 0.10);
+                letter-spacing: 0.5px;
+                z-index: 2;
+                pointer-events: none;
+                opacity: 0.93;
+            }
+        
+        .movie-title { 
+            font-size: 1.3rem; 
+            font-weight: 700; 
+            margin-bottom: 10px; 
+            color: #DD1F25; 
+            letter-spacing: 0.5px;
+            transition: all 0.25s ease;
+        }
+        
+        .movie-card:hover .movie-title {
+            transform: translateX(3px);
+            color: #AA151B;
+        }
+        
+        .movie-intro { 
+            font-size: 1rem; 
+            color: #444; 
+            opacity: 0.9;
+            transition: all 0.25s ease;
+        }
+        
+        .movie-card:hover .movie-intro {
+            opacity: 1;
+        }
+        
+        /* No results message */
+        .no-results {
+            grid-column: 1/-1;
+            text-align: center;
+            padding: 3em 2em;
+            color: #DD1F25;
+            font-weight: 600;
+            font-size: 1.2rem;
+            animation: fadeIn 0.4s ease-out;
+        }
+        
+        @media (max-width: 600px) { 
+            .catalogue-container { padding: 20px 8px; } 
+            .movies-grid {
+                gap: 12px;
+                grid-template-columns: 1fr;
+            }
+            .movie-card {
+                flex-direction: row;
+                min-height: 120px;
+                align-items: flex-start;
+                padding-bottom: 24px;
+            }
+            .movie-image {
+                width: 100px;
+                height: 100px;
+                aspect-ratio: 1/1;
+                border-radius: 12px;
+                border-bottom: none;
+                flex-shrink: 0;
+                margin: 12px;
+            }
+            .movie-info { 
+                padding: 12px 12px 60px 12px; /* More bottom padding for topics */
+                flex: 1;
+                min-width: 0;
+            }
+            .movie-title {
+                font-size: 1.1rem;
+                margin-bottom: 6px;
+            }
+            .movie-intro {
+                font-size: 0.9rem;
+            }
+            .movie-topics {
+                position: absolute;
+                bottom: 10px;
+                left: 120px; /* Place topics under text, not image */
+                right: auto;
+                flex-wrap: wrap;
+                gap: 6px;
+            }
+            .movie-topic {
+                font-size: 0.85rem;
+                padding: 5px 10px;
+                border-radius: 12px;
+                margin-bottom: 2px;
+            }
+            .navbar { font-size: 1.2rem; padding: 0 20px; }
+        }
+
+        /* Add styles for movie topics badge */
+    .movie-topics {
+        position: absolute;
+        bottom: 12px;
+        right: 16px;
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        z-index: 2;
+    }
+    .movie-topic {
+        background: #DD1F25;
+        color: #fff;
+        font-size: 0.95rem;
+        font-weight: 600;
+        padding: 6px 14px;
+        border-radius: 14px;
+        box-shadow: 0 2px 8px rgba(221, 31, 37, 0.10);
+        letter-spacing: 0.5px;
+        opacity: 0.93;
+        pointer-events: none;
+        margin-bottom: 2px;
+    }
+
+    /* Add overlay and popup styles */
+    .popup-overlay {
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(0,0,0,0.45);
+        z-index: 9999;
+        display: none;
+        align-items: center;
+        justify-content: center;
+    }
+    .popup-content {
+        background: #fff;
+        border-radius: 18px;
+        max-width: 700px;
+        width: 95vw;
+        max-height: 90vh;
+        overflow-y: auto;
+        box-shadow: 0 8px 40px rgba(0,0,0,0.18);
+        position: relative;
+        animation: fadeIn 0.3s;
+    }
+    .popup-close {
+        position: absolute;
+        top: 18px;
+        right: 22px;
+        font-size: 1.7rem;
+        color: #DD1F25;
+        background: none;
+        border: none;
+        cursor: pointer;
+        z-index: 2;
+    }
+    @media (max-width: 600px) {
+        .popup-content {
+            max-width: 98vw;
+            padding: 0;
+        }
+    }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="general-resources.html">← Back</a>
+        French general resources
+    </div>
+    <div class="catalogue-container">
+        <div class="search-filter-container">
+            <input type="text" class="search-bar" id="searchInput" placeholder="Search resources...">
+            <div class="topic-filters">
+                <label class="topic-filter-label">
+                    <input type="checkbox" value="Movies"> Movies
+                </label>
+                <label class="topic-filter-label">
+                    <input type="checkbox" value="Documentaries"> Documentaries
+                </label>
+            </div>
+        </div>
+        <div class="movies-grid" id="moviesGrid"></div>
+    </div>
+
+    <!-- Popup Overlay -->
+    <div class="popup-overlay" id="popupOverlay">
+        <div class="popup-content" id="popupContent">
+            <button class="popup-close" id="popupClose">&times;</button>
+            <!-- Content will be injected here -->
+        </div>
+    </div>
+
+    <script>
+    // Resource data with popup content for each card
+    const movies = [
+        {
+            title: "Ratatouille",
+            intro: "Common culture, food...",
+            image: "General Resources/French/Ratatoullie1.png",
+            topics: ["Movies"],
+            popup: `
+                <div class="hero-banner" style="height:220px;background-image:linear-gradient(rgba(0,0,0,0.45),rgba(0,0,0,0.45)),url('General Resources/French/Ratatoullie2.png');background-size:cover;background-position:center;display:flex;align-items:center;justify-content:center;margin-bottom:30px;">
+                    <h1 style="font-family:'Palatino Linotype',serif;font-size:2.2rem;color:#fff;text-shadow:0 4px 12px rgba(0,0,0,0.4);text-align:center;">Ratatoullie</h1>
+                </div>
+                <div style="max-width:600px;margin:0 auto;padding:10px 20px 30px 20px;">
+                    <img src="General Resources/French/Ratatoullie1.png" style="display:block;margin:2em auto;max-width:100%;border-radius:8px;box-shadow:0 6px 24px rgba(0,0,0,0.12);" alt="Movie illustration">
+                    <div style="margin-bottom:1.5em;">
+                        <span style="font-size:1.1rem;color:#1a1a1a;">Remy dreams of becoming a great chef, despite being a rat in a definitely rodent-phobic profession.<br><br> He moves to Paris to follow his dream, and with the help of hapless garbage boy Linguini he puts his culinary skills to the test in the kitchen but he has to stay in hiding at the same time, with hilarious consequences.<br><br> Remy eventually gets the chance to prove his culinary abilities to a great food critic but is the food good? A Pixar animation.</span>
+                    </div>
+                    <div style="margin-bottom:1.5em;">
+                        <span style="font-size:1.05rem;"><a href="https://www.disneyplus.com/en-gb/browse/entity-ab7c4e29-04f1-46dd-931a-d43be1ce0f8c" target="_blank">Watch Ratatoullie on Disney plus</a></span>
+                    </div>
+                    <img src="General resources/French/Ratatoullie3.png" style="display:block;margin:2em auto;max-width:100%;border-radius:8px;box-shadow:0 6px 24px rgba(0,0,0,0.12);" alt="Movie illustration">
+                </div>
+            `,
+        },
+        {
+
+            title: "Le Chef",
+            intro: "Comedy, food, and French kitchens",
+            image: "General Resources/French/LeChef1.png",
+            topics: ["Movies"],
+            popup: `
+                <div class="hero-banner" style="height:220px;background-image:linear-gradient(rgba(0,0,0,0.45),rgba(0,0,0,0.45)),url('General Resources/French/LeChef2.png');background-size:cover;background-position:center;display:flex;align-items:center;justify-content:center;margin-bottom:30px;">
+                    <h1 style="font-family:'Palatino Linotype',serif;font-size:2.2rem;color:#fff;text-shadow:0 4px 12px rgba(0,0,0,0.4);text-align:center;">Le Chef</h1>
+                </div>
+                <div style="max-width:600px;margin:0 auto;padding:10px 20px 30px 20px;">
+                    <img src="General Resources/French/LeChef1.png" style="display:block;margin:2em auto;max-width:100%;border-radius:8px;box-shadow:0 6px 24px rgba(0,0,0,0.12);" alt="Movie illustration">
+                    <div style="margin-bottom:1.5em;">
+                        <span style="font-size:1.1rem;color:#1a1a1a;">A feel-good French comedy following a veteran chef who clashes with his new boss over the future of French cuisine. When he meets a passionate amateur cook, they team up to revive the restaurant’s reputation and rediscover the joy of cooking. Perfect for learners—clear speech, humor, and a delicious theme!</span>
+                    </div>
+                    <div style="margin-bottom:1.5em;">
+                        <span style="font-size:1.05rem;"><a href="https://www.justwatch.com/uk/movie/le-chef" target="_blank">Watch Le Chef on JustWatch</a></span>
+                    </div>
+                    <img src="General Resources/French/LeChef3.png" style="display:block;margin:2em auto;max-width:100%;border-radius:8px;box-shadow:0 6px 24px rgba(0,0,0,0.12);" alt="Movie illustration">
+                </div>
+            `,
+        },
+        {
+            title: "La Famille Bélier",
+            intro: "Heartwarming story and clear, everyday French",
+            image: "General Resources/French/FamilleBelier1.png",
+            topics: ["Movies"],
+            popup: `
+                <div class="hero-banner" style="height:220px;background-image:linear-gradient(rgba(0,0,0,0.45),rgba(0,0,0,0.45)),url('General Resources/French/FamilleBelier2.png');background-size:cover;background-position:center;display:flex;align-items:center;justify-content:center;margin-bottom:30px;">
+                    <h1 style="font-family:'Palatino Linotype',serif;font-size:2.2rem;color:#fff;text-shadow:0 4px 12px rgba(0,0,0,0.4);text-align:center;">La Famille Bélier</h1>
+                </div>
+                <div style="max-width:600px;margin:0 auto;padding:10px 20px 30px 20px;">
+                    <img src="General Resources/French/FamilleBelier1.png" style="display:block;margin:2em auto;max-width:100%;border-radius:8px;box-shadow:0 6px 24px rgba(0,0,0,0.12);" alt="Movie illustration">
+                    <div style="margin-bottom:1.5em;">
+                        <span style="font-size:1.1rem;color:#1a1a1a;">Paula lives with her loving but deaf family on a farm. When her teacher discovers her incredible singing voice, she faces a tough decision—pursue her dreams in music or stay to help her family communicate. A touching comedy-drama with everyday vocabulary and plenty of heart.</span>
+                    </div>
+                    <div style="margin-bottom:1.5em;">
+                        <span style="font-size:1.05rem;"><a href="https://www.justwatch.com/uk/movie/la-famille-belier" target="_blank">Watch La Famille Bélier on JustWatch</a></span>
+                    </div>
+                    <img src="General Resources/French/FamilleBelier3.png" style="display:block;margin:2em auto;max-width:100%;border-radius:8px;box-shadow:0 6px 24px rgba(0,0,0,0.12);" alt="Movie illustration">
+                </div>
+            `,
+        },
+        {
+            title: "Être et Avoir",
+            intro: "Documentary about a rural French school and everyday language",
+            image: "General Resources/French/EtreEtAvoir1.png",
+            topics: ["Documentaries"],
+            popup: `
+                <div class="hero-banner" style="height:220px;background-image:linear-gradient(rgba(0,0,0,0.45),rgba(0,0,0,0.45)),url('General Resources/French/EtreEtAvoir2.png');background-size:cover;background-position:center;display:flex;align-items:center;justify-content:center;margin-bottom:30px;">
+                    <h1 style="font-family:'Palatino Linotype',serif;font-size:2.2rem;color:#fff;text-shadow:0 4px 12px rgba(0,0,0,0.4);text-align:center;">Être et Avoir</h1>
+                </div>
+                <div style="max-width:600px;margin:0 auto;padding:10px 20px 30px 20px;">
+                    <img src="General Resources/French/EtreEtAvoir1.png" style="display:block;margin:2em auto;max-width:100%;border-radius:8px;box-shadow:0 6px 24px rgba(0,0,0,0.12);" alt="Documentary illustration">
+                    <div style="margin-bottom:1.5em;">
+                        <span style="font-size:1.1rem;color:#1a1a1a;">A gentle and inspiring documentary about a small one-room school in rural France, where a single teacher educates children of all ages. The slow pace and clear, everyday conversations make it perfect for French learners. You’ll hear natural interactions, classroom vocabulary, and glimpses of real French life.</span>
+                    </div>
+                    <div style="margin-bottom:1.5em;">
+                        <span style="font-size:1.05rem;"><a href="https://www.justwatch.com/uk/movie/etre-et-avoir" target="_blank">Watch Être et Avoir on JustWatch</a></span>
+                    </div>
+                    <img src="General Resources/French/EtreEtAvoir3.png" style="display:block;margin:2em auto;max-width:100%;border-radius:8px;box-shadow:0 6px 24px rgba(0,0,0,0.12);" alt="Documentary illustration">
+                </div>
+            `,
+        }
+    ];
+
+    function normalizeText(text) {
+        return text ? text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase() : '';
+    }
+
+    function getSelectedTopics() {
+        const checkboxes = document.querySelectorAll('.topic-filters input[type="checkbox"]');
+        const selected = [];
+        checkboxes.forEach(cb => {
+            if (cb.checked) {
+                selected.push(cb.value);
+            }
+        });
+        return selected;
+    }
+
+    function renderMoviesCatalogue(filter='') {
+        const grid = document.getElementById('moviesGrid');
+        const normalizedFilter = normalizeText(filter);
+        const selectedTopics = getSelectedTopics();
+
+        let shown = 0;
+        let newHTML = '';
+        movies.forEach((movie, index) => {
+            const matchesFilter = !normalizedFilter ||
+                normalizeText(movie.title).includes(normalizedFilter) ||
+                normalizeText(movie.intro).includes(normalizedFilter);
+            const matchesTopics = selectedTopics.length === 0 ||
+                selectedTopics.some(topic => movie.topics.includes(topic));
+
+            if (matchesFilter && matchesTopics) {
+                shown++;
+                newHTML += `
+                    <div class="movie-card" tabindex="0" data-index="${index}" style="animation-delay:${0.05 * index}s;position:relative;">
+                        <img src="${movie.image}" alt="${movie.title}" class="movie-image">
+                        <div class="movie-info">
+                            <div class="movie-title">${movie.title}</div>
+                            <div class="movie-intro">${movie.intro}</div>
+                        </div>
+                        <div class="movie-topics">
+                            ${movie.topics.map(topic => `<span class="movie-topic">${topic}</span>`).join(' ')}
+                        </div>
+                    </div>`;
+            }
+        });
+
+        if (shown === 0) {
+            newHTML = `<div class="no-results">No resources found.</div>`;
+        }
+
+        grid.innerHTML = newHTML;
+
+        // Add click event listeners for popups
+        document.querySelectorAll('.movie-card').forEach(card => {
+            card.onclick = function() {
+                const idx = this.getAttribute('data-index');
+                showPopup(movies[idx].popup);
+            };
+            card.onkeydown = function(e) {
+                if (e.key === "Enter" || e.key === " ") {
+                    const idx = this.getAttribute('data-index');
+                    showPopup(movies[idx].popup);
+                }
+            };
+        });
+    }
+
+    function showPopup(html) {
+        const overlay = document.getElementById('popupOverlay');
+        const content = document.getElementById('popupContent');
+        content.querySelector('.popup-close').onclick = hidePopup;
+        content.innerHTML = `<button class="popup-close" id="popupClose">&times;</button>` + html;
+        overlay.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+        document.getElementById('popupClose').onclick = hidePopup;
+        overlay.onclick = function(e) {
+            if (e.target === overlay) hidePopup();
+        };
+        document.onkeydown = function(e) {
+            if (e.key === "Escape") hidePopup();
+        };
+    }
+
+    function hidePopup() {
+        document.getElementById('popupOverlay').style.display = 'none';
+        document.body.style.overflow = '';
+        document.onkeydown = null;
+    }
+
+    renderMoviesCatalogue();
+
+    document.getElementById('searchInput').addEventListener('input', function() {
+        renderMoviesCatalogue(this.value);
+    });
+
+    const topicCheckboxes = document.querySelectorAll('.topic-filters input[type="checkbox"]');
+    topicCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            this.parentElement.classList.toggle('active', this.checked);
+            const searchValue = document.getElementById('searchInput').value;
+            renderMoviesCatalogue(searchValue);
+        });
+        if (checkbox.checked) {
+            checkbox.parentElement.classList.add('active');
+        }
+    });
+    </script>
+    <style>
+    /* ...existing styles from your file... */
+    /* Add styles for movie topics badge */
+    .movie-topics {
+        position: absolute;
+        bottom: 12px;
+        right: 16px;
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        z-index: 2;
+    }
+    .movie-topic {
+        background: #DD1F25;
+        color: #fff;
+        font-size: 0.95rem;
+        font-weight: 600;
+        padding: 6px 14px;
+        border-radius: 14px;
+        box-shadow: 0 2px 8px rgba(221, 31, 37, 0.10);
+        letter-spacing: 0.5px;
+        opacity: 0.93;
+        pointer-events: none;
+        margin-bottom: 2px;
+    }
+    </style>
+</body>
+</html>
