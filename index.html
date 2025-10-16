@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="images/favicon.png">
-    <link rel="manifest" href="/manifest.webmanifest">
     <meta name="theme-color" content="#ffffff">
     <title>Bourne to Translate</title>
     <style>
@@ -89,6 +88,22 @@
             border-color: #b8000f;
             box-shadow: 0 4px 16px rgba(221, 31, 37, 0.15);
             transform: scale(1.04);
+        }
+
+        .header-favicon {
+            display: none;
+            position: fixed;
+            top: 55px;
+            right: 20px;
+            width: 100px;
+            height: 100px;
+            z-index: 99;
+        }
+
+        @media (min-width: 1024px) {
+            .header-favicon {
+                display: block;
+            }
         }
 
         .container {
@@ -213,6 +228,7 @@
             background-color: #DD1F25;
             padding: 40px 20px;
             margin-top: 60px;
+            position: relative;
         }
 
         .contributors-title {
@@ -474,6 +490,8 @@
             <a href="general-resources.html" class="resources-button">Useful Resources</a>
         </div>
     </div>
+
+    <img src="images/favicon.png" alt="Favicon" class="header-favicon">
 
     <div class="container">
         <h1 class="title">Bourne to Translate</h1>
