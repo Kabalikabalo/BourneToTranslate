@@ -185,13 +185,13 @@
         }
         
         /* Subtle stagger animation for each card */
-        .story-card:nth-child(1) { animation-delay: 0.4s; }
-        .story-card:nth-child(2) { animation-delay: 0.5s; }
-        .story-card:nth-child(3) { animation-delay: 0.6s; }
-        .story-card:nth-child(4) { animation-delay: 0.7s; }
-        .story-card:nth-child(5) { animation-delay: 0.8s; }
-        .story-card:nth-child(6) { animation-delay: 0.9s; }
-        .story-card:nth-child(n+7) { animation-delay: 1s; }
+        .story-card:nth-child(1) { animation-delay: 0.05s; }
+        .story-card:nth-child(2) { animation-delay: 0.1s; }
+        .story-card:nth-child(3) { animation-delay: 0.15s; }
+        .story-card:nth-child(4) { animation-delay: 0.2s; }
+        .story-card:nth-child(5) { animation-delay: 0.25s; }
+        .story-card:nth-child(6) { animation-delay: 0.3s; }
+        .story-card:nth-child(n+7) { animation-delay: 0.35s; }
         
         @keyframes cardAppear {
             to {
@@ -280,6 +280,29 @@
         
         .story-card:hover .story-intro {
             opacity: 1;
+        }
+        
+        /* Loading spinner */
+        .loading-spinner {
+            grid-column: 1/-1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 3em 2em;
+        }
+        
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #DD1F25;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
         
         /* No results message */
@@ -380,6 +403,13 @@
             yearGroup: 7
         },
         {
+            title: "El zodíaco Chino",
+            intro: "Animales, Extension...",
+            image: "SpanishStories/El zodiaco chino/ratbull.png",
+            url: "SpanishStories/El zodiaco chino/index.html",
+            yearGroup: 9
+        },
+        {
             title: "Mi familia divertida",
             intro: "Personalidad, animales...",
             image: "SpanishStories/Mi familia divertida/sisters.png",
@@ -391,13 +421,6 @@
             intro: "Mitología, aventuras...",
             image: "SpanishStories/El leon de nemea/hercules.png",
             url: "SpanishStories/El leon de nemea/index.html",
-            yearGroup: 9
-        },
-                {
-            title: "El zodíaco Chino",
-            intro: "Animales, Extension...",
-            image: "SpanishStories/El zodiaco chino/ratbull.png",
-            url: "SpanishStories/El zodiaco chino/index.html",
             yearGroup: 9
         },
         {
@@ -518,32 +541,22 @@
         return selected;
     }
 
-    function renderCatalogue(filter='') {
+    function renderCatalogue(filter='', showLoading=false) {
         const grid = document.getElementById('storiesGrid');
         const normalizedFilter = normalizeText(filter);
         const selectedYears = getSelectedYearGroups();
         
-        let shown = 0;
-        const currentCards = grid.querySelectorAll('.story-card');
+        // Show loading spinner briefly
+        if (showLoading) {
+            grid.innerHTML = '<div class="loading-spinner"><div class="spinner"></div></div>';
+            // Use requestAnimationFrame to render immediately after showing spinner
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => renderCatalogue(filter, false));
+            });
+            return;
+        }
         
-        // Animate out cards that don't match
-        currentCards.forEach(card => {
-            const title = card.getAttribute('data-title');
-            const intro = card.getAttribute('data-intro');
-            const yearGroup = parseInt(card.getAttribute('data-year'));
-            const matchesFilter = !normalizedFilter || 
-                normalizeText(title).includes(normalizedFilter) ||
-                normalizeText(intro).includes(normalizedFilter);
-            const matchesYear = selectedYears.length === 0 || selectedYears.includes(yearGroup);
-            
-            if ((!matchesFilter || !matchesYear) && !card.classList.contains('hiding')) {
-                card.classList.add('hiding');
-                setTimeout(() => {
-                    renderCatalogue(filter);
-                }, 300);
-                return;
-            }
-        });
+        let shown = 0;
         
         // Build fresh grid
         let newHTML = '';
@@ -559,9 +572,8 @@
                         <a class="story-card" href="${story.url}" 
                            data-title="${story.title}" 
                            data-intro="${story.intro}"
-                           data-year="${story.yearGroup}"
-                           style="animation-delay: ${0.05 * index}s; position: relative;">
-                            <img src="${story.image}" alt="${story.title}" class="story-image">
+                           data-year="${story.yearGroup}">
+                            <img src="${story.image}" alt="${story.title}" class="story-image" loading="lazy">
                             <div class="story-info">
                                 <div class="story-title">${story.title}</div>
                                 <div class="story-intro">${story.intro}</div>
@@ -581,7 +593,7 @@
     renderCatalogue();
 
     document.getElementById('searchInput').addEventListener('input', function() {
-        renderCatalogue(this.value);
+        renderCatalogue(this.value, true);
     });
 
     // Add event listeners to year filter checkboxes
@@ -592,7 +604,7 @@
             this.parentElement.classList.toggle('active', this.checked);
             // Re-render catalogue
             const searchValue = document.getElementById('searchInput').value;
-            renderCatalogue(searchValue);
+            renderCatalogue(searchValue, true);
         });
         
         // Initialize active state
