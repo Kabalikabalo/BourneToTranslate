@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Le lion et la souris</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: Georgia, 'Times New Roman', serif;
+            background: #f5f5f5; 
+            color: #2a2a2a;
+            line-height: 1.8;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            background-color: #0055A4;
+            height: 65px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .back-button {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 8px 18px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        .back-button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateX(-5px);
+        }
+        .back-arrow { font-size: 1.3rem; }
+
+        /* Toggle Container */
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .toggle-label { color: white; font-size: 0.95rem; font-weight: 400; }
+        .toggle-switch {
+            position: relative;
+            width: 55px;
+            height: 28px;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .toggle-switch.active { background-color: rgba(255, 255, 255, 0.5); }
+        .toggle-slider {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 22px;
+            height: 22px;
+            background-color: white;
+            border-radius: 50%;
+            transition: transform 0.3s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .toggle-switch.active .toggle-slider { transform: translateX(27px); }
+
+        /* Hero Banner */
+        .hero-banner {
+            position: relative;
+            width: 100%;
+            height: 320px;
+            background-image: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url('trap.png');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 50px;
+        }
+        .story-title {
+            font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+            font-size: 3.5rem;
+            font-weight: 400;
+            color: white;
+            text-align: center;
+            text-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            letter-spacing: 1px;
+        }
+
+        /* Story Content */
+        .container { 
+            max-width: 750px; 
+            margin: 0 auto; 
+            padding: 20px 30px 60px 30px; 
+        }
+        .story-block { 
+            margin-bottom: 1.8em;
+            position: relative;
+        }
+        .sentence { 
+            font-size: 1.25rem;
+            font-weight: 400;
+            color: #1a1a1a;
+            display: inline;
+        }
+        .translate-btn {
+            display: inline-block;
+            margin-left: 8px;
+            font-size: 0.75rem;
+            color: #0055A4;
+            background: transparent;
+            border: 1px solid #0055A4;
+            padding: 2px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Segoe UI', sans-serif;
+            font-weight: 500;
+            opacity: 0.7;
+        }
+        .translate-btn:hover {
+            opacity: 1;
+            background: #0055A4;
+            color: white;
+        }
+        .translation { 
+            color: #666;
+            font-size: 1.05rem;
+            display: none;
+            margin-top: 6px;
+            font-style: italic;
+            padding-left: 20px;
+            border-left: 2px solid #0055A4;
+        }
+        .translation.show { display: block; }
+        .story-image { 
+            display: block; 
+            margin: 3em auto; 
+            max-width: 100%; 
+            height: auto;
+            border-radius: 8px; 
+            box-shadow: 0 6px 24px rgba(0,0,0,0.12); 
+        }
+
+        @media (max-width: 768px) {
+            .navbar { height: 60px; padding: 0 20px; }
+            .hero-banner { height: 250px; }
+            .story-title { font-size: 2.5rem; }
+            .container { padding: 20px 20px 50px 20px; }
+            .sentence { font-size: 1.15rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <a href="../../french-stories.html" class="back-button">
+            <span class="back-arrow">←</span>
+            <span>Back</span>
+        </a>
+        <div class="toggle-container">
+            <span class="toggle-label">Show All Translations</span>
+            <div class="toggle-switch" id="toggleSwitch" onclick="toggleAllTranslations()">
+                <div class="toggle-slider"></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Banner with Story Title -->
+    <div class="hero-banner">
+        <h1 class="story-title">Le lion et la souris</h1>
+    </div>
+
+    <!-- Story Content -->
+    <div class="container">
+        <div class="story-block">
+            <span class="sentence">Il y a très longtemps, le soleil traversait le ciel trop vite.</span>
+            <button class="translate-btn" onclick="toggleTranslation(0)">TRANSLATE</button>
+            <div class="translation" id="trans-0">A long time ago, the sun moved too quickly across the sky.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">Les jours étaient courts, et les gens n’avaient pas le temps de travailler, de cuisiner ou de se reposer.</span>
+            <button class="translate-btn" onclick="toggleTranslation(1)">TRANSLATE</button>
+            <div class="translation" id="trans-1">The days were short, and people had no time to work, cook, or rest.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">Les plantes commençaient à mourir parce que la lumière du soleil disparaissait trop tôt.</span>
+            <button class="translate-btn" onclick="toggleTranslation(2)">TRANSLATE</button>
+            <div class="translation" id="trans-2">The plants began to die because the sunlight disappeared too soon.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">Māui, un jeune homme courageux et intelligent, regardait le ciel chaque jour.</span>
+            <button class="translate-btn" onclick="toggleTranslation(3)">TRANSLATE</button>
+            <div class="translation" id="trans-3">Māui, a brave and clever young man, watched the sky every day.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">Un jour, il dit à ses frères :</span>
+            <button class="translate-btn" onclick="toggleTranslation(4)">TRANSLATE</button>
+            <div class="translation" id="trans-4">One day he said to his brothers,</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">« Le soleil va trop vite ! Nous devons le ralentir. »</span>
+            <button class="translate-btn" onclick="toggleTranslation(5)">TRANSLATE</button>
+            <div class="translation" id="trans-5">“The sun moves too fast! We must slow it down.”</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">Ses frères ont ri.</span>
+            <button class="translate-btn" onclick="toggleTranslation(6)">TRANSLATE</button>
+            <div class="translation" id="trans-6">His brothers laughed.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">« Tu ne peux pas attraper le soleil — il va te brûler ! »</span>
+            <button class="translate-btn" onclick="toggleTranslation(7)">TRANSLATE</button>
+            <div class="translation" id="trans-7">“You can’t catch the sun — it will burn you!”</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">Mais Māui n’a pas abandonné.</span>
+            <button class="translate-btn" onclick="toggleTranslation(8)">TRANSLATE</button>
+            <div class="translation" id="trans-8">But Māui didn’t give up.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">Il a fabriqué une corde magique avec les cheveux de sa mère et des branches solides.</span>
+            <button class="translate-btn" onclick="toggleTranslation(9)">TRANSLATE</button>
+            <div class="translation" id="trans-9">He made a magic rope from his mother’s hair and strong branches.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">Quand la nuit est tombée, Māui et ses frères ont marché doucement vers l’est, là où le soleil se lève.</span>
+            <button class="translate-btn" onclick="toggleTranslation(10)">TRANSLATE</button>
+            <div class="translation" id="trans-10">When night came, Māui and his brothers walked quietly to the east, where the sun rises.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">Ils ont construit un mur de pierre et se sont cachés derrière.</span>
+            <button class="translate-btn" onclick="toggleTranslation(11)">TRANSLATE</button>
+            <div class="translation" id="trans-11">They built a stone wall and hid behind it.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">Quand la première lumière est apparue, Māui a crié :</span>
+            <button class="translate-btn" onclick="toggleTranslation(12)">TRANSLATE</button>
+            <div class="translation" id="trans-12">When the first light appeared, Māui shouted,</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">« Maintenant ! Tirez sur la corde ! »</span>
+            <button class="translate-btn" onclick="toggleTranslation(13)">TRANSLATE</button>
+            <div class="translation" id="trans-13">“Now! Pull the rope!”</div>
+        </div>
+        <img src="trap.png" class="story-image" alt="Story illustration">
+        <div class="story-block">
+            <span class="sentence">Le soleil a jailli de l’horizon, furieux et brillant.</span>
+            <button class="translate-btn" onclick="toggleTranslation(14)">TRANSLATE</button>
+            <div class="translation" id="trans-14">The sun burst from the horizon, angry and bright.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">Il s’est débattu, mais Māui a tenu bon.</span>
+            <button class="translate-btn" onclick="toggleTranslation(15)">TRANSLATE</button>
+            <div class="translation" id="trans-15">It fought against them, but Māui held tight.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">« Promets de te déplacer plus lentement ! » cria-t-il.</span>
+            <button class="translate-btn" onclick="toggleTranslation(16)">TRANSLATE</button>
+            <div class="translation" id="trans-16">“Promise to move more slowly!” he cried.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">Le soleil s’est fatigué et a finalement accepté.</span>
+            <button class="translate-btn" onclick="toggleTranslation(17)">TRANSLATE</button>
+            <div class="translation" id="trans-17">The sun grew tired and finally agreed.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">« D’accord, » dit le soleil. « Je brillerai plus lentement, ainsi vos jours seront plus longs. »</span>
+            <button class="translate-btn" onclick="toggleTranslation(18)">TRANSLATE</button>
+            <div class="translation" id="trans-18">“Alright,” said the sun. “I will shine more slowly, so your days will be longer.”</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">Depuis ce jour, le soleil traverse calmement le ciel.</span>
+            <button class="translate-btn" onclick="toggleTranslation(19)">TRANSLATE</button>
+            <div class="translation" id="trans-19">From that day on, the sun moved calmly across the sky.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">Les gens pouvaient travailler, cuisiner et rire à la lumière.</span>
+            <button class="translate-btn" onclick="toggleTranslation(20)">TRANSLATE</button>
+            <div class="translation" id="trans-20">People could work, cook, and laugh in the light.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">Et quand le soleil se couche lentement le soir, tout le monde se souvient de Māui, le héros qui a dompté le soleil.</span>
+            <button class="translate-btn" onclick="toggleTranslation(21)">TRANSLATE</button>
+            <div class="translation" id="trans-21">And when the sun sets slowly in the evening, everyone remembers Māui, the hero who tamed the sun.</div>
+        </div>
+    </div>
+
+    <script>
+        let allTranslationsVisible = false;
+
+        function toggleTranslation(id) {{
+            const trans = document.getElementById('trans-' + id);
+            trans.classList.toggle('show');
+        }}
+
+        function toggleAllTranslations() {{
+            const toggle = document.getElementById('toggleSwitch');
+            const translations = document.querySelectorAll('.translation');
+
+            allTranslationsVisible = !allTranslationsVisible;
+            toggle.classList.toggle('active');
+
+            translations.forEach(translation => {{
+                if (allTranslationsVisible) {{
+                    translation.classList.add('show');
+                }} else {{
+                    translation.classList.remove('show');
+                }}
+            }});
+        }}
+    </script>
+</body>
+</html>
