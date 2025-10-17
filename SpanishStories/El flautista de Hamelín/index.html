@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>El flautista de Hamelín</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: Georgia, 'Times New Roman', serif;
+            background: #f5f5f5; 
+            color: #2a2a2a;
+            line-height: 1.8;
+        }
+
+        /* Red Navigation Bar */
+        .navbar {
+            background-color: #DD1F25;
+            height: 65px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .back-button {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 8px 18px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        .back-button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateX(-5px);
+        }
+        .back-arrow { font-size: 1.3rem; }
+
+        /* Toggle Container */
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .toggle-label { color: white; font-size: 0.95rem; font-weight: 400; }
+        .toggle-switch {
+            position: relative;
+            width: 55px;
+            height: 28px;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .toggle-switch.active { background-color: rgba(255, 255, 255, 0.5); }
+        .toggle-slider {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 22px;
+            height: 22px;
+            background-color: white;
+            border-radius: 50%;
+            transition: transform 0.3s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .toggle-switch.active .toggle-slider { transform: translateX(27px); }
+
+        /* Hero Banner */
+        .hero-banner {
+            position: relative;
+            width: 100%;
+            height: 320px;
+            background-image: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url('rats.png');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 50px;
+        }
+        .story-title {
+            font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+            font-size: 3.5rem;
+            font-weight: 400;
+            color: white;
+            text-align: center;
+            text-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            letter-spacing: 1px;
+        }
+
+        /* Story Content */
+        .container { 
+            max-width: 750px; 
+            margin: 0 auto; 
+            padding: 20px 30px 60px 30px; 
+        }
+        .story-block { 
+            margin-bottom: 1.8em;
+            position: relative;
+        }
+        .sentence { 
+            font-size: 1.25rem;
+            font-weight: 400;
+            color: #1a1a1a;
+            display: inline;
+        }
+        .translate-btn {
+            display: inline-block;
+            margin-left: 8px;
+            font-size: 0.75rem;
+            color: #DD1F25;
+            background: transparent;
+            border: 1px solid #DD1F25;
+            padding: 2px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Segoe UI', sans-serif;
+            font-weight: 500;
+            opacity: 0.7;
+        }
+        .translate-btn:hover {
+            opacity: 1;
+            background: #DD1F25;
+            color: white;
+        }
+        .translation { 
+            color: #666;
+            font-size: 1.05rem;
+            display: none;
+            margin-top: 6px;
+            font-style: italic;
+            padding-left: 20px;
+            border-left: 2px solid #DD1F25;
+        }
+        .translation.show { display: block; }
+        .story-image { 
+            display: block; 
+            margin: 3em auto; 
+            max-width: 100%; 
+            height: auto;
+            border-radius: 8px; 
+            box-shadow: 0 6px 24px rgba(0,0,0,0.12); 
+        }
+
+        @media (max-width: 768px) {
+            .navbar { height: 60px; padding: 0 20px; }
+            .hero-banner { height: 250px; }
+            .story-title { font-size: 2.5rem; }
+            .container { padding: 20px 20px 50px 20px; }
+            .sentence { font-size: 1.15rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <a href="../../spanish-stories.html" class="back-button">
+            <span class="back-arrow">←</span>
+            <span>Back</span>
+        </a>
+        <div class="toggle-container">
+            <span class="toggle-label">Show All Translations</span>
+            <div class="toggle-switch" id="toggleSwitch" onclick="toggleAllTranslations()">
+                <div class="toggle-slider"></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Banner with Story Title -->
+    <div class="hero-banner">
+        <h1 class="story-title">El flautista de Hamelín</h1>
+    </div>
+
+    <!-- Story Content -->
+    <div class="container">
+        <div class="story-block">
+            <span class="sentence">Había una vez un pueblo llamado Hamelín que tenía un gran problema con ratas.</span>
+            <button class="translate-btn" onclick="toggleTranslation(0)">TRANSLATE</button>
+            <div class="translation" id="trans-0">Once upon a time, there was a town called Hamelin that had a big problem with rats.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">Las ratas estaban por todas partes: en las casas, en los campos y hasta en las cocinas.</span>
+            <button class="translate-btn" onclick="toggleTranslation(1)">TRANSLATE</button>
+            <div class="translation" id="trans-1">The rats were everywhere — in the houses, the fields, and even in the kitchens.</div>
+        </div>
+        <img src="rats.png" class="story-image" alt="Story illustration">
+        <div class="story-block">
+            <span class="sentence">Corrían por las calles, comían la comida y asustaban a los niños.</span>
+            <button class="translate-btn" onclick="toggleTranslation(2)">TRANSLATE</button>
+            <div class="translation" id="trans-2">They ran through the streets, ate the food, and frightened the children.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">Un día llegó un hombre vestido con ropas de colores brillantes y una flauta larga y dorada.</span>
+            <button class="translate-btn" onclick="toggleTranslation(3)">TRANSLATE</button>
+            <div class="translation" id="trans-3">One day, a man arrived wearing bright-colored clothes and carrying a long golden flute.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">Dijo con voz tranquila que podía liberar al pueblo de las ratas si le daban una recompensa justa.</span>
+            <button class="translate-btn" onclick="toggleTranslation(4)">TRANSLATE</button>
+            <div class="translation" id="trans-4">He said calmly that he could free the town from the rats if they gave him a fair reward.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">Los habitantes, cansados y desesperados, aceptaron su trato.</span>
+            <button class="translate-btn" onclick="toggleTranslation(5)">TRANSLATE</button>
+            <div class="translation" id="trans-5">The townspeople, tired and desperate, agreed to his deal.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">Entonces, el flautista levantó su flauta y empezó a tocar una melodía mágica.</span>
+            <button class="translate-btn" onclick="toggleTranslation(6)">TRANSLATE</button>
+            <div class="translation" id="trans-6">Then, the piper raised his flute and began to play a magical melody.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">El sonido era tan dulce que las ratas salieron de cada rincón y lo siguieron por las calles.</span>
+            <button class="translate-btn" onclick="toggleTranslation(7)">TRANSLATE</button>
+            <div class="translation" id="trans-7">The sound was so sweet that the rats came out of every corner and followed him through the streets.</div>
+        </div>
+        <img src="ratsfollow.png" class="story-image" alt="Story illustration">
+        <div class="story-block">
+            <span class="sentence">Cruzaron el puente y llegaron al río, donde una a una se lanzaron al agua y desaparecieron.</span>
+            <button class="translate-btn" onclick="toggleTranslation(8)">TRANSLATE</button>
+            <div class="translation" id="trans-8">They crossed the bridge and reached the river, where one by one they jumped into the water and disappeared.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">El pueblo celebró con alegría, pero cuando el flautista volvió por su pago, los aldeanos se negaron a pagarle.</span>
+            <button class="translate-btn" onclick="toggleTranslation(9)">TRANSLATE</button>
+            <div class="translation" id="trans-9">The town celebrated with joy, but when the piper came back for his payment, the villagers refused to give him the money.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">“Ya hiciste tu trabajo, no necesitamos darte tanto,” dijeron.</span>
+            <button class="translate-btn" onclick="toggleTranslation(10)">TRANSLATE</button>
+            <div class="translation" id="trans-10">"You’ve done your job, we don’t need to give you so much," they said.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">El flautista bajó la mirada, triste y en silencio, y se marchó.</span>
+            <button class="translate-btn" onclick="toggleTranslation(11)">TRANSLATE</button>
+            <div class="translation" id="trans-11">The piper lowered his eyes, sad and silent, and walked away.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">Pero al amanecer del día siguiente, regresó al pueblo.</span>
+            <button class="translate-btn" onclick="toggleTranslation(12)">TRANSLATE</button>
+            <div class="translation" id="trans-12">But at dawn the next day, he returned to the town.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">Tocó otra melodía, más suave y misteriosa.</span>
+            <button class="translate-btn" onclick="toggleTranslation(13)">TRANSLATE</button>
+            <div class="translation" id="trans-13">He played another melody, softer and more mysterious.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">Esta vez, no salieron ratas, sino todos los niños del pueblo.</span>
+            <button class="translate-btn" onclick="toggleTranslation(14)">TRANSLATE</button>
+            <div class="translation" id="trans-14">This time, no rats came out — all the children of the town did.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">Los niños sonreían y bailaban mientras seguían al flautista hacia las montañas.</span>
+            <button class="translate-btn" onclick="toggleTranslation(15)">TRANSLATE</button>
+            <div class="translation" id="trans-15">The children smiled and danced as they followed the piper toward the mountains.</div>
+        </div>
+        <img src="kidsfollow.png" class="story-image" alt="Story illustration">
+        <div class="story-block">
+            <span class="sentence">Los padres corrieron detrás, gritando sus nombres, pero el sonido de la flauta los cubrió como el viento.</span>
+            <button class="translate-btn" onclick="toggleTranslation(16)">TRANSLATE</button>
+            <div class="translation" id="trans-16">The parents ran after them, shouting their names, but the sound of the flute covered their voices like the wind.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">Cuando el flautista y los niños desaparecieron entre las colinas, el pueblo quedó en silencio.</span>
+            <button class="translate-btn" onclick="toggleTranslation(17)">TRANSLATE</button>
+            <div class="translation" id="trans-17">When the piper and the children vanished among the hills, the town fell silent.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">Desde aquel día, nadie volvió a ver a los niños de Hamelín.</span>
+            <button class="translate-btn" onclick="toggleTranslation(18)">TRANSLATE</button>
+            <div class="translation" id="trans-18">From that day on, no one ever saw the children of Hamelin again.</div>
+        </div>
+    </div>
+
+    <script>
+        let allTranslationsVisible = false;
+
+        function toggleTranslation(id) {{
+            const trans = document.getElementById('trans-' + id);
+            trans.classList.toggle('show');
+        }}
+
+        function toggleAllTranslations() {{
+            const toggle = document.getElementById('toggleSwitch');
+            const translations = document.querySelectorAll('.translation');
+
+            allTranslationsVisible = !allTranslationsVisible;
+            toggle.classList.toggle('active');
+
+            translations.forEach(translation => {{
+                if (allTranslationsVisible) {{
+                    translation.classList.add('show');
+                }} else {{
+                    translation.classList.remove('show');
+                }}
+            }});
+        }}
+    </script>
+</body>
+</html>
