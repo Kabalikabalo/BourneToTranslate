@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Beowulf</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: Georgia, 'Times New Roman', serif;
+            background: #f5f5f5; 
+            color: #2a2a2a;
+            line-height: 1.8;
+        }
+
+        /* Red Navigation Bar */
+        .navbar {
+            background-color: #DD1F25;
+            height: 65px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .back-button {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 8px 18px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        .back-button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateX(-5px);
+        }
+        .back-arrow { font-size: 1.3rem; }
+
+        /* Toggle Container */
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .toggle-label { color: white; font-size: 0.95rem; font-weight: 400; }
+        .toggle-switch {
+            position: relative;
+            width: 55px;
+            height: 28px;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .toggle-switch.active { background-color: rgba(255, 255, 255, 0.5); }
+        .toggle-slider {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 22px;
+            height: 22px;
+            background-color: white;
+            border-radius: 50%;
+            transition: transform 0.3s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .toggle-switch.active .toggle-slider { transform: translateX(27px); }
+
+        /* Hero Banner */
+        .hero-banner {
+            position: relative;
+            width: 100%;
+            height: 320px;
+            background-image: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url('heorot.jpeg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 50px;
+        }
+        .story-title {
+            font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+            font-size: 3.5rem;
+            font-weight: 400;
+            color: white;
+            text-align: center;
+            text-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            letter-spacing: 1px;
+        }
+
+        /* Story Content */
+        .container { 
+            max-width: 750px; 
+            margin: 0 auto; 
+            padding: 20px 30px 60px 30px; 
+        }
+        .story-block { 
+            margin-bottom: 1.8em;
+            position: relative;
+        }
+        .sentence { 
+            font-size: 1.25rem;
+            font-weight: 400;
+            color: #1a1a1a;
+            display: inline;
+        }
+        .translate-btn {
+            display: inline-block;
+            margin-left: 8px;
+            font-size: 0.75rem;
+            color: #DD1F25;
+            background: transparent;
+            border: 1px solid #DD1F25;
+            padding: 2px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Segoe UI', sans-serif;
+            font-weight: 500;
+            opacity: 0.7;
+        }
+        .translate-btn:hover {
+            opacity: 1;
+            background: #DD1F25;
+            color: white;
+        }
+        .translation { 
+            color: #666;
+            font-size: 1.05rem;
+            display: none;
+            margin-top: 6px;
+            font-style: italic;
+            padding-left: 20px;
+            border-left: 2px solid #DD1F25;
+        }
+        .translation.show { display: block; }
+        .story-image { 
+            display: block; 
+            margin: 3em auto; 
+            max-width: 100%; 
+            height: auto;
+            border-radius: 8px; 
+            box-shadow: 0 6px 24px rgba(0,0,0,0.12); 
+        }
+
+        @media (max-width: 768px) {
+            .navbar { height: 60px; padding: 0 20px; }
+            .hero-banner { height: 250px; }
+            .story-title { font-size: 2.5rem; }
+            .container { padding: 20px 20px 50px 20px; }
+            .sentence { font-size: 1.15rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <a href="../../spanish-stories.html" class="back-button">
+            <span class="back-arrow">←</span>
+            <span>Back</span>
+        </a>
+        <div class="toggle-container">
+            <span class="toggle-label">Show All Translations</span>
+            <div class="toggle-switch" id="toggleSwitch" onclick="toggleAllTranslations()">
+                <div class="toggle-slider"></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Banner with Story Title -->
+    <div class="hero-banner">
+        <h1 class="story-title">Beowulf</h1>
+    </div>
+
+    <!-- Story Content -->
+    <div class="container">
+        <div class="story-block">
+            <span class="sentence">Beowulf es uno de los poemas más antiguos de la literatura anglosajona, escrito hace más de mil años.</span>
+            <button class="translate-btn" onclick="toggleTranslation(0)">TRANSLATE</button>
+            <div class="translation" id="trans-0">Beowulf is one of the oldest poems in Anglo-Saxon literature, written over a thousand years ago.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">Cuenta la historia de un héroe del norte que enfrenta monstruos para devolver la paz a la tierra.</span>
+            <button class="translate-btn" onclick="toggleTranslation(1)">TRANSLATE</button>
+            <div class="translation" id="trans-1">It tells the story of a northern hero who faces monsters to bring peace to the land.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">En Dinamarca, el rey Hrothgar construyó un gran salón llamado Heorot, donde su pueblo cantaba y celebraba.</span>
+            <button class="translate-btn" onclick="toggleTranslation(2)">TRANSLATE</button>
+            <div class="translation" id="trans-2">In Denmark, King Hrothgar built a great hall called Heorot, where his people sang and celebrated.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">Pero un monstruo del pantano, nacido del odio y descendiente de Caín, odiaba su alegría.</span>
+            <button class="translate-btn" onclick="toggleTranslation(3)">TRANSLATE</button>
+            <div class="translation" id="trans-3">But a swamp monster, born of hatred and descended from Cain, hated their joy.</div>
+        </div>
+        <img src="heorot.jpeg" class="story-image" alt="Story illustration">
+        <div class="story-block">
+            <span class="sentence">Su nombre era Grendel, y durante doce años aterrorizó a los hombres de Heorot.</span>
+            <button class="translate-btn" onclick="toggleTranslation(4)">TRANSLATE</button>
+            <div class="translation" id="trans-4">His name was Grendel, and for twelve years he terrorized the men of Heorot.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">En la tierra de los gautas vivía un príncipe llamado Beowulf, conocido por sus hazañas de batalla.</span>
+            <button class="translate-btn" onclick="toggleTranslation(5)">TRANSLATE</button>
+            <div class="translation" id="trans-5">In the land of the Geats lived a prince named Beowulf, known for his feats of battle.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">Al oír del sufrimiento de Hrothgar, cruzó el mar para ofrecer su ayuda.</span>
+            <button class="translate-btn" onclick="toggleTranslation(6)">TRANSLATE</button>
+            <div class="translation" id="trans-6">Hearing of Hrothgar’s suffering, he crossed the sea to offer his help.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">Esa noche, Beowulf esperó al monstruo en el gran salón.</span>
+            <button class="translate-btn" onclick="toggleTranslation(7)">TRANSLATE</button>
+            <div class="translation" id="trans-7">That night, Beowulf waited for the monster in the great hall.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">Grendel llegó rugiendo; tomó a un guerrero dormido, pero Beowulf atrapó su brazo con fuerza.</span>
+            <button class="translate-btn" onclick="toggleTranslation(8)">TRANSLATE</button>
+            <div class="translation" id="trans-8">Grendel came roaring; he seized a sleeping warrior, but Beowulf caught his arm with great strength.</div>
+        </div>
+        <img src="fight.jpeg" class="story-image" alt="Story illustration">
+        <div class="story-block">
+            <span class="sentence">El monstruo intentó escapar, pero el héroe tiró con furia hasta arrancarle el brazo.</span>
+            <button class="translate-btn" onclick="toggleTranslation(9)">TRANSLATE</button>
+            <div class="translation" id="trans-9">The monster tried to flee, but the hero pulled with fury until he tore off its arm.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">Grendel huyó al pantano, dejando tras de sí un rastro de sangre y gritos.</span>
+            <button class="translate-btn" onclick="toggleTranslation(10)">TRANSLATE</button>
+            <div class="translation" id="trans-10">Grendel fled to the swamp, leaving behind a trail of blood and cries.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">El pueblo celebró, pero la madre de Grendel salió del lago oscuro para vengarlo.</span>
+            <button class="translate-btn" onclick="toggleTranslation(11)">TRANSLATE</button>
+            <div class="translation" id="trans-11">The people celebrated, but Grendel’s mother rose from the dark lake to avenge him.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">Beowulf descendió al agua y luchó con ella en su guarida profunda.</span>
+            <button class="translate-btn" onclick="toggleTranslation(12)">TRANSLATE</button>
+            <div class="translation" id="trans-12">Beowulf descended into the water and fought her in her deep lair.</div>
+        </div>
+        <img src="underwater.jpeg" class="story-image" alt="Story illustration">
+        <div class="story-block">
+            <span class="sentence">Su espada común se rompió, pero halló una espada mágica colgada en la pared.</span>
+            <button class="translate-btn" onclick="toggleTranslation(13)">TRANSLATE</button>
+            <div class="translation" id="trans-13">His ordinary sword broke, but he found a magic blade hanging on the wall.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">Con un solo golpe cortó la cabeza de la bestia, y el lago se volvió tranquilo otra vez.</span>
+            <button class="translate-btn" onclick="toggleTranslation(14)">TRANSLATE</button>
+            <div class="translation" id="trans-14">With a single stroke he cut off the creature’s head, and the lake grew calm once more.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">Beowulf regresó a Heorot como el héroe que trajo de nuevo la paz.</span>
+            <button class="translate-btn" onclick="toggleTranslation(15)">TRANSLATE</button>
+            <div class="translation" id="trans-15">Beowulf returned to Heorot as the hero who brought peace once again.</div>
+        </div>
+    </div>
+
+    <script>
+        let allTranslationsVisible = false;
+
+        function toggleTranslation(id) {{
+            const trans = document.getElementById('trans-' + id);
+            trans.classList.toggle('show');
+        }}
+
+        function toggleAllTranslations() {{
+            const toggle = document.getElementById('toggleSwitch');
+            const translations = document.querySelectorAll('.translation');
+
+            allTranslationsVisible = !allTranslationsVisible;
+            toggle.classList.toggle('active');
+
+            translations.forEach(translation => {{
+                if (allTranslationsVisible) {{
+                    translation.classList.add('show');
+                }} else {{
+                    translation.classList.remove('show');
+                }}
+            }});
+        }}
+    </script>
+</body>
+</html>
