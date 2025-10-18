@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>El mono y el cocodrilo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: Georgia, 'Times New Roman', serif;
+            background: #f5f5f5; 
+            color: #2a2a2a;
+            line-height: 1.8;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            background-color: #DD1F25;
+            height: 65px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .back-button {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 8px 18px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        .back-button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateX(-5px);
+        }
+        .back-arrow { font-size: 1.3rem; }
+
+        /* Toggle Container */
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .toggle-label { color: white; font-size: 0.95rem; font-weight: 400; }
+        .toggle-switch {
+            position: relative;
+            width: 55px;
+            height: 28px;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .toggle-switch.active { background-color: rgba(255, 255, 255, 0.5); }
+        .toggle-slider {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 22px;
+            height: 22px;
+            background-color: white;
+            border-radius: 50%;
+            transition: transform 0.3s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .toggle-switch.active .toggle-slider { transform: translateX(27px); }
+
+        /* Hero Banner */
+        .hero-banner {
+            position: relative;
+            width: 100%;
+            height: 320px;
+            background-image: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url('1000015451.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 50px;
+        }
+        .story-title {
+            font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+            font-size: 3.5rem;
+            font-weight: 400;
+            color: white;
+            text-align: center;
+            text-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            letter-spacing: 1px;
+        }
+
+        /* Story Content */
+        .container { 
+            max-width: 750px; 
+            margin: 0 auto; 
+            padding: 20px 30px 60px 30px; 
+        }
+        .story-block { 
+            margin-bottom: 1.8em;
+            position: relative;
+        }
+        .sentence { 
+            font-size: 1.25rem;
+            font-weight: 400;
+            color: #1a1a1a;
+            display: inline;
+        }
+        .translate-btn {
+            display: inline-block;
+            margin-left: 8px;
+            font-size: 0.75rem;
+            color: #DD1F25;
+            background: transparent;
+            border: 1px solid #DD1F25;
+            padding: 2px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Segoe UI', sans-serif;
+            font-weight: 500;
+            opacity: 0.7;
+        }
+        .translate-btn:hover {
+            opacity: 1;
+            background: #DD1F25;
+            color: white;
+        }
+        .translation { 
+            color: #666;
+            font-size: 1.05rem;
+            display: none;
+            margin-top: 6px;
+            font-style: italic;
+            padding-left: 20px;
+            border-left: 2px solid #DD1F25;
+        }
+        .translation.show { display: block; }
+        .story-image { 
+            display: block; 
+            margin: 3em auto; 
+            max-width: 100%; 
+            height: auto;
+            border-radius: 8px; 
+            box-shadow: 0 6px 24px rgba(0,0,0,0.12); 
+        }
+
+        @media (max-width: 768px) {
+            .navbar { height: 60px; padding: 0 20px; }
+            .hero-banner { height: 250px; }
+            .story-title { font-size: 2.5rem; }
+            .container { padding: 20px 20px 50px 20px; }
+            .sentence { font-size: 1.15rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <a href="../../spanish-stories.html" class="back-button">
+            <span class="back-arrow">←</span>
+            <span>Back</span>
+        </a>
+        <div class="toggle-container">
+            <span class="toggle-label">Show All Translations</span>
+            <div class="toggle-switch" id="toggleSwitch" onclick="toggleAllTranslations()">
+                <div class="toggle-slider"></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Banner with Story Title -->
+    <div class="hero-banner">
+        <h1 class="story-title">El mono y el cocodrilo</h1>
+    </div>
+
+    <!-- Story Content -->
+    <div class="container">
+        <div class="story-block">
+            <span class="sentence">El mono y el cocodrilo</span>
+            <button class="translate-btn" onclick="toggleTranslation(0)">TRANSLATE</button>
+            <div class="translation" id="trans-0">The monkey and the crocodile</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">Hace mucho, mucho tiempo, había un mono que vivía en un árbol de mango a la orilla de un gran río.</span>
+            <button class="translate-btn" onclick="toggleTranslation(1)">TRANSLATE</button>
+            <div class="translation" id="trans-1">Long, long ago there was a monkey that lived in a mango tree on the banks of a great river.</div>
+        </div>
+        <img src="1000015451.jpg" class="story-image" alt="Story illustration" loading="lazy">
+        <div class="story-block">
+            <span class="sentence">Un día, un cocodrilo visitó el árbol, y juntos disfrutaron de los mangos dulces y deliciosos que crecían en la copa del árbol frutal.</span>
+            <button class="translate-btn" onclick="toggleTranslation(2)">TRANSLATE</button>
+            <div class="translation" id="trans-2">One day, a crocodile visited the tree, and together they enjoyed the sweet and delicious mangos that grew in the canopy of the fruit tree.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">Durante muchos días, el mono y el cocodrilo comieron mangos a la sombra del imponente árbol de mango, y se convirtieron en los mejores amigos.</span>
+            <button class="translate-btn" onclick="toggleTranslation(3)">TRANSLATE</button>
+            <div class="translation" id="trans-3">For many days, the monkey and the crocodile ate mangos under the shade of the towering mango tree, and they became the best of friends.</div>
+        </div>
+        <img src="1000015452.jpg" class="story-image" alt="Story illustration" loading="lazy">
+        <div class="story-block">
+            <span class="sentence">Pero un día, los celos comenzaron a crecer en el corazón de la malvada esposa del cocodrilo. Ella exigió que el cocodrilo le trajera el corazón del mono.</span>
+            <button class="translate-btn" onclick="toggleTranslation(4)">TRANSLATE</button>
+            <div class="translation" id="trans-4">But one day, jealousy began to grow in the heart of the crocodile's wicked wife. She demanded that the crocodile bring her the monkey's heart.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">—Después de todo —dijo la cocodrila—, ¡si el mono come frutas azucaradas todos los días, su corazón debe saber aún más dulce! —</span>
+            <button class="translate-btn" onclick="toggleTranslation(5)">TRANSLATE</button>
+            <div class="translation" id="trans-5">“After all,” said the crocodile. “If the monkey eats sugary fruits every day, his heart must taste even sweeter”.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">El cocodrilo se negó, pero su astuta esposa dijo que estaba muy enferma y que el cocodrilo necesitaba traerle el corazón del mono para curarla.</span>
+            <button class="translate-btn" onclick="toggleTranslation(6)">TRANSLATE</button>
+            <div class="translation" id="trans-6">The crocodile refused, but the cunning wife said that she was very sick, and that the crocodile needed to bring her the heart of the monkey to cure her.</div>
+        </div>
+        <img src="1000015453.jpg" class="story-image" alt="Story illustration" loading="lazy">
+        <div class="story-block">
+            <span class="sentence">El cocodrilo estaba desconsolado, porque no quería traicionar a su nuevo mejor amigo, pero también amaba demasiado a su esposa para decirle que no.</span>
+            <button class="translate-btn" onclick="toggleTranslation(7)">TRANSLATE</button>
+            <div class="translation" id="trans-7">The crocodile was heartbroken, because he didn’t want to betray his new best friend, but he also loved his wife too much to say no.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">Así que un día, el cocodrilo dijo: —Mono querido, mi esposa ha oído hablar de ti y dice que debes venir a visitarnos a cenar, como recompensa por compartir tus mangos deliciosos. —El mono aceptó. Esa noche, trepó a la espalda del cocodrilo y el cocodrilo nadó a través del río.</span>
+            <button class="translate-btn" onclick="toggleTranslation(8)">TRANSLATE</button>
+            <div class="translation" id="trans-8">So, one day, the crocodile said, "My dear monkey, my wife has heard about you and says you must come visit us for dinner, as a reward for sharing your delicious mangoes." The monkey agreed. That night, he climbed onto the crocodile's back, and the crocodile swam across the river.</div>
+        </div>
+        <img src="1000015454.jpg" class="story-image" alt="Story illustration" loading="lazy">
+        <div class="story-block">
+            <span class="sentence">Cuando estaban a mitad de camino, el cocodrilo confesó: —¡Oh, mono, lo siento mucho! Pero mi esposa está muy enferma y dice que, si quiere vivir, debo llevarle tu corazón. —</span>
+            <button class="translate-btn" onclick="toggleTranslation(9)">TRANSLATE</button>
+            <div class="translation" id="trans-9">When they were halfway across the river, the crocodile confessed: “Oh, monkey, I’m terribly sorry! But my wife is very ill, and she says that if she wants to live, I must bring her your heart.”</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">Inmediatamente, el mono inteligente dijo: —Sería un honor darle mi corazón a tu esposa, pero ¡lo he dejado en casa! —</span>
+            <button class="translate-btn" onclick="toggleTranslation(10)">TRANSLATE</button>
+            <div class="translation" id="trans-10">Immediately, the intelligent monkey said:”It would be an honour to give my heart to your wife, but I have left my heart at home!</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">El cocodrilo, rebosante de alegría por la generosidad del mono, lo llevó de vuelta a su árbol, donde el mono trepó rápidamente y no volvió jamás.</span>
+            <button class="translate-btn" onclick="toggleTranslation(11)">TRANSLATE</button>
+            <div class="translation" id="trans-11">The crocodile, overjoyed at the monkey's generosity, took him back to his tree, where the monkey quickly climbed up and never returned.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">—Eres una criatura tonta y un amigo traidor —dijo el mono—, porque estabas dispuesto a quitarme la vida por una exigencia injusta de tu esposa. Luego cometiste la estupidez de creerme y traerme de vuelta al árbol. —</span>
+            <button class="translate-btn" onclick="toggleTranslation(12)">TRANSLATE</button>
+            <div class="translation" id="trans-12">“You are a foolish creature and a treacherous friend”. Said the monkey. “Because you were willing to take my life for the unreasonable demand of your wife. Then you were stupid enough to believe me and return me to my tree.</div>
+        </div>
+        <img src="1000015455.jpg" class="story-image" alt="Story illustration" loading="lazy">
+        <div class="story-block">
+            <span class="sentence">El cocodrilo se fue abatido y nunca volvió a ver al mono.</span>
+            <button class="translate-btn" onclick="toggleTranslation(13)">TRANSLATE</button>
+            <div class="translation" id="trans-13">The crocodile left dejected and never saw the monkey again.</div>
+        </div>
+    </div>
+
+    <script>
+        let allTranslationsVisible = false;
+
+        function toggleTranslation(id) {
+            const trans = document.getElementById('trans-' + id);
+            trans.classList.toggle('show');
+        }
+
+        function toggleAllTranslations() {
+            const toggle = document.getElementById('toggleSwitch');
+            const translations = document.querySelectorAll('.translation');
+
+            allTranslationsVisible = !allTranslationsVisible;
+            toggle.classList.toggle('active');
+
+            translations.forEach(translation => {
+                if (allTranslationsVisible) {
+                    translation.classList.add('show');
+                } else {
+                    translation.classList.remove('show');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
