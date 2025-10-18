@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New Spanish Story</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #fff 0%, #f0f4f8 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #DD1F25;
+            margin-bottom: 10px;
+            font-size: 2rem;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 0.95rem;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+            font-size: 0.95rem;
+        }
+
+        .help-text {
+            display: block;
+            margin-top: 5px;
+            font-size: 0.85rem;
+            color: #666;
+            font-style: italic;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #DD1F25;
+        }
+
+        textarea {
+            font-family: 'Courier New', monospace;
+            min-height: 400px;
+            resize: vertical;
+            line-height: 1.6;
+        }
+
+        .token-container {
+            background: #fff9e6;
+            border: 1px solid #ffe066;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 25px;
+        }
+
+        .token-container h3 {
+            color: #b8860b;
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
+
+        .token-container p {
+            font-size: 0.9rem;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        button {
+            padding: 14px 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            flex: 1;
+        }
+
+        .btn-primary {
+            background: #DD1F25;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #b31920;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(221, 31, 37, 0.3);
+        }
+
+        .btn-primary:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        #status {
+            margin-top: 25px;
+            padding: 15px;
+            border-radius: 6px;
+            display: none;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        #status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+
+        #status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+
+        #status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+            display: block;
+        }
+
+        .example-box {
+            background: #f8f9fa;
+            border-left: 4px solid #DD1F25;
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 4px;
+        }
+
+        .example-box pre {
+            font-size: 0.85rem;
+            line-height: 1.6;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top: 3px solid white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        input[type="file"] {
+            padding: 10px;
+            border: 2px dashed #DD1F25;
+            background: #fff;
+            cursor: pointer;
+        }
+
+        input[type="file"]:hover {
+            background: #fff9f9;
+        }
+
+        #imagePreview {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .image-preview-item {
+            position: relative;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            padding: 8px;
+            background: #f9f9f9;
+        }
+
+        .image-preview-item img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 5px;
+        }
+
+        .image-preview-item .filename {
+            font-size: 0.8rem;
+            color: #333;
+            word-break: break-all;
+            text-align: center;
+        }
+
+        .image-preview-item .remove-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: #DD1F25;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            font-size: 14px;
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .image-preview-item .remove-btn:hover {
+            background: #b31920;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📖 Create New Spanish Story</h1>
+        <p class="subtitle">Add a new story directly to your GitHub repository</p>
+
+        <div class="token-container">
+            <h3>🔐 GitHub Personal Access Token Required</h3>
+            <p>You need a GitHub token with <strong>repo</strong> permissions. 
+            <a href="https://github.com/settings/tokens/new?scopes=repo&description=BourneToTranslate%20Story%20Creator" target="_blank">Create one here</a></p>
+        </div>
+
+        <form id="storyForm">
+            <div class="form-group">
+                <label for="githubToken">GitHub Personal Access Token *</label>
+                <input type="password" id="githubToken" required>
+                <span class="help-text">This is stored only in your browser's memory for this session</span>
+            </div>
+
+            <div class="form-group">
+                <label for="storyTitle">Story Title *</label>
+                <input type="text" id="storyTitle" placeholder="e.g., Tiddalik la rana sedienta" required>
+            </div>
+
+            <div class="form-group">
+                <label for="storyIntro">Story Description *</label>
+                <input type="text" id="storyIntro" placeholder="e.g., Extension, mitos, fábula" required>
+                <span class="help-text">Short description that appears on the story card</span>
+            </div>
+
+            <div class="form-group">
+                <label for="yearGroup">Year Group *</label>
+                <select id="yearGroup" required>
+                    <option value="">Select year group</option>
+                    <option value="7">Year 7</option>
+                    <option value="8">Year 8</option>
+                    <option value="9">Year 9</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="storyText">Story Text *</label>
+                <textarea id="storyText" placeholder="Paste your story text here..." required></textarea>
+                <span class="help-text">Format: Spanish sentence, English translation, blank line, repeat. Use (image.png) for images.</span>
+                
+                <div class="example-box">
+                    <strong>Example format:</strong>
+                    <pre>Tiddalik es una rana muy grande y tiene mucha sed.
+Tiddalik is a very big frog and he is very thirsty.
+
+Bebe y bebe hasta que no queda agua en los ríos ni en los lagos.
+He drinks and drinks until there is no water left in the rivers or lakes.
+
+(frog.png)
+
+Los animales del bosque tienen mucha sed y están tristes.
+The animals in the forest are very thirsty and they are sad.</pre>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="imageUpload">Upload Story Images</label>
+                <input type="file" id="imageUpload" accept="image/*" multiple>
+                <span class="help-text">Upload all images referenced in your story text (e.g., frog.png, eel.png). The filenames must match exactly what you wrote in the story text.</span>
+                <div id="imagePreview"></div>
+            </div>
+
+            <div class="button-group">
+                <button type="button" class="btn-secondary" onclick="window.location.href='admin.html'">Cancel</button>
+                <button type="submit" class="btn-primary" id="submitBtn">Create Story</button>
+            </div>
+        </form>
+
+        <div id="status"></div>
+    </div>
+
+    <script src="create-story.js"></script>
+</body>
+</html>
