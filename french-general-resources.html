@@ -17,7 +17,7 @@
         
         /* Navbar with subtle slide-in animation */
         .navbar { 
-            background: #DD1F25; 
+            background: #0055A4; 
             color: white; 
             height: 60px; 
             display: flex; 
@@ -26,8 +26,11 @@
             font-size: 1.5rem; 
             font-weight: 700; 
             letter-spacing: 1px;
-            box-shadow: 0 2px 12px rgba(221, 31, 37, 0.15);
+            box-shadow: 0 2px 12px rgba(0, 85, 164, 0.15);
             animation: slideDown 0.5s ease-out;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         
         @keyframes slideDown {
@@ -94,9 +97,9 @@
             font-size: 1.1rem; 
             padding: 12px 18px; 
             border-radius: 30px; 
-            border: 1px solid #DD1F25; 
+            border: 1px solid #0055A4; 
             outline: none; 
-            box-shadow: 0 2px 12px rgba(221, 31, 37, 0.08); 
+            box-shadow: 0 2px 12px rgba(0, 85, 164, 0.08); /* Updated */
             transition: all 0.25s ease;
         }
         
@@ -112,8 +115,8 @@
         }
         
         .search-bar:focus { 
-            border-color: #AA151B;
-            box-shadow: 0 3px 16px rgba(221, 31, 37, 0.15);
+            border-color: #0055A4;
+            box-shadow: 0 3px 16px rgba(0, 85, 164, 0.15); /* Updated */
             transform: scale(1.01);
         }
         
@@ -142,7 +145,7 @@
         }
         
         .topic-filter-label:hover {
-            border-color: #DD1F25;
+            border-color: #0055A4;
             background: #fff5f5;
         }
         
@@ -150,11 +153,11 @@
             width: 18px;
             height: 18px;
             cursor: pointer;
-            accent-color: #DD1F25;
+            accent-color: #0055A4;
         }
         
         .topic-filter-label.active {
-            border-color: #DD1F25;
+            border-color: #0055A4;
             background: #fff5f5;
             font-weight: 600;
         }
@@ -169,7 +172,7 @@
         .movie-card { 
             background: #fafafd; 
             border-radius: 20px; 
-            box-shadow: 0 6px 26px rgba(221, 31, 37, 0.08); 
+            box-shadow: 0 6px 26px rgba(0, 85, 164, 0.08); /* Updated */
             overflow: hidden; 
             cursor: pointer; 
             display: flex; 
@@ -213,7 +216,7 @@
         }
         
         .movie-card:hover { 
-            box-shadow: 0 10px 35px rgba(221, 31, 37, 0.14); 
+            box-shadow: 0 10px 35px rgba(0, 85, 164, 0.14); /* Updated */
             transform: translateY(-4px);
         }
         
@@ -245,13 +248,13 @@
                 position: absolute;
                 bottom: 12px;
                 right: 16px;
-                background: #DD1F25;
+                background: #0055A4;
                 color: #fff;
                 font-size: 0.95rem;
                 font-weight: 600;
                 padding: 6px 16px;
                 border-radius: 16px;
-                box-shadow: 0 2px 8px rgba(221, 31, 37, 0.10);
+                box-shadow: 0 2px 8px rgba(0, 85, 164, 0.10); /* Updated */
                 letter-spacing: 0.5px;
                 z-index: 2;
                 pointer-events: none;
@@ -262,14 +265,14 @@
             font-size: 1.3rem; 
             font-weight: 700; 
             margin-bottom: 10px; 
-            color: #DD1F25; 
+            color: #0055A4; 
             letter-spacing: 0.5px;
             transition: all 0.25s ease;
         }
         
         .movie-card:hover .movie-title {
             transform: translateX(3px);
-            color: #AA151B;
+            color: #0055A4;
         }
         
         .movie-intro { 
@@ -288,7 +291,7 @@
             grid-column: 1/-1;
             text-align: center;
             padding: 3em 2em;
-            color: #DD1F25;
+            color: #0055A4;
             font-weight: 600;
             font-size: 1.2rem;
             animation: fadeIn 0.4s ease-out;
@@ -355,13 +358,13 @@
         z-index: 2;
     }
     .movie-topic {
-        background: #DD1F25;
+        background: #0055A4;
         color: #fff;
         font-size: 0.95rem;
         font-weight: 600;
         padding: 6px 14px;
         border-radius: 14px;
-        box-shadow: 0 2px 8px rgba(221, 31, 37, 0.10);
+        box-shadow: 0 2px 8px rgba(0, 85, 164, 0.10); /* Updated */
         letter-spacing: 0.5px;
         opacity: 0.93;
         pointer-events: none;
@@ -396,7 +399,7 @@
         width: 36px;
         height: 36px;
         font-size: 1.5rem;
-        color: #DD1F25;
+        color: #0055A4;
         background: #fff;
         border: none;
         border-radius: 50%;
@@ -409,9 +412,9 @@
         transition: box-shadow 0.2s;
     }
     .popup-close:hover {
-        box-shadow: 0 4px 16px rgba(221,31,37,0.15);
-        background: #fff5f5;
-        color: #b8000f;
+        box-shadow: 0 4px 16px rgba(0, 85, 164, 0.15); /* Updated */
+        background: #f0faff;
+        color: #0055A4;
     }
     @media (max-width: 600px) {
         .popup-content {
@@ -486,7 +489,7 @@
                 <div style="max-width:600px;margin:0 auto;padding:10px 20px 30px 20px;">
                     <img src="GeneralResources/French/LeChef/LeChef1.png" style="display:block;margin:2em auto;max-width:100%;border-radius:8px;box-shadow:0 6px 24px rgba(0,0,0,0.12);" alt="Movie illustration">
                     <div style="margin-bottom:1.5em;">
-                        <span style="font-size:1.1rem;color:#1a1a1a;">A feel-good French comedy following a veteran chef who clashes with his new boss over the future of French cuisine. When he meets a passionate amateur cook, they team up to revive the restaurant’s reputation and rediscover the joy of cooking. Perfect for learners—clear speech, humor, and a delicious theme!</span>
+                        <span style="font-size:1.1rem;color:#1a1a1a;">A feel-good French comedy following a veteran chef who clashes with his new boss over the future of French cuisine. When he meets a passionate amateur cook, they team up to revive the restaurant's reputation and rediscover the joy of cooking. Perfect for learners—clear speech, humor, and a delicious theme!</span>
                     </div>
                     <div style="margin-bottom:1.5em;">
                         <span style="font-size:1.05rem;"><a href="https://www.justwatch.com/uk/movie/le-chef" target="_blank">Watch Le Chef on JustWatch</a></span>
@@ -528,7 +531,7 @@
                 <div style="max-width:600px;margin:0 auto;padding:10px 20px 30px 20px;">
                     <img src="GeneralResources/French/EtreEtAvoir/EtreEtAvoir1.png" style="display:block;margin:2em auto;max-width:100%;border-radius:8px;box-shadow:0 6px 24px rgba(0,0,0,0.12);" alt="Documentary illustration">
                     <div style="margin-bottom:1.5em;">
-                        <span style="font-size:1.1rem;color:#1a1a1a;">A gentle and inspiring documentary about a small one-room school in rural France, where a single teacher educates children of all ages. The slow pace and clear, everyday conversations make it perfect for French learners. You’ll hear natural interactions, classroom vocabulary, and glimpses of real French life.</span>
+                        <span style="font-size:1.1rem;color:#1a1a1a;">A gentle and inspiring documentary about a small one-room school in rural France, where a single teacher educates children of all ages. The slow pace and clear, everyday conversations make it perfect for French learners. You'll hear natural interactions, classroom vocabulary, and glimpses of real French life.</span>
                     </div>
                     <div style="margin-bottom:1.5em;">
                         <span style="font-size:1.05rem;"><a href="https://www.justwatch.com/uk/movie/etre-et-avoir" target="_blank">Watch Être et Avoir on JustWatch</a></span>
@@ -645,31 +648,5 @@
         }
     });
     </script>
-    <style>
-    /* ...existing styles from your file... */
-    /* Add styles for movie topics badge */
-    .movie-topics {
-        position: absolute;
-        bottom: 12px;
-        right: 16px;
-        display: flex;
-        gap: 8px;
-        flex-wrap: wrap;
-        z-index: 2;
-    }
-    .movie-topic {
-        background: #DD1F25;
-        color: #fff;
-        font-size: 0.95rem;
-        font-weight: 600;
-        padding: 6px 14px;
-        border-radius: 14px;
-        box-shadow: 0 2px 8px rgba(221, 31, 37, 0.10);
-        letter-spacing: 0.5px;
-        opacity: 0.93;
-        pointer-events: none;
-        margin-bottom: 2px;
-    }
-    </style>
 </body>
 </html>
