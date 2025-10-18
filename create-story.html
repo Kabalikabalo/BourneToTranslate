@@ -25,12 +25,23 @@
             padding: 40px;
             border-radius: 12px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .logo {
+            position: absolute;
+            top: 40px;
+            right: 40px;
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
         }
 
         h1 {
             color: #DD1F25;
             margin-bottom: 10px;
             font-size: 2rem;
+            padding-right: 80px;
         }
 
         .subtitle {
@@ -275,10 +286,30 @@
         .image-preview-item .remove-btn:hover {
             background: #b31920;
         }
+
+        @media (max-width: 768px) {
+            .logo {
+                width: 50px;
+                height: 50px;
+                top: 30px;
+                right: 30px;
+            }
+
+            h1 {
+                padding-right: 60px;
+                font-size: 1.6rem;
+            }
+
+            .container {
+                padding: 30px 20px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
+        <img src="images/favicon.png" alt="Logo" class="logo">
+        
         <h1>📖 Create New Spanish Story</h1>
         <p class="subtitle">Add a new story directly to your GitHub repository</p>
 
