@@ -3,6 +3,48 @@ const GITHUB_OWNER = 'Kabalikabalo';
 const GITHUB_REPO = 'BourneToTranslate';
 const GITHUB_BRANCH = 'main';
 
+// Language configuration
+const LANGUAGE_CONFIG = {
+    spanish: {
+        storiesDir: 'SpanishStories',
+        catalogueFile: 'spanish-stories.html',
+        useYearGroup: true,
+        backLink: '../../spanish-stories.html'
+    },
+    french: {
+        storiesDir: 'FrenchStories',
+        catalogueFile: 'french-stories.html',
+        useYearGroup: false,
+        backLink: '../../french-stories.html'
+    }
+};
+
+// Handle language selection change
+document.getElementById('language').addEventListener('change', function() {
+    const language = this.value;
+    const yearGroupContainer = document.getElementById('yearGroupContainer');
+    const difficultyContainer = document.getElementById('difficultyContainer');
+    const yearGroupSelect = document.getElementById('yearGroup');
+    const difficultySelect = document.getElementById('difficulty');
+
+    if (language === 'spanish') {
+        yearGroupContainer.style.display = 'block';
+        difficultyContainer.style.display = 'none';
+        yearGroupSelect.required = true;
+        difficultySelect.required = false;
+    } else if (language === 'french') {
+        yearGroupContainer.style.display = 'none';
+        difficultyContainer.style.display = 'block';
+        yearGroupSelect.required = false;
+        difficultySelect.required = true;
+    } else {
+        yearGroupContainer.style.display = 'none';
+        difficultyContainer.style.display = 'none';
+        yearGroupSelect.required = false;
+        difficultySelect.required = false;
+    }
+});
+
 // Parse story text into blocks
 function parseStory(storyText) {
     const lines = storyText.split('\n').map(l => l.trim()).filter(l => l);
@@ -30,7 +72,10 @@ function parseStory(storyText) {
 }
 
 // Generate story HTML
-function generateStoryHTML(title, blocks, bannerImage) {
+function generateStoryHTML(title, blocks, bannerImage, language) {
+    const config = LANGUAGE_CONFIG[language];
+    const navbarColor = language === 'spanish' ? '#DD1F25' : '#0055A4';
+    
     let html = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -46,9 +91,9 @@ function generateStoryHTML(title, blocks, bannerImage) {
             line-height: 1.8;
         }
 
-        /* Red Navigation Bar */
+        /* Navigation Bar */
         .navbar {
-            background-color: #DD1F25;
+            background-color: ${navbarColor};
             height: 65px;
             display: flex;
             align-items: center;
@@ -151,9 +196,9 @@ function generateStoryHTML(title, blocks, bannerImage) {
             display: inline-block;
             margin-left: 8px;
             font-size: 0.75rem;
-            color: #DD1F25;
+            color: ${navbarColor};
             background: transparent;
-            border: 1px solid #DD1F25;
+            border: 1px solid ${navbarColor};
             padding: 2px 8px;
             border-radius: 4px;
             cursor: pointer;
@@ -164,7 +209,7 @@ function generateStoryHTML(title, blocks, bannerImage) {
         }
         .translate-btn:hover {
             opacity: 1;
-            background: #DD1F25;
+            background: ${navbarColor};
             color: white;
         }
         .translation { 
@@ -174,7 +219,7 @@ function generateStoryHTML(title, blocks, bannerImage) {
             margin-top: 6px;
             font-style: italic;
             padding-left: 20px;
-            border-left: 2px solid #DD1F25;
+            border-left: 2px solid ${navbarColor};
         }
         .translation.show { display: block; }
         .story-image { 
@@ -198,7 +243,7 @@ function generateStoryHTML(title, blocks, bannerImage) {
 <body>
     <!-- Navigation Bar -->
     <nav class="navbar">
-        <a href="../../spanish-stories.html" class="back-button">
+        <a href="${config.backLink}" class="back-button">
             <span class="back-arrow">←</span>
             <span>Back</span>
         </a>
@@ -457,11 +502,12 @@ async function createAtomicCommit(token, files, commitMessage) {
     return newCommitSHA;
 }
 
-// Get and update spanish-stories.html content with new story
-async function getUpdatedSpanishStoriesHTML(token, title, intro, yearGroup, firstImage) {
-    const filePath = 'spanish-stories.html';
+// Get and update catalogue HTML content with new story
+async function getUpdatedCatalogueHTML(token, language, title, intro, yearGroupOrDifficulty, firstImage) {
+    const config = LANGUAGE_CONFIG[language];
+    const filePath = config.catalogueFile;
     
-    showStatus('Reading spanish-stories.html...', 'info');
+    showStatus(`Reading ${filePath}...`, 'info');
     
     // Get current file
     const response = await fetch(
@@ -475,7 +521,7 @@ async function getUpdatedSpanishStoriesHTML(token, title, intro, yearGroup, firs
     );
 
     if (!response.ok) {
-        throw new Error('Failed to fetch spanish-stories.html');
+        throw new Error(`Failed to fetch ${filePath}`);
     }
 
     const fileData = await response.json();
@@ -484,20 +530,34 @@ async function getUpdatedSpanishStoriesHTML(token, title, intro, yearGroup, firs
     // Find stories array
     const storiesMatch = content.match(/const stories = \[(.*?)\];/s);
     if (!storiesMatch) {
-        throw new Error('Could not find stories array in spanish-stories.html');
+        throw new Error(`Could not find stories array in ${filePath}`);
     }
 
     const storiesContent = storiesMatch[1];
 
-    // Create new story entry
-    let newStory = `,
+    // Create new story entry based on language
+    let newStory;
+    if (config.useYearGroup) {
+        // Spanish: uses yearGroup
+        newStory = `,
         {
             title: "${title}",
             intro: "${intro}",
-            image: "SpanishStories/${title}/${firstImage}",
-            url: "SpanishStories/${title}/index.html",
-            yearGroup: ${yearGroup}
+            image: "${config.storiesDir}/${title}/${firstImage}",
+            url: "${config.storiesDir}/${title}/index.html",
+            yearGroup: ${yearGroupOrDifficulty}
         }`;
+    } else {
+        // French: uses difficulty
+        newStory = `,
+        {
+            title: "${title}",
+            intro: "${intro}",
+            image: "${config.storiesDir}/${title}/${firstImage}",
+            url: "${config.storiesDir}/${title}/index.html",
+            difficulty: ${yearGroupOrDifficulty}
+        }`;
+    }
 
     // Insert new story
     const updatedContent = content.replace(
@@ -578,7 +638,7 @@ function removeImage(filename) {
 window.removeImage = removeImage;
 
 // Prepare images for atomic commit
-async function prepareImageFiles(storyTitle) {
+async function prepareImageFiles(language, storyTitle) {
     const uploadedCount = uploadedImages.length;
     
     if (uploadedCount === 0) {
@@ -587,10 +647,11 @@ async function prepareImageFiles(storyTitle) {
 
     showStatus(`Preparing ${uploadedCount} image(s)...`, 'info');
 
+    const config = LANGUAGE_CONFIG[language];
     const imageFilePromises = uploadedImages.map(async (file) => {
         const base64Content = await fileToBase64(file);
         return {
-            path: `SpanishStories/${storyTitle}/${file.name}`,
+            path: `${config.storiesDir}/${storyTitle}/${file.name}`,
             content: base64Content,
             isBase64: true,
             name: file.name
@@ -614,12 +675,20 @@ document.getElementById('storyForm').addEventListener('submit', async (e) => {
         
         // Get form values
         const token = document.getElementById('githubToken').value.trim();
+        const language = document.getElementById('language').value;
         const title = document.getElementById('storyTitle').value.trim();
         const intro = document.getElementById('storyIntro').value.trim();
-        const yearGroup = parseInt(document.getElementById('yearGroup').value);
         const storyText = document.getElementById('storyText').value.trim();
 
-        if (!token || !title || !intro || !yearGroup || !storyText) {
+        // Get year group or difficulty based on language
+        let yearGroupOrDifficulty;
+        if (language === 'spanish') {
+            yearGroupOrDifficulty = parseInt(document.getElementById('yearGroup').value);
+        } else if (language === 'french') {
+            yearGroupOrDifficulty = parseInt(document.getElementById('difficulty').value);
+        }
+
+        if (!token || !language || !title || !intro || !yearGroupOrDifficulty || !storyText) {
             throw new Error('Please fill in all required fields');
         }
 
@@ -633,7 +702,7 @@ document.getElementById('storyForm').addEventListener('submit', async (e) => {
         }
 
         // Prepare image files
-        const imageFiles = await prepareImageFiles(title);
+        const imageFiles = await prepareImageFiles(language, title);
         const uploadedImageNames = imageFiles.map(f => f.name);
 
         // Verify all images referenced in story are uploaded
@@ -652,11 +721,12 @@ document.getElementById('storyForm').addEventListener('submit', async (e) => {
         }
 
         // Generate story HTML
-        const storyHTML = generateStoryHTML(title, blocks, firstImage);
-        const storyPath = `SpanishStories/${title}/index.html`;
+        const config = LANGUAGE_CONFIG[language];
+        const storyHTML = generateStoryHTML(title, blocks, firstImage, language);
+        const storyPath = `${config.storiesDir}/${title}/index.html`;
 
         // Get updated catalogue HTML
-        const updatedCatalogueHTML = await getUpdatedSpanishStoriesHTML(token, title, intro, yearGroup, firstImage);
+        const updatedCatalogueHTML = await getUpdatedCatalogueHTML(token, language, title, intro, yearGroupOrDifficulty, firstImage);
 
         // Prepare all files for atomic commit
         const allFiles = [
@@ -668,7 +738,7 @@ document.getElementById('storyForm').addEventListener('submit', async (e) => {
             },
             // Updated catalogue
             {
-                path: 'spanish-stories.html',
+                path: config.catalogueFile,
                 content: updatedCatalogueHTML,
                 isBase64: false
             },
@@ -677,7 +747,8 @@ document.getElementById('storyForm').addEventListener('submit', async (e) => {
         ];
 
         // Create one atomic commit with all files
-        const commitMessage = `Add story: ${title} (${imageFiles.length} image${imageFiles.length !== 1 ? 's' : ''})`;
+        const languageLabel = language.charAt(0).toUpperCase() + language.slice(1);
+        const commitMessage = `Add ${languageLabel} story: ${title} (${imageFiles.length} image${imageFiles.length !== 1 ? 's' : ''})`;
         await createAtomicCommit(token, allFiles, commitMessage);
 
         showStatus(
@@ -686,14 +757,14 @@ document.getElementById('storyForm').addEventListener('submit', async (e) => {
             `- 1 story HTML\n` +
             `- 1 catalogue update\n` +
             `- ${imageFiles.length} image(s)\n\n` +
-            `View at: https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}/tree/${GITHUB_BRANCH}/SpanishStories/${encodeURIComponent(title)}\n\n` +
+            `View at: https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}/tree/${GITHUB_BRANCH}/${config.storiesDir}/${encodeURIComponent(title)}\n\n` +
             `Redirecting in 3 seconds...`,
             'success'
         );
 
         // Reset form and reload after delay
         setTimeout(() => {
-            window.location.href = 'spanish-stories.html';
+            window.location.href = config.catalogueFile;
         }, 3000);
 
     } catch (error) {
