@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Le lièvre et la tortue</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: Georgia, 'Times New Roman', serif;
+            background: #f5f5f5; 
+            color: #2a2a2a;
+            line-height: 1.8;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            background-color: #0055A4;
+            height: 65px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .back-button {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 8px 18px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        .back-button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateX(-5px);
+        }
+        .back-arrow { font-size: 1.3rem; }
+
+        /* Toggle Container */
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .toggle-label { color: white; font-size: 0.95rem; font-weight: 400; }
+        .toggle-switch {
+            position: relative;
+            width: 55px;
+            height: 28px;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .toggle-switch.active { background-color: rgba(255, 255, 255, 0.5); }
+        .toggle-slider {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 22px;
+            height: 22px;
+            background-color: white;
+            border-radius: 50%;
+            transition: transform 0.3s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .toggle-switch.active .toggle-slider { transform: translateX(27px); }
+
+        /* Hero Banner */
+        .hero-banner {
+            position: relative;
+            width: 100%;
+            height: 320px;
+            background-image: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url('1000015468.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 50px;
+        }
+        .story-title {
+            font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+            font-size: 3.5rem;
+            font-weight: 400;
+            color: white;
+            text-align: center;
+            text-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            letter-spacing: 1px;
+        }
+
+        /* Story Content */
+        .container { 
+            max-width: 750px; 
+            margin: 0 auto; 
+            padding: 20px 30px 60px 30px; 
+        }
+        .story-block { 
+            margin-bottom: 1.8em;
+            position: relative;
+        }
+        .sentence { 
+            font-size: 1.25rem;
+            font-weight: 400;
+            color: #1a1a1a;
+            display: inline;
+        }
+        .translate-btn {
+            display: inline-block;
+            margin-left: 8px;
+            font-size: 0.75rem;
+            color: #0055A4;
+            background: transparent;
+            border: 1px solid #0055A4;
+            padding: 2px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Segoe UI', sans-serif;
+            font-weight: 500;
+            opacity: 0.7;
+        }
+        .translate-btn:hover {
+            opacity: 1;
+            background: #0055A4;
+            color: white;
+        }
+        .translation { 
+            color: #666;
+            font-size: 1.05rem;
+            display: none;
+            margin-top: 6px;
+            font-style: italic;
+            padding-left: 20px;
+            border-left: 2px solid #0055A4;
+        }
+        .translation.show { display: block; }
+        .story-image { 
+            display: block; 
+            margin: 3em auto; 
+            max-width: 100%; 
+            height: auto;
+            border-radius: 8px; 
+            box-shadow: 0 6px 24px rgba(0,0,0,0.12); 
+        }
+
+        @media (max-width: 768px) {
+            .navbar { height: 60px; padding: 0 20px; }
+            .hero-banner { height: 250px; }
+            .story-title { font-size: 2.5rem; }
+            .container { padding: 20px 20px 50px 20px; }
+            .sentence { font-size: 1.15rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <a href="../../french-stories.html" class="back-button">
+            <span class="back-arrow">←</span>
+            <span>Back</span>
+        </a>
+        <div class="toggle-container">
+            <span class="toggle-label">Show All Translations</span>
+            <div class="toggle-switch" id="toggleSwitch" onclick="toggleAllTranslations()">
+                <div class="toggle-slider"></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Banner with Story Title -->
+    <div class="hero-banner">
+        <h1 class="story-title">Le lièvre et la tortue</h1>
+    </div>
+
+    <!-- Story Content -->
+    <div class="container">
+        <div class="story-block">
+            <span class="sentence">Un jour, un lièvre s’est moqué d’une tortue parce qu’elle était très lente.</span>
+            <button class="translate-btn" onclick="toggleTranslation(0)">TRANSLATE</button>
+            <div class="translation" id="trans-0">One day, a hare made fun of a tortoise because she was very slow.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">La tortue était fâchée et elle a dit au lièvre : « Je peux faire la course avec toi ! »</span>
+            <button class="translate-btn" onclick="toggleTranslation(1)">TRANSLATE</button>
+            <div class="translation" id="trans-1">The tortoise was angry and said to the hare: “I can race with you!”</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">Le lièvre a beaucoup ri, mais il a accepté le défi.</span>
+            <button class="translate-btn" onclick="toggleTranslation(2)">TRANSLATE</button>
+            <div class="translation" id="trans-2">The hare laughed a lot, but he accepted the challenge.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">Le lendemain, ils se sont retrouvés pour commencer la course.</span>
+            <button class="translate-btn" onclick="toggleTranslation(3)">TRANSLATE</button>
+            <div class="translation" id="trans-3">The next day, they met to start the race.</div>
+        </div>
+        <img src="1000015468.jpg" class="story-image" alt="Story illustration" loading="lazy">
+        <div class="story-block">
+            <span class="sentence">Quand la course a commencé, le lièvre est parti très vite.</span>
+            <button class="translate-btn" onclick="toggleTranslation(4)">TRANSLATE</button>
+            <div class="translation" id="trans-4">When the race started, the hare ran off very fast.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">La tortue avançait lentement, mais elle ne s’arrêtait pas.</span>
+            <button class="translate-btn" onclick="toggleTranslation(5)">TRANSLATE</button>
+            <div class="translation" id="trans-5">The tortoise was moving slowly, but she didn’t stop.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">Le lièvre voyait qu’il était très loin devant la tortue, alors il a décidé de se reposer sous un arbre.</span>
+            <button class="translate-btn" onclick="toggleTranslation(6)">TRANSLATE</button>
+            <div class="translation" id="trans-6">The hare saw that he was far ahead of the tortoise, so he decided to rest under a tree.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">Il s’est allongé et il s’est endormi.</span>
+            <button class="translate-btn" onclick="toggleTranslation(7)">TRANSLATE</button>
+            <div class="translation" id="trans-7">He lay down and fell asleep.</div>
+        </div>
+        <img src="1000015469.jpg" class="story-image" alt="Story illustration" loading="lazy">
+        <div class="story-block">
+            <span class="sentence">Pendant ce temps, la tortue continuait à marcher doucement.</span>
+            <button class="translate-btn" onclick="toggleTranslation(8)">TRANSLATE</button>
+            <div class="translation" id="trans-8">Meanwhile, the tortoise kept walking slowly.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">Petit à petit, elle a dépassé le lièvre qui dormait.</span>
+            <button class="translate-btn" onclick="toggleTranslation(9)">TRANSLATE</button>
+            <div class="translation" id="trans-9">Little by little, she passed the hare who was sleeping.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">Quand le lièvre s’est réveillé, il a couru aussi vite qu’il a pu vers la ligne d’arrivée.</span>
+            <button class="translate-btn" onclick="toggleTranslation(10)">TRANSLATE</button>
+            <div class="translation" id="trans-10">When the hare woke up, he ran as fast as he could toward the finish line.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">Mais la tortue était déjà arrivée.</span>
+            <button class="translate-btn" onclick="toggleTranslation(11)">TRANSLATE</button>
+            <div class="translation" id="trans-11">But the tortoise had already arrived.</div>
+        </div>
+        <img src="1000015470.jpg" class="story-image" alt="Story illustration" loading="lazy">
+        <div class="story-block">
+            <span class="sentence">Le lièvre était très surpris et très honteux.</span>
+            <button class="translate-btn" onclick="toggleTranslation(12)">TRANSLATE</button>
+            <div class="translation" id="trans-12">The hare was very surprised and very ashamed.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">La tortue était fière d’elle parce qu’elle avait travaillé avec patience.</span>
+            <button class="translate-btn" onclick="toggleTranslation(13)">TRANSLATE</button>
+            <div class="translation" id="trans-13">The tortoise was proud of herself because she had worked patiently.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">La morale de l’histoire : il vaut mieux être lent mais constant que rapide et paresseux.</span>
+            <button class="translate-btn" onclick="toggleTranslation(14)">TRANSLATE</button>
+            <div class="translation" id="trans-14">The moral of the story: it’s better to be slow but steady than fast and lazy.</div>
+        </div>
+    </div>
+
+    <script>
+        let allTranslationsVisible = false;
+
+        function toggleTranslation(id) {
+            const trans = document.getElementById('trans-' + id);
+            trans.classList.toggle('show');
+        }
+
+        function toggleAllTranslations() {
+            const toggle = document.getElementById('toggleSwitch');
+            const translations = document.querySelectorAll('.translation');
+
+            allTranslationsVisible = !allTranslationsVisible;
+            toggle.classList.toggle('active');
+
+            translations.forEach(translation => {
+                if (allTranslationsVisible) {
+                    translation.classList.add('show');
+                } else {
+                    translation.classList.remove('show');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
