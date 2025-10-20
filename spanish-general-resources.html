@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>Spanish general resources</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
@@ -22,12 +24,16 @@
             height: 60px; 
             display: flex; 
             align-items: center; 
+            justify-content: space-between; /* Changed from default */
             padding: 0 30px; 
             font-size: 1.5rem; 
             font-weight: 700; 
             letter-spacing: 1px;
             box-shadow: 0 2px 12px rgba(221, 31, 37, 0.15);
             animation: slideDown 0.5s ease-out;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         
         @keyframes slideDown {
@@ -50,11 +56,17 @@
             transition: all 0.2s ease;
             padding: 6px 12px;
             border-radius: 4px;
+            flex-shrink: 0; /* Prevent back button from shrinking */
         }
         
-        .navbar a:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: translateX(-3px);
+        /* Title element for better control */
+        .navbar-title {
+            flex: 1 1 auto;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding-right: 80px; /* Offset for back button width to center text */
         }
         
         /* Catalogue container with subtle fade-in */
@@ -293,9 +305,93 @@
             font-size: 1.2rem;
             animation: fadeIn 0.4s ease-out;
         }
-        
+
+        /* Overlay base (ensure it’s visible when opened) */
+        .popup-overlay {
+            position: fixed;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.45);
+            z-index: 1000;
+            padding: 20px;
+            backdrop-filter: blur(1px);
+        }
+        .popup-overlay.is-open { display: flex !important; }
+
+        .popup-content {
+            position: relative;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 18px 60px rgba(0,0,0,0.25);
+            overflow: hidden;
+        }
+        .popup-close {
+            position: absolute;
+            top: 10px;
+            right: 12px;
+            width: 36px;
+            height: 36px;
+            border: none;
+            background: #ffffff;
+            color: #222;
+            border-radius: 50%;
+            font-size: 22px;
+            line-height: 36px;
+            cursor: pointer;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.16);
+        }
+
+        /* Map card and full-screen map */
+        .map-card-wrapper { 
+            max-width: 1100px; 
+            margin: 18px auto 6px; 
+            padding: 0 20px; 
+        }
+        .map-card-wrapper.is-open {
+            max-height: 380px; /* enough for 320px map + paddings */
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+            transform: translateY(0);
+            margin-bottom: 40px; /* Add white space below when open */
+        }
+        .map-card {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 8px 28px rgba(0,0,0,0.12);
+            overflow: hidden;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            transform-origin: center;
+            cursor: zoom-in;
+        }
+        .map-card:hover { transform: scale(1.15); box-shadow: 0 12px 36px rgba(0,0,0,0.18); }
+        #mapPreview { width: 100%; height: 320px; }
+
+        .map-popup { 
+            width: 96vw; 
+            height: 92vh; 
+            padding: 0;
+            border-radius: 18px; /* Add rounded corners */
+            overflow: hidden; /* Clip map to rounded edges */
+        }
+        #mapFull { 
+            width: 100%; 
+            height: 100%; 
+            border-radius: 0; /* Remove since parent handles it */
+        }
+
+        .leaflet-interactive { cursor: pointer; }
+
         @media (max-width: 600px) { 
-            .catalogue-container { padding: 20px 8px; } 
+            .catalogue-container { padding: 20px 8px; }
+            
+            /* Make map bigger on mobile */
+            .map-card-wrapper { padding: 0 12px; margin-bottom: 12px; }
+            .map-card:hover { transform: scale(1.05); } /* Less aggressive hover */
+            #mapPreview { height: 280px; } /* Taller on mobile */
+            
             .movies-grid {
                 gap: 12px;
                 grid-template-columns: 1fr;
@@ -344,7 +440,7 @@
             .navbar { font-size: 1.2rem; padding: 0 20px; }
         }
 
-        /* Add styles for movie topics badge */
+    /* Add styles for movie topics badge */
     .movie-topics {
         position: absolute;
         bottom: 12px;
@@ -368,70 +464,64 @@
         margin-bottom: 2px;
     }
 
-    /* Add overlay and popup styles */
-    .popup-overlay {
-        position: fixed;
-        top: 0; left: 0; right: 0; bottom: 0;
-        background: rgba(0,0,0,0.45);
-        z-index: 9999;
-        display: none;
-        align-items: center;
-        justify-content: center;
+    /* Add hover effect for button */
+    #showMapBtn:hover {
+        background: #AA151B;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(221, 31, 37, 0.3);
     }
-    .popup-content {
-        background: #fff;
-        border-radius: 18px;
-        max-width: 700px;
-        width: 95vw;
-        max-height: 90vh;
-        overflow-y: auto;
-        box-shadow: 0 8px 40px rgba(0,0,0,0.18);
-        position: relative;
-        animation: fadeIn 0.3s;
-    }
-    .popup-close {
-        position: absolute;
-        top: 18px;
-        right: 22px;
-        width: 36px;
-        height: 36px;
-        font-size: 1.5rem;
-        color: #DD1F25;
-        background: #fff;
-        border: none;
-        border-radius: 50%;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        cursor: pointer;
-        z-index: 2;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: box-shadow 0.2s;
-    }
-    .popup-close:hover {
-        box-shadow: 0 4px 16px rgba(221,31,37,0.15);
-        background: #fff5f5;
-        color: #b8000f;
-    }
-    .popup-close:hover {
-        box-shadow: 0 4px 16px rgba(221,31,37,0.15);
-        background: #fff5f5;
-        color: #b8000f;
+    #showMapBtn:active {
+        transform: translateY(0);
     }
 
-    @media (max-width: 600px) {
-        .popup-content {
-            max-width: 98vw;
-            padding: 0;
-        }
+    /* Adjust map card wrapper */
+    .map-card-wrapper {
+        animation: fadeIn 0.4s ease-out;
     }
+
+    /* Map preview appear/disappear animation */
+.map-card-wrapper {
+    max-width: 1100px;
+    margin: 18px auto 6px;
+    padding: 0 20px;
+    /* hidden by default, will be animated */
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-6px);
+    transition: max-height 350ms ease, opacity 250ms ease, transform 250ms ease;
+    will-change: max-height, opacity, transform;
+}
+.map-card-wrapper.is-open {
+    max-height: 380px; /* enough for 320px map + paddings */
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+    margin-bottom: 40px; /* Add white space below when open */
+}
+@media (max-width: 600px) {
+    .map-card-wrapper { padding: 0 12px; margin-bottom: 12px; }
+    .map-card-wrapper.is-open { max-height: 330px; }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .map-card-wrapper {
+        transition: none;
+        transform: none;
+    }
+}
     </style>
 </head>
 <body>
     <div class="navbar">
         <a href="general-resources.html">← Back</a>
-        Spanish general resources
+        <span class="navbar-title">Spanish general resources</span>
     </div>
+
     <div class="catalogue-container">
         <div class="search-filter-container">
             <input type="text" class="search-bar" id="searchInput" placeholder="Search resources...">
@@ -442,12 +532,39 @@
                 <label class="topic-filter-label">
                     <input type="checkbox" value="Documentaries"> Documentaries
                 </label>
+                <label class="topic-filter-label">
+                    <input type="checkbox" value="Locations"> Locations
+                </label>
+            </div>
+            <!-- Show Map Button -->
+            <button id="showMapBtn" style="
+                padding: 12px 28px;
+                font-size: 1.05rem;
+                font-weight: 600;
+                color: #fff;
+                background: #DD1F25;
+                border: none;
+                border-radius: 30px;
+                cursor: pointer;
+                box-shadow: 0 4px 16px rgba(221, 31, 37, 0.2);
+                transition: all 0.25s ease;
+                margin-top: 10px;
+            ">
+                🗺️ Show Map
+            </button>
+        </div>
+
+        <!-- Map card (hidden by default) -->
+        <div class="map-card-wrapper" id="mapCardWrapper">
+            <div class="map-card" id="mapCard" aria-label="Click to enlarge map">
+                <div id="mapPreview"></div>
             </div>
         </div>
+
         <div class="movies-grid" id="moviesGrid"></div>
     </div>
 
-    <!-- Popup Overlay -->
+    <!-- Existing Popup Overlay -->
     <div class="popup-overlay" id="popupOverlay">
         <div class="popup-content" id="popupContent">
             <button class="popup-close" id="popupClose">&times;</button>
@@ -455,7 +572,169 @@
         </div>
     </div>
 
+    <!-- Full-screen Map Overlay -->
+    <div class="popup-overlay" id="mapOverlay">
+        <div class="popup-content map-popup">
+            <button class="popup-close" id="mapOverlayClose" title="Close map">&times;</button>
+            <div id="mapFull"></div>
+        </div>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
     <script>
+    /* ===================== Festivals map ===================== */
+    const festivalsMapData = [
+        { name: "La Tomatina (Buñol)",   lat: 39.4202, lng: -0.7890, url: "#" },
+        { name: "Las Fallas (Valencia)", lat: 39.4699, lng: -0.3763, url: "#" },
+        { name: "Día de los Muertos (Madrid)", lat: 40.4168, lng: -3.7038, url: "#" },
+        { name: "Flamenco (Seville)",    lat: 37.3891, lng: -5.9845, url: "#" },
+        { name: "San Fermín (Pamplona)", lat: 42.8169, lng: -1.6432, url: "#" },
+        { name: "Semana Santa (Málaga)", lat: 36.7213, lng: -4.4214, url: "#" },
+    ];
+
+    let previewMap, fullMap, previewMarkers = [], fullMarkers = [];
+    let mapInitialized = false;
+
+    // Spain bounds (mainland + Balearics)
+    const SPAIN_BOUNDS = L.latLngBounds([35.5, -9.5], [43.8, 4.3]);
+
+    function markerStyle(map) {
+        const z = map.getZoom() ?? 6;
+        const radius = Math.max(5, Math.min(10, 5 + (z - 6) * 1.2));
+        return { radius, fillColor: 'crimson', color: '#fff', weight: 2, opacity: 1, fillOpacity: 0.95 };
+    }
+
+    function addFestivalMarkers(map, collection) {
+        const style = markerStyle(map);
+        const list = festivalsMapData.map(f => {
+            const m = L.circleMarker([f.lat, f.lng], style)
+                .bindTooltip(f.name, { direction: 'top', offset: [0, -8], permanent: false })
+                .on('click', () => {
+                    if (f.url !== '#') window.open(f.url, '_blank');
+                })
+                .addTo(map);
+            return m;
+        });
+        map.on('zoomend', () => {
+            const st = markerStyle(map);
+            list.forEach(m => m.setStyle(st));
+        });
+        if (collection) collection.push(...list);
+        return list;
+    }
+
+    function initMapPreview() {
+        previewMap = L.map('mapPreview', {
+            zoomControl: false,
+            attributionControl: false,
+            dragging: false,
+            scrollWheelZoom: false,
+            doubleClickZoom: false,
+            boxZoom: false,
+            keyboard: false,
+            tap: false,
+            minZoom: 5,
+            maxZoom: 8,
+            worldCopyJump: false
+        });
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            noWrap: false
+        }).addTo(previewMap);
+
+        previewMap.fitBounds(SPAIN_BOUNDS, { padding: [20, 20] });
+        addFestivalMarkers(previewMap, previewMarkers);
+        
+        setTimeout(() => previewMap.invalidateSize(), 100);
+        document.getElementById('mapCard').addEventListener('click', openFullMap);
+    }
+
+    function openFullMap() {
+        const overlay = document.getElementById('mapOverlay');
+        overlay.classList.add('is-open');
+        document.body.style.overflow = 'hidden';
+
+        const content = overlay.querySelector('.popup-content');
+        content.addEventListener('click', (e) => e.stopPropagation());
+
+        if (!fullMap) {
+            fullMap = L.map('mapFull', { 
+                zoomControl: true,
+                minZoom: 3,
+                maxZoom: 12,
+                worldCopyJump: true,
+                maxBounds: null
+            });
+            
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                noWrap: false,
+                attribution: '© OpenStreetMap'
+            }).addTo(fullMap);
+
+            fullMap.fitBounds(SPAIN_BOUNDS, { padding: [30, 30] });
+            addFestivalMarkers(fullMap, fullMarkers);
+        }
+
+        setTimeout(() => fullMap.invalidateSize(), 100);
+        document.addEventListener('keydown', escCloseHandler);
+    }
+
+    function escCloseHandler(e) {
+        if (e.key === 'Escape') closeFullMap();
+    }
+
+    function closeFullMap() {
+        const overlay = document.getElementById('mapOverlay');
+        overlay.classList.remove('is-open');
+        document.body.style.overflow = '';
+        document.removeEventListener('keydown', escCloseHandler);
+    }
+
+    // Initialize when DOM loads - SINGLE event listener
+    document.addEventListener('DOMContentLoaded', () => {
+    const showMapBtn = document.getElementById('showMapBtn');
+    const mapCardWrapper = document.getElementById('mapCardWrapper');
+
+    // Ensure wrapper participates in layout; visibility controlled by CSS
+    mapCardWrapper.style.display = 'block';
+
+    // Show/hide map button handler
+    showMapBtn.addEventListener('click', () => {
+        const opening = !mapCardWrapper.classList.contains('is-open');
+        
+        if (opening) {
+            // Opening: add class immediately
+            mapCardWrapper.classList.add('is-open');
+            showMapBtn.textContent = '🗺️ Hide Map';
+            
+            // Give the wrapper a moment to expand before sizing the map
+            if (!mapInitialized) {
+                setTimeout(() => {
+                    initMapPreview();
+                    mapInitialized = true;
+                }, 200);
+            } else {
+                setTimeout(() => previewMap.invalidateSize(), 300);
+            }
+        } else {
+            // Closing: remove class to trigger animation
+            mapCardWrapper.classList.remove('is-open');
+            showMapBtn.textContent = '🗺️ Show Map';
+        }
+    });
+
+    // Full map overlay handlers
+    document.getElementById('mapOverlayClose').addEventListener('click', closeFullMap);
+    document.getElementById('mapOverlay').addEventListener('click', (e) => {
+        if (e.target.id === 'mapOverlay') closeFullMap();
+    });
+    });
+
+    /* ===================== Existing catalogue script ===================== */
     // Resource data with popup content for each card
     const movies = [
         {
@@ -485,7 +764,7 @@
             image: "GeneralResources/Spanish/Coco/Coco3.png",
             topics: ["Movies"],
             popup: `
-                <div class="hero-banner" style="height:220px;background-image:linear-gradient(rgba(0,0,0,0.45),rgba(0,0,0,0.45)),url('GeneralResources/Spanish/Coco/coco.png');background-size:cover;background-position:center;display:flex;align-items:center;justify-content:center;margin-bottom:30px;">
+                <div class="hero-banner" style="height:220px;background-image:linear-gradient(rgba(0,0,0,0.45),rgba(0,0,0,0.45)),url('GeneralResources/Spanish/Coco/Coco1.png');background-size:cover;background-position:center;display:flex;align-items:center;justify-content:center;margin-bottom:30px;">
                     <h1 style="font-family:'Palatino Linotype',serif;font-size:2.2rem;color:#fff;text-shadow:0 4px 12px rgba(0,0,0,0.4);text-align:center;">Coco</h1>
                 </div>
                 <div style="max-width:600px;margin:0 auto;padding:10px 20px 30px 20px;">
@@ -855,31 +1134,7 @@
         }
     });
     </script>
-    <style>
-    /* ...existing styles from your file... */
-    /* Add styles for movie topics badge */
-    .movie-topics {
-        position: absolute;
-        bottom: 12px;
-        right: 16px;
-        display: flex;
-        gap: 8px;
-        flex-wrap: wrap;
-        z-index: 2;
-    }
-    .movie-topic {
-        background: #DD1F25;
-        color: #fff;
-        font-size: 0.95rem;
-        font-weight: 600;
-        padding: 6px 14px;
-        border-radius: 14px;
-        box-shadow: 0 2px 8px rgba(221, 31, 37, 0.10);
-        letter-spacing: 0.5px;
-        opacity: 0.93;
-        pointer-events: none;
-        margin-bottom: 2px;
-    }
-    </style>
+
+    <!-- ...existing code... -->
 </body>
 </html>
