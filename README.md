@@ -21,9 +21,9 @@ All translations are **manually written by students**, promoting real-world lang
 ## 🏠 Homepage
 
 - Links to:
-  - [Spanish Resources](#spanish-section)
-  - [French Resources](#french-section)
-  - [General Resources](#general-resources)
+  - [Spanish Resources](#spanish.html)
+  - [French Resources](#french.html)
+  - [General Resources](#general-resources.html)
 - Highlights the purpose of the site  
 - Displays a **list of contributors** at the bottom of the page
 
