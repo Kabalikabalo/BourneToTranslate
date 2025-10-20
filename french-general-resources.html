@@ -129,50 +129,210 @@
         #showMapBtn:hover { background: #0055A4; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0, 85, 164, 0.15); }
         #showMapBtn:active { transform: translateY(0); }
 
-        /* Inline popup area for resource details (below map) */
-        #resourceDetails { 
-            display: none; max-width: 1100px; margin: 16px auto 26px; padding: 0; 
-            background: #fff; border-radius: 18px; box-shadow: 0 8px 40px rgba(0,0,0,0.18); 
-            overflow: hidden; position: relative;
+        /* Full-screen Overlay for both map and resources */
+        .popup-overlay { 
+            position: fixed; 
+            inset: 0; 
+            background: rgba(0,0,0,0.45); 
+            z-index: 9999; 
+            display: none; 
+            align-items: center; 
+            justify-content: center; 
+            padding: 20px;
+            backdrop-filter: blur(1px);
         }
-        /* Reuse close button look */
+        .popup-overlay.is-open { display: flex !important; }
+
+        .popup-content { 
+            position: relative;
+            background: #fff; 
+            border-radius: 18px; 
+            max-width: 700px; 
+            width: 95vw; 
+            max-height: 90vh; 
+            overflow-y: auto;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.18);
+        }
+
         .popup-close {
-            position: absolute; top: 12px; right: 14px; width: 36px; height: 36px; font-size: 1.5rem;
-            color: #0055A4; background: #fff; border: none; border-radius: 50%; box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            cursor: pointer; z-index: 2; display: flex; align-items: center; justify-content: center;
+            position: absolute;
+            top: 10px;
+            right: 12px;
+            width: 36px;
+            height: 36px;
+            border: none;
+            background: #ffffff;
+            color: #222;
+            border-radius: 50%;
+            font-size: 22px;
+            line-height: 36px;
+            cursor: pointer;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.16);
+            z-index: 10;
         }
-        .popup-close:hover { box-shadow: 0 4px 16px rgba(0,85,164,0.15); background: #f0faff; color: #0055A4; }
+        .popup-close:hover {
+            box-shadow: 0 4px 16px rgba(0,85,164,0.15);
+            background: #f0faff;
+            color: #0055A4;
+        }
 
         /* Movies grid/cards */
-        .movies-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 15px; }
-        .movie-card { background: #fafafd; border-radius: 20px; box-shadow: 0 6px 26px rgba(0,85,164,0.08); overflow: hidden; cursor: pointer; display: flex; flex-direction: column; text-decoration: none; color: inherit; position: relative; transition: all 0.3s; }
-        .movie-card:hover { box-shadow: 0 10px 35px rgba(0,85,164,0.14); transform: translateY(-4px); }
-        .movie-image { width: 100%; aspect-ratio: 3/2; object-fit: cover; background: #eaeaea; border-bottom: 1px solid #eee; transition: transform 0.35s ease; }
-        .movie-card:hover .movie-image { transform: scale(1.04); }
-        .movie-info { padding: 18px 16px 70px 16px; flex: 1; position: relative; }
-        .movie-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 10px; color: #0055A4; letter-spacing: 0.5px; }
-        .movie-intro { font-size: 1rem; color: #444; opacity: 0.9; }
-        .movie-topics { position: absolute; bottom: 12px; right: 16px; display: flex; gap: 8px; flex-wrap: wrap; z-index: 2; }
-        .movie-topic { background: #0055A4; color: #fff; font-size: 0.95rem; font-weight: 600; padding: 6px 14px; border-radius: 14px; box-shadow: 0 2px 8px rgba(0,85,164,0.10); letter-spacing: 0.5px; opacity: 0.93; pointer-events: none; margin-bottom: 2px; }
-        .no-results { grid-column: 1/-1; text-align: center; padding: 3em 2em; color: #0055A4; font-weight: 600; font-size: 1.2rem; }
+        .movies-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); 
+            gap: 15px; 
+        }
 
-        /* Full-screen Map Overlay */
-        .popup-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 9999; display: none; align-items: center; justify-content: center; }
-        .popup-overlay.is-open { display: flex !important; }
-        .popup-content { background: #fff; border-radius: 18px; max-width: 700px; width: 95vw; max-height: 90vh; overflow: hidden; box-shadow: 0 8px 40px rgba(0,0,0,0.18); position: relative; }
+        .movie-card { 
+            background: #fafafd; 
+            border-radius: 20px; 
+            box-shadow: 0 6px 26px rgba(0, 85, 164, 0.08); 
+            overflow: hidden; 
+            cursor: pointer; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: stretch; 
+            text-decoration: none; 
+            color: inherit;
+            position: relative;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
-        @media (max-width: 600px) {
-            .catalogue-container { padding: 20px 8px; }
-            .map-card-wrapper { padding: 0 12px; margin-bottom: 12px; }
-            .map-card:hover { transform: scale(1.03); }
-            #mapPreview { height: 280px; }
-            .movie-card { flex-direction: row; min-height: 120px; padding-bottom: 24px; }
-            .movie-image { width: 100px; height: 100px; aspect-ratio: 1/1; border-radius: 12px; border-bottom: none; flex-shrink: 0; margin: 12px; }
-            .movie-info { padding: 12px 12px 60px 12px; }
-            .movie-title { font-size: 1.1rem; margin-bottom: 6px; }
-            .movie-intro { font-size: 0.9rem; }
-            .movie-topics { position: absolute; bottom: 10px; left: 120px; right: auto; gap: 6px; }
-            .movie-topic { font-size: 0.85rem; padding: 5px 10px; border-radius: 12px; margin-bottom: 2px; }
+        .movie-card:hover { 
+            box-shadow: 0 10px 35px rgba(0, 85, 164, 0.14); 
+            transform: translateY(-4px);
+        }
+
+        .movie-card:active {
+            transform: translateY(-2px);
+        }
+
+        .movie-image { 
+            width: 100%; 
+            aspect-ratio: 3/2; 
+            object-fit: cover; 
+            background: #eaeaea; 
+            border-bottom: 1px solid #eee;
+            transition: transform 0.35s ease;
+        }
+
+        .movie-card:hover .movie-image {
+            transform: scale(1.04);
+        }
+
+        .movie-info { 
+            padding: 18px 16px 70px 16px;
+            flex: 1;
+            transition: all 0.25s ease;
+            position: relative;
+        }
+
+        .movie-title { 
+            font-size: 1.3rem; 
+            font-weight: 700; 
+            margin-bottom: 10px; 
+            color: #0055A4; 
+            letter-spacing: 0.5px;
+            transition: all 0.25s ease;
+        }
+
+        .movie-card:hover .movie-title {
+            transform: translateX(3px);
+            color: #0055A4;
+        }
+
+        .movie-intro { 
+            font-size: 1rem; 
+            color: #444; 
+            opacity: 0.9;
+            transition: all 0.25s ease;
+        }
+
+        .movie-card:hover .movie-intro {
+            opacity: 1;
+        }
+
+        .movie-topics {
+            position: absolute;
+            bottom: 12px;
+            right: 16px;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            z-index: 2;
+        }
+
+        .movie-topic {
+            background: #0055A4;
+            color: #fff;
+            font-size: 0.95rem;
+            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: 14px;
+            box-shadow: 0 2px 8px rgba(0, 85, 164, 0.10);
+            letter-spacing: 0.5px;
+            opacity: 0.93;
+            pointer-events: none;
+            margin-bottom: 2px;
+        }
+
+        /* No results message */
+        .no-results {
+            grid-column: 1/-1;
+            text-align: center;
+            padding: 3em 2em;
+            color: #0055A4;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 600px) { 
+            .catalogue-container { padding: 20px 8px; } 
+            .movies-grid {
+                gap: 12px;
+                grid-template-columns: 1fr;
+            }
+            .movie-card {
+                flex-direction: row;
+                min-height: 120px;
+                align-items: flex-start;
+                padding-bottom: 24px;
+            }
+            .movie-image {
+                width: 100px;
+                height: 100px;
+                aspect-ratio: 1/1;
+                border-radius: 12px;
+                border-bottom: none;
+                flex-shrink: 0;
+                margin: 12px;
+            }
+            .movie-info { 
+                padding: 12px 12px 60px 12px;
+                flex: 1;
+                min-width: 0;
+            }
+            .movie-title {
+                font-size: 1.1rem;
+                margin-bottom: 6px;
+            }
+            .movie-intro {
+                font-size: 0.9rem;
+            }
+            .movie-topics {
+                position: absolute;
+                bottom: 10px;
+                left: 120px;
+                right: auto;
+                flex-wrap: wrap;
+                gap: 6px;
+            }
+            .movie-topic {
+                font-size: 0.85rem;
+                padding: 5px 10px;
+                border-radius: 12px;
+                margin-bottom: 2px;
+            }
         }
 
         /* Respect reduced motion */
@@ -217,9 +377,6 @@
             </div>
         </div>
 
-        <!-- Inline popup area (DETAILS RENDERED HERE) -->
-        <div id="resourceDetails"></div>
-
         <!-- Catalogue grid -->
         <div class="movies-grid" id="moviesGrid"></div>
     </div>
@@ -229,6 +386,14 @@
         <div class="popup-content map-popup">
             <button class="popup-close" id="mapOverlayClose" title="Close map">&times;</button>
             <div id="mapFull"></div>
+        </div>
+    </div>
+
+    <!-- Resource Details Overlay (like Spanish) -->
+    <div class="popup-overlay" id="popupOverlay">
+        <div class="popup-content" id="popupContent">
+            <button class="popup-close" id="popupClose">&times;</button>
+            <!-- Content will be injected here -->
         </div>
     </div>
 
@@ -448,41 +613,50 @@
 
         grid.innerHTML = shown ? html : `<div class="no-results">No resources found.</div>`;
 
-        // Card events -> inline popup below map
+        // Card events -> full-screen overlay popup
         document.querySelectorAll('.movie-card').forEach(card => {
             const open = () => {
                 const idx = Number(card.getAttribute('data-index'));
-                showInlinePopup(movies[idx].popup);
+                showPopup(movies[idx].popup);
             };
             card.onclick = open;
             card.onkeydown = (e) => { if (e.key === 'Enter' || e.key === ' ') open(); };
         });
     }
 
-    // Inline popup rendering below the map
-    function showInlinePopup(html){
-        const host = document.getElementById('resourceDetails');
-        host.innerHTML = `<button class="popup-close" id="resourceClose" title="Close">&times;</button>${html}`;
-        host.style.display = 'block';
-        document.getElementById('resourceClose').onclick = hideInlinePopup;
-        host.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // Full-screen overlay popup (like Spanish)
+    function showPopup(html) {
+        const overlay = document.getElementById('popupOverlay');
+        const content = document.getElementById('popupContent');
+        content.innerHTML = `<button class="popup-close" id="popupClose">&times;</button>${html}`;
+        overlay.classList.add('is-open');
+        document.body.style.overflow = 'hidden';
+        
+        document.getElementById('popupClose').onclick = hidePopup;
+        overlay.onclick = function(e) {
+            if (e.target === overlay) hidePopup();
+        };
+        document.addEventListener('keydown', escClosePopup);
     }
-    function hideInlinePopup(){
-        const host = document.getElementById('resourceDetails');
-        host.style.display = 'none';
-        host.innerHTML = '';
+
+    function hidePopup() {
+        document.getElementById('popupOverlay').classList.remove('is-open');
+        document.body.style.overflow = '';
+        document.removeEventListener('keydown', escClosePopup);
+    }
+
+    function escClosePopup(e) {
+        if (e.key === 'Escape') hidePopup();
     }
 
     // Search + topic filter
     function wireFilters(){
         document.getElementById('searchInput').addEventListener('input', function(){
-            hideInlinePopup();
             renderMoviesCatalogue(this.value);
         });
         document.querySelectorAll('.topic-filters input[type="checkbox"]').forEach(cb => {
             cb.addEventListener('change', function(){
                 this.parentElement.classList.toggle('active', this.checked);
-                hideInlinePopup();
                 renderMoviesCatalogue(document.getElementById('searchInput').value);
             });
             if (cb.checked) cb.parentElement.classList.add('active');
@@ -491,39 +665,32 @@
 
     // Map button + overlay handlers
     function wireMapUI(){
-    const showMapBtn = document.getElementById('showMapBtn');
-    const mapCardWrapper = document.getElementById('mapCardWrapper');
+        const showMapBtn = document.getElementById('showMapBtn');
+        const mapCardWrapper = document.getElementById('mapCardWrapper');
+        mapCardWrapper.style.display = 'block';
 
-    // Ensure wrapper participates in layout; visibility controlled by CSS
-    mapCardWrapper.style.display = 'block';
-
-    showMapBtn.addEventListener('click', () => {
-        const opening = !mapCardWrapper.classList.contains('is-open');
-        
-        if (opening){
-            // Opening: add class immediately
-            mapCardWrapper.classList.add('is-open');
-            showMapBtn.textContent = '🗺️ Hide Map';
+        showMapBtn.addEventListener('click', () => {
+            const opening = !mapCardWrapper.classList.contains('is-open');
             
-            // Give the wrapper a moment to expand before sizing the map
-            if (!mapInitialized){
-                setTimeout(() => { initMapPreview(); mapInitialized = true; }, 200);
+            if (opening){
+                mapCardWrapper.classList.add('is-open');
+                showMapBtn.textContent = '🗺️ Hide Map';
+                if (!mapInitialized){
+                    setTimeout(() => { initMapPreview(); mapInitialized = true; }, 200);
+                } else {
+                    setTimeout(() => previewMap.invalidateSize(), 300);
+                }
             } else {
-                setTimeout(() => previewMap.invalidateSize(), 300);
+                mapCardWrapper.classList.remove('is-open');
+                showMapBtn.textContent = '🗺️ Show Map';
             }
-        } else {
-            // Closing: remove class to trigger animation, then clean up
-            mapCardWrapper.classList.remove('is-open');
-            showMapBtn.textContent = '🗺️ Show Map';
-            hideInlinePopup(); // optional: close details when hiding map
-        }
-    });
+        });
 
-    document.getElementById('mapOverlayClose').addEventListener('click', closeFullMap);
-    document.getElementById('mapOverlay').addEventListener('click', (e) => {
-        if (e.target.id === 'mapOverlay') closeFullMap();
-    });
-}
+        document.getElementById('mapOverlayClose').addEventListener('click', closeFullMap);
+        document.getElementById('mapOverlay').addEventListener('click', (e) => {
+            if (e.target.id === 'mapOverlay') closeFullMap();
+        });
+    }
 
     // Init
     document.addEventListener('DOMContentLoaded', () => {
