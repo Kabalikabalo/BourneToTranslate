@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>French general resources</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
@@ -15,164 +17,176 @@
             overflow-x: hidden;
         }
         
-        /* Navbar with subtle slide-in animation */
+        /* Navbar */
         .navbar { 
             background: #0055A4; 
             color: white; 
             height: 60px; 
             display: flex; 
             align-items: center; 
+            justify-content: space-between; /* Changed from default */
             padding: 0 30px; 
             font-size: 1.5rem; 
             font-weight: 700; 
             letter-spacing: 1px;
             box-shadow: 0 2px 12px rgba(0, 85, 164, 0.15);
-            animation: slideDown 0.5s ease-out;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
-        
-        @keyframes slideDown {
-            from {
-                transform: translateY(-100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-        
         .navbar a { 
-            color: white; 
-            text-decoration: none; 
-            font-size: 1rem; 
-            font-weight: 500; 
-            margin-right: 25px;
-            transition: all 0.2s ease;
-            padding: 6px 12px;
-            border-radius: 4px;
+            color: white; text-decoration: none; font-size: 1rem; font-weight: 500; 
+            margin-right: 25px; transition: all 0.2s ease; padding: 6px 12px; border-radius: 4px;
+            flex-shrink: 0; /* Prevent back button from shrinking */
         }
+        .navbar a:hover { background: rgba(255,255,255,0.1); transform: translateX(-3px); }
         
-        .navbar a:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: translateX(-3px);
+        /* Title element for better control */
+        .navbar-title {
+            flex: 1 1 auto;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding-right: 80px; /* Offset for back button width to center text */
         }
-        
-        /* Catalogue container with subtle fade-in */
-        .catalogue-container { 
-            max-width: 1100px; 
-            margin: 0 auto; 
-            padding: 40px 20px 20px 20px;
-            animation: fadeIn 0.6s ease-out 0.1s both;
-        }
-        
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
+
+        /* Mobile: allow wrapping and auto height */
+        @media (max-width: 600px) {
+            .navbar {
+                height: auto;
+                min-height: 60px;
+                padding: 10px 16px;
+                overflow: visible;
+                align-items: flex-start;
             }
-            to {
-                opacity: 1;
-                transform: translateY(0);
+            .navbar-title {
+                white-space: normal;     /* allow wrap */
+                text-overflow: clip;
+                line-height: 1.2;
             }
         }
-        
-        /* Search and filter container */
+
+        /* Page layout */
+        .catalogue-container { max-width: 1100px; margin: 0 auto; padding: 40px 20px 20px; }
         .search-filter-container {
-            max-width: 700px;
-            margin: 0 auto 35px auto;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            align-items: center;
-            animation: scaleIn 0.5s ease-out 0.3s both;
+            max-width: 700px; margin: 0 auto 20px; display: flex; flex-direction: column; gap: 16px; align-items: center;
         }
-        
-        /* Search bar with gentle scale animation */
-        .search-bar { 
+        .search-bar { width: 100%; max-width: 400px; font-size: 1.1rem; padding: 12px 18px; border-radius: 30px; border: 1px solid #0055A4; outline: none; box-shadow: 0 2px 12px rgba(0, 85, 164, 0.08); transition: all 0.25s ease; }
+        .search-bar:focus { border-color: #0055A4; box-shadow: 0 3px 16px rgba(0,85,164,0.15); transform: scale(1.01); }
+        .topic-filters { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; align-items: center; }
+        .topic-filter-label { display: flex; align-items: center; gap: 8px; font-size: 1rem; color: #444; cursor: pointer; padding: 8px 16px; border-radius: 20px; background: #fafafd; border: 2px solid #e0e0e0; transition: all 0.25s ease; user-select: none; }
+        .topic-filter-label:hover { border-color: #0055A4; background: #fff5f5; }
+        .topic-filter-label input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; accent-color: #0055A4; }
+        .topic-filter-label.active { border-color: #0055A4; background: #fff5f5; font-weight: 600; }
+
+        /* Map card + overlay */
+        .map-card-wrapper { 
+            max-width: 1100px; margin: 10px auto 16px; padding: 0 20px; 
+            /* hidden by default, will be animated */
+            overflow: hidden;
+            max-height: 0;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transform: translateY(-6px);
+            transition: max-height 350ms ease, opacity 250ms ease, transform 250ms ease;
+            will-change: max-height, opacity, transform;
+        }
+        .map-card-wrapper.is-open {
+            max-height: 380px; /* enough for 320px map + paddings */
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+        @media (max-width: 600px) {
+            .map-card-wrapper.is-open { max-height: 330px; }
+        }
+
+        .map-card { background: #fff; border-radius: 16px; box-shadow: 0 8px 28px rgba(0,0,0,0.12); overflow: hidden; transition: transform 0.25s ease, box-shadow 0.25s ease; transform-origin: center; cursor: zoom-in; }
+        .map-card:hover { transform: scale(1.08); box-shadow: 0 12px 36px rgba(0,0,0,0.18); }
+        #mapPreview { width: 100%; height: 320px; }
+        .map-popup { 
+            width: 96vw; 
+            height: 92vh; 
+            padding: 0;
+            border-radius: 18px; /* Add rounded corners */
+            overflow: hidden; /* Clip map to rounded edges */
+        }
+        #mapFull { 
             width: 100%; 
-            max-width: 400px; 
-            font-size: 1.1rem; 
-            padding: 12px 18px; 
-            border-radius: 30px; 
-            border: 1px solid #0055A4; 
-            outline: none; 
-            box-shadow: 0 2px 12px rgba(0, 85, 164, 0.08); /* Updated */
-            transition: all 0.25s ease;
+            height: 100%; 
+            border-radius: 0; /* Remove since parent handles it */
         }
-        
-        @keyframes scaleIn {
-            from {
-                transform: scale(0.95);
-                opacity: 0;
-            }
-            to {
-                transform: scale(1);
-                opacity: 1;
-            }
+        .leaflet-interactive { cursor: pointer; }
+
+        /* Show Map button */
+        #showMapBtn {
+            padding: 12px 28px; font-size: 1.05rem; font-weight: 600; color: #fff; background: #0055A4;
+            border: none; border-radius: 30px; cursor: pointer; box-shadow: 0 4px 16px rgba(0, 85, 164, 0.15); transition: all 0.25s ease; margin-top: 6px;
         }
-        
-        .search-bar:focus { 
-            border-color: #0055A4;
-            box-shadow: 0 3px 16px rgba(0, 85, 164, 0.15); /* Updated */
-            transform: scale(1.01);
+        #showMapBtn:hover { background: #0055A4; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0, 85, 164, 0.15); }
+        #showMapBtn:active { transform: translateY(0); }
+
+        /* Full-screen Overlay for both map and resources */
+        .popup-overlay { 
+            position: fixed; 
+            inset: 0; 
+            background: rgba(0,0,0,0.45); 
+            z-index: 9999; 
+            display: none; 
+            align-items: center; 
+            justify-content: center; 
+            padding: 20px;
+            backdrop-filter: blur(1px);
         }
-        
-        /* Topic filters */
-        .topic-filters {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
+        .popup-overlay.is-open { display: flex !important; }
+
+        .popup-content { 
+            position: relative;
+            background: #fff; 
+            border-radius: 18px; 
+            max-width: 700px; 
+            width: 95vw; 
+            max-height: 90vh; 
+            overflow-y: auto;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.18);
         }
-        
-        .topic-filter-label {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 1rem;
-            color: #444;
+
+        .popup-close {
+            position: absolute;
+            top: 10px;
+            right: 12px;
+            width: 36px;
+            height: 36px;
+            border: none;
+            background: #ffffff;
+            color: #222;
+            border-radius: 50%;
+            font-size: 22px;
+            line-height: 36px;
             cursor: pointer;
-            padding: 8px 16px;
-            border-radius: 20px;
-            background: #fafafd;
-            border: 2px solid #e0e0e0;
-            transition: all 0.25s ease;
-            user-select: none;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.16);
+            z-index: 10;
         }
-        
-        .topic-filter-label:hover {
-            border-color: #0055A4;
-            background: #fff5f5;
+        .popup-close:hover {
+            box-shadow: 0 4px 16px rgba(0,85,164,0.15);
+            background: #f0faff;
+            color: #0055A4;
         }
-        
-        .topic-filter-label input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            cursor: pointer;
-            accent-color: #0055A4;
-        }
-        
-        .topic-filter-label.active {
-            border-color: #0055A4;
-            background: #fff5f5;
-            font-weight: 600;
-        }
-        
-        /* Grid with subtle staggered card animations */
+
+        /* Movies grid/cards */
         .movies-grid { 
             display: grid; 
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); 
             gap: 15px; 
         }
-        
+
         .movie-card { 
             background: #fafafd; 
             border-radius: 20px; 
-            box-shadow: 0 6px 26px rgba(0, 85, 164, 0.08); /* Updated */
+            box-shadow: 0 6px 26px rgba(0, 85, 164, 0.08); 
             overflow: hidden; 
             cursor: pointer; 
             display: flex; 
@@ -182,48 +196,17 @@
             color: inherit;
             position: relative;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            opacity: 0;
-            transform: translateY(20px);
-            animation: cardAppear 0.5s ease-out forwards;
         }
-        
-        /* Subtle stagger animation for each card */
-        .movie-card:nth-child(1) { animation-delay: 0.4s; }
-        .movie-card:nth-child(2) { animation-delay: 0.5s; }
-        .movie-card:nth-child(3) { animation-delay: 0.6s; }
-        .movie-card:nth-child(4) { animation-delay: 0.7s; }
-        .movie-card:nth-child(5) { animation-delay: 0.8s; }
-        .movie-card:nth-child(6) { animation-delay: 0.9s; }
-        .movie-card:nth-child(n+7) { animation-delay: 1s; }
-        
-        @keyframes cardAppear {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        /* Card disappear animation for search filtering */
-        .movie-card.hiding {
-            animation: cardDisappear 0.3s ease-out forwards;
-        }
-        
-        @keyframes cardDisappear {
-            to {
-                opacity: 0;
-                transform: translateY(-10px) scale(0.98);
-            }
-        }
-        
+
         .movie-card:hover { 
-            box-shadow: 0 10px 35px rgba(0, 85, 164, 0.14); /* Updated */
+            box-shadow: 0 10px 35px rgba(0, 85, 164, 0.14); 
             transform: translateY(-4px);
         }
-        
+
         .movie-card:active {
             transform: translateY(-2px);
         }
-        
+
         .movie-image { 
             width: 100%; 
             aspect-ratio: 3/2; 
@@ -232,35 +215,18 @@
             border-bottom: 1px solid #eee;
             transition: transform 0.35s ease;
         }
-        
+
         .movie-card:hover .movie-image {
             transform: scale(1.04);
         }
-        
+
         .movie-info { 
-            padding: 18px 16px 70px 16px; /* Increased bottom padding for more gap */
+            padding: 18px 16px 70px 16px;
             flex: 1;
             transition: all 0.25s ease;
             position: relative;
         }
 
-            .movie-year {
-                position: absolute;
-                bottom: 12px;
-                right: 16px;
-                background: #0055A4;
-                color: #fff;
-                font-size: 0.95rem;
-                font-weight: 600;
-                padding: 6px 16px;
-                border-radius: 16px;
-                box-shadow: 0 2px 8px rgba(0, 85, 164, 0.10); /* Updated */
-                letter-spacing: 0.5px;
-                z-index: 2;
-                pointer-events: none;
-                opacity: 0.93;
-            }
-        
         .movie-title { 
             font-size: 1.3rem; 
             font-weight: 700; 
@@ -269,23 +235,47 @@
             letter-spacing: 0.5px;
             transition: all 0.25s ease;
         }
-        
+
         .movie-card:hover .movie-title {
             transform: translateX(3px);
             color: #0055A4;
         }
-        
+
         .movie-intro { 
             font-size: 1rem; 
             color: #444; 
             opacity: 0.9;
             transition: all 0.25s ease;
         }
-        
+
         .movie-card:hover .movie-intro {
             opacity: 1;
         }
-        
+
+        .movie-topics {
+            position: absolute;
+            bottom: 12px;
+            right: 16px;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            z-index: 2;
+        }
+
+        .movie-topic {
+            background: #0055A4;
+            color: #fff;
+            font-size: 0.95rem;
+            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: 14px;
+            box-shadow: 0 2px 8px rgba(0, 85, 164, 0.10);
+            letter-spacing: 0.5px;
+            opacity: 0.93;
+            pointer-events: none;
+            margin-bottom: 2px;
+        }
+
         /* No results message */
         .no-results {
             grid-column: 1/-1;
@@ -294,9 +284,8 @@
             color: #0055A4;
             font-weight: 600;
             font-size: 1.2rem;
-            animation: fadeIn 0.4s ease-out;
         }
-        
+
         @media (max-width: 600px) { 
             .catalogue-container { padding: 20px 8px; } 
             .movies-grid {
@@ -319,7 +308,7 @@
                 margin: 12px;
             }
             .movie-info { 
-                padding: 12px 12px 60px 12px; /* More bottom padding for topics */
+                padding: 12px 12px 60px 12px;
                 flex: 1;
                 min-width: 0;
             }
@@ -333,7 +322,7 @@
             .movie-topics {
                 position: absolute;
                 bottom: 10px;
-                left: 120px; /* Place topics under text, not image */
+                left: 120px;
                 right: auto;
                 flex-wrap: wrap;
                 gap: 6px;
@@ -344,92 +333,25 @@
                 border-radius: 12px;
                 margin-bottom: 2px;
             }
-            .navbar { font-size: 1.2rem; padding: 0 20px; }
         }
 
-        /* Add styles for movie topics badge */
-    .movie-topics {
-        position: absolute;
-        bottom: 12px;
-        right: 16px;
-        display: flex;
-        gap: 8px;
-        flex-wrap: wrap;
-        z-index: 2;
-    }
-    .movie-topic {
-        background: #0055A4;
-        color: #fff;
-        font-size: 0.95rem;
-        font-weight: 600;
-        padding: 6px 14px;
-        border-radius: 14px;
-        box-shadow: 0 2px 8px rgba(0, 85, 164, 0.10); /* Updated */
-        letter-spacing: 0.5px;
-        opacity: 0.93;
-        pointer-events: none;
-        margin-bottom: 2px;
-    }
-
-    /* Add overlay and popup styles */
-    .popup-overlay {
-        position: fixed;
-        top: 0; left: 0; right: 0; bottom: 0;
-        background: rgba(0,0,0,0.45);
-        z-index: 9999;
-        display: none;
-        align-items: center;
-        justify-content: center;
-    }
-    .popup-content {
-        background: #fff;
-        border-radius: 18px;
-        max-width: 700px;
-        width: 95vw;
-        max-height: 90vh;
-        overflow-y: auto;
-        box-shadow: 0 8px 40px rgba(0,0,0,0.18);
-        position: relative;
-        animation: fadeIn 0.3s;
-    }
-    .popup-close {
-        position: absolute;
-        top: 18px;
-        right: 22px;
-        width: 36px;
-        height: 36px;
-        font-size: 1.5rem;
-        color: #0055A4;
-        background: #fff;
-        border: none;
-        border-radius: 50%;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        cursor: pointer;
-        z-index: 2;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: box-shadow 0.2s;
-    }
-    .popup-close:hover {
-        box-shadow: 0 4px 16px rgba(0, 85, 164, 0.15); /* Updated */
-        background: #f0faff;
-        color: #0055A4;
-    }
-    @media (max-width: 600px) {
-        .popup-content {
-            max-width: 98vw;
-            padding: 0;
+        /* Respect reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            .map-card-wrapper {
+                transition: none;
+                transform: none;
+            }
         }
-    }
     </style>
 </head>
 <body>
     <div class="navbar">
         <a href="general-resources.html">← Back</a>
-        French general resources
+        <span class="navbar-title">French general resources</span>
     </div>
+
     <div class="catalogue-container">
+        <!-- Search and filters -->
         <div class="search-filter-container">
             <input type="text" class="search-bar" id="searchInput" placeholder="Search resources...">
             <div class="topic-filters">
@@ -439,12 +361,35 @@
                 <label class="topic-filter-label">
                     <input type="checkbox" value="Documentaries"> Documentaries
                 </label>
+                <label class="topic-filter-label">
+                    <input type="checkbox" value="Locations"> Locations
+                </label>
+            </div>
+
+            <!-- Show/Hide Map Button -->
+            <button id="showMapBtn">🗺️ Show Map</button>
+        </div>
+
+        <!-- Map preview card -->
+        <div class="map-card-wrapper" id="mapCardWrapper">
+            <div class="map-card" id="mapCard" aria-label="Click to enlarge map">
+                <div id="mapPreview"></div>
             </div>
         </div>
+
+        <!-- Catalogue grid -->
         <div class="movies-grid" id="moviesGrid"></div>
     </div>
 
-    <!-- Popup Overlay -->
+    <!-- Full-screen Map Overlay -->
+    <div class="popup-overlay" id="mapOverlay">
+        <div class="popup-content map-popup">
+            <button class="popup-close" id="mapOverlayClose" title="Close map">&times;</button>
+            <div id="mapFull"></div>
+        </div>
+    </div>
+
+    <!-- Resource Details Overlay (like Spanish) -->
     <div class="popup-overlay" id="popupOverlay">
         <div class="popup-content" id="popupContent">
             <button class="popup-close" id="popupClose">&times;</button>
@@ -452,8 +397,99 @@
         </div>
     </div>
 
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
     <script>
-    // Resource data with popup content for each card
+    /* ===================== Festivals map (France) ===================== */
+    const festivalsMapData = [
+        { name: "Fête de la Musique (Paris)",     lat: 48.8566, lng: 2.3522, url: "#" },
+    ];
+
+    let previewMap, fullMap, previewMarkers = [], fullMarkers = [];
+    let mapInitialized = false;
+
+    // France bounds for initial fit
+    const FRANCE_BOUNDS = L.latLngBounds([41.0, -5.5], [51.5, 9.8]);
+
+    function markerStyle(map) {
+        const z = map.getZoom() ?? 6;
+        const radius = Math.max(5, Math.min(10, 5 + (z - 6) * 1.2));
+        return { radius, fillColor: '#0055A4', color: '#fff', weight: 2, opacity: 1, fillOpacity: 0.95 };
+    }
+
+    function addFestivalMarkers(map, collection) {
+        const style = markerStyle(map);
+        const list = festivalsMapData.map(f => {
+            const m = L.circleMarker([f.lat, f.lng], style)
+                .bindTooltip(f.name, { direction: 'top', offset: [0, -8] })
+                .on('click', () => { if (f.url !== '#') window.open(f.url, '_blank'); })
+                .addTo(map);
+            return m;
+        });
+        map.on('zoomend', () => {
+            const st = markerStyle(map);
+            list.forEach(m => m.setStyle(st));
+        });
+        if (collection) collection.push(...list);
+        return list;
+    }
+
+    function initMapPreview() {
+        previewMap = L.map('mapPreview', {
+            zoomControl: false,
+            attributionControl: false,
+            dragging: false,
+            scrollWheelZoom: false,
+            doubleClickZoom: false,
+            boxZoom: false,
+            keyboard: false,
+            tap: false,
+            minZoom: 5,
+            maxZoom: 8,
+            worldCopyJump: false
+        });
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            noWrap: false
+        }).addTo(previewMap);
+
+        previewMap.fitBounds(FRANCE_BOUNDS, { padding: [20, 20] });
+        addFestivalMarkers(previewMap, previewMarkers);
+
+        setTimeout(() => previewMap.invalidateSize(), 0);
+        document.getElementById('mapCard').addEventListener('click', openFullMap);
+    }
+
+    function openFullMap() {
+        const overlay = document.getElementById('mapOverlay');
+        overlay.classList.add('is-open');
+        document.body.style.overflow = 'hidden';
+
+        const content = overlay.querySelector('.popup-content');
+        content.addEventListener('click', (e) => e.stopPropagation());
+
+        if (!fullMap) {
+            fullMap = L.map('mapFull', { zoomControl: true, minZoom: 3, maxZoom: 12, worldCopyJump: true });
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19, noWrap: false, attribution: '© OpenStreetMap'
+            }).addTo(fullMap);
+            fullMap.fitBounds(FRANCE_BOUNDS, { padding: [30, 30] });
+            addFestivalMarkers(fullMap, fullMarkers);
+        }
+        setTimeout(() => fullMap.invalidateSize(), 50);
+        document.addEventListener('keydown', escCloseHandler);
+    }
+
+    function closeFullMap() {
+        document.getElementById('mapOverlay').classList.remove('is-open');
+        document.body.style.overflow = '';
+        document.removeEventListener('keydown', escCloseHandler);
+    }
+    function escCloseHandler(e) { if (e.key === 'Escape') closeFullMap(); }
+
+    /* ===================== Resource catalogue ===================== */
     const movies = [
         {
             title: "Ratatouille",
@@ -477,7 +513,6 @@
             `,
         },
         {
-
             title: "Le Chef",
             intro: "Comedy, food, and French kitchens",
             image: "GeneralResources/French/LeChef/LeChef1.png",
@@ -542,39 +577,27 @@
         }
     ];
 
-    function normalizeText(text) {
-        return text ? text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase() : '';
+    function normalizeText(text){ return text ? text.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase() : ''; }
+    function getSelectedTopics(){
+        return Array.from(document.querySelectorAll('.topic-filters input[type="checkbox"]:checked')).map(cb => cb.value);
     }
 
-    function getSelectedTopics() {
-        const checkboxes = document.querySelectorAll('.topic-filters input[type="checkbox"]');
-        const selected = [];
-        checkboxes.forEach(cb => {
-            if (cb.checked) {
-                selected.push(cb.value);
-            }
-        });
-        return selected;
-    }
-
-    function renderMoviesCatalogue(filter='') {
+    function renderMoviesCatalogue(filter=''){
         const grid = document.getElementById('moviesGrid');
         const normalizedFilter = normalizeText(filter);
         const selectedTopics = getSelectedTopics();
 
-        let shown = 0;
-        let newHTML = '';
+        let shown = 0, html = '';
         movies.forEach((movie, index) => {
             const matchesFilter = !normalizedFilter ||
                 normalizeText(movie.title).includes(normalizedFilter) ||
                 normalizeText(movie.intro).includes(normalizedFilter);
             const matchesTopics = selectedTopics.length === 0 ||
                 selectedTopics.some(topic => movie.topics.includes(topic));
-
             if (matchesFilter && matchesTopics) {
                 shown++;
-                newHTML += `
-                    <div class="movie-card" tabindex="0" data-index="${index}" style="animation-delay:${0.05 * index}s;position:relative;">
+                html += `
+                    <div class="movie-card" tabindex="0" data-index="${index}">
                         <img src="${movie.image}" alt="${movie.title}" class="movie-image">
                         <div class="movie-info">
                             <div class="movie-title">${movie.title}</div>
@@ -583,69 +606,97 @@
                         <div class="movie-topics">
                             ${movie.topics.map(topic => `<span class="movie-topic">${topic}</span>`).join(' ')}
                         </div>
-                    </div>`;
+                    </div>
+                `;
             }
         });
 
-        if (shown === 0) {
-            newHTML = `<div class="no-results">No resources found.</div>`;
-        }
+        grid.innerHTML = shown ? html : `<div class="no-results">No resources found.</div>`;
 
-        grid.innerHTML = newHTML;
-
-        // Add click event listeners for popups
+        // Card events -> full-screen overlay popup
         document.querySelectorAll('.movie-card').forEach(card => {
-            card.onclick = function() {
-                const idx = this.getAttribute('data-index');
+            const open = () => {
+                const idx = Number(card.getAttribute('data-index'));
                 showPopup(movies[idx].popup);
             };
-            card.onkeydown = function(e) {
-                if (e.key === "Enter" || e.key === " ") {
-                    const idx = this.getAttribute('data-index');
-                    showPopup(movies[idx].popup);
-                }
-            };
+            card.onclick = open;
+            card.onkeydown = (e) => { if (e.key === 'Enter' || e.key === ' ') open(); };
         });
     }
 
+    // Full-screen overlay popup (like Spanish)
     function showPopup(html) {
         const overlay = document.getElementById('popupOverlay');
         const content = document.getElementById('popupContent');
-        content.querySelector('.popup-close').onclick = hidePopup;
-        content.innerHTML = `<button class="popup-close" id="popupClose">&times;</button>` + html;
-        overlay.style.display = 'flex';
+        content.innerHTML = `<button class="popup-close" id="popupClose">&times;</button>${html}`;
+        overlay.classList.add('is-open');
         document.body.style.overflow = 'hidden';
+        
         document.getElementById('popupClose').onclick = hidePopup;
         overlay.onclick = function(e) {
             if (e.target === overlay) hidePopup();
         };
-        document.onkeydown = function(e) {
-            if (e.key === "Escape") hidePopup();
-        };
+        document.addEventListener('keydown', escClosePopup);
     }
 
     function hidePopup() {
-        document.getElementById('popupOverlay').style.display = 'none';
+        document.getElementById('popupOverlay').classList.remove('is-open');
         document.body.style.overflow = '';
-        document.onkeydown = null;
+        document.removeEventListener('keydown', escClosePopup);
     }
 
-    renderMoviesCatalogue();
+    function escClosePopup(e) {
+        if (e.key === 'Escape') hidePopup();
+    }
 
-    document.getElementById('searchInput').addEventListener('input', function() {
-        renderMoviesCatalogue(this.value);
-    });
-
-    const topicCheckboxes = document.querySelectorAll('.topic-filters input[type="checkbox"]');
-    topicCheckboxes.forEach(checkbox => {
-        checkbox.addEventListener('change', function() {
-            this.parentElement.classList.toggle('active', this.checked);
-            const searchValue = document.getElementById('searchInput').value;
-            renderMoviesCatalogue(searchValue);
+    // Search + topic filter
+    function wireFilters(){
+        document.getElementById('searchInput').addEventListener('input', function(){
+            renderMoviesCatalogue(this.value);
         });
-        if (checkbox.checked) {
-            checkbox.parentElement.classList.add('active');
-        }
+        document.querySelectorAll('.topic-filters input[type="checkbox"]').forEach(cb => {
+            cb.addEventListener('change', function(){
+                this.parentElement.classList.toggle('active', this.checked);
+                renderMoviesCatalogue(document.getElementById('searchInput').value);
+            });
+            if (cb.checked) cb.parentElement.classList.add('active');
+        });
+    }
+
+    // Map button + overlay handlers
+    function wireMapUI(){
+        const showMapBtn = document.getElementById('showMapBtn');
+        const mapCardWrapper = document.getElementById('mapCardWrapper');
+        mapCardWrapper.style.display = 'block';
+
+        showMapBtn.addEventListener('click', () => {
+            const opening = !mapCardWrapper.classList.contains('is-open');
+            
+            if (opening){
+                mapCardWrapper.classList.add('is-open');
+                showMapBtn.textContent = '🗺️ Hide Map';
+                if (!mapInitialized){
+                    setTimeout(() => { initMapPreview(); mapInitialized = true; }, 200);
+                } else {
+                    setTimeout(() => previewMap.invalidateSize(), 300);
+                }
+            } else {
+                mapCardWrapper.classList.remove('is-open');
+                showMapBtn.textContent = '🗺️ Show Map';
+            }
+        });
+
+        document.getElementById('mapOverlayClose').addEventListener('click', closeFullMap);
+        document.getElementById('mapOverlay').addEventListener('click', (e) => {
+            if (e.target.id === 'mapOverlay') closeFullMap();
+        });
+    }
+
+    // Init
+    document.addEventListener('DOMContentLoaded', () => {
+        wireFilters();
+        renderMoviesCatalogue();
+        wireMapUI();
     });
     </script>
 </body>
