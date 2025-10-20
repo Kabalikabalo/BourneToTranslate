@@ -105,7 +105,7 @@
         }
 
         .map-card { background: #fff; border-radius: 16px; box-shadow: 0 8px 28px rgba(0,0,0,0.12); overflow: hidden; transition: transform 0.25s ease, box-shadow 0.25s ease; transform-origin: center; cursor: zoom-in; }
-        .map-card:hover { transform: scale(1.08); box-shadow: 0 12px 36px rgba(0,0,0,0.18); }
+
         #mapPreview { width: 100%; height: 320px; }
         .map-popup { 
             width: 96vw; 
@@ -431,6 +431,31 @@
             const st = markerStyle(map);
             list.forEach(m => m.setStyle(st));
         });
+        
+        // Add map click handler to find and show nearest festival
+        map.on('click', (e) => {
+            const clickLatLng = e.latlng;
+            let nearestFestival = null;
+            let minDistance = Infinity;
+            
+            festivalsMapData.forEach(f => {
+                const festivalLatLng = L.latLng(f.lat, f.lng);
+                const distance = clickLatLng.distanceTo(festivalLatLng);
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    nearestFestival = f;
+                }
+            });
+            
+            if (nearestFestival) {
+                // Show popup at the nearest festival location
+                L.popup()
+                    .setLatLng([nearestFestival.lat, nearestFestival.lng])
+                    .setContent(`<strong>${nearestFestival.name}</strong><br>${nearestFestival.url !== '#' ? '<a href="' + nearestFestival.url + '" target="_blank">Learn more</a>' : ''}`)
+                    .openOn(map);
+            }
+        });
+        
         if (collection) collection.push(...list);
         return list;
     }

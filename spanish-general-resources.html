@@ -370,7 +370,7 @@
             transform-origin: center;
             cursor: zoom-in;
         }
-        .map-card:hover { transform: scale(1.15); box-shadow: 0 12px 36px rgba(0,0,0,0.18); }
+
         #mapPreview { width: 100%; height: 320px; }
 
         .map-popup { 
@@ -590,12 +590,12 @@
     <script>
     /* ===================== Festivals map ===================== */
     const festivalsMapData = [
-        { name: "La Tomatina (Buñol)",   lat: 39.4202, lng: -0.7890, url: "#" },
-        { name: "Las Fallas (Valencia)", lat: 39.4699, lng: -0.3763, url: "#" },
-        { name: "Día de los Muertos (Madrid)", lat: 40.4168, lng: -3.7038, url: "#" },
-        { name: "Flamenco (Seville)",    lat: 37.3891, lng: -5.9845, url: "#" },
-        { name: "San Fermín (Pamplona)", lat: 42.8169, lng: -1.6432, url: "#" },
-        { name: "Semana Santa (Málaga)", lat: 36.7213, lng: -4.4214, url: "#" },
+        { name: "La Tomatina (Buñol)",   lat: 39.4202, lng: -0.7890, url: "../SpanishCulturePages/LaTomatina/index.html" },
+        { name: "Las Fallas (Valencia)", lat: 39.4699, lng: -0.3763, url: "../SpanishCulturePages/LasFallas/index.html" },
+        { name: "El Día de los Muertos (Mexico City)", lat: 19.4326, lng: -99.1332, url: "../SpanishCulturePages/DayOfTheDead/index.html" },
+        { name: "Flamenco (Seville)",    lat: 37.3891, lng: -5.9845, url: "../SpanishCulturePages/Flamenco/index.html" },
+        { name: "San Fermín (Pamplona)", lat: 42.8169, lng: -1.6432, url: "../SpanishCulturePages/SanFermin/index.html" },
+        { name: "Semana Santa (Málaga)", lat: 36.7213, lng: -4.4214, url: "../SpanishCulturePages/SemanaSanta/index.html" },
     ];
 
     let previewMap, fullMap, previewMarkers = [], fullMarkers = [];
@@ -625,6 +625,31 @@
             const st = markerStyle(map);
             list.forEach(m => m.setStyle(st));
         });
+        
+        // Add map click handler to find and show nearest festival
+        map.on('click', (e) => {
+            const clickLatLng = e.latlng;
+            let nearestFestival = null;
+            let minDistance = Infinity;
+            
+            festivalsMapData.forEach(f => {
+                const festivalLatLng = L.latLng(f.lat, f.lng);
+                const distance = clickLatLng.distanceTo(festivalLatLng);
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    nearestFestival = f;
+                }
+            });
+            
+            if (nearestFestival) {
+                // Show popup at the nearest festival location
+                L.popup()
+                    .setLatLng([nearestFestival.lat, nearestFestival.lng])
+                    .setContent(`<strong>${nearestFestival.name}</strong><br>${nearestFestival.url !== '#' ? '<a href="' + nearestFestival.url + '" target="_blank">Learn more</a>' : ''}`)
+                    .openOn(map);
+            }
+        });
+        
         if (collection) collection.push(...list);
         return list;
     }
@@ -1138,7 +1163,5 @@
         }
     });
     </script>
-
-    <!-- ...existing code... -->
 </body>
 </html>
