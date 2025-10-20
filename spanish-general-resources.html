@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <title>Spanish general resources</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Leaflet CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
@@ -347,54 +345,8 @@
             z-index: 10; /* Keep close button on top */
         }
 
-        /* Map card and full-screen map */
-        .map-card-wrapper { 
-            max-width: 1100px; 
-            margin: 18px auto 6px; 
-            padding: 0 20px; 
-        }
-        .map-card-wrapper.is-open {
-            max-height: 380px; /* enough for 320px map + paddings */
-            opacity: 1;
-            visibility: visible;
-            pointer-events: auto;
-            transform: translateY(0);
-            margin-bottom: 40px; /* Add white space below when open */
-        }
-        .map-card {
-            background: #fff;
-            border-radius: 16px;
-            box-shadow: 0 8px 28px rgba(0,0,0,0.12);
-            overflow: hidden;
-            transition: transform 0.25s ease, box-shadow 0.25s ease;
-            transform-origin: center;
-            cursor: zoom-in;
-        }
-
-        #mapPreview { width: 100%; height: 320px; }
-
-        .map-popup { 
-            width: 96vw; 
-            height: 92vh; 
-            padding: 0;
-            border-radius: 18px; /* Add rounded corners */
-            overflow: hidden; /* Clip map to rounded edges */
-        }
-        #mapFull { 
-            width: 100%; 
-            height: 100%; 
-            border-radius: 0; /* Remove since parent handles it */
-        }
-
-        .leaflet-interactive { cursor: pointer; }
-
         @media (max-width: 600px) { 
             .catalogue-container { padding: 20px 8px; }
-            
-            /* Make map bigger on mobile */
-            .map-card-wrapper { padding: 0 12px; margin-bottom: 12px; }
-            .map-card:hover { transform: scale(1.05); } /* Less aggressive hover */
-            #mapPreview { height: 280px; } /* Taller on mobile */
             
             .movies-grid {
                 gap: 12px;
@@ -536,32 +488,6 @@
                 <label class="topic-filter-label">
                     <input type="checkbox" value="Documentaries"> Documentaries
                 </label>
-                <label class="topic-filter-label">
-                    <input type="checkbox" value="Locations"> Locations
-                </label>
-            </div>
-            <!-- Show Map Button -->
-            <button id="showMapBtn" style="
-                padding: 12px 28px;
-                font-size: 1.05rem;
-                font-weight: 600;
-                color: #fff;
-                background: #DD1F25;
-                border: none;
-                border-radius: 30px;
-                cursor: pointer;
-                box-shadow: 0 4px 16px rgba(221, 31, 37, 0.2);
-                transition: all 0.25s ease;
-                margin-top: 10px;
-            ">
-                🗺️ Show Map
-            </button>
-        </div>
-
-        <!-- Map card (hidden by default) -->
-        <div class="map-card-wrapper" id="mapCardWrapper">
-            <div class="map-card" id="mapCard" aria-label="Click to enlarge map">
-                <div id="mapPreview"></div>
             </div>
         </div>
 
@@ -576,194 +502,7 @@
         </div>
     </div>
 
-    <!-- Full-screen Map Overlay -->
-    <div class="popup-overlay" id="mapOverlay">
-        <div class="popup-content map-popup">
-            <button class="popup-close" id="mapOverlayClose" title="Close map">&times;</button>
-            <div id="mapFull"></div>
-        </div>
-    </div>
-
-    <!-- Leaflet JS -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
     <script>
-    /* ===================== Festivals map ===================== */
-    const festivalsMapData = [
-        { name: "La Tomatina (Buñol)",   lat: 39.4202, lng: -0.7890, url: "../SpanishCulturePages/LaTomatina/index.html" },
-        { name: "Las Fallas (Valencia)", lat: 39.4699, lng: -0.3763, url: "../SpanishCulturePages/LasFallas/index.html" },
-        { name: "El Día de los Muertos (Mexico City)", lat: 19.4326, lng: -99.1332, url: "../SpanishCulturePages/DayOfTheDead/index.html" },
-        { name: "Flamenco (Seville)",    lat: 37.3891, lng: -5.9845, url: "../SpanishCulturePages/Flamenco/index.html" },
-        { name: "San Fermín (Pamplona)", lat: 42.8169, lng: -1.6432, url: "../SpanishCulturePages/SanFermin/index.html" },
-        { name: "Semana Santa (Málaga)", lat: 36.7213, lng: -4.4214, url: "../SpanishCulturePages/SemanaSanta/index.html" },
-    ];
-
-    let previewMap, fullMap, previewMarkers = [], fullMarkers = [];
-    let mapInitialized = false;
-
-    // Spain bounds (mainland + Balearics)
-    const SPAIN_BOUNDS = L.latLngBounds([35.5, -9.5], [43.8, 4.3]);
-
-    function markerStyle(map) {
-        const z = map.getZoom() ?? 6;
-        const radius = Math.max(5, Math.min(10, 5 + (z - 6) * 1.2));
-        return { radius, fillColor: 'crimson', color: '#fff', weight: 2, opacity: 1, fillOpacity: 0.95 };
-    }
-
-    function addFestivalMarkers(map, collection) {
-        const style = markerStyle(map);
-        const list = festivalsMapData.map(f => {
-            const m = L.circleMarker([f.lat, f.lng], style)
-                .bindTooltip(f.name, { direction: 'top', offset: [0, -8], permanent: false })
-                .on('click', () => {
-                    if (f.url !== '#') window.open(f.url, '_blank');
-                })
-                .addTo(map);
-            return m;
-        });
-        map.on('zoomend', () => {
-            const st = markerStyle(map);
-            list.forEach(m => m.setStyle(st));
-        });
-        
-        // Add map click handler to find and show nearest festival
-        map.on('click', (e) => {
-            const clickLatLng = e.latlng;
-            let nearestFestival = null;
-            let minDistance = Infinity;
-            
-            festivalsMapData.forEach(f => {
-                const festivalLatLng = L.latLng(f.lat, f.lng);
-                const distance = clickLatLng.distanceTo(festivalLatLng);
-                if (distance < minDistance) {
-                    minDistance = distance;
-                    nearestFestival = f;
-                }
-            });
-            
-            if (nearestFestival) {
-                // Show popup at the nearest festival location
-                L.popup()
-                    .setLatLng([nearestFestival.lat, nearestFestival.lng])
-                    .setContent(`<strong>${nearestFestival.name}</strong><br>${nearestFestival.url !== '#' ? '<a href="' + nearestFestival.url + '" target="_blank">Learn more</a>' : ''}`)
-                    .openOn(map);
-            }
-        });
-        
-        if (collection) collection.push(...list);
-        return list;
-    }
-
-    function initMapPreview() {
-        previewMap = L.map('mapPreview', {
-            zoomControl: false,
-            attributionControl: false,
-            dragging: false,
-            scrollWheelZoom: false,
-            doubleClickZoom: false,
-            boxZoom: false,
-            keyboard: false,
-            tap: false,
-            minZoom: 5,
-            maxZoom: 8,
-            worldCopyJump: false
-        });
-
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-            noWrap: false
-        }).addTo(previewMap);
-
-        previewMap.fitBounds(SPAIN_BOUNDS, { padding: [20, 20] });
-        addFestivalMarkers(previewMap, previewMarkers);
-        
-        setTimeout(() => previewMap.invalidateSize(), 100);
-        document.getElementById('mapCard').addEventListener('click', openFullMap);
-    }
-
-    function openFullMap() {
-        const overlay = document.getElementById('mapOverlay');
-        overlay.classList.add('is-open');
-        document.body.style.overflow = 'hidden';
-
-        const content = overlay.querySelector('.popup-content');
-        content.addEventListener('click', (e) => e.stopPropagation());
-
-        if (!fullMap) {
-            fullMap = L.map('mapFull', { 
-                zoomControl: true,
-                minZoom: 3,
-                maxZoom: 12,
-                worldCopyJump: true,
-                maxBounds: null
-            });
-            
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                maxZoom: 19,
-                noWrap: false,
-                attribution: '© OpenStreetMap'
-            }).addTo(fullMap);
-
-            fullMap.fitBounds(SPAIN_BOUNDS, { padding: [30, 30] });
-            addFestivalMarkers(fullMap, fullMarkers);
-        }
-
-        setTimeout(() => fullMap.invalidateSize(), 100);
-        document.addEventListener('keydown', escCloseHandler);
-    }
-
-    function escCloseHandler(e) {
-        if (e.key === 'Escape') closeFullMap();
-    }
-
-    function closeFullMap() {
-        const overlay = document.getElementById('mapOverlay');
-        overlay.classList.remove('is-open');
-        document.body.style.overflow = '';
-        document.removeEventListener('keydown', escCloseHandler);
-    }
-
-    // Initialize when DOM loads - SINGLE event listener
-    document.addEventListener('DOMContentLoaded', () => {
-    const showMapBtn = document.getElementById('showMapBtn');
-    const mapCardWrapper = document.getElementById('mapCardWrapper');
-
-    // Ensure wrapper participates in layout; visibility controlled by CSS
-    mapCardWrapper.style.display = 'block';
-
-    // Show/hide map button handler
-    showMapBtn.addEventListener('click', () => {
-        const opening = !mapCardWrapper.classList.contains('is-open');
-        
-        if (opening) {
-            // Opening: add class immediately
-            mapCardWrapper.classList.add('is-open');
-            showMapBtn.textContent = '🗺️ Hide Map';
-            
-            // Give the wrapper a moment to expand before sizing the map
-            if (!mapInitialized) {
-                setTimeout(() => {
-                    initMapPreview();
-                    mapInitialized = true;
-                }, 200);
-            } else {
-                setTimeout(() => previewMap.invalidateSize(), 300);
-            }
-        } else {
-            // Closing: remove class to trigger animation
-            mapCardWrapper.classList.remove('is-open');
-            showMapBtn.textContent = '🗺️ Show Map';
-        }
-    });
-
-    // Full map overlay handlers
-    document.getElementById('mapOverlayClose').addEventListener('click', closeFullMap);
-    document.getElementById('mapOverlay').addEventListener('click', (e) => {
-        if (e.target.id === 'mapOverlay') closeFullMap();
-    });
-    });
-
-    /* ===================== Existing catalogue script ===================== */
     // Resource data with popup content for each card
     const movies = [
         {

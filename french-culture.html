@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>Culture Française</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
@@ -238,6 +240,152 @@
             }
             .navbar { font-size: 1.2rem; padding: 0 20px; }
         }
+
+        /* Map Styles */
+        .show-map-btn {
+            background-color: #0055A4;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 20px auto;
+            display: block;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .show-map-btn:hover {
+            background-color: #003d7a;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .map-card-wrapper {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .map-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .map-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+            border-radius: 15px;
+        }
+
+        .map-preview {
+            width: 100%;
+            height: 400px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .map-loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+        }
+
+        .map-loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(0, 85, 164, 0.3);
+            border-top-color: #0055A4;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .map-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 10000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .map-overlay.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .map-fullscreen {
+            width: 90%;
+            height: 90%;
+            background: white;
+            border-radius: 15px;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { 
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to { 
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .close-map {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: white;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            z-index: 10001;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            color: #0055A4;
+        }
+
+        .close-map:hover {
+            background: #0055A4;
+            color: white;
+            transform: rotate(90deg);
+        }
+
+        #fullMap {
+            width: 100%;
+            height: 100%;
+            border-radius: 15px;
+        }
     </style>
 </head>
 <body>
@@ -247,9 +395,183 @@
     </div>
     <div class="catalogue-container">
         <input type="text" class="search-bar" id="searchInput" placeholder="Rechercher des thèmes culturels...">
+        
+        <!-- Map Section -->
+        <button class="show-map-btn" onclick="initMapPreview()">Show Map</button>
+        <div class="map-card-wrapper" style="display:none;" id="mapCardWrapper">
+            <div class="map-card">
+                <div id="mapPreview" class="map-preview" onclick="openFullMap()">
+                    <div class="map-loading" id="mapLoading">
+                        <div class="map-loading-spinner"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         <div class="culture-grid" id="cultureGrid"></div>
     </div>
+
+    <!-- Full screen map overlay -->
+    <div class="map-overlay" id="mapOverlay">
+        <div class="map-fullscreen">
+            <button class="close-map" onclick="closeFullMap()">×</button>
+            <div id="fullMap"></div>
+        </div>
+    </div>
+
     <script>
+    // French locations map data
+    const festivalsMapData = [
+        { name: "Fête de la Musique", lat: 48.8566, lon: 2.3522, city: "Paris", url: "#" }
+    ];
+
+    let previewMap = null;
+    let fullMapInstance = null;
+    let mapInitialized = false;
+
+    // Custom marker styling
+    function markerStyle() {
+        return L.divIcon({
+            className: 'custom-marker',
+            html: `<div style="
+                background-color: #0055A4;
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                border: 2px solid white;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            "></div>`,
+            iconSize: [20, 20],
+            iconAnchor: [10, 10]
+        });
+    }
+
+    // Add location markers to map
+    function addFestivalMarkers(map) {
+        festivalsMapData.forEach(location => {
+            const marker = L.marker([location.lat, location.lon], {
+                icon: markerStyle()
+            }).addTo(map);
+
+            marker.bindPopup(`
+                <div style="font-family: 'Segoe UI', sans-serif;">
+                    <h3 style="margin: 0 0 5px 0; color: #0055A4; font-size: 16px;">${location.name}</h3>
+                    <p style="margin: 0; color: #555; font-size: 14px;">${location.city}</p>
+                </div>
+            `);
+
+            // Add click handler to navigate to the culture page
+            marker.on('click', function() {
+                if (location.url && location.url !== '#') {
+                    window.location.href = location.url;
+                }
+            });
+        });
+
+        // Add click handler to map for finding nearest location
+        map.on('click', function(e) {
+            const clickLat = e.latlng.lat;
+            const clickLon = e.latlng.lng;
+            
+            // Find nearest location
+            let nearestLocation = null;
+            let minDistance = Infinity;
+            
+            festivalsMapData.forEach(location => {
+                const distance = Math.sqrt(
+                    Math.pow(location.lat - clickLat, 2) + 
+                    Math.pow(location.lon - clickLon, 2)
+                );
+                
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    nearestLocation = location;
+                }
+            });
+            
+            // Pan to and open popup for nearest location
+            if (nearestLocation) {
+                map.setView([nearestLocation.lat, nearestLocation.lon], 8, {
+                    animate: true,
+                    duration: 1
+                });
+                
+                // Find and open the marker's popup
+                map.eachLayer(layer => {
+                    if (layer instanceof L.Marker) {
+                        const markerLatLng = layer.getLatLng();
+                        if (markerLatLng.lat === nearestLocation.lat && 
+                            markerLatLng.lng === nearestLocation.lon) {
+                            setTimeout(() => layer.openPopup(), 500);
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    function initMapPreview() {
+        const mapCardWrapper = document.getElementById('mapCardWrapper');
+        const mapLoading = document.getElementById('mapLoading');
+        const showMapBtn = document.querySelector('.show-map-btn');
+        
+        if (!mapInitialized) {
+            mapCardWrapper.style.display = 'block';
+            mapLoading.style.display = 'block';
+            showMapBtn.textContent = 'Hide Map';
+            
+            setTimeout(() => {
+                previewMap = L.map('mapPreview', {
+                    dragging: false,
+                    zoomControl: false,
+                    scrollWheelZoom: false,
+                    doubleClickZoom: false,
+                    touchZoom: false
+                }).setView([46.603354, 1.888334], 6);
+
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© OpenStreetMap contributors'
+                }).addTo(previewMap);
+
+                addFestivalMarkers(previewMap);
+                
+                mapLoading.style.display = 'none';
+                mapInitialized = true;
+            }, 100);
+        } else {
+            if (mapCardWrapper.style.display === 'none') {
+                mapCardWrapper.style.display = 'block';
+                showMapBtn.textContent = 'Hide Map';
+            } else {
+                mapCardWrapper.style.display = 'none';
+                showMapBtn.textContent = 'Show Map';
+            }
+        }
+    }
+
+    function openFullMap() {
+        const overlay = document.getElementById('mapOverlay');
+        overlay.classList.add('active');
+        
+        setTimeout(() => {
+            if (!fullMapInstance) {
+                fullMapInstance = L.map('fullMap').setView([46.603354, 1.888334], 6);
+                
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© OpenStreetMap contributors'
+                }).addTo(fullMapInstance);
+
+                addFestivalMarkers(fullMapInstance);
+            }
+            fullMapInstance.invalidateSize();
+        }, 100);
+    }
+
+    function closeFullMap() {
+        const overlay = document.getElementById('mapOverlay');
+        overlay.classList.remove('active');
+    }
+
     // Culture topics data
     const cultureTopics = [
         {
@@ -325,5 +647,8 @@
         renderCulture(this.value);
     });
     </script>
+    
+    <!-- Leaflet JavaScript -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </body>
 </html>
