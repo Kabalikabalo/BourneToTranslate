@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Spanish Grammar</title>
+    <title>French Grammar</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -16,7 +16,7 @@
         }
 
         .navbar {
-            background: #DD1F25;
+            background: #0055A4;
             color: white;
             height: 60px;
             display: flex;
@@ -25,7 +25,7 @@
             font-size: 1.5rem;
             font-weight: 700;
             letter-spacing: 1px;
-            box-shadow: 0 2px 12px rgba(221, 31, 37, 0.15);
+            box-shadow: 0 2px 12px rgba(0, 85, 164, 0.15);
             animation: slideDown 0.5s ease-out;
         }
         @keyframes slideDown {
@@ -70,7 +70,7 @@
         .page-title {
             font-size: 2.2rem;
             font-weight: 700;
-            color: #DD1F25;
+            color: #0055A4;
             text-align: center;
             margin-bottom: 28px;
             animation: scaleIn 0.5s ease-out 0.3s both;
@@ -82,7 +82,7 @@
         .about-box {
             background: #fff;
             border-radius: 12px;
-            box-shadow: 0 4px 14px rgba(221, 31, 37, 0.09);
+            box-shadow: 0 4px 14px rgba(0, 85, 164, 0.09);
             padding: 28px 24px;
             margin-bottom: 36px;
             text-align: center;
@@ -100,10 +100,10 @@
             margin-bottom: 18px;
         }
         .download-card {
-            background: #DD1F25;
+            background: #0055A4;
             border-radius: 12px;
             padding: 18px 14px;
-            box-shadow: 0 6px 26px rgba(221, 31, 37, 0.16);
+            box-shadow: 0 6px 26px rgba(0, 85, 164, 0.16);
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
             text-decoration: none;
@@ -118,12 +118,6 @@
         .download-card:nth-child(1) {
             animation-delay: 0.2s;
         }
-        .download-card:nth-child(2) {
-            animation-delay: 0.35s;
-        }
-        .download-card:nth-child(3) {
-            animation-delay: 0.5s;
-        }
         @keyframes slideInFromRight {
             from {
                 opacity: 0;
@@ -136,8 +130,8 @@
         }
         .download-card:hover {
             transform: translateY(-2px) scale(1.012);
-            box-shadow: 0 10px 38px rgba(221, 31, 37, 0.18);
-            background: #d11520;
+            box-shadow: 0 10px 38px rgba(0, 85, 164, 0.18);
+            background: #003d7a;
         }
         .download-icon {
             width: 36px;
@@ -173,7 +167,7 @@
             min-width: 140px;
             background: #fff;
             border-radius: 14px;
-            box-shadow: 0 2px 14px rgba(221, 31, 37, 0.09);
+            box-shadow: 0 2px 14px rgba(0, 85, 164, 0.09);
             padding: 22px 16px;
             margin-top: 8px;
             margin-bottom: 8px;
@@ -185,7 +179,7 @@
             height: fit-content;
         }
         .side-nav-title {
-            color: #DD1F25;
+            color: #0055A4;
             font-weight: 700;
             font-size: 1.09rem;
             margin-bottom: 10px;
@@ -193,9 +187,9 @@
             text-align: center;
         }
         .side-link {
-            color: #DD1F25;
+            color: #0055A4;
             text-decoration: none;
-            background: rgba(221,31,37,0.05);
+            background: rgba(0, 85, 164, 0.05);
             padding: 8px 14px;
             border-radius: 6px;
             transition: background 0.18s, color 0.18s;
@@ -204,7 +198,7 @@
         }
         .side-link:hover,
         .side-link.active {
-            background: #DD1F25;
+            background: #0055A4;
             color: #fff;
         }
         @media (max-width: 900px) {
@@ -235,7 +229,7 @@
         /* Dropdown toggle for mobile */
         .dropdown-toggle {
             display: none;
-            background: #DD1F25;
+            background: #0055A4;
             color: white;
             padding: 18px 20px;
             border-radius: 12px;
@@ -243,13 +237,13 @@
             font-weight: 700;
             font-size: 1.15rem;
             text-align: center;
-            box-shadow: 0 6px 26px rgba(221, 31, 37, 0.16);
+            box-shadow: 0 6px 26px rgba(0, 85, 164, 0.16);
             margin-bottom: 18px;
             transition: all 0.25s;
         }
         .dropdown-toggle:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 38px rgba(221, 31, 37, 0.18);
+            box-shadow: 0 10px 38px rgba(0, 85, 164, 0.18);
         }
         .dropdown-toggle.active::after {
             content: ' ▼';
@@ -276,46 +270,20 @@
 </head>
 <body>
     <div class="navbar">
-        <a href="spanish.html">← Back</a>
-        Spanish Grammar
+        <a href="french.html">← Retour</a>
+        French Grammar
     </div>
     <div class="content-wrapper">
         <main class="grammar-main">
             <h1 class="page-title">Grammar Resources</h1>
             <div class="about-box">
-                Welcome to the Spanish Grammar page! <br>
-                Here you can download grammar notes and worksheets for different year groups.<br>
-                Understanding grammar is essential for mastering Spanish. Use these resources to learn verb conjugations, sentence structures, and key grammar rules.
+                Welcome to the French Grammar page! <br>
+                Here you can download Year 9 grammar notes and worksheets.<br>
+                Understanding grammar is essential for mastering French. Use these resources to learn verb conjugations, sentence structures, and key grammar rules.
             </div>
             <div class="dropdown-toggle" onclick="toggleDropdown()">Download Grammar Notes</div>
             <div class="downloads-grid collapsed" id="downloadsGrid">
-                <a href="SpanishGrammarNotes/Year7SpanishGrammar.pdf" class="download-card" download>
-                    <span class="download-icon">
-                        <svg class="download-svg" viewBox="0 0 24 24" fill="none">
-                            <rect x="6" y="18" width="12" height="2" rx="1" fill="white"/>
-                            <path d="M12 5v9" stroke="white" stroke-width="2" stroke-linecap="round"/>
-                            <path d="M8 12l4 4 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </span>
-                    <span class="download-info">
-                        <span class="download-title">Year 7 Grammar Notes</span>
-                        <span class="download-subtitle">Click to download PDF</span>
-                    </span>
-                </a>
-                <a href="SpanishGrammarNotes/Year8SpanishGrammar.pdf" class="download-card" download>
-                    <span class="download-icon">
-                        <svg class="download-svg" viewBox="0 0 24 24" fill="none">
-                            <rect x="6" y="18" width="12" height="2" rx="1" fill="white"/>
-                            <path d="M12 5v9" stroke="white" stroke-width="2" stroke-linecap="round"/>
-                            <path d="M8 12l4 4 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </span>
-                    <span class="download-info">
-                        <span class="download-title">Year 8 Grammar Notes</span>
-                        <span class="download-subtitle">Click to download PDF</span>
-                    </span>
-                </a>
-                <a href="SpanishGrammarNotes/Year9SpanishGrammar.pdf" class="download-card" download>
+                <a href="FrenchGrammarNotes/Year9FrenchGrammar.pdf" class="download-card" download>
                     <span class="download-icon">
                         <svg class="download-svg" viewBox="0 0 24 24" fill="none">
                             <rect x="6" y="18" width="12" height="2" rx="1" fill="white"/>
@@ -332,9 +300,7 @@
         </main>
         <nav class="side-nav">
             <div class="side-nav-title">Worksheets</div>
-            <a href="SpanishGrammarWorksheetPages/Year7SpanishGrammarWorksheets.html" class="side-link">Year 7</a>
-            <a href="SpanishGrammarWorksheetPages/Year8SpanishGrammarWorksheets.html" class="side-link">Year 8</a>
-            <a href="SpanishGrammarWorksheetPages/Year9SpanishGrammarWorksheets.html" class="side-link">Year 9</a>
+            <a href="FrenchGrammarWorksheetPages/Year9FrenchGrammarWorksheets.html" class="side-link">Year 9</a>
         </nav>
     </div>
     
