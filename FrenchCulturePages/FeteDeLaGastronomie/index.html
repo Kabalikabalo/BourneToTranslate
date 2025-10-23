@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fête de la Gastronomie</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: Georgia, 'Times New Roman', serif;
+            background: #f5f5f5; 
+            color: #2a2a2a;
+            line-height: 1.8;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            background-color: #0055A4;
+            height: 65px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .back-button {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 8px 18px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        .back-button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateX(-5px);
+        }
+        .back-arrow { font-size: 1.3rem; }
+
+        /* Toggle Container */
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .toggle-label { color: white; font-size: 0.95rem; font-weight: 400; }
+        .toggle-switch {
+            position: relative;
+            width: 55px;
+            height: 28px;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .toggle-switch.active { background-color: rgba(255, 255, 255, 0.5); }
+        .toggle-slider {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 22px;
+            height: 22px;
+            background-color: white;
+            border-radius: 50%;
+            transition: transform 0.3s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .toggle-switch.active .toggle-slider { transform: translateX(27px); }
+
+        /* Hero Banner */
+        .hero-banner {
+            position: relative;
+            width: 100%;
+            height: 320px;
+            background-image: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url('Gastronomie1.png');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 50px;
+        }
+        .page-title {
+            font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+            font-size: 3.5rem;
+            font-weight: 400;
+            color: white;
+            text-align: center;
+            text-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            letter-spacing: 1px;
+        }
+
+        /* Content */
+        .container { 
+            max-width: 800px; 
+            margin: 0 auto; 
+            padding: 20px 30px 60px 30px; 
+        }
+        .content-block { 
+            margin-bottom: 2.5em;
+            position: relative;
+        }
+        .paragraph { 
+            font-size: 1.15rem;
+            font-weight: 400;
+            color: #1a1a1a;
+            line-height: 1.9;
+            margin-bottom: 12px;
+        }
+        .paragraph.translation {
+            display: none;
+            padding-left: 20px;
+            border-left: 3px solid #0055A4;
+            color: #555;
+            font-style: italic;
+        }
+        .paragraph.translation.show {
+            display: block;
+        }
+        .translate-btn {
+            display: inline-block;
+            margin-top: 8px;
+            font-size: 0.7rem;
+            color: #0055A4;
+            background: transparent;
+            border: 1px solid #0055A4;
+            padding: 4px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Segoe UI', sans-serif;
+            font-weight: 600;
+            opacity: 0.7;
+            letter-spacing: 0.5px;
+        }
+        .translate-btn:hover {
+            opacity: 1;
+            background: #0055A4;
+            color: white;
+        }
+        .content-image { 
+            display: block; 
+            margin: 3em auto; 
+            max-width: 100%; 
+            height: auto;
+            border-radius: 8px; 
+            box-shadow: 0 6px 24px rgba(0,0,0,0.12); 
+        }
+
+        @media (max-width: 768px) {
+            .navbar { height: 60px; padding: 0 20px; }
+            .hero-banner { height: 250px; }
+            .page-title { font-size: 2.5rem; }
+            .container { padding: 20px 20px 50px 20px; }
+            .paragraph { font-size: 1.05rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <a href="../../french-culture.html" class="back-button">
+            <span class="back-arrow">←</span>
+            <span>Back</span>
+        </a>
+        <div class="toggle-container">
+            <span class="toggle-label" id="toggleLabel">View in French</span>
+            <div class="toggle-switch" id="toggleSwitch" onclick="toggleAllTranslations()">
+                <div class="toggle-slider"></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Banner with Page Title -->
+    <div class="hero-banner">
+        <h1 class="page-title">Fête de la Gastronomie</h1>
+    </div>
+
+    <!-- Page Content -->
+<div class="container">
+  <div class="content-block">
+    <p class="paragraph main" id="main-0">
+      The Fête de la Gastronomie is more than a culinary event. It reflects France’s deep cultural heritage, regional diversity, and commitment to preserving traditional foodways. Yet it remains a vibrant tribute to France—its passion for food, conviviality, celebration, and the art of living well.
+    </p>
+    <p class="paragraph translation" id="trans-0">
+      La Fête de la Gastronomie est plus qu’un événement culinaire. Elle reflète le profond patrimoine culturel de la France, sa diversité régionale et son engagement à préserver les traditions alimentaires. Mais elle reste un vibrant hommage à la France—à sa passion pour la gastronomie, la convivialité, la célébration et l’art de bien vivre.
+    </p>
+    <button class="translate-btn" id="btn-0" onclick="toggleTranslation(0)">TRANSLATE</button>
+  </div>
+  <img src="Gastronomie2.png" class="content-image" alt="Culture illustration">
+
+  <div class="content-block">
+    <p class="paragraph main" id="main-1">
+      The Fête de la Gastronomie is a national celebration of French cuisine and culinary culture, held annually across France. It showcases regional specialties and local products, helps honor chefs, producers, and artisans, and connects to the UNESCO-recognized tradition of the French gastronomic meal.
+    </p>
+    <p class="paragraph translation" id="trans-1">
+      La Fête de la Gastronomie est une célébration nationale de la cuisine française et de la culture culinaire, qui se tient chaque année dans toute la France. Elle met en valeur les spécialités régionales et les produits locaux, rend hommage aux chefs, producteurs et artisans, et s’inscrit dans le cadre de la tradition du repas gastronomique français reconnue par l’UNESCO.
+    </p>
+    <button class="translate-btn" id="btn-1" onclick="toggleTranslation(1)">TRANSLATE</button>
+  </div>
+
+  <div class="content-block">
+    <p class="paragraph main" id="main-2">
+      The festival includes culinary workshops, tastings, cooking demonstrations, open-door events at restaurants, and special menus that highlight French gastronomy and local terroirs.
+    </p>
+    <p class="paragraph translation" id="trans-2">
+      Le festival comprend des ateliers culinaires, des dégustations, des démonstrations de cuisine, des événements portes ouvertes dans les restaurants et des menus spéciaux mettant en valeur la gastronomie française et les terroirs locaux.
+    </p>
+    <button class="translate-btn" id="btn-2" onclick="toggleTranslation(2)">TRANSLATE</button>
+  </div>
+  <img src="Gastronomie3.png" class="content-image" alt="Culture illustration">
+
+  <div class="content-block">
+    <p class="paragraph main" id="main-3">
+      The event, usually held over three days in late September (often the fourth weekend), transforms cities, towns, and villages into celebrations of food culture. Events include market visits, picnics, farm tours, and gatherings that bring together food lovers, professionals, and families. It’s a nationwide festival that honors France’s gastronomic traditions and the pleasures of sharing good food.
+    </p>
+    <p class="paragraph translation" id="trans-3">
+      L’événement, qui se tient généralement pendant trois jours fin septembre (souvent le quatrième week-end), transforme villes, villages et hameaux en célébrations de la culture gastronomique. Les manifestations comprennent des visites de marchés, des pique-niques, des visites de fermes et des rassemblements réunissant amateurs de gastronomie, professionnels et familles. C’est une fête nationale qui honore les traditions gastronomiques de la France et les plaisirs du partage d’un bon repas.
+    </p>
+    <button class="translate-btn" id="btn-3" onclick="toggleTranslation(3)">TRANSLATE</button>
+  </div>
+</div>
+
+    <script>
+        let viewMode = 'english'; // 'english' or 'target'
+        const langName = 'French';
+        const totalParagraphs = 4;
+
+        function toggleTranslation(id) {
+            const translation = document.getElementById('trans-' + id);
+            const btn = document.getElementById('btn-' + id);
+
+            if (translation.classList.contains('show')) {
+                translation.classList.remove('show');
+                if (viewMode === 'english') {
+                    btn.textContent = 'TRANSLATE';
+                } else {
+                    btn.textContent = 'SHOW ENGLISH';
+                }
+            } else {
+                translation.classList.add('show');
+                btn.textContent = 'HIDE';
+            }
+        }
+
+        function toggleAllTranslations() {
+            const toggle = document.getElementById('toggleSwitch');
+            const toggleLabel = document.getElementById('toggleLabel');
+
+            viewMode = viewMode === 'english' ? 'target' : 'english';
+            toggle.classList.toggle('active');
+
+            // Swap content for all paragraphs
+            for (let i = 0; i < totalParagraphs; i++) {
+                const mainPara = document.getElementById('main-' + i);
+                const transPara = document.getElementById('trans-' + i);
+                const btn = document.getElementById('btn-' + i);
+
+                // Swap the text content
+                const temp = mainPara.textContent;
+                mainPara.textContent = transPara.textContent;
+                transPara.textContent = temp;
+
+                // Hide translation and reset button
+                transPara.classList.remove('show');
+
+                if (viewMode === 'target') {
+                    btn.textContent = 'SHOW ENGLISH';
+                    toggleLabel.textContent = 'View in English';
+                } else {
+                    btn.textContent = 'TRANSLATE';
+                    toggleLabel.textContent = 'View in ' + langName;
+                }
+            }
+        }
+    </script>
+</body>
+</html>
