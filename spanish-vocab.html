@@ -162,17 +162,33 @@
 
         .downloads-grid {
             display: grid;
+            grid-template-rows: 0fr;
             grid-template-columns: 1fr;
-            gap: 18px;
+            gap: 0;
             margin-top: 10px;
             margin-bottom: 18px;
+            transition: grid-template-rows 0.4s ease;
+            overflow: hidden;
         }
+        
+        .downloads-grid.expanded {
+            grid-template-rows: 1fr;
+            gap: 18px;
+        }
+        
+        .downloads-grid-content {
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+        
         .download-card {
             background: #DD1F25;
             border-radius: 12px;
             padding: 18px 14px;
             box-shadow: 0 6px 26px rgba(221, 31, 37, 0.16);
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.25s ease;
             cursor: pointer;
             text-decoration: none;
             display: flex;
@@ -181,36 +197,14 @@
             min-height: 62px;
             position: relative;
             overflow: hidden;
-            animation: slideInFromRight 0.6s ease-out backwards;
         }
-        .download-card:nth-child(1) {
-            animation-delay: 0.2s;
-        }
-        .download-card:nth-child(2) {
-            animation-delay: 0.35s;
-        }
-        .download-card:nth-child(3) {
-            animation-delay: 0.5s;
-        }
-        @keyframes slideInFromRight {
-            from {
-                opacity: 0;
-                transform: translateX(60px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-        @keyframes cardAppear {
-            from { opacity: 0; transform: translateY(14px);}
-            to   { opacity: 1; transform: translateY(0);}
-        }
+        
         .download-card:hover {
             transform: translateY(-2px) scale(1.012);
             box-shadow: 0 10px 38px rgba(221, 31, 37, 0.18);
             background: #d11520;
         }
+        
         .download-icon {
             width: 36px;
             height: 36px;
@@ -330,13 +324,14 @@
                 box-shadow: 0 6px 20px rgba(221, 31, 37, 0.25);
                 background: #B01820;
             }
-            .mobile-dropdown-button.active::after {
-                content: ' ▼';
-            }
             .mobile-dropdown-button::after {
-                content: ' ►';
+                content: '►';
                 margin-left: auto;
                 transition: transform 0.3s ease;
+                display: inline-block;
+            }
+            .mobile-dropdown-button.active::after {
+                content: '▼';
             }
             .mobile-dropdown-links {
                 display: grid;
@@ -366,26 +361,6 @@
                 text-align: center;
                 border: 2px solid #DD1F25;
                 transition: all 0.2s;
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            .mobile-dropdown-links.expanded a {
-                animation: slideInFade 0.3s ease forwards;
-            }
-            .mobile-dropdown-links.expanded a:nth-child(1) {
-                animation-delay: 0.1s;
-            }
-            .mobile-dropdown-links.expanded a:nth-child(2) {
-                animation-delay: 0.2s;
-            }
-            .mobile-dropdown-links.expanded a:nth-child(3) {
-                animation-delay: 0.3s;
-            }
-            @keyframes slideInFade {
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
             }
             .mobile-dropdown-links a:hover {
                 background: #DD1F25;
@@ -439,17 +414,23 @@
             margin-bottom: 16px;
             transition: all 0.25s;
             user-select: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
         .dropdown-toggle:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 30px rgba(221, 31, 37, 0.18);
             background: #B01820;
         }
-        .dropdown-toggle.active::after {
-            content: ' ▼';
-        }
         .dropdown-toggle::after {
-            content: ' ►';
+            content: '►';
+            transition: transform 0.3s ease;
+            display: inline-block;
+        }
+        .dropdown-toggle.active::after {
+            content: '▼';
         }
         
         /* Special styling for vocab download toggle */
@@ -468,13 +449,6 @@
         .vocab-download-toggle:hover {
             background: #B01820;
             box-shadow: 0 6px 20px rgba(221, 31, 37, 0.25);
-        }
-        
-        .downloads-grid {
-            display: none;
-        }
-        .downloads-grid.expanded {
-            display: grid;
         }
         
         @media (max-width: 600px) {
@@ -554,50 +528,52 @@
             </div>
             <div class="vocab-download-section">
                 <div class="dropdown-toggle vocab-download-toggle" onclick="toggleDropdown()">Download Vocabulary Lists</div>
-                <div class="downloads-grid collapsed" id="downloadsGrid">
-                <a href="SpanishVocabLists/Year7Vocab.pdf" class="download-card" download>
-                    <span class="download-icon">
-                        <!-- Simple download SVG icon (white) -->
-                        <svg class="download-svg" viewBox="0 0 24 24" fill="none">
-                            <rect x="6" y="18" width="12" height="2" rx="1" fill="white"/>
-                            <path d="M12 5v9" stroke="white" stroke-width="2" stroke-linecap="round"/>
-                            <path d="M8 12l4 4 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </span>
-                    <span class="download-info">
-                        <span class="download-title">Year 7 Vocabulary</span>
-                        <span class="download-subtitle">Click to download PDF</span>
-                    </span>
-                </a>
-                <a href="SpanishVocabLists/Year8Vocab.pdf" class="download-card" download>
-                    <span class="download-icon">
-                        <!-- Simple download SVG icon (white) -->
-                        <svg class="download-svg" viewBox="0 0 24 24" fill="none">
-                            <rect x="6" y="18" width="12" height="2" rx="1" fill="white"/>
-                            <path d="M12 5v9" stroke="white" stroke-width="2" stroke-linecap="round"/>
-                            <path d="M8 12l4 4 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </span>
-                    <span class="download-info">
-                        <span class="download-title">Year 8 Vocabulary</span>
-                        <span class="download-subtitle">Click to download PDF</span>
-                    </span>
-                </a>
-                <a href="SpanishVocabLists/Year9Vocab.pdf" class="download-card" download>
-                    <span class="download-icon">
-                        <!-- Simple download SVG icon (white) -->
-                        <svg class="download-svg" viewBox="0 0 24 24" fill="none">
-                            <rect x="6" y="18" width="12" height="2" rx="1" fill="white"/>
-                            <path d="M12 5v9" stroke="white" stroke-width="2" stroke-linecap="round"/>
-                            <path d="M8 12l4 4 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </span>
-                    <span class="download-info">
-                        <span class="download-title">Year 9 Vocabulary</span>
-                        <span class="download-subtitle">Click to download PDF</span>
-                    </span>
-                </a>
-            </div>
+                <div class="downloads-grid" id="downloadsGrid">
+                    <div class="downloads-grid-content">
+                        <a href="SpanishVocabLists/Year7Vocab.pdf" class="download-card" download>
+                            <span class="download-icon">
+                                <!-- Simple download SVG icon (white) -->
+                                <svg class="download-svg" viewBox="0 0 24 24" fill="none">
+                                    <rect x="6" y="18" width="12" height="2" rx="1" fill="white"/>
+                                    <path d="M12 5v9" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                                    <path d="M8 12l4 4 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </span>
+                            <span class="download-info">
+                                <span class="download-title">Year 7 Vocabulary</span>
+                                <span class="download-subtitle">Click to download PDF</span>
+                            </span>
+                        </a>
+                        <a href="SpanishVocabLists/Year8Vocab.pdf" class="download-card" download>
+                            <span class="download-icon">
+                                <!-- Simple download SVG icon (white) -->
+                                <svg class="download-svg" viewBox="0 0 24 24" fill="none">
+                                    <rect x="6" y="18" width="12" height="2" rx="1" fill="white"/>
+                                    <path d="M12 5v9" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                                    <path d="M8 12l4 4 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </span>
+                            <span class="download-info">
+                                <span class="download-title">Year 8 Vocabulary</span>
+                                <span class="download-subtitle">Click to download PDF</span>
+                            </span>
+                        </a>
+                        <a href="SpanishVocabLists/Year9Vocab.pdf" class="download-card" download>
+                            <span class="download-icon">
+                                <!-- Simple download SVG icon (white) -->
+                                <svg class="download-svg" viewBox="0 0 24 24" fill="none">
+                                    <rect x="6" y="18" width="12" height="2" rx="1" fill="white"/>
+                                    <path d="M12 5v9" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                                    <path d="M8 12l4 4 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </span>
+                            <span class="download-info">
+                                <span class="download-title">Year 9 Vocabulary</span>
+                                <span class="download-subtitle">Click to download PDF</span>
+                            </span>
+                        </a>
+                    </div>
+                </div>
             </div>
             <div class="about-box" style="margin-bottom: 24px;">
                 <div class="daily-features">
@@ -772,15 +748,14 @@
         // Toggle dropdown for vocab lists
         function toggleDropdown() {
             const dropdown = document.getElementById('downloadsGrid');
-            const toggle = document.querySelector('.dropdown-toggle');
-            if (dropdown.classList.contains('collapsed')) {
-                dropdown.classList.remove('collapsed');
-                dropdown.classList.add('expanded');
-                toggle.classList.add('active');
-            } else {
-                dropdown.classList.add('collapsed');
+            const toggle = document.querySelector('.vocab-download-toggle');
+            
+            if (dropdown.classList.contains('expanded')) {
                 dropdown.classList.remove('expanded');
                 toggle.classList.remove('active');
+            } else {
+                dropdown.classList.add('expanded');
+                toggle.classList.add('active');
             }
         }
 
