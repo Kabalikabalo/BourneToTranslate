@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fête des Lumières</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: Georgia, 'Times New Roman', serif;
+            background: #f5f5f5; 
+            color: #2a2a2a;
+            line-height: 1.8;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            background-color: #0055A4;
+            height: 65px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .back-button {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 8px 18px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        .back-button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateX(-5px);
+        }
+        .back-arrow { font-size: 1.3rem; }
+
+        /* Toggle Container */
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .toggle-label { color: white; font-size: 0.95rem; font-weight: 400; }
+        .toggle-switch {
+            position: relative;
+            width: 55px;
+            height: 28px;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .toggle-switch.active { background-color: rgba(255, 255, 255, 0.5); }
+        .toggle-slider {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 22px;
+            height: 22px;
+            background-color: white;
+            border-radius: 50%;
+            transition: transform 0.3s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .toggle-switch.active .toggle-slider { transform: translateX(27px); }
+
+        /* Hero Banner */
+        .hero-banner {
+            position: relative;
+            width: 100%;
+            height: 320px;
+            background-image: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url('lyon1.png');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 50px;
+        }
+        .page-title {
+            font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+            font-size: 3.5rem;
+            font-weight: 400;
+            color: white;
+            text-align: center;
+            text-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            letter-spacing: 1px;
+        }
+
+        /* Content */
+        .container { 
+            max-width: 800px; 
+            margin: 0 auto; 
+            padding: 20px 30px 60px 30px; 
+        }
+        .content-block { 
+            margin-bottom: 2.5em;
+            position: relative;
+        }
+        .paragraph { 
+            font-size: 1.15rem;
+            font-weight: 400;
+            color: #1a1a1a;
+            line-height: 1.9;
+            margin-bottom: 12px;
+        }
+        .paragraph.translation {
+            display: none;
+            padding-left: 20px;
+            border-left: 3px solid #0055A4;
+            color: #555;
+            font-style: italic;
+        }
+        .paragraph.translation.show {
+            display: block;
+        }
+        .translate-btn {
+            display: inline-block;
+            margin-top: 8px;
+            font-size: 0.7rem;
+            color: #0055A4;
+            background: transparent;
+            border: 1px solid #0055A4;
+            padding: 4px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Segoe UI', sans-serif;
+            font-weight: 600;
+            opacity: 0.7;
+            letter-spacing: 0.5px;
+        }
+        .translate-btn:hover {
+            opacity: 1;
+            background: #0055A4;
+            color: white;
+        }
+        .content-image { 
+            display: block; 
+            margin: 3em auto; 
+            max-width: 100%; 
+            height: auto;
+            border-radius: 8px; 
+            box-shadow: 0 6px 24px rgba(0,0,0,0.12); 
+        }
+
+        @media (max-width: 768px) {
+            .navbar { height: 60px; padding: 0 20px; }
+            .hero-banner { height: 250px; }
+            .page-title { font-size: 2.5rem; }
+            .container { padding: 20px 20px 50px 20px; }
+            .paragraph { font-size: 1.05rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <a href="../../french-culture.html" class="back-button">
+            <span class="back-arrow">←</span>
+            <span>Back</span>
+        </a>
+        <div class="toggle-container">
+            <span class="toggle-label" id="toggleLabel">View in French</span>
+            <div class="toggle-switch" id="toggleSwitch" onclick="toggleAllTranslations()">
+                <div class="toggle-slider"></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Banner with Page Title -->
+    <div class="hero-banner">
+        <h1 class="page-title">Fête des Lumières</h1>
+    </div>
+
+    <!-- Page Content -->
+<div class="container">
+  <div class="content-block">
+    <p class="paragraph main" id="main-0">
+      The Fête des Lumières is more than a light festival. It reflects Lyon’s rich history, artistic innovation and community spirit. Yet it remains a vibrant tribute to France—its creativity, urban beauty, celebration and cultural heritage.
+    </p>
+    <p class="paragraph translation" id="trans-0">
+      La Fête des Lumières est plus qu’un simple festival de lumières. Elle reflète la riche histoire de Lyon, l’innovation artistique et l’esprit communautaire. Mais elle reste un vibrant hommage à la France—à sa créativité, sa beauté urbaine, sa célébration et son patrimoine culturel.
+    </p>
+    <button class="translate-btn" id="btn-0" onclick="toggleTranslation(0)">TRANSLATE</button>
+  </div>
+
+  <img src="lyon2.png" class="content-image" alt="Culture illustration">
+
+  <div class="content-block">
+    <p class="paragraph main" id="main-1">
+      The Fête des Lumières is one of the world’s most spectacular light festivals, held annually in Lyon, France. It serves as a celebration of light art and urban creativity, a showcase for innovative light installations and projections from artists worldwide, and a tribute to Lyon’s heritage in illumination.
+    </p>
+    <p class="paragraph translation" id="trans-1">
+      La Fête des Lumières est l’un des festivals de lumière les plus spectaculaires au monde, qui se tient chaque année à Lyon, en France. Elle sert de célébration de l’art lumineux et de la créativité urbaine, de vitrine pour des installations lumineuses innovantes et des projections d’artistes du monde entier, et d’hommage à l’héritage de Lyon en matière d’illumination.
+    </p>
+    <button class="translate-btn" id="btn-1" onclick="toggleTranslation(1)">TRANSLATE</button>
+  </div>
+
+  <div class="content-block">
+    <p class="paragraph main" id="main-2">
+      The festival includes spectacular light projections on historic buildings, interactive installations, artistic performances and illuminated pathways throughout the city centre.
+    </p>
+    <p class="paragraph translation" id="trans-2">
+      Le festival comprend des projections lumineuses spectaculaires sur des bâtiments historiques, des installations interactives, des performances artistiques et des parcours illuminés dans tout le centre-ville.
+    </p>
+    <button class="translate-btn" id="btn-2" onclick="toggleTranslation(2)">TRANSLATE</button>
+  </div>
+
+  <img src="lyon3.png" class="content-image" alt="Culture illustration">
+
+  <div class="content-block">
+    <p class="paragraph main" id="main-3">
+      The event spans four evenings around December 8, transforming Lyon into a dazzling outdoor gallery. Typically attracting around two million visitors, it traces its roots to a 19th-century candle-lighting tradition in honour of the Virgin Mary on Fourvière Hill. Today it features contemporary light art, multimedia shows and strong community participation. It’s a magical gathering that illuminates Lyon’s architecture and celebrates artistic expression through light.
+    </p>
+    <p class="paragraph translation" id="trans-3">
+      L’événement s’étend sur quatre soirées autour du 8 décembre, transformant Lyon en une éblouissante galerie en plein air. Attirant environ deux millions de visiteurs, il puise ses racines dans une tradition de bougies du XIXᵉ siècle en l’honneur de la Vierge Marie sur la colline de Fourvière. Aujourd’hui, il présente de l’art lumineux contemporain, des spectacles multimédias et une forte participation communautaire. C’est un rassemblement magique qui illumine l’architecture de Lyon et célèbre l’expression artistique par la lumière.
+    </p>
+    <button class="translate-btn" id="btn-3" onclick="toggleTranslation(3)">TRANSLATE</button>
+  </div>
+</div>
+
+    <script>
+        let viewMode = 'english'; // 'english' or 'target'
+        const langName = 'French';
+        const totalParagraphs = 4;
+
+        function toggleTranslation(id) {
+            const translation = document.getElementById('trans-' + id);
+            const btn = document.getElementById('btn-' + id);
+
+            if (translation.classList.contains('show')) {
+                translation.classList.remove('show');
+                if (viewMode === 'english') {
+                    btn.textContent = 'TRANSLATE';
+                } else {
+                    btn.textContent = 'SHOW ENGLISH';
+                }
+            } else {
+                translation.classList.add('show');
+                btn.textContent = 'HIDE';
+            }
+        }
+
+        function toggleAllTranslations() {
+            const toggle = document.getElementById('toggleSwitch');
+            const toggleLabel = document.getElementById('toggleLabel');
+
+            viewMode = viewMode === 'english' ? 'target' : 'english';
+            toggle.classList.toggle('active');
+
+            // Swap content for all paragraphs
+            for (let i = 0; i < totalParagraphs; i++) {
+                const mainPara = document.getElementById('main-' + i);
+                const transPara = document.getElementById('trans-' + i);
+                const btn = document.getElementById('btn-' + i);
+
+                // Swap the text content
+                const temp = mainPara.textContent;
+                mainPara.textContent = transPara.textContent;
+                transPara.textContent = temp;
+
+                // Hide translation and reset button
+                transPara.classList.remove('show');
+
+                if (viewMode === 'target') {
+                    btn.textContent = 'SHOW ENGLISH';
+                    toggleLabel.textContent = 'View in English';
+                } else {
+                    btn.textContent = 'TRANSLATE';
+                    toggleLabel.textContent = 'View in ' + langName;
+                }
+            }
+        }
+    </script>
+</body>
+</html>
