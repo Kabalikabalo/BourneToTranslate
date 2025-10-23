@@ -226,17 +226,17 @@
         .contributors-section {
             width: 100%;
             background-color: #DD1F25;
-            padding: 40px 20px;
-            margin-top: 60px;
+            padding: 30px 20px;
+            margin-top: 50px;
             position: relative;
         }
 
         .contributors-title {
             text-align: center;
             color: white;
-            font-size: 2rem;
+            font-size: 1.6rem;
             font-weight: 700;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             letter-spacing: 0.5px;
         }
 
@@ -251,10 +251,10 @@
 
         .contributor {
             background-color: rgba(255, 255, 255, 0.15);
-            padding: 15px 25px;
-            border-radius: 12px;
+            padding: 12px 20px;
+            border-radius: 10px;
             color: white;
-            font-size: 1.1rem;
+            font-size: 0.95rem;
             font-weight: 500;
             transition: all 0.3s ease;
             backdrop-filter: blur(10px);
@@ -263,6 +263,76 @@
         .contributor:hover {
             background-color: rgba(255, 255, 255, 0.25);
             transform: translateY(-3px);
+        }
+
+        .lucas-contributor {
+            width: 60%;
+            background: rgba(255, 255, 255, 0.25);
+            color: white;
+            font-size: 1.05rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            margin-bottom: 20px;
+            text-align: center;
+            padding: 12px 22px;
+            position: relative;
+        }
+
+        .lucas-contributor::before {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            right: -4px;
+            bottom: -4px;
+            background: #DD1F25;
+            border-radius: 12px;
+            z-index: -1;
+            opacity: 0.5;
+            filter: blur(7px);
+        }
+
+        .lucas-contributor:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .made-by-box {
+            width: 100%;
+            background: linear-gradient(90deg, rgba(221, 31, 37, 0.35) 0%, rgba(0, 85, 164, 0.35) 100%);
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            padding: 16px 30px;
+            border-radius: 12px;
+            text-align: center;
+            margin: 0 auto 25px auto;
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
+            border: 3px solid rgba(255, 255, 255, 0.4);
+        }
+
+        @media (max-width: 600px) {
+            .made-by-box {
+                font-size: 1.1rem;
+                padding: 14px 20px;
+                margin-bottom: 20px;
+            }
+
+            .lucas-contributor {
+                font-size: 0.95rem;
+                letter-spacing: 0.8px;
+                padding: 12px 15px;
+                margin-bottom: 20px;
+                box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
+            }
+
+            .lucas-contributor::before {
+                filter: blur(10px);
+                opacity: 0.6;
+            }
         }
 
         @media (max-width: 1024px) {
@@ -294,11 +364,11 @@
             }
 
             .contributors-title {
-                font-size: 1.8rem;
+                font-size: 1.4rem;
             }
 
             .contributor {
-                font-size: 1rem;
+                font-size: 0.9rem;
             }
         }
 
@@ -340,12 +410,12 @@
             }
 
             .contributors-title {
-                font-size: 1.6rem;
+                font-size: 1.3rem;
             }
 
             .contributor {
-                font-size: 0.95rem;
-                padding: 12px 20px;
+                font-size: 0.85rem;
+                padding: 10px 16px;
             }
         }
 
@@ -406,17 +476,17 @@
             }
 
             .contributors-section {
-                padding: 30px 15px;
+                padding: 25px 15px;
             }
 
             .contributors-title {
-                font-size: 1.4rem;
-                margin-bottom: 20px;
+                font-size: 1.2rem;
+                margin-bottom: 18px;
             }
 
             .contributor {
-                font-size: 0.9rem;
-                padding: 10px 15px;
+                font-size: 0.8rem;
+                padding: 8px 12px;
             }
         }
 
@@ -518,9 +588,12 @@
 
     <!-- Contributors Section -->
     <div class="contributors-section">
+        <div class="made-by-box">Made by Arjun Raghavan</div>
         <h2 class="contributors-title">Contributors</h2>
         <div class="contributors-list">
-            <div class="contributor">Lucas Eling</div>
+            <div class="contributor lucas-contributor">Lucas Eling</div>
+        </div>
+        <div class="contributors-list">
             <div class="contributor">Sebastien Louzolo</div>
             <div class="contributor">Jed Longden</div>
             <div class="contributor">Roxana Wasilewska</div>
