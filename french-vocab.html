@@ -252,16 +252,22 @@
             animation: fadeIn 0.6s ease-out 0.7s both;
         }
 
+        /* Nav container for side-by-side layout on desktop */
+        .nav-container {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+            width: 100%;
+            margin-bottom: 24px;
+        }
+
         /* Side nav */
         .side-nav {
-            width: 188px;
-            min-width: 140px;
+            flex: 1;
             background: #fff;
             border-radius: 14px;
             box-shadow: 0 2px 14px rgba(31, 136, 221, 0.09);
             padding: 22px 16px;
-            margin-top: 8px;
-            margin-bottom: 8px;
             display: flex;
             flex-direction: column;
             gap: 14px;
@@ -296,45 +302,52 @@
             .content-wrapper {
                 flex-direction: column;
                 gap: 0;
-                padding: 36px 5px;
+                padding: 24px 12px;
                 align-items: center;
+            }
+            .nav-container {
+                flex-direction: column;
+                gap: 16px;
             }
             .side-nav {
                 flex-direction: row;
                 flex-wrap: wrap;
                 width: 100%;
-                margin-bottom: 28px;
-                margin-top: 0;
-                padding: 16px 4px;
+                margin-bottom: 0;
+                padding: 18px 12px;
                 justify-content: center;
-                gap: 8px;
+                gap: 12px;
             }
             .side-nav-title {
                 width: 100%;
                 text-align: center;
+                font-size: 1.2rem;
             }
-            .side-nav-title:not(:first-child) {
-                margin-top: 16px;
+            .side-link {
+                font-size: 1.1rem;
+                padding: 12px 24px;
+                min-width: 140px;
             }
         }
-        /* Dropdown toggle for mobile */
+        /* Dropdown toggle */
         .dropdown-toggle {
-            display: none;
             background: #0055A4;
             color: white;
-            padding: 18px 20px;
+            padding: 16px 20px;
             border-radius: 12px;
             cursor: pointer;
             font-weight: 700;
-            font-size: 1.15rem;
+            font-size: 1.1rem;
             text-align: center;
-            box-shadow: 0 6px 26px rgba(31, 97, 221, 0.16);
-            margin-bottom: 18px;
+            box-shadow: 0 4px 20px rgba(31, 97, 221, 0.16);
+            margin-bottom: 16px;
             transition: all 0.25s;
+            user-select: none;
         }
         .dropdown-toggle:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 38px rgba(31, 113, 221, 0.18);
+            box-shadow: 0 8px 30px rgba(31, 113, 221, 0.18);
+            background: #004080;
         }
         .dropdown-toggle.active::after {
             content: ' ▼';
@@ -343,24 +356,48 @@
             content: ' ►';
         }
         
-        @media (max-width: 700px) {
-            .navbar {
-                font-size: 1.08rem;
-            }
+        /* Special styling for vocab download toggle */
+        .vocab-download-section {
+            margin-bottom: 24px;
         }
+        .vocab-download-toggle {
+            background: #0151a1;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            font-size: 1.15rem;
+            letter-spacing: 0.5px;
+            box-shadow: 0 6px 25px rgba(31, 97, 221, 0.2);
+        }
+        .vocab-download-toggle:hover {
+            background: linear-gradient(135deg, #003d7a 0%, #002d5a 100%);
+            box-shadow: 0 10px 35px rgba(31, 97, 221, 0.25);
+        }
+        
+        .downloads-grid {
+            display: none;
+        }
+        .downloads-grid.expanded {
+            display: grid;
+        }
+        
         @media (max-width: 600px) {
-            .page-title { font-size: 1.18rem;}
-            .about-box { font-size: 1rem; padding: 16px 6px; }
-            .side-nav { font-size: 0.95rem; padding: 8px 2px;}
-            .dropdown-toggle {
-                display: block;
-            }
-            .downloads-grid {
-                display: none;
-            }
-            .downloads-grid.expanded {
-                display: grid;
-            }
+            .page-title { font-size: 1.4rem; margin-bottom: 16px; }
+            .about-box { font-size: 0.95rem; padding: 16px 12px; margin-bottom: 16px !important; }
+            .side-nav { font-size: 0.95rem; padding: 14px 8px; margin-bottom: 16px !important; }
+            .side-link { font-size: 1rem; padding: 10px 20px; }
+            .daily-features { margin-bottom: 0; }
+            .feature-card { padding: 14px; }
+            .feature-header { font-size: 0.75rem; margin-bottom: 8px; }
+            .feature-main { font-size: 1.2rem; margin-bottom: 6px; }
+            .feature-translation { font-size: 0.95rem; margin-bottom: 8px; }
+            .feature-example { padding: 8px 10px; margin-top: 8px; }
+            .feature-example-text { font-size: 0.85rem; }
+            .feature-example-translation { font-size: 0.8rem; }
+            .feature-literal { font-size: 0.75rem; }
+            .download-card { padding: 12px; min-height: 50px; }
+            .download-icon { width: 28px; height: 28px; margin-right: 10px; }
+            .download-svg { width: 22px; height: 22px; }
+            .download-title { font-size: 1rem; }
+            .download-subtitle { font-size: 0.85rem; }
         }
     </style>
 </head>
@@ -371,8 +408,44 @@
     </div>
     <div class="content-wrapper">
         <main class="vocab-main">
-            <h1 class="page-title">Download Vocabulary Lists</h1>
-            <div class="about-box">
+            <h1 class="page-title">French Vocabulary Resources</h1>
+            <div class="about-box" style="margin-bottom: 24px;">
+                <p style="font-size: 1.05rem; line-height: 1.6; color: #333; text-align: center;">
+                    <strong>Welcome to the French Vocabulary section!</strong><br>
+                    Test your knowledge with interactive quizzes, practice with downloadable worksheets, 
+                    learn new words and phrases daily, and download comprehensive vocabulary lists for your year group.
+                </p>
+            </div>
+            <div class="nav-container">
+                <nav class="side-nav nav-quiz">
+                    <div class="side-nav-title">Vocab Quiz</div>
+                    <a href="FrenchVocabPages/Year9FrenchVocab.html" class="side-link">Year 9</a>
+                </nav>
+                <nav class="side-nav nav-worksheets">
+                    <div class="side-nav-title">Worksheets</div>
+                    <a href="FrenchVocabWorksheetPages/Year9FrenchVocabWorksheets.html" class="side-link">Year 9</a>
+                </nav>
+            </div>
+            <div class="vocab-download-section">
+                <div class="dropdown-toggle vocab-download-toggle" onclick="toggleDropdown()">Download Vocabulary Lists</div>
+                <div class="downloads-grid collapsed" id="downloadsGrid">
+                    <a href="FrenchVocabLists/Year9Vocab.pdf" class="download-card" download>
+                        <span class="download-icon">
+                            <!-- Simple download SVG icon (white) -->
+                            <svg class="download-svg" viewBox="0 0 24 24" fill="none">
+                                <rect x="6" y="18" width="12" height="2" rx="1" fill="white"></rect>
+                                <path d="M12 5v9" stroke="white" stroke-width="2" stroke-linecap="round"></path>
+                                <path d="M8 12l4 4 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                            </svg>
+                        </span>
+                        <span class="download-info">
+                            <span class="download-title">Year 9 Vocabulary</span>
+                            <span class="download-subtitle">Click to download PDF</span>
+                        </span>
+                    </a>
+                </div>
+            </div>
+            <div class="about-box" style="margin-bottom: 24px;">
                 <div class="daily-features">
                     <div class="feature-card">
                         <div class="feature-header">Word of the Day</div>
@@ -395,33 +468,9 @@
                     </div>
                 </div>
             </div>
-            <div class="dropdown-toggle" onclick="toggleDropdown()">Download Vocab Lists</div>
-            <div class="downloads-grid collapsed" id="downloadsGrid">
-                <a href="FrenchVocabLists/Year9Vocab.pdf" class="download-card" download>
-                    <span class="download-icon">
-                        <!-- Simple download SVG icon (white) -->
-                        <svg class="download-svg" viewBox="0 0 24 24" fill="none">
-                            <rect x="6" y="18" width="12" height="2" rx="1" fill="white"></rect>
-                            <path d="M12 5v9" stroke="white" stroke-width="2" stroke-linecap="round"></path>
-                            <path d="M8 12l4 4 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                        </svg>
-                    </span>
-                    <span class="download-info">
-                        <span class="download-title">Year 9 Vocabulary</span>
-                        <span class="download-subtitle">Click to download PDF</span>
-                    </span>
-                </a>  
-                <div style="width:100%;text-align:center;margin-top:12px;margin-bottom:8px;">
-                    <a href="FrenchVocabPages/Year9FrenchVocab.html" style="display:inline-block;background:#0055A4;color:#fff;padding:10px 22px;border-radius:7px;font-weight:600;font-size:1.08rem;text-decoration:none;box-shadow:0 2px 8px rgba(31,97,221,0.10);transition:background 0.2s;">Year 9 French Vocab Test</a>
-                </div>
+        </main>
             </div>
         </main>
-        <nav class="side-nav">
-            <div class="side-nav-title">Vocab Quiz</div>
-            <a href="FrenchVocabPages/Year9FrenchVocab.html" class="side-link">Year 9</a>
-            <div class="side-nav-title" style="margin-top: 20px;">Worksheets</div>
-            <a href="FrenchVocabWorksheetPages/Year9FrenchVocabWorksheets.html" class="side-link">Year 9</a>
-        </nav>
     </div>
 
     <script>
@@ -568,7 +617,7 @@
         displayWordOfDay();
         displayPhraseOfWeek();
 
-        // Toggle dropdown for mobile
+        // Toggle dropdown for vocab lists
         function toggleDropdown() {
             const dropdown = document.getElementById('downloadsGrid');
             const toggle = document.querySelector('.dropdown-toggle');

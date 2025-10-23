@@ -246,16 +246,22 @@
             animation: fadeIn 0.6s ease-out 0.7s both;
         }
 
+        /* Nav container for side-by-side layout on desktop */
+        .nav-container {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+            width: 100%;
+            margin-bottom: 24px;
+        }
+
         /* Side nav */
         .side-nav {
-            width: 188px;
-            min-width: 140px;
+            flex: 1;
             background: #fff;
             border-radius: 14px;
             box-shadow: 0 2px 14px rgba(221, 31, 37, 0.09);
             padding: 22px 16px;
-            margin-top: 8px;
-            margin-bottom: 8px;
             display: flex;
             flex-direction: column;
             gap: 14px;
@@ -286,49 +292,158 @@
             background: #DD1F25;
             color: #fff;
         }
+
+        /* Mobile dropdown styles */
+        .mobile-nav-dropdown {
+            display: none;
+        }
+
+        @media (max-width: 600px) {
+            .side-nav {
+                display: none;
+            }
+            .mobile-nav-dropdown {
+                display: block;
+                width: 100%;
+                margin-bottom: 4px;
+            }
+            .mobile-dropdown-button {
+                width: 100%;
+                background: #DD1F25;
+                color: white;
+                padding: 12px 16px;
+                border: 2px solid rgba(255, 255, 255, 0.2);
+                border-radius: 12px;
+                font-size: 1.15rem;
+                font-weight: 700;
+                letter-spacing: 0.5px;
+                cursor: pointer;
+                text-align: center;
+                box-shadow: 0 4px 15px rgba(221, 31, 37, 0.2);
+                transition: all 0.25s;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+            .mobile-dropdown-button:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 20px rgba(221, 31, 37, 0.25);
+                background: #B01820;
+            }
+            .mobile-dropdown-button.active::after {
+                content: ' ▼';
+            }
+            .mobile-dropdown-button::after {
+                content: ' ►';
+                margin-left: auto;
+                transition: transform 0.3s ease;
+            }
+            .mobile-dropdown-links {
+                display: grid;
+                grid-template-rows: 0fr;
+                transition: grid-template-rows 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                overflow: hidden;
+            }
+            .mobile-dropdown-links.expanded {
+                grid-template-rows: 1fr;
+            }
+            .mobile-dropdown-content {
+                min-height: 0;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                padding-top: 10px;
+            }
+            .mobile-dropdown-links a {
+                display: block;
+                background: #fff;
+                color: #DD1F25;
+                text-decoration: none;
+                padding: 14px 20px;
+                border-radius: 8px;
+                font-weight: 600;
+                font-size: 1.05rem;
+                text-align: center;
+                border: 2px solid #DD1F25;
+                transition: all 0.2s;
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            .mobile-dropdown-links.expanded a {
+                animation: slideInFade 0.3s ease forwards;
+            }
+            .mobile-dropdown-links.expanded a:nth-child(1) {
+                animation-delay: 0.1s;
+            }
+            .mobile-dropdown-links.expanded a:nth-child(2) {
+                animation-delay: 0.2s;
+            }
+            .mobile-dropdown-links.expanded a:nth-child(3) {
+                animation-delay: 0.3s;
+            }
+            @keyframes slideInFade {
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            .mobile-dropdown-links a:hover {
+                background: #DD1F25;
+                color: white;
+                transform: scale(1.02);
+            }
+        }
+
         @media (max-width: 900px) {
             .content-wrapper {
                 flex-direction: column;
                 gap: 0;
-                padding: 36px 5px;
+                padding: 24px 12px;
                 align-items: center;
+            }
+            .nav-container {
+                flex-direction: column;
+                gap: 16px;
             }
             .side-nav {
                 flex-direction: row;
                 flex-wrap: wrap;
                 width: 100%;
-                margin-bottom: 28px;
-                margin-top: 0;
-                padding: 16px 4px;
+                margin-bottom: 0;
+                padding: 18px 12px;
                 justify-content: center;
-                gap: 8px;
+                gap: 12px;
             }
             .side-nav-title {
                 width: 100%;
                 text-align: center;
+                font-size: 1.2rem;
             }
-            .side-nav-title:not(:first-child) {
-                margin-top: 16px;
+            .side-link {
+                font-size: 1.1rem;
+                padding: 12px 24px;
+                min-width: 140px;
             }
         }
-        /* Dropdown toggle for mobile */
+        /* Dropdown toggle */
         .dropdown-toggle {
-            display: none;
             background: #DD1F25;
             color: white;
-            padding: 18px 20px;
+            padding: 16px 20px;
             border-radius: 12px;
             cursor: pointer;
             font-weight: 700;
-            font-size: 1.15rem;
+            font-size: 1.1rem;
             text-align: center;
-            box-shadow: 0 6px 26px rgba(221, 31, 37, 0.16);
-            margin-bottom: 18px;
+            box-shadow: 0 4px 20px rgba(221, 31, 37, 0.16);
+            margin-bottom: 16px;
             transition: all 0.25s;
+            user-select: none;
         }
         .dropdown-toggle:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 38px rgba(221, 31, 37, 0.18);
+            box-shadow: 0 8px 30px rgba(221, 31, 37, 0.18);
+            background: #B01820;
         }
         .dropdown-toggle.active::after {
             content: ' ▼';
@@ -337,19 +452,50 @@
             content: ' ►';
         }
         
+        /* Special styling for vocab download toggle */
+        .vocab-download-section {
+            margin-bottom: 24px;
+            margin-top: 4px;
+        }
+        .vocab-download-toggle {
+            background: #DD1F25;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            font-size: 1.15rem;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px rgba(221, 31, 37, 0.2);
+            padding: 12px 16px;
+        }
+        .vocab-download-toggle:hover {
+            background: #B01820;
+            box-shadow: 0 6px 20px rgba(221, 31, 37, 0.25);
+        }
+        
+        .downloads-grid {
+            display: none;
+        }
+        .downloads-grid.expanded {
+            display: grid;
+        }
+        
         @media (max-width: 600px) {
-            .page-title { font-size: 1.18rem;}
-            .about-box { font-size: 1rem; padding: 16px 6px; }
-            .side-nav { font-size: 0.95rem; padding: 8px 2px;}
-            .dropdown-toggle {
-                display: block;
-            }
-            .downloads-grid {
-                display: none;
-            }
-            .downloads-grid.expanded {
-                display: grid;
-            }
+            .page-title { font-size: 1.4rem; margin-bottom: 16px; }
+            .about-box { font-size: 0.95rem; padding: 16px 12px; margin-bottom: 16px !important; }
+            .side-nav { font-size: 0.95rem; padding: 14px 8px; margin-bottom: 16px !important; }
+            .side-link { font-size: 1rem; padding: 10px 20px; }
+            .daily-features { margin-bottom: 0; }
+            .feature-card { padding: 14px; }
+            .feature-header { font-size: 0.75rem; margin-bottom: 8px; }
+            .feature-main { font-size: 1.2rem; margin-bottom: 6px; }
+            .feature-translation { font-size: 0.95rem; margin-bottom: 8px; }
+            .feature-example { padding: 8px 10px; margin-top: 8px; }
+            .feature-example-text { font-size: 0.85rem; }
+            .feature-example-translation { font-size: 0.8rem; }
+            .feature-literal { font-size: 0.75rem; }
+            .download-card { padding: 12px; min-height: 50px; }
+            .download-icon { width: 28px; height: 28px; margin-right: 10px; }
+            .download-svg { width: 22px; height: 22px; }
+            .download-title { font-size: 1rem; }
+            .download-subtitle { font-size: 0.85rem; }
         }
     </style>
 </head>
@@ -360,32 +506,55 @@
     </div>
     <div class="content-wrapper">
         <main class="vocab-main">
-            <h1 class="page-title">Download Vocabulary Lists</h1>
-            <div class="about-box">
-                <div class="daily-features">
-                    <div class="feature-card">
-                        <div class="feature-header">Word of the Day</div>
-                        <div class="feature-main" id="wordOfDay"></div>
-                        <div class="feature-translation" id="wordTranslation"></div>
-                        <div class="feature-example">
-                            <div class="feature-example-text" id="wordExampleES"></div>
-                            <div class="feature-example-translation" id="wordExampleEN"></div>
+            <h1 class="page-title">Spanish Vocabulary Resources</h1>
+            <div class="about-box" style="margin-bottom: 24px;">
+                <p style="font-size: 1.05rem; line-height: 1.6; color: #333; text-align: center;">
+                    <strong>Welcome to the Spanish Vocabulary section!</strong><br>
+                    Test your knowledge with interactive quizzes, practice with downloadable worksheets, 
+                    learn new words and phrases daily, and download comprehensive vocabulary lists for your year group.
+                </p>
+            </div>
+            <div class="nav-container">
+                <nav class="side-nav nav-quiz">
+                    <div class="side-nav-title">Vocab Quiz</div>
+                    <a href="SpanishVocabPages/Year7SpanishVocab.html" class="side-link">Year 7</a>
+                    <a href="SpanishVocabPages/Year8SpanishVocab.html" class="side-link">Year 8</a>
+                    <a href="SpanishVocabPages/Year9SpanishVocab.html" class="side-link">Year 9</a>
+                </nav>
+                <div class="mobile-nav-dropdown">
+                    <button class="mobile-dropdown-button" onclick="toggleMobileDropdown('quiz')">
+                        Vocab Quizzes
+                    </button>
+                    <div class="mobile-dropdown-links" id="quizDropdown">
+                        <div class="mobile-dropdown-content">
+                            <a href="SpanishVocabPages/Year7SpanishVocab.html">Year 7</a>
+                            <a href="SpanishVocabPages/Year8SpanishVocab.html">Year 8</a>
+                            <a href="SpanishVocabPages/Year9SpanishVocab.html">Year 9</a>
                         </div>
                     </div>
-                    <div class="feature-card">
-                        <div class="feature-header">Phrase of the Week</div>
-                        <div class="feature-main" id="phraseOfWeek"></div>
-                        <div class="feature-literal" id="phraseLiteral"></div>
-                        <div class="feature-translation" id="phraseTranslation"></div>
-                        <div class="feature-example">
-                            <div class="feature-example-text" id="phraseExampleES"></div>
-                            <div class="feature-example-translation" id="phraseExampleEN"></div>
+                </div>
+                <nav class="side-nav nav-worksheets">
+                    <div class="side-nav-title">Worksheets</div>
+                    <a href="SpanishVocabWorksheetPages/Year7SpanishVocabWorksheets.html" class="side-link">Year 7</a>
+                    <a href="SpanishVocabWorksheetPages/Year8SpanishVocabWorksheets.html" class="side-link">Year 8</a>
+                    <a href="SpanishVocabWorksheetPages/Year9SpanishVocabWorksheets.html" class="side-link">Year 9</a>
+                </nav>
+                <div class="mobile-nav-dropdown">
+                    <button class="mobile-dropdown-button" onclick="toggleMobileDropdown('worksheets')">
+                        Worksheets
+                    </button>
+                    <div class="mobile-dropdown-links" id="worksheetsDropdown">
+                        <div class="mobile-dropdown-content">
+                            <a href="SpanishVocabWorksheetPages/Year7SpanishVocabWorksheets.html">Year 7</a>
+                            <a href="SpanishVocabWorksheetPages/Year8SpanishVocabWorksheets.html">Year 8</a>
+                            <a href="SpanishVocabWorksheetPages/Year9SpanishVocabWorksheets.html">Year 9</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="dropdown-toggle" onclick="toggleDropdown()">Download Vocab Lists</div>
-            <div class="downloads-grid collapsed" id="downloadsGrid">
+            <div class="vocab-download-section">
+                <div class="dropdown-toggle vocab-download-toggle" onclick="toggleDropdown()">Download Vocabulary Lists</div>
+                <div class="downloads-grid collapsed" id="downloadsGrid">
                 <a href="SpanishVocabLists/Year7Vocab.pdf" class="download-card" download>
                     <span class="download-icon">
                         <!-- Simple download SVG icon (white) -->
@@ -429,17 +598,31 @@
                     </span>
                 </a>
             </div>
+            </div>
+            <div class="about-box" style="margin-bottom: 24px;">
+                <div class="daily-features">
+                    <div class="feature-card">
+                        <div class="feature-header">Word of the Day</div>
+                        <div class="feature-main" id="wordOfDay"></div>
+                        <div class="feature-translation" id="wordTranslation"></div>
+                        <div class="feature-example">
+                            <div class="feature-example-text" id="wordExampleES"></div>
+                            <div class="feature-example-translation" id="wordExampleEN"></div>
+                        </div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-header">Phrase of the Week</div>
+                        <div class="feature-main" id="phraseOfWeek"></div>
+                        <div class="feature-literal" id="phraseLiteral"></div>
+                        <div class="feature-translation" id="phraseTranslation"></div>
+                        <div class="feature-example">
+                            <div class="feature-example-text" id="phraseExampleES"></div>
+                            <div class="feature-example-translation" id="phraseExampleEN"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
-        <nav class="side-nav">
-            <div class="side-nav-title">Vocab Quiz</div>
-            <a href="SpanishVocabPages/Year7SpanishVocab.html" class="side-link">Year 7</a>
-            <a href="SpanishVocabPages/Year8SpanishVocab.html" class="side-link">Year 8</a>
-            <a href="SpanishVocabPages/Year9SpanishVocab.html" class="side-link">Year 9</a>
-            <div class="side-nav-title" style="margin-top: 20px;">Worksheets</div>
-            <a href="SpanishVocabWorksheetPages/Year7SpanishVocabWorksheets.html" class="side-link">Year 7</a>
-            <a href="SpanishVocabWorksheetPages/Year8SpanishVocabWorksheets.html" class="side-link">Year 8</a>
-            <a href="SpanishVocabWorksheetPages/Year9SpanishVocabWorksheets.html" class="side-link">Year 9</a>
-        </nav>
     </div>
     
     <script>
@@ -586,7 +769,7 @@
         displayWordOfDay();
         displayPhraseOfWeek();
 
-        // Toggle dropdown for mobile
+        // Toggle dropdown for vocab lists
         function toggleDropdown() {
             const dropdown = document.getElementById('downloadsGrid');
             const toggle = document.querySelector('.dropdown-toggle');
@@ -598,6 +781,20 @@
                 dropdown.classList.add('collapsed');
                 dropdown.classList.remove('expanded');
                 toggle.classList.remove('active');
+            }
+        }
+
+        // Toggle mobile navigation dropdowns
+        function toggleMobileDropdown(type) {
+            const dropdown = document.getElementById(type + 'Dropdown');
+            const button = event.currentTarget;
+            
+            if (dropdown.classList.contains('expanded')) {
+                dropdown.classList.remove('expanded');
+                button.classList.remove('active');
+            } else {
+                dropdown.classList.add('expanded');
+                button.classList.add('active');
             }
         }
     </script>
