@@ -27,8 +27,6 @@
             letter-spacing: 1px;
             box-shadow: 0 2px 12px rgba(221, 31, 37, 0.15);
             animation: slideDown 0.5s ease-out;
-            white-space: nowrap;
-            overflow: hidden;
         }
         @keyframes slideDown {
             from { transform: translateY(-100%); opacity: 0; }
@@ -43,6 +41,7 @@
             transition: all 0.2s ease;
             padding: 6px 12px;
             border-radius: 4px;
+            white-space: nowrap; /* prevent wrapping of the Back button text */
         }
         .navbar a:hover {
             background: rgba(255, 255, 255, 0.1);
@@ -175,14 +174,14 @@
         
         .downloads-grid.expanded {
             grid-template-rows: 1fr;
-            gap: 10px;
+            gap: 18px;
         }
         
         .downloads-grid-content {
             min-height: 0;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 18px;
         }
         
         .download-card {
@@ -199,35 +198,6 @@
             min-height: 62px;
             position: relative;
             overflow: hidden;
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        
-        .downloads-grid.expanded .download-card {
-            animation: fadeInUp 0.4s ease-out forwards;
-        }
-        
-        .downloads-grid.expanded .download-card:nth-child(1) {
-            animation-delay: 0.1s;
-        }
-        
-        .downloads-grid.expanded .download-card:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-        
-        .downloads-grid.expanded .download-card:nth-child(3) {
-            animation-delay: 0.3s;
-        }
-        
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
         
         .download-card:hover {
@@ -277,7 +247,7 @@
             flex-direction: row;
             gap: 20px;
             width: 100%;
-            margin-bottom: 12px;
+            margin-bottom: 24px;
         }
 
         /* Side nav */
@@ -330,6 +300,7 @@
             .mobile-nav-dropdown {
                 display: block;
                 width: 100%;
+                margin-bottom: 4px;
             }
             .mobile-dropdown-button {
                 width: 100%;
@@ -348,23 +319,26 @@
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
+                -webkit-tap-highlight-color: transparent;
+                -webkit-touch-callout: none;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
             }
             .mobile-dropdown-button:hover {
                 transform: translateY(-2px);
                 box-shadow: 0 6px 20px rgba(221, 31, 37, 0.25);
                 background: #B01820;
             }
-            /* Uniform SVG arrow icon */
-            .mobile-dropdown-button svg,
-            .dropdown-toggle svg {
-                width: 32px;
-                height: 32px;
-                fill: white;
+            .mobile-dropdown-button::after {
+                content: '►';
+                margin-left: auto;
                 transition: transform 0.3s ease;
+                display: inline-block;
             }
-            .mobile-dropdown-button.active svg,
-            .dropdown-toggle.active svg {
-                transform: rotate(90deg);
+            .mobile-dropdown-button.active::after {
+                content: '▼';
             }
             .mobile-dropdown-links {
                 display: grid;
@@ -433,8 +407,7 @@
                 min-width: 140px;
             }
         }
-
-        /* Dropdown toggle button (Download vocab lists) */
+        /* Dropdown toggle */
         .dropdown-toggle {
             background: #DD1F25;
             color: white;
@@ -445,38 +418,37 @@
             font-size: 1.1rem;
             text-align: center;
             box-shadow: 0 4px 20px rgba(221, 31, 37, 0.16);
-            margin-bottom: 12px;
+            margin-bottom: 16px;
             transition: all 0.25s;
             user-select: none;
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 8px;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
         }
         .dropdown-toggle:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 30px rgba(221, 31, 37, 0.18);
             background: #B01820;
         }
-
-        /* Uniform SVG icon styling for both types of dropdowns */
-        .dropdown-toggle svg,
-        .mobile-dropdown-button svg {
-            width: 16px;
-            height: 16px;
-            fill: white;
+        .dropdown-toggle::after {
+            content: '►';
             transition: transform 0.3s ease;
+            display: inline-block;
         }
-
-        .dropdown-toggle.active svg,
-        .mobile-dropdown-button.active svg {
-            transform: rotate(90deg);
+        .dropdown-toggle.active::after {
+            content: '▼';
         }
-
+        
         /* Special styling for vocab download toggle */
         .vocab-download-section {
-            margin-bottom: 12px;
-            margin-top: 17px;
+            margin-bottom: 24px;
+            margin-top: 4px;
         }
         .vocab-download-toggle {
             background: #DD1F25;
@@ -490,6 +462,27 @@
             background: #B01820;
             box-shadow: 0 6px 20px rgba(221, 31, 37, 0.25);
         }
+        
+        @media (max-width: 600px) {
+            .page-title { font-size: 1.4rem; margin-bottom: 16px; }
+            .about-box { font-size: 0.95rem; padding: 16px 12px; margin-bottom: 16px !important; }
+            .side-nav { font-size: 0.95rem; padding: 14px 8px; margin-bottom: 16px !important; }
+            .side-link { font-size: 1rem; padding: 10px 20px; }
+            .daily-features { margin-bottom: 0; }
+            .feature-card { padding: 14px; }
+            .feature-header { font-size: 0.75rem; margin-bottom: 8px; }
+            .feature-main { font-size: 1.2rem; margin-bottom: 6px; }
+            .feature-translation { font-size: 0.95rem; margin-bottom: 8px; }
+            .feature-example { padding: 8px 10px; margin-top: 8px; }
+            .feature-example-text { font-size: 0.85rem; }
+            .feature-example-translation { font-size: 0.8rem; }
+            .feature-literal { font-size: 0.75rem; }
+            .download-card { padding: 12px; min-height: 50px; }
+            .download-icon { width: 28px; height: 28px; margin-right: 10px; }
+            .download-svg { width: 22px; height: 22px; }
+            .download-title { font-size: 1rem; }
+            .download-subtitle { font-size: 0.85rem; }
+        }
     </style>
 </head>
 <body>
@@ -497,11 +490,9 @@
         <a href="spanish.html">← Back</a>
         Spanish Vocabulary
     </div>
-
     <div class="content-wrapper">
         <main class="vocab-main">
             <h1 class="page-title">Spanish Vocabulary Resources</h1>
-
             <div class="about-box" style="margin-bottom: 24px;">
                 <p style="font-size: 1.05rem; line-height: 1.6; color: #333; text-align: center;">
                     <strong>Welcome to the Spanish Vocabulary section!</strong><br>
@@ -509,21 +500,16 @@
                     learn new words and phrases daily, and download comprehensive vocabulary lists for your year group.
                 </p>
             </div>
-
             <div class="nav-container">
-                <!-- Desktop side nav -->
                 <nav class="side-nav nav-quiz">
                     <div class="side-nav-title">Vocab Quiz</div>
                     <a href="SpanishVocabPages/Year7SpanishVocab.html" class="side-link">Year 7</a>
                     <a href="SpanishVocabPages/Year8SpanishVocab.html" class="side-link">Year 8</a>
                     <a href="SpanishVocabPages/Year9SpanishVocab.html" class="side-link">Year 9</a>
                 </nav>
-
-                <!-- Mobile dropdown -->
                 <div class="mobile-nav-dropdown">
-                    <button class="mobile-dropdown-button" onclick="toggleMobileDropdown('quiz', this)">
-                        Vocabulary Quizzes
-                        <svg viewBox="0 0 24 24"><path d="M8 5l8 7-8 7z"/></svg>
+                    <button class="mobile-dropdown-button" onclick="toggleMobileDropdown('quiz')">
+                        Vocab Quizzes
                     </button>
                     <div class="mobile-dropdown-links" id="quizDropdown">
                         <div class="mobile-dropdown-content">
@@ -533,18 +519,15 @@
                         </div>
                     </div>
                 </div>
-
                 <nav class="side-nav nav-worksheets">
                     <div class="side-nav-title">Worksheets</div>
                     <a href="SpanishVocabWorksheetPages/Year7SpanishVocabWorksheets.html" class="side-link">Year 7</a>
                     <a href="SpanishVocabWorksheetPages/Year8SpanishVocabWorksheets.html" class="side-link">Year 8</a>
                     <a href="SpanishVocabWorksheetPages/Year9SpanishVocabWorksheets.html" class="side-link">Year 9</a>
                 </nav>
-
                 <div class="mobile-nav-dropdown">
-                    <button class="mobile-dropdown-button" onclick="toggleMobileDropdown('worksheets', this)">
+                    <button class="mobile-dropdown-button" onclick="toggleMobileDropdown('worksheets')">
                         Worksheets
-                        <svg viewBox="0 0 24 24"><path d="M8 5l8 7-8 7z"/></svg>
                     </button>
                     <div class="mobile-dropdown-links" id="worksheetsDropdown">
                         <div class="mobile-dropdown-content">
@@ -555,17 +538,13 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Download section -->
             <div class="vocab-download-section">
-                <div class="dropdown-toggle vocab-download-toggle" onclick="toggleDropdown(this)">
-                    Download Vocabulary Lists
-                    <svg viewBox="0 0 24 24"><path d="M8 5l8 7-8 7z"/></svg>
-                </div>
+                <div class="dropdown-toggle vocab-download-toggle" onclick="toggleDropdown()">Download Vocabulary Lists</div>
                 <div class="downloads-grid" id="downloadsGrid">
                     <div class="downloads-grid-content">
                         <a href="SpanishVocabLists/Year7Vocab.pdf" class="download-card" download>
                             <span class="download-icon">
+                                <!-- Simple download SVG icon (white) -->
                                 <svg class="download-svg" viewBox="0 0 24 24" fill="none">
                                     <rect x="6" y="18" width="12" height="2" rx="1" fill="white"/>
                                     <path d="M12 5v9" stroke="white" stroke-width="2" stroke-linecap="round"/>
@@ -577,9 +556,9 @@
                                 <span class="download-subtitle">Click to download PDF</span>
                             </span>
                         </a>
-
                         <a href="SpanishVocabLists/Year8Vocab.pdf" class="download-card" download>
                             <span class="download-icon">
+                                <!-- Simple download SVG icon (white) -->
                                 <svg class="download-svg" viewBox="0 0 24 24" fill="none">
                                     <rect x="6" y="18" width="12" height="2" rx="1" fill="white"/>
                                     <path d="M12 5v9" stroke="white" stroke-width="2" stroke-linecap="round"/>
@@ -591,9 +570,9 @@
                                 <span class="download-subtitle">Click to download PDF</span>
                             </span>
                         </a>
-
                         <a href="SpanishVocabLists/Year9Vocab.pdf" class="download-card" download>
                             <span class="download-icon">
+                                <!-- Simple download SVG icon (white) -->
                                 <svg class="download-svg" viewBox="0 0 24 24" fill="none">
                                     <rect x="6" y="18" width="12" height="2" rx="1" fill="white"/>
                                     <path d="M12 5v9" stroke="white" stroke-width="2" stroke-linecap="round"/>
@@ -608,7 +587,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="about-box" style="margin-bottom: 24px;">
                 <div class="daily-features">
                     <div class="feature-card">
@@ -634,68 +612,177 @@
             </div>
         </main>
     </div>
-
+    
     <script>
-        // Databases (unchanged)
+        // Word of the Day Database
         const wordsOfDay = [
-            {word:"la biblioteca",translation:"the library",exampleES:"Voy a la biblioteca todos los días.",exampleEN:"I go to the library every day."},
-            {word:"el desayuno",translation:"breakfast",exampleES:"Me gusta comer cereales para el desayuno.",exampleEN:"I like to eat cereal for breakfast."},
-            {word:"la montaña",translation:"the mountain",exampleES:"La montaña es muy alta y hermosa.",exampleEN:"The mountain is very tall and beautiful."},
-            {word:"el verano",translation:"summer",exampleES:"En el verano hace mucho calor.",exampleEN:"In summer it's very hot."},
-            {word:"la alegría",translation:"joy / happiness",exampleES:"Su sonrisa llena de alegría el cuarto.",exampleEN:"Her smile fills the room with joy."},
-            {word:"el paraguas",translation:"umbrella",exampleES:"Necesito un paraguas porque está lloviendo.",exampleEN:"I need an umbrella because it's raining."},
-            {word:"la estrella",translation:"star",exampleES:"Las estrellas brillan en el cielo nocturno.",exampleEN:"The stars shine in the night sky."}
-        ];
-        const phrasesOfWeek = [
-            {phrase:"No hay mal que por bien no venga",literal:"(There is no bad from which good doesn't come)",translation:"Every cloud has a silver lining",exampleES:"Perdí mi trabajo, pero encontré uno mejor. No hay mal que por bien no venga.",exampleEN:"I lost my job, but I found a better one. Every cloud has a silver lining."},
-            {phrase:"Estar en las nubes",literal:"(To be in the clouds)",translation:"To daydream / to have one's head in the clouds",exampleES:"María está en las nubes durante la clase de matemáticas.",exampleEN:"María is daydreaming during math class."},
-            {phrase:"Costar un ojo de la cara",literal:"(To cost an eye from the face)",translation:"To cost an arm and a leg",exampleES:"Este coche nuevo me costó un ojo de la cara.",exampleEN:"This new car cost me an arm and a leg."},
-            {phrase:"Dar en el clavo",literal:"(To hit the nail)",translation:"To hit the nail on the head / to be exactly right",exampleES:"Tu explicación dio en el clavo.",exampleEN:"Your explanation hit the nail on the head."},
-            {phrase:"Llover a cántaros",literal:"(To rain pitchers)",translation:"To rain cats and dogs / to pour",exampleES:"Ayer llovió a cántaros toda la tarde.",exampleEN:"Yesterday it poured all afternoon."},
-            {phrase:"Tomar el pelo",literal:"(To take the hair)",translation:"To pull someone's leg / to tease",exampleES:"No te preocupes, solo te estoy tomando el pelo.",exampleEN:"Don't worry, I'm just pulling your leg."},
-            {phrase:"Estar como una cabra",literal:"(To be like a goat)",translation:"To be crazy / to be nuts",exampleES:"Mi tío está como una cabra, siempre hace cosas locas.",exampleEN:"My uncle is nuts, he always does crazy things."}
+            {
+                word: "la biblioteca",
+                translation: "the library",
+                exampleES: "Voy a la biblioteca todos los días.",
+                exampleEN: "I go to the library every day."
+            },
+            {
+                word: "el desayuno",
+                translation: "breakfast",
+                exampleES: "Me gusta comer cereales para el desayuno.",
+                exampleEN: "I like to eat cereal for breakfast."
+            },
+            {
+                word: "la montaña",
+                translation: "the mountain",
+                exampleES: "La montaña es muy alta y hermosa.",
+                exampleEN: "The mountain is very tall and beautiful."
+            },
+            {
+                word: "el verano",
+                translation: "summer",
+                exampleES: "En el verano hace mucho calor.",
+                exampleEN: "In summer it's very hot."
+            },
+            {
+                word: "la alegría",
+                translation: "joy / happiness",
+                exampleES: "Su sonrisa llena de alegría el cuarto.",
+                exampleEN: "Her smile fills the room with joy."
+            },
+            {
+                word: "el paraguas",
+                translation: "umbrella",
+                exampleES: "Necesito un paraguas porque está lloviendo.",
+                exampleEN: "I need an umbrella because it's raining."
+            },
+            {
+                word: "la estrella",
+                translation: "star",
+                exampleES: "Las estrellas brillan en el cielo nocturno.",
+                exampleEN: "The stars shine in the night sky."
+            }
         ];
 
+        // Phrase of the Week Database (idioms)
+        const phrasesOfWeek = [
+            {
+                phrase: "No hay mal que por bien no venga",
+                literal: "(There is no bad from which good doesn't come)",
+                translation: "Every cloud has a silver lining",
+                exampleES: "Perdí mi trabajo, pero encontré uno mejor. No hay mal que por bien no venga.",
+                exampleEN: "I lost my job, but I found a better one. Every cloud has a silver lining."
+            },
+            {
+                phrase: "Estar en las nubes",
+                literal: "(To be in the clouds)",
+                translation: "To daydream / to have one's head in the clouds",
+                exampleES: "María está en las nubes durante la clase de matemáticas.",
+                exampleEN: "María is daydreaming during math class."
+            },
+            {
+                phrase: "Costar un ojo de la cara",
+                literal: "(To cost an eye from the face)",
+                translation: "To cost an arm and a leg",
+                exampleES: "Este coche nuevo me costó un ojo de la cara.",
+                exampleEN: "This new car cost me an arm and a leg."
+            },
+            {
+                phrase: "Dar en el clavo",
+                literal: "(To hit the nail)",
+                translation: "To hit the nail on the head / to be exactly right",
+                exampleES: "Tu explicación dio en el clavo.",
+                exampleEN: "Your explanation hit the nail on the head."
+            },
+            {
+                phrase: "Llover a cántaros",
+                literal: "(To rain pitchers)",
+                translation: "To rain cats and dogs / to pour",
+                exampleES: "Ayer llovió a cántaros toda la tarde.",
+                exampleEN: "Yesterday it poured all afternoon."
+            },
+            {
+                phrase: "Tomar el pelo",
+                literal: "(To take the hair)",
+                translation: "To pull someone's leg / to tease",
+                exampleES: "No te preocupes, solo te estoy tomando el pelo.",
+                exampleEN: "Don't worry, I'm just pulling your leg."
+            },
+            {
+                phrase: "Estar como una cabra",
+                literal: "(To be like a goat)",
+                translation: "To be crazy / to be nuts",
+                exampleES: "Mi tío está como una cabra, siempre hace cosas locas.",
+                exampleEN: "My uncle is nuts, he always does crazy things."
+            }
+        ];
+
+        // Get day of year for consistent daily rotation
         function getDayOfYear() {
             const now = new Date();
             const start = new Date(now.getFullYear(), 0, 0);
             const diff = now - start;
-            return Math.floor(diff / (1000 * 60 * 60 * 24));
+            const oneDay = 1000 * 60 * 60 * 24;
+            return Math.floor(diff / oneDay);
         }
+
+        // Get week of year for consistent weekly rotation
         function getWeekOfYear() {
             const now = new Date();
             const onejan = new Date(now.getFullYear(), 0, 1);
-            return Math.ceil((((now - onejan) / 86400000) + onejan.getDay() + 1) / 7);
+            const millisecsInDay = 86400000;
+            return Math.ceil((((now - onejan) / millisecsInDay) + onejan.getDay() + 1) / 7);
         }
 
+        // Display Word of the Day
         function displayWordOfDay() {
-            const w = wordsOfDay[getDayOfYear() % wordsOfDay.length];
-            document.getElementById('wordOfDay').textContent = w.word;
-            document.getElementById('wordTranslation').textContent = w.translation;
-            document.getElementById('wordExampleES').textContent = w.exampleES;
-            document.getElementById('wordExampleEN').textContent = w.exampleEN;
+            const dayIndex = getDayOfYear() % wordsOfDay.length;
+            const word = wordsOfDay[dayIndex];
+            
+            document.getElementById('wordOfDay').textContent = word.word;
+            document.getElementById('wordTranslation').textContent = word.translation;
+            document.getElementById('wordExampleES').textContent = word.exampleES;
+            document.getElementById('wordExampleEN').textContent = word.exampleEN;
         }
+
+        // Display Phrase of the Week
         function displayPhraseOfWeek() {
-            const p = phrasesOfWeek[getWeekOfYear() % phrasesOfWeek.length];
-            document.getElementById('phraseOfWeek').textContent = p.phrase;
-            document.getElementById('phraseLiteral').textContent = p.literal;
-            document.getElementById('phraseTranslation').textContent = p.translation;
-            document.getElementById('phraseExampleES').textContent = p.exampleES;
-            document.getElementById('phraseExampleEN').textContent = p.exampleEN;
+            const weekIndex = getWeekOfYear() % phrasesOfWeek.length;
+            const phrase = phrasesOfWeek[weekIndex];
+            
+            document.getElementById('phraseOfWeek').textContent = phrase.phrase;
+            document.getElementById('phraseLiteral').textContent = phrase.literal;
+            document.getElementById('phraseTranslation').textContent = phrase.translation;
+            document.getElementById('phraseExampleES').textContent = phrase.exampleES;
+            document.getElementById('phraseExampleEN').textContent = phrase.exampleEN;
         }
+
+        // Initialize on page load
         displayWordOfDay();
         displayPhraseOfWeek();
 
-        function toggleDropdown(btn) {
+        // Toggle dropdown for vocab lists
+        function toggleDropdown() {
             const dropdown = document.getElementById('downloadsGrid');
-            btn.classList.toggle('active');
-            dropdown.classList.toggle('expanded');
+            const toggle = document.querySelector('.vocab-download-toggle');
+            
+            if (dropdown.classList.contains('expanded')) {
+                dropdown.classList.remove('expanded');
+                toggle.classList.remove('active');
+            } else {
+                dropdown.classList.add('expanded');
+                toggle.classList.add('active');
+            }
         }
 
-        function toggleMobileDropdown(type, btn) {
+        // Toggle mobile navigation dropdowns
+        function toggleMobileDropdown(type) {
             const dropdown = document.getElementById(type + 'Dropdown');
-            btn.classList.toggle('active');
-            dropdown.classList.toggle('expanded');
+            const button = event.currentTarget;
+            
+            if (dropdown.classList.contains('expanded')) {
+                dropdown.classList.remove('expanded');
+                button.classList.remove('active');
+            } else {
+                dropdown.classList.add('expanded');
+                button.classList.add('active');
+            }
         }
     </script>
 </body>
