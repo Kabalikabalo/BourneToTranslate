@@ -2,787 +2,655 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Spanish Vocabulary</title>
+    <title>Spanish Stories</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
             background: linear-gradient(135deg, #fff 0%, #f8f8f8 100%);
-            margin: 0;
-            padding: 0;
+            margin: 0; 
+            padding: 0; 
             overflow-x: hidden;
         }
-
-        .navbar {
-            background: #DD1F25;
-            color: white;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            padding: 0 30px;
-            font-size: 1.5rem;
-            font-weight: 700;
+        
+        /* Navbar with subtle slide-in animation */
+        .navbar { 
+            background: #DD1F25; 
+            color: white; 
+            height: 60px; 
+            display: flex; 
+            align-items: center; 
+            padding: 0 30px; 
+            font-size: 1.5rem; 
+            font-weight: 700; 
             letter-spacing: 1px;
             box-shadow: 0 2px 12px rgba(221, 31, 37, 0.15);
             animation: slideDown 0.5s ease-out;
         }
+        
         @keyframes slideDown {
-            from { transform: translateY(-100%); opacity: 0; }
-            to   { transform: translateY(0); opacity: 1; }
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
-        .navbar a {
-            color: white;
-            text-decoration: none;
-            font-size: 1rem;
-            font-weight: 500;
+        
+        .navbar a { 
+            color: white; 
+            text-decoration: none; 
+            font-size: 1rem; 
+            font-weight: 500; 
             margin-right: 25px;
             transition: all 0.2s ease;
             padding: 6px 12px;
             border-radius: 4px;
         }
+        
         .navbar a:hover {
             background: rgba(255, 255, 255, 0.1);
             transform: translateX(-3px);
         }
-
-        .content-wrapper {
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            align-items: flex-start;
-            gap: 42px;
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 60px 16px;
+        
+        /* Catalogue container with subtle fade-in */
+        .catalogue-container { 
+            max-width: 1100px; 
+            margin: 0 auto; 
+            padding: 40px 20px 20px 20px;
             animation: fadeIn 0.6s ease-out 0.1s both;
         }
+        
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px);}
-            to   { opacity: 1; transform: translateY(0);}
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
-
-        .vocab-main {
-            flex: 1 1 420px;
-            min-width: 0;
-        }
-        .page-title {
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: #DD1F25;
-            text-align: center;
-            margin-bottom: 28px;
+        
+        /* Search and filter container */
+        .search-filter-container {
+            max-width: 700px;
+            margin: 0 auto 35px auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
             animation: scaleIn 0.5s ease-out 0.3s both;
         }
-        @keyframes scaleIn {
-            from { transform: scale(0.97); opacity: 0;}
-            to   { transform: scale(1); opacity: 1;}
-        }
-        .about-box {
-            background: #fff;
-            border-radius: 12px;
-            box-shadow: 0 4px 14px rgba(221, 31, 37, 0.09);
-            padding: 28px 24px;
-            margin-bottom: 36px;
-            animation: fadeIn 0.7s ease-out 0.2s both;
-        }
-
-        .daily-features {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
-            margin-bottom: 10px;
-        }
-
-        .feature-card {
-            background: linear-gradient(135deg, #fff 0%, #fffbfb 100%);
-            border-radius: 10px;
-            padding: 20px;
-            border-left: 4px solid #DD1F25;
-            box-shadow: 0 2px 10px rgba(221, 31, 37, 0.06);
-        }
-
-        .feature-header {
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 1.2px;
-            color: #DD1F25;
-            font-weight: 700;
-            margin-bottom: 12px;
-        }
-
-        .feature-main {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #1a1a1a;
-            margin-bottom: 8px;
-            font-style: italic;
-        }
-
-        .feature-translation {
-            font-size: 1.1rem;
-            color: #666;
-            margin-bottom: 12px;
-            font-weight: 500;
-        }
-
-        .feature-example {
-            background: #f8f8f8;
-            border-radius: 6px;
-            padding: 10px 12px;
-            margin-top: 10px;
-        }
-
-        .feature-example-text {
-            font-size: 0.95rem;
-            color: #444;
-            font-style: italic;
-            margin-bottom: 4px;
-        }
-
-        .feature-example-translation {
-            font-size: 0.9rem;
-            color: #777;
-        }
-
-        .feature-literal {
-            font-size: 0.85rem;
-            color: #999;
-            font-style: italic;
-            margin-bottom: 6px;
-        }
-
-        @media (max-width: 700px) {
-            .daily-features {
-                grid-template-columns: 1fr;
-                gap: 18px;
-            }
-        }
-
-        .downloads-grid {
-            display: grid;
-            grid-template-rows: 0fr;
-            grid-template-columns: 1fr;
-            gap: 0;
-            margin-top: 10px;
-            margin-bottom: 18px;
-            transition: grid-template-rows 0.4s ease;
-            overflow: hidden;
-        }
         
-        .downloads-grid.expanded {
-            grid-template-rows: 1fr;
-            gap: 18px;
-        }
-        
-        .downloads-grid-content {
-            min-height: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
-        }
-        
-        .download-card {
-            background: #DD1F25;
-            border-radius: 12px;
-            padding: 18px 14px;
-            box-shadow: 0 6px 26px rgba(221, 31, 37, 0.16);
+        /* Search bar with gentle scale animation */
+        .search-bar { 
+            width: 100%; 
+            max-width: 400px; 
+            font-size: 1.1rem; 
+            padding: 12px 18px; 
+            border-radius: 30px; 
+            border: 1px solid #DD1F25; 
+            outline: none; 
+            box-shadow: 0 2px 12px rgba(221, 31, 37, 0.08); 
             transition: all 0.25s ease;
-            cursor: pointer;
-            text-decoration: none;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            min-height: 62px;
-            position: relative;
-            overflow: hidden;
         }
         
-        .download-card:hover {
-            transform: translateY(-2px) scale(1.012);
-            box-shadow: 0 10px 38px rgba(221, 31, 37, 0.18);
-            background: #d11520;
+        @keyframes scaleIn {
+            from {
+                transform: scale(0.95);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
         }
         
-        .download-icon {
-            width: 36px;
-            height: 36px;
-            margin-right: 14px;
+        .search-bar:focus { 
+            border-color: #AA151B;
+            box-shadow: 0 3px 16px rgba(221, 31, 37, 0.15);
+            transform: scale(1.01);
+        }
+        
+        /* Year group filters */
+        .year-filters {
             display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .download-svg {
-            display: block;
-            width: 28px;
-            height: 28px;
-        }
-        .download-title {
-            font-size: 1.15rem;
-            font-weight: 700;
-            color: white;
-            margin-bottom: 3px;
-        }
-        .download-subtitle {
-            font-size: 0.97rem;
-            color: rgba(255,255,255,0.93);
-        }
-        .download-info {
-            display: flex;
-            flex-direction: column;
-        }
-        .info-text {
-            text-align: center;
-            color: #666;
-            font-size: 1rem;
-            margin-top: 26px;
-            animation: fadeIn 0.6s ease-out 0.7s both;
-        }
-
-        /* Nav container for side-by-side layout on desktop */
-        .nav-container {
-            display: flex;
-            flex-direction: row;
             gap: 20px;
-            width: 100%;
-            margin-bottom: 24px;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
         }
-
-        /* Side nav */
-        .side-nav {
-            flex: 1;
-            background: #fff;
-            border-radius: 14px;
-            box-shadow: 0 2px 14px rgba(221, 31, 37, 0.09);
-            padding: 22px 16px;
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-            font-size: 1.05rem;
-            animation: fadeIn 0.8s ease 0.18s both;
-            height: fit-content;
-        }
-        .side-nav-title {
-            color: #DD1F25;
-            font-weight: 700;
-            font-size: 1.09rem;
-            margin-bottom: 10px;
-            letter-spacing: 0.5px;
-            text-align: center;
-        }
-        .side-link {
-            color: #DD1F25;
-            text-decoration: none;
-            background: rgba(221,31,37,0.05);
-            padding: 8px 14px;
-            border-radius: 6px;
-            transition: background 0.18s, color 0.18s;
-            font-weight: 500;
-            text-align: center;
-        }
-        .side-link:hover,
-        .side-link.active {
-            background: #DD1F25;
-            color: #fff;
-        }
-
-        /* Mobile dropdown styles */
-        .mobile-nav-dropdown {
-            display: none;
-        }
-
-        @media (max-width: 600px) {
-            .side-nav {
-                display: none;
-            }
-            .mobile-nav-dropdown {
-                display: block;
-                width: 100%;
-                margin-bottom: 4px;
-            }
-            .mobile-dropdown-button {
-                width: 100%;
-                background: #DD1F25;
-                color: white;
-                padding: 12px 16px;
-                border: 2px solid rgba(255, 255, 255, 0.2);
-                border-radius: 12px;
-                font-size: 1.15rem;
-                font-weight: 700;
-                letter-spacing: 0.5px;
-                cursor: pointer;
-                text-align: center;
-                box-shadow: 0 4px 15px rgba(221, 31, 37, 0.2);
-                transition: all 0.25s;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                -webkit-tap-highlight-color: transparent;
-                -webkit-touch-callout: none;
-                -webkit-user-select: none;
-                -moz-user-select: none;
-                -ms-user-select: none;
-                user-select: none;
-            }
-            .mobile-dropdown-button:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 6px 20px rgba(221, 31, 37, 0.25);
-                background: #B01820;
-            }
-            .mobile-dropdown-button::after {
-                content: '►';
-                margin-left: auto;
-                transition: transform 0.3s ease;
-                display: inline-block;
-            }
-            .mobile-dropdown-button.active::after {
-                content: '▼';
-            }
-            .mobile-dropdown-links {
-                display: grid;
-                grid-template-rows: 0fr;
-                transition: grid-template-rows 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-                overflow: hidden;
-            }
-            .mobile-dropdown-links.expanded {
-                grid-template-rows: 1fr;
-            }
-            .mobile-dropdown-content {
-                min-height: 0;
-                display: flex;
-                flex-direction: column;
-                gap: 10px;
-                padding-top: 10px;
-            }
-            .mobile-dropdown-links a {
-                display: block;
-                background: #fff;
-                color: #DD1F25;
-                text-decoration: none;
-                padding: 14px 20px;
-                border-radius: 8px;
-                font-weight: 600;
-                font-size: 1.05rem;
-                text-align: center;
-                border: 2px solid #DD1F25;
-                transition: all 0.2s;
-            }
-            .mobile-dropdown-links a:hover {
-                background: #DD1F25;
-                color: white;
-                transform: scale(1.02);
-            }
-        }
-
-        @media (max-width: 900px) {
-            .content-wrapper {
-                flex-direction: column;
-                gap: 0;
-                padding: 24px 12px;
-                align-items: center;
-            }
-            .nav-container {
-                flex-direction: column;
-                gap: 16px;
-            }
-            .side-nav {
-                flex-direction: row;
-                flex-wrap: wrap;
-                width: 100%;
-                margin-bottom: 0;
-                padding: 18px 12px;
-                justify-content: center;
-                gap: 12px;
-            }
-            .side-nav-title {
-                width: 100%;
-                text-align: center;
-                font-size: 1.2rem;
-            }
-            .side-link {
-                font-size: 1.1rem;
-                padding: 12px 24px;
-                min-width: 140px;
-            }
-        }
-        /* Dropdown toggle */
-        .dropdown-toggle {
-            background: #DD1F25;
-            color: white;
-            padding: 16px 20px;
-            border-radius: 12px;
-            cursor: pointer;
-            font-weight: 700;
-            font-size: 1.1rem;
-            text-align: center;
-            box-shadow: 0 4px 20px rgba(221, 31, 37, 0.16);
-            margin-bottom: 16px;
-            transition: all 0.25s;
-            user-select: none;
+        
+        .year-filter-label {
             display: flex;
             align-items: center;
-            justify-content: space-between;
             gap: 8px;
-            -webkit-tap-highlight-color: transparent;
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
+            font-size: 1rem;
+            color: #444;
+            cursor: pointer;
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: #fafafd;
+            border: 2px solid #e0e0e0;
+            transition: all 0.25s ease;
+            user-select: none;
         }
-        .dropdown-toggle:hover {
+        
+        .year-filter-label:hover {
+            border-color: #DD1F25;
+            background: #fff5f5;
+        }
+        
+        .year-filter-label input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: #DD1F25;
+        }
+        
+        .year-filter-label.active {
+            border-color: #DD1F25;
+            background: #fff5f5;
+            font-weight: 600;
+        }
+        
+        /* Grid with subtle staggered card animations */
+        .stories-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); 
+            gap: 35px; 
+        }
+        
+        .story-card { 
+            background: #fafafd; 
+            border-radius: 16px; 
+            box-shadow: 0 6px 26px rgba(221, 31, 37, 0.08); 
+            overflow: hidden; 
+            cursor: pointer; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: stretch; 
+            text-decoration: none; 
+            color: inherit;
+            position: relative;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: cardAppear 0.5s ease-out forwards;
+        }
+        
+        /* Subtle stagger animation for each card */
+        .story-card:nth-child(1) { animation-delay: 0.05s; }
+        .story-card:nth-child(2) { animation-delay: 0.1s; }
+        .story-card:nth-child(3) { animation-delay: 0.15s; }
+        .story-card:nth-child(4) { animation-delay: 0.2s; }
+        .story-card:nth-child(5) { animation-delay: 0.25s; }
+        .story-card:nth-child(6) { animation-delay: 0.3s; }
+        .story-card:nth-child(n+7) { animation-delay: 0.35s; }
+        
+        @keyframes cardAppear {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Card disappear animation for search filtering */
+        .story-card.hiding {
+            animation: cardDisappear 0.3s ease-out forwards;
+        }
+        
+        @keyframes cardDisappear {
+            to {
+                opacity: 0;
+                transform: translateY(-10px) scale(0.98);
+            }
+        }
+        
+        .story-card:hover { 
+            box-shadow: 0 10px 35px rgba(221, 31, 37, 0.14); 
+            transform: translateY(-4px);
+        }
+        
+        .story-card:active {
             transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(221, 31, 37, 0.18);
-            background: #B01820;
-        }
-        .dropdown-toggle::after {
-            content: '►';
-            transition: transform 0.3s ease;
-            display: inline-block;
-        }
-        .dropdown-toggle.active::after {
-            content: '▼';
         }
         
-        /* Special styling for vocab download toggle */
-        .vocab-download-section {
-            margin-bottom: 24px;
-            margin-top: 4px;
+        .story-image { 
+            width: 100%; 
+            aspect-ratio: 3/2; 
+            object-fit: cover; 
+            background: #eaeaea; 
+            border-bottom: 1px solid #eee;
+            transition: transform 0.35s ease;
         }
-        .vocab-download-toggle {
-            background: #DD1F25;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            font-size: 1.15rem;
+        
+        .story-card:hover .story-image {
+            transform: scale(1.04);
+        }
+        
+        .story-info { 
+            padding: 18px 16px 20px 16px; 
+            flex: 1;
+            transition: all 0.25s ease;
+        }
+
+            .story-year {
+                position: absolute;
+                bottom: 12px;
+                right: 16px;
+                background: #DD1F25;
+                color: #fff;
+                font-size: 0.95rem;
+                font-weight: 600;
+                padding: 6px 16px;
+                border-radius: 16px;
+                box-shadow: 0 2px 8px rgba(221, 31, 37, 0.10);
+                letter-spacing: 0.5px;
+                z-index: 2;
+                pointer-events: none;
+                opacity: 0.93;
+            }
+        
+        .story-title { 
+            font-size: 1.3rem; 
+            font-weight: 700; 
+            margin-bottom: 10px; 
+            color: #DD1F25; 
             letter-spacing: 0.5px;
-            box-shadow: 0 4px 15px rgba(221, 31, 37, 0.2);
-            padding: 12px 16px;
-        }
-        .vocab-download-toggle:hover {
-            background: #B01820;
-            box-shadow: 0 6px 20px rgba(221, 31, 37, 0.25);
+            transition: all 0.25s ease;
         }
         
-        @media (max-width: 600px) {
-            .page-title { font-size: 1.4rem; margin-bottom: 16px; }
-            .about-box { font-size: 0.95rem; padding: 16px 12px; margin-bottom: 16px !important; }
-            .side-nav { font-size: 0.95rem; padding: 14px 8px; margin-bottom: 16px !important; }
-            .side-link { font-size: 1rem; padding: 10px 20px; }
-            .daily-features { margin-bottom: 0; }
-            .feature-card { padding: 14px; }
-            .feature-header { font-size: 0.75rem; margin-bottom: 8px; }
-            .feature-main { font-size: 1.2rem; margin-bottom: 6px; }
-            .feature-translation { font-size: 0.95rem; margin-bottom: 8px; }
-            .feature-example { padding: 8px 10px; margin-top: 8px; }
-            .feature-example-text { font-size: 0.85rem; }
-            .feature-example-translation { font-size: 0.8rem; }
-            .feature-literal { font-size: 0.75rem; }
-            .download-card { padding: 12px; min-height: 50px; }
-            .download-icon { width: 28px; height: 28px; margin-right: 10px; }
-            .download-svg { width: 22px; height: 22px; }
-            .download-title { font-size: 1rem; }
-            .download-subtitle { font-size: 0.85rem; }
+        .story-card:hover .story-title {
+            transform: translateX(3px);
+            color: #AA151B;
+        }
+        
+        .story-intro { 
+            font-size: 1rem; 
+            color: #444; 
+            opacity: 0.9;
+            transition: all 0.25s ease;
+        }
+        
+        .story-card:hover .story-intro {
+            opacity: 1;
+        }
+        
+        /* Loading spinner */
+        .loading-spinner {
+            grid-column: 1/-1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 3em 2em;
+        }
+        
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #DD1F25;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* No results message */
+        .no-results {
+            grid-column: 1/-1;
+            text-align: center;
+            padding: 3em 2em;
+            color: #DD1F25;
+            font-weight: 600;
+            font-size: 1.2rem;
+            animation: fadeIn 0.4s ease-out;
+        }
+        
+        @media (max-width: 600px) { 
+            .catalogue-container { padding: 20px 8px; } 
+            .stories-grid {
+                gap: 12px;
+                grid-template-columns: 1fr;
+            }
+            .story-card {
+                flex-direction: row;
+                min-height: 100px;
+            }
+            .story-image {
+                width: 100px;
+                height: 100px;
+                aspect-ratio: 1/1;
+                border-radius: 12px;
+                border-bottom: none;
+                flex-shrink: 0;
+            }
+            .story-info { 
+                padding: 12px 12px 12px 14px;
+                flex: 1;
+            }
+            .story-title {
+                font-size: 1.1rem;
+            }
+            .story-intro {
+                font-size: 0.9rem;
+            }
+            .story-year {
+                bottom: 12px;
+                right: 12px;
+                font-size: 0.85rem;
+                padding: 4px 12px;
+            }
+            .navbar { font-size: 1.2rem; padding: 0 20px; }
         }
     </style>
 </head>
 <body>
     <div class="navbar">
         <a href="spanish.html">← Back</a>
-        Spanish Vocabulary
+        Spanish Stories
     </div>
-    <div class="content-wrapper">
-        <main class="vocab-main">
-            <h1 class="page-title">Spanish Vocabulary Resources</h1>
-            <div class="about-box" style="margin-bottom: 24px;">
-                <p style="font-size: 1.05rem; line-height: 1.6; color: #333; text-align: center;">
-                    <strong>Welcome to the Spanish Vocabulary section!</strong><br>
-                    Test your knowledge with interactive quizzes, practice with downloadable worksheets, 
-                    learn new words and phrases daily, and download comprehensive vocabulary lists for your year group.
-                </p>
+    <div class="catalogue-container">
+        <div class="search-filter-container">
+            <input type="text" class="search-bar" id="searchInput" placeholder="Search stories...">
+            <div class="year-filters">
+                <label class="year-filter-label">
+                    <input type="checkbox" id="year7" value="7" checked>
+                    <span>Year 7</span>
+                </label>
+                <label class="year-filter-label">
+                    <input type="checkbox" id="year8" value="8" checked>
+                    <span>Year 8</span>
+                </label>
+                <label class="year-filter-label">
+                    <input type="checkbox" id="year9" value="9" checked>
+                    <span>Year 9</span>
+                </label>
             </div>
-            <div class="nav-container">
-                <nav class="side-nav nav-quiz">
-                    <div class="side-nav-title">Vocab Quiz</div>
-                    <a href="SpanishVocabPages/Year7SpanishVocab.html" class="side-link">Year 7</a>
-                    <a href="SpanishVocabPages/Year8SpanishVocab.html" class="side-link">Year 8</a>
-                    <a href="SpanishVocabPages/Year9SpanishVocab.html" class="side-link">Year 9</a>
-                </nav>
-                <div class="mobile-nav-dropdown">
-                    <button class="mobile-dropdown-button" onclick="toggleMobileDropdown('quiz')">
-                        Vocab Quizzes
-                    </button>
-                    <div class="mobile-dropdown-links" id="quizDropdown">
-                        <div class="mobile-dropdown-content">
-                            <a href="SpanishVocabPages/Year7SpanishVocab.html">Year 7</a>
-                            <a href="SpanishVocabPages/Year8SpanishVocab.html">Year 8</a>
-                            <a href="SpanishVocabPages/Year9SpanishVocab.html">Year 9</a>
-                        </div>
-                    </div>
-                </div>
-                <nav class="side-nav nav-worksheets">
-                    <div class="side-nav-title">Worksheets</div>
-                    <a href="SpanishVocabWorksheetPages/Year7SpanishVocabWorksheets.html" class="side-link">Year 7</a>
-                    <a href="SpanishVocabWorksheetPages/Year8SpanishVocabWorksheets.html" class="side-link">Year 8</a>
-                    <a href="SpanishVocabWorksheetPages/Year9SpanishVocabWorksheets.html" class="side-link">Year 9</a>
-                </nav>
-                <div class="mobile-nav-dropdown">
-                    <button class="mobile-dropdown-button" onclick="toggleMobileDropdown('worksheets')">
-                        Worksheets
-                    </button>
-                    <div class="mobile-dropdown-links" id="worksheetsDropdown">
-                        <div class="mobile-dropdown-content">
-                            <a href="SpanishVocabWorksheetPages/Year7SpanishVocabWorksheets.html">Year 7</a>
-                            <a href="SpanishVocabWorksheetPages/Year8SpanishVocabWorksheets.html">Year 8</a>
-                            <a href="SpanishVocabWorksheetPages/Year9SpanishVocabWorksheets.html">Year 9</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="vocab-download-section">
-                <div class="dropdown-toggle vocab-download-toggle" onclick="toggleDropdown()">Download Vocabulary Lists</div>
-                <div class="downloads-grid" id="downloadsGrid">
-                    <div class="downloads-grid-content">
-                        <a href="SpanishVocabLists/Year7Vocab.pdf" class="download-card" download>
-                            <span class="download-icon">
-                                <!-- Simple download SVG icon (white) -->
-                                <svg class="download-svg" viewBox="0 0 24 24" fill="none">
-                                    <rect x="6" y="18" width="12" height="2" rx="1" fill="white"/>
-                                    <path d="M12 5v9" stroke="white" stroke-width="2" stroke-linecap="round"/>
-                                    <path d="M8 12l4 4 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </span>
-                            <span class="download-info">
-                                <span class="download-title">Year 7 Vocabulary</span>
-                                <span class="download-subtitle">Click to download PDF</span>
-                            </span>
-                        </a>
-                        <a href="SpanishVocabLists/Year8Vocab.pdf" class="download-card" download>
-                            <span class="download-icon">
-                                <!-- Simple download SVG icon (white) -->
-                                <svg class="download-svg" viewBox="0 0 24 24" fill="none">
-                                    <rect x="6" y="18" width="12" height="2" rx="1" fill="white"/>
-                                    <path d="M12 5v9" stroke="white" stroke-width="2" stroke-linecap="round"/>
-                                    <path d="M8 12l4 4 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </span>
-                            <span class="download-info">
-                                <span class="download-title">Year 8 Vocabulary</span>
-                                <span class="download-subtitle">Click to download PDF</span>
-                            </span>
-                        </a>
-                        <a href="SpanishVocabLists/Year9Vocab.pdf" class="download-card" download>
-                            <span class="download-icon">
-                                <!-- Simple download SVG icon (white) -->
-                                <svg class="download-svg" viewBox="0 0 24 24" fill="none">
-                                    <rect x="6" y="18" width="12" height="2" rx="1" fill="white"/>
-                                    <path d="M12 5v9" stroke="white" stroke-width="2" stroke-linecap="round"/>
-                                    <path d="M8 12l4 4 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </span>
-                            <span class="download-info">
-                                <span class="download-title">Year 9 Vocabulary</span>
-                                <span class="download-subtitle">Click to download PDF</span>
-                            </span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="about-box" style="margin-bottom: 24px;">
-                <div class="daily-features">
-                    <div class="feature-card">
-                        <div class="feature-header">Word of the Day</div>
-                        <div class="feature-main" id="wordOfDay"></div>
-                        <div class="feature-translation" id="wordTranslation"></div>
-                        <div class="feature-example">
-                            <div class="feature-example-text" id="wordExampleES"></div>
-                            <div class="feature-example-translation" id="wordExampleEN"></div>
-                        </div>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-header">Phrase of the Week</div>
-                        <div class="feature-main" id="phraseOfWeek"></div>
-                        <div class="feature-literal" id="phraseLiteral"></div>
-                        <div class="feature-translation" id="phraseTranslation"></div>
-                        <div class="feature-example">
-                            <div class="feature-example-text" id="phraseExampleES"></div>
-                            <div class="feature-example-translation" id="phraseExampleEN"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </main>
+        </div>
+        <div class="stories-grid" id="storiesGrid"></div>
     </div>
-    
     <script>
-        // Word of the Day Database
-        const wordsOfDay = [
-            {
-                word: "la biblioteca",
-                translation: "the library",
-                exampleES: "Voy a la biblioteca todos los días.",
-                exampleEN: "I go to the library every day."
-            },
-            {
-                word: "el desayuno",
-                translation: "breakfast",
-                exampleES: "Me gusta comer cereales para el desayuno.",
-                exampleEN: "I like to eat cereal for breakfast."
-            },
-            {
-                word: "la montaña",
-                translation: "the mountain",
-                exampleES: "La montaña es muy alta y hermosa.",
-                exampleEN: "The mountain is very tall and beautiful."
-            },
-            {
-                word: "el verano",
-                translation: "summer",
-                exampleES: "En el verano hace mucho calor.",
-                exampleEN: "In summer it's very hot."
-            },
-            {
-                word: "la alegría",
-                translation: "joy / happiness",
-                exampleES: "Su sonrisa llena de alegría el cuarto.",
-                exampleEN: "Her smile fills the room with joy."
-            },
-            {
-                word: "el paraguas",
-                translation: "umbrella",
-                exampleES: "Necesito un paraguas porque está lloviendo.",
-                exampleEN: "I need an umbrella because it's raining."
-            },
-            {
-                word: "la estrella",
-                translation: "star",
-                exampleES: "Las estrellas brillan en el cielo nocturno.",
-                exampleEN: "The stars shine in the night sky."
+    // Add a 'url' field to each story pointing to its HTML page
+    const stories = [{
+            title: "La foto de familia",
+            intro: "Mi familia es grande...",
+            image: "SpanishStories/La foto de familia/FamilyPhoto1.png",
+            url: "SpanishStories/La foto de familia/index.html",
+            yearGroup: 7
+        },
+        {
+            title: "Aventura en Escocia",
+            intro: "El verano pasado...",
+            image: "SpanishStories/Aventura en Escocia/MuddyFrog3.png",
+            url: "SpanishStories/Aventura en Escocia/index.html",
+            yearGroup: 8
+        },
+        {
+            title: "Tiddalik la rana sedienta",
+            intro: "Extension, mitos, fábula",
+            image: "SpanishStories/Tiddalik la rana sedienta/frog.png",
+            url: "SpanishStories/Tiddalik la rana sedienta/index.html",
+            yearGroup: 8
+        },
+        {
+            title: "Nuestros Animales Favoritos",
+            intro: "Animales, colores...",
+            image: "SpanishStories/Nuestros Animales Favoritos/fish.png",
+            url: "SpanishStories/Nuestros Animales Favoritos/index.html",
+            yearGroup: 7
+        },
+        {
+            title: "El Zodíaco Chino",
+            intro: "Animales, Extension...",
+            image: "SpanishStories/El zodiaco chino/ratbull.png",
+            url: "SpanishStories/El zodiaco chino/index.html",
+            yearGroup: 9
+        },
+        {
+            title: "Mi familia divertida",
+            intro: "Personalidad, animales...",
+            image: "SpanishStories/Mi familia divertida/sisters.png",
+            url: "SpanishStories/Mi familia divertida/index.html",
+            yearGroup: 7
+        },
+        {
+            title: "El León de Nemea",
+            intro: "Mitología, aventuras...",
+            image: "SpanishStories/El leon de nemea/hercules.png",
+            url: "SpanishStories/El leon de nemea/index.html",
+            yearGroup: 9
+        },
+        {
+            title: "La Serpiente del Arcoíris",
+            intro: "Animales, mitos...",
+            image: "SpanishStories/La Serpiente del Arcoíris/rainbowsnake.png",
+            url: "SpanishStories/La Serpiente del Arcoíris/index.html",
+            yearGroup: 8
+        },
+        {
+            title: "Un día en el parque",
+            intro: "Tiempo, deportes...",
+            image: "SpanishStories/Un dia en el parque/football.png",
+            url: "SpanishStories/Un dia en el parque/index.html",
+            yearGroup: 7
+        },
+        {
+            title: "Un día lluvioso",
+            intro: "El clima, El tiempo...",
+            image: "SpanishStories/Un dia lluvioso/rainyday.png",
+            url: "SpanishStories/Un dia lluvioso/index.html",
+            yearGroup: 7
+        },
+        {
+            title: "Beowulf",
+            intro: "Aventura, mitos...",
+            image: "SpanishStories/Beowulf/heorot.jpeg",
+            url: "SpanishStories/Beowulf/index.html",
+            yearGroup: 9
+        },
+        {
+            title: "Nuestro tiempo libre",
+            intro: "Tiempo libre...",
+            image: "SpanishStories/Nuestro tiempo libre/piano.png",
+            url: "SpanishStories/Nuestro tiempo libre/index.html",
+            yearGroup: 7
+        },
+        {
+            title: "Mi semana escolar",
+            intro: "La escuela, la rutina...",
+            image: "SpanishStories/Mi semana escolar/swimming.png",
+            url: "SpanishStories/Mi semana escolar/index.html",
+            yearGroup: 7
+        },
+        {
+            title: "Mi rutina diaria",
+            intro: "Rutina diaria...",
+            image: "SpanishStories/Mi rutina diaria/television.png",
+            url: "SpanishStories/Mi rutina diaria/index.html",
+            yearGroup: 7
+        },
+        {
+            title: "Mi nuevo instituto",
+            intro: "Instituto, asignaturas...",
+            image: "SpanishStories/Mi nuevo instituto/artlesson.png",
+            url: "SpanishStories/Mi nuevo instituto/index.html",
+            yearGroup: 7
+        },
+        {
+            title: "El recreo",
+            intro: "Comida, recreo...",
+            image: "SpanishStories/El recreo/music.png",
+            url: "SpanishStories/El recreo/index.html",
+            yearGroup: 7
+        },
+        {
+            title: "Mi cumpleaños",
+            intro: "tiempo libre",
+            image: "SpanishStories/Mi cumpleaños/screen.png",
+            url: "SpanishStories/Mi cumpleaños/index.html",
+            yearGroup: 7
+        },
+        {
+            title: "Mi fin de semana",
+            intro: "Actividades, tiempo libre",
+            image: "SpanishStories/Mi fin de semana/cafe.png",
+            url: "SpanishStories/Mi fin de semana/index.html",
+            yearGroup: 7
+        },
+        {
+            title: "Nuestras mascotas",
+            intro: "Animales, descripciones...",
+            image: "SpanishStories/Nuestras mascotas/cat2.png",
+            url: "SpanishStories/Nuestras mascotas/index.html",
+            yearGroup: 7
+        },
+        {
+            title: "Baba Yaga",
+            intro: "Extension, mitos...",
+            image: "SpanishStories/Baba Yaga/house.png",
+            url: "SpanishStories/Baba Yaga/index.html",
+            yearGroup: 9
+        }
+    ,
+        {
+            title: "El Flautista de Hamelín",
+            intro: "Extension, mitos, fábula",
+            image: "SpanishStories/El flautista de Hamelín/rats.png",
+            url: "SpanishStories/El flautista de Hamelín/index.html",
+            yearGroup: 8
+        }
+    ,
+        {
+            title: "El Wendigo",
+            intro: "fábula",
+            image: "SpanishStories/El Wendigo/wendigo.png",
+            url: "SpanishStories/El Wendigo/index.html",
+            yearGroup: 8
+        }
+    ,
+        {
+            title: "El mono y el cocodrilo",
+            intro: "Extension, fábula, Panchatantra",
+            image: "SpanishStories/El mono y el cocodrilo/1000015451.jpg",
+            url: "SpanishStories/El mono y el cocodrilo/index.html",
+            yearGroup: 8
+        }
+    ,
+        {
+            title: "El chacal azul",
+            intro: "Extension, fábula, Panchatantra",
+            image: "SpanishStories/El chacal azul/1000015457.jpg",
+            url: "SpanishStories/El chacal azul/index.html",
+            yearGroup: 7
+        }
+    ,
+        {
+            title: "El Dragón de Wawel",
+            intro: "Extension, Polish, mitos, fábula",
+            image: "SpanishStories/El Dragón de Wawel/dragon.jpeg",
+            url: "SpanishStories/El Dragón de Wawel/index.html",
+            yearGroup: 9
+        }
+    ];
+
+    // Normalize text to remove accents for search
+    function normalizeText(text) {
+        return text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+    }
+
+    // Get selected year groups
+    function getSelectedYearGroups() {
+        const checkboxes = document.querySelectorAll('.year-filters input[type="checkbox"]');
+        const selected = [];
+        checkboxes.forEach(cb => {
+            if (cb.checked) {
+                selected.push(parseInt(cb.value));
             }
-        ];
+        });
+        return selected;
+    }
 
-        // Phrase of the Week Database (idioms)
-        const phrasesOfWeek = [
-            {
-                phrase: "No hay mal que por bien no venga",
-                literal: "(There is no bad from which good doesn't come)",
-                translation: "Every cloud has a silver lining",
-                exampleES: "Perdí mi trabajo, pero encontré uno mejor. No hay mal que por bien no venga.",
-                exampleEN: "I lost my job, but I found a better one. Every cloud has a silver lining."
-            },
-            {
-                phrase: "Estar en las nubes",
-                literal: "(To be in the clouds)",
-                translation: "To daydream / to have one's head in the clouds",
-                exampleES: "María está en las nubes durante la clase de matemáticas.",
-                exampleEN: "María is daydreaming during math class."
-            },
-            {
-                phrase: "Costar un ojo de la cara",
-                literal: "(To cost an eye from the face)",
-                translation: "To cost an arm and a leg",
-                exampleES: "Este coche nuevo me costó un ojo de la cara.",
-                exampleEN: "This new car cost me an arm and a leg."
-            },
-            {
-                phrase: "Dar en el clavo",
-                literal: "(To hit the nail)",
-                translation: "To hit the nail on the head / to be exactly right",
-                exampleES: "Tu explicación dio en el clavo.",
-                exampleEN: "Your explanation hit the nail on the head."
-            },
-            {
-                phrase: "Llover a cántaros",
-                literal: "(To rain pitchers)",
-                translation: "To rain cats and dogs / to pour",
-                exampleES: "Ayer llovió a cántaros toda la tarde.",
-                exampleEN: "Yesterday it poured all afternoon."
-            },
-            {
-                phrase: "Tomar el pelo",
-                literal: "(To take the hair)",
-                translation: "To pull someone's leg / to tease",
-                exampleES: "No te preocupes, solo te estoy tomando el pelo.",
-                exampleEN: "Don't worry, I'm just pulling your leg."
-            },
-            {
-                phrase: "Estar como una cabra",
-                literal: "(To be like a goat)",
-                translation: "To be crazy / to be nuts",
-                exampleES: "Mi tío está como una cabra, siempre hace cosas locas.",
-                exampleEN: "My uncle is nuts, he always does crazy things."
+    function renderCatalogue(filter='', showLoading=false) {
+        const grid = document.getElementById('storiesGrid');
+        const normalizedFilter = normalizeText(filter);
+        const selectedYears = getSelectedYearGroups();
+        
+        // Show loading spinner briefly
+        if (showLoading) {
+            grid.innerHTML = '<div class="loading-spinner"><div class="spinner"></div></div>';
+            // Use requestAnimationFrame to render immediately after showing spinner
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => renderCatalogue(filter, false));
+            });
+            return;
+        }
+        
+        let shown = 0;
+        
+        // Build fresh grid
+        let newHTML = '';
+        stories.forEach((story, index) => {
+            const matchesFilter = !normalizedFilter ||
+                normalizeText(story.title).includes(normalizedFilter) ||
+                normalizeText(story.intro).includes(normalizedFilter);
+            const matchesYear = selectedYears.length === 0 || selectedYears.includes(story.yearGroup);
+            
+            if (matchesFilter && matchesYear) {
+                shown++;
+                    newHTML += `
+                        <a class="story-card" href="${story.url}" 
+                           data-title="${story.title}" 
+                           data-intro="${story.intro}"
+                           data-year="${story.yearGroup}">
+                            <img src="${story.image}" alt="${story.title}" class="story-image" loading="lazy">
+                            <div class="story-info">
+                                <div class="story-title">${story.title}</div>
+                                <div class="story-intro">${story.intro}</div>
+                            </div>
+                            <div class="story-year">Year ${story.yearGroup}</div>
+                        </a>`;
             }
-        ];
-
-        // Get day of year for consistent daily rotation
-        function getDayOfYear() {
-            const now = new Date();
-            const start = new Date(now.getFullYear(), 0, 0);
-            const diff = now - start;
-            const oneDay = 1000 * 60 * 60 * 24;
-            return Math.floor(diff / oneDay);
+        });
+        
+        if (shown === 0) {
+            newHTML = `<div class="no-results">No stories found.</div>`;
         }
+        
+        grid.innerHTML = newHTML;
+    }
+    
+    renderCatalogue();
 
-        // Get week of year for consistent weekly rotation
-        function getWeekOfYear() {
-            const now = new Date();
-            const onejan = new Date(now.getFullYear(), 0, 1);
-            const millisecsInDay = 86400000;
-            return Math.ceil((((now - onejan) / millisecsInDay) + onejan.getDay() + 1) / 7);
+    document.getElementById('searchInput').addEventListener('input', function() {
+        renderCatalogue(this.value, true);
+    });
+
+    // Add event listeners to year filter checkboxes
+    const yearCheckboxes = document.querySelectorAll('.year-filters input[type="checkbox"]');
+    yearCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            // Update label styling
+            this.parentElement.classList.toggle('active', this.checked);
+            // Re-render catalogue
+            const searchValue = document.getElementById('searchInput').value;
+            renderCatalogue(searchValue, true);
+        });
+        
+        // Initialize active state
+        if (checkbox.checked) {
+            checkbox.parentElement.classList.add('active');
         }
-
-        // Display Word of the Day
-        function displayWordOfDay() {
-            const dayIndex = getDayOfYear() % wordsOfDay.length;
-            const word = wordsOfDay[dayIndex];
-            
-            document.getElementById('wordOfDay').textContent = word.word;
-            document.getElementById('wordTranslation').textContent = word.translation;
-            document.getElementById('wordExampleES').textContent = word.exampleES;
-            document.getElementById('wordExampleEN').textContent = word.exampleEN;
-        }
-
-        // Display Phrase of the Week
-        function displayPhraseOfWeek() {
-            const weekIndex = getWeekOfYear() % phrasesOfWeek.length;
-            const phrase = phrasesOfWeek[weekIndex];
-            
-            document.getElementById('phraseOfWeek').textContent = phrase.phrase;
-            document.getElementById('phraseLiteral').textContent = phrase.literal;
-            document.getElementById('phraseTranslation').textContent = phrase.translation;
-            document.getElementById('phraseExampleES').textContent = phrase.exampleES;
-            document.getElementById('phraseExampleEN').textContent = phrase.exampleEN;
-        }
-
-        // Initialize on page load
-        displayWordOfDay();
-        displayPhraseOfWeek();
-
-        // Toggle dropdown for vocab lists
-        function toggleDropdown() {
-            const dropdown = document.getElementById('downloadsGrid');
-            const toggle = document.querySelector('.vocab-download-toggle');
-            
-            if (dropdown.classList.contains('expanded')) {
-                dropdown.classList.remove('expanded');
-                toggle.classList.remove('active');
-            } else {
-                dropdown.classList.add('expanded');
-                toggle.classList.add('active');
-            }
-        }
-
-        // Toggle mobile navigation dropdowns
-        function toggleMobileDropdown(type) {
-            const dropdown = document.getElementById(type + 'Dropdown');
-            const button = event.currentTarget;
-            
-            if (dropdown.classList.contains('expanded')) {
-                dropdown.classList.remove('expanded');
-                button.classList.remove('active');
-            } else {
-                dropdown.classList.add('expanded');
-                button.classList.add('active');
-            }
-        }
+    });
     </script>
 </body>
 </html>
