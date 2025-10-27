@@ -274,7 +274,7 @@
             letter-spacing: 1px;
             box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
             border: 2px solid rgba(255, 255, 255, 0.4);
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             text-align: center;
             padding: 12px 22px;
             position: relative;
@@ -297,6 +297,43 @@
         .lucas-contributor:hover {
             transform: translateY(-5px);
             box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .featured-contributor {
+            width: 45%;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 0.8px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
+            border: 2px solid rgba(255, 255, 255, 0.35);
+            text-align: center;
+            padding: 11px 20px;
+            position: relative;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .featured-contributor::before {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            background: #DD1F25;
+            border-radius: 11px;
+            z-index: -1;
+            opacity: 0.4;
+            filter: blur(5px);
+        }
+
+        .featured-contributor:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.35);
+            background: rgba(255, 255, 255, 0.3);
         }
 
         .made-by-box {
@@ -647,11 +684,11 @@
         <h2 class="contributors-title">Contributors</h2>
         <div class="contributors-list">
             <div class="contributor lucas-contributor">Lucas Eling</div>
+            <div class="contributor featured-contributor">Sebastien Louzolo</div>
+            <div class="contributor featured-contributor">Roxana Wasilewska</div>
         </div>
         <div class="contributors-list">
-            <div class="contributor">Sebastien Louzolo</div>
             <div class="contributor">Jed Longden</div>
-            <div class="contributor">Roxana Wasilewska</div>
             <div class="contributor">Atiksh Agnihotri</div>
             <div class="contributor">Marco Perna</div>
             <div class="contributor">James Houghton</div>
