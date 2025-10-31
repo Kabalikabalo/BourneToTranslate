@@ -352,7 +352,6 @@
         }
 
         .lucas-contributor:hover {
-            transform: translateY(-6px) scale(1.03);
             box-shadow: 0 12px 40px rgba(255, 255, 255, 0.4);
         }
 
@@ -620,28 +619,46 @@
             }
         }
 
-        /* Roxana - Jump and flip animation */
-        .roxana-contributor:hover {
-            animation: jumpFlip 1.2s ease-in-out infinite;
+        /* Roxana - Confetti animation */
+        .roxana-contributor {
+            position: relative;
+            overflow: visible;
         }
 
-        @keyframes jumpFlip {
-            0%, 100% {
-                transform: translateY(0) rotateY(0deg) scale(1);
-                box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
-            }
-            25% {
-                transform: translateY(-15px) rotateY(90deg) scale(1.05);
-                box-shadow: 0 15px 35px rgba(255, 255, 255, 0.4);
-            }
-            50% {
-                transform: translateY(-20px) rotateY(180deg) scale(1.1);
-                box-shadow: 0 20px 45px rgba(255, 255, 255, 0.5);
-            }
-            75% {
-                transform: translateY(-15px) rotateY(270deg) scale(1.05);
-                box-shadow: 0 15px 35px rgba(255, 255, 255, 0.4);
-            }
+        .roxana-contributor .confetti-container {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 10;
+        }
+
+        .roxana-contributor .confetti-1 {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(90deg);
+        }
+
+        .roxana-contributor .confetti-2 {
+            top: 35%;
+            left: 60%;
+            transform: translate(-50%, -50%) rotate(180deg) scaleX(-1);
+        }
+
+        .roxana-contributor .confetti-3 {
+            top: 65%;
+            left: 40%;
+            transform: translate(-50%, -50%) rotate(45deg) scaleY(-1);
+        }
+
+        .roxana-contributor:hover {
+            box-shadow: 0 12px 40px rgba(255, 255, 255, 0.4);
+        }
+
+        .roxana-contributor:hover .confetti-container {
+            opacity: 1;
         }
 
         @keyframes shimmerEffect {
@@ -1021,6 +1038,9 @@
             </div>
             <div class="contributor featured-contributor roxana-contributor">
                 Roxana Wasilewska
+                <div class="confetti-container confetti-1"></div>
+                <div class="confetti-container confetti-2"></div>
+                <div class="confetti-container confetti-3"></div>
             </div>
         </div>
         <div class="contributors-list">
@@ -1154,6 +1174,77 @@
                 if (lottieBottomLeft) lottieBottomLeft.stop();
                 if (lottieTopLeft) lottieTopLeft.stop();
                 if (lottieBottomRight) lottieBottomRight.stop();
+            });
+        }
+
+        // Initialize Lottie animations for Roxana's confetti
+        const roxanaCard = document.querySelector('.roxana-contributor');
+        const confetti1 = roxanaCard.querySelector('.confetti-1');
+        const confetti2 = roxanaCard.querySelector('.confetti-2');
+        const confetti3 = roxanaCard.querySelector('.confetti-3');
+
+        let lottieConfetti1 = null;
+        let lottieConfetti2 = null;
+        let lottieConfetti3 = null;
+        let confettiTimers = [];
+
+        if (confetti1 && confetti2 && confetti3) {
+            lottieConfetti1 = lottie.loadAnimation({
+                container: confetti1,
+                renderer: 'svg',
+                loop: true,
+                autoplay: false,
+                path: 'animations/confetti.json'
+            });
+
+            lottieConfetti2 = lottie.loadAnimation({
+                container: confetti2,
+                renderer: 'svg',
+                loop: true,
+                autoplay: false,
+                path: 'animations/confetti.json'
+            });
+
+            lottieConfetti3 = lottie.loadAnimation({
+                container: confetti3,
+                renderer: 'svg',
+                loop: true,
+                autoplay: false,
+                path: 'animations/confetti.json'
+            });
+
+            roxanaCard.addEventListener('mouseenter', () => {
+                // Clear any existing timers
+                confettiTimers.forEach(timer => clearTimeout(timer));
+                confettiTimers = [];
+
+                // Play confetti with staggered delays
+                if (lottieConfetti1) {
+                    lottieConfetti1.play();
+                }
+
+                confettiTimers.push(setTimeout(() => {
+                    if (lottieConfetti2) {
+                        lottieConfetti2.play();
+                    }
+                }, 200));
+
+                confettiTimers.push(setTimeout(() => {
+                    if (lottieConfetti3) {
+                        lottieConfetti3.play();
+                    }
+                }, 400));
+            });
+
+            roxanaCard.addEventListener('mouseleave', () => {
+                // Clear timers
+                confettiTimers.forEach(timer => clearTimeout(timer));
+                confettiTimers = [];
+
+                // Stop all confetti animations
+                if (lottieConfetti1) lottieConfetti1.stop();
+                if (lottieConfetti2) lottieConfetti2.stop();
+                if (lottieConfetti3) lottieConfetti3.stop();
             });
         }
     </script>
