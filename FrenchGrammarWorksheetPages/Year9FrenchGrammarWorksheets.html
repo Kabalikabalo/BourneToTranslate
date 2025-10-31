@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Year 9 French Grammar Worksheets</title>
+    <style>
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #fff 0%, #f8f8f8 100%);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        .navbar {
+            background: #0055A4;
+            color: white;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            padding: 0 30px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            box-shadow: 0 2px 12px rgba(0, 85, 164, 0.15);
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            margin-right: 25px;
+            transition: all 0.2s ease;
+            padding: 6px 12px;
+            border-radius: 4px;
+        }
+
+        .navbar a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(-3px);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .page-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #0055A4;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .page-description {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 14px rgba(0, 85, 164, 0.09);
+            text-align: center;
+            color: #444;
+            font-size: 1.05rem;
+            line-height: 1.6;
+        }
+
+        .downloads-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+
+        .download-card {
+            background: #0055A4;
+            border-radius: 12px;
+            padding: 18px 14px;
+            box-shadow: 0 6px 26px rgba(0, 85, 164, 0.16);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            min-height: 62px;
+            opacity: 0;
+            transform: translateX(40px);
+            animation: slideIn 0.5s ease-out forwards;
+        }
+
+        .download-card:nth-child(1) { animation-delay: 0.1s; }
+        .download-card:nth-child(2) { animation-delay: 0.2s; }
+        .download-card:nth-child(3) { animation-delay: 0.3s; }
+        .download-card:nth-child(4) { animation-delay: 0.4s; }
+        .download-card:nth-child(5) { animation-delay: 0.5s; }
+        .download-card:nth-child(n+6) { animation-delay: 0.6s; }
+
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .download-card:hover {
+            transform: translateY(-2px) scale(1.01);
+            box-shadow: 0 10px 38px rgba(0, 85, 164, 0.22);
+            background: #003d7a;
+        }
+
+        .download-icon {
+            width: 36px;
+            height: 36px;
+            margin-right: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .download-svg {
+            display: block;
+            width: 28px;
+            height: 28px;
+        }
+
+        .download-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 3px;
+        }
+
+        .download-subtitle {
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.9);
+        }
+
+        .download-info {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        @media (max-width: 600px) {
+            .page-title { font-size: 1.5rem; }
+            .page-description { font-size: 0.95rem; padding: 18px; }
+            .download-title { font-size: 1rem; }
+            .download-subtitle { font-size: 0.85rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="../french-grammar.html">← Back</a>
+        Year 9 French Grammar Worksheets
+    </div>
+
+    <div class="container">
+        <h1 class="page-title">Year 9 French Grammar Worksheets</h1>
+        
+        <div class="page-description">
+            Download grammar worksheets to practice and strengthen your French grammar skills.
+            Each worksheet focuses on key grammar concepts for Year 9 students.
+        </div>
+
+        <div class="downloads-grid" id="worksheetsContainer"></div>
+    </div>
+
+    <script>
+        // Data structure for worksheets - easy to modify and extend
+        const worksheets = [
+           {
+                title: "Articles",
+                subtitle: "Worksheet 1",
+                link: "../FrenchGrammarWorksheets/Year9/Year9FrenchGrammarWorksheetArticles.pdf"
+            },
+            {
+                title: "Adjective Agreement",
+                subtitle: "Worksheet 2",
+                link: "../FrenchGrammarWorksheets/Year9/Year9FrenchGrammarWorksheetAdjectiveAgreement.pdf"
+            },
+            {
+                title: "Present Tense - Regular Verbs",
+                subtitle: "Worksheet 3",
+                link: "../FrenchGrammarWorksheets/Year9/Year9FrenchGrammarWorksheetPresentTenseRegularVerbs.pdf"
+            },
+            {
+                title: "Near Future Tense",
+                subtitle: "Worksheet 4",
+                link: "../FrenchGrammarWorksheets/Year9/Year9FrenchGrammarWorksheetNearFutureTense.pdf"
+            },
+            {
+                title: "Simple Past Tense",
+                subtitle: "Worksheet 5",
+                link: "../FrenchGrammarWorksheets/Year9/Year9FrenchGrammarWorksheetPastTensePerfectTense.pdf"
+            },
+            {
+                title: "Reflexive Verbs",
+                subtitle: "Worksheet 6",
+                link: "../FrenchGrammarWorksheets/Year9/Year9FrenchGrammarWorksheetReflexiveVerbs.pdf"
+            }
+        ];
+
+        // Generate HTML for worksheets
+        function renderWorksheets() {
+            const container = document.getElementById('worksheetsContainer');
+            let html = '';
+
+            worksheets.forEach(worksheet => {
+                html += `
+                    <a href="${worksheet.link}" class="download-card" ${worksheet.link !== '#' ? 'download' : ''}>
+                        <span class="download-icon">
+                            <svg class="download-svg" viewBox="0 0 24 24" fill="none">
+                                <rect x="6" y="18" width="12" height="2" rx="1" fill="white"/>
+                                <path d="M12 5v9" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                                <path d="M8 12l4 4 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </span>
+                        <span class="download-info">
+                            <span class="download-title">${worksheet.title}</span>
+                            <span class="download-subtitle">${worksheet.subtitle}</span>
+                        </span>
+                    </a>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        // Initialize page
+        renderWorksheets();
+    </script>
+</body>
+</html>
