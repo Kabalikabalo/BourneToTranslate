@@ -303,10 +303,219 @@
             }
         }
 
-        /* Lucas - Glow pulse animation */
+        /* Lucas - Paw animation */
+        .lucas-contributor {
+            position: relative;
+            overflow: visible;
+        }
+
+        .lucas-contributor .paw {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background-image: url('animations/paw.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            pointer-events: none;
+            opacity: 0;
+        }
+
+        /* Paw starting positions - spread around the card */
+        .lucas-contributor .paw-1 {
+            top: -25px;
+            left: 35%;
+        }
+
+        .lucas-contributor .paw-2 {
+            top: -22px;
+            right: 30%;
+        }
+
+        .lucas-contributor .paw-3 {
+            top: 50%;
+            right: -22px;
+        }
+
+        .lucas-contributor .paw-4 {
+            bottom: -25px;
+            right: 35%;
+        }
+
+        .lucas-contributor .paw-5 {
+            bottom: -22px;
+            left: 30%;
+        }
+
+        .lucas-contributor .paw-6 {
+            top: 50%;
+            left: -25px;
+        }
+
         .lucas-contributor:hover {
             transform: translateY(-6px) scale(1.03);
-            animation: pulseGlow 1.5s ease-in-out infinite;
+            box-shadow: 0 12px 40px rgba(255, 255, 255, 0.4);
+        }
+
+        .lucas-contributor:hover .paw-1 {
+            animation: pawWalk1 3s ease-in-out infinite;
+        }
+
+        .lucas-contributor:hover .paw-2 {
+            animation: pawWalk2 3s ease-in-out infinite 0.5s;
+        }
+
+        .lucas-contributor:hover .paw-3 {
+            animation: pawWalk3 3s ease-in-out infinite 1s;
+        }
+
+        .lucas-contributor:hover .paw-4 {
+            animation: pawWalk4 3s ease-in-out infinite 1.5s;
+        }
+
+        .lucas-contributor:hover .paw-5 {
+            animation: pawWalk5 3s ease-in-out infinite 2s;
+        }
+
+        .lucas-contributor:hover .paw-6 {
+            animation: pawWalk6 3s ease-in-out infinite 2.5s;
+        }
+
+        @keyframes pawWalk1 {
+            0%, 100% {
+                opacity: 0;
+                transform: translate(-50%, 0) rotate(-10deg) scale(0.6);
+            }
+            15% {
+                opacity: 1;
+                transform: translate(-45%, -8px) rotate(-25deg) scale(1.3);
+            }
+            30% {
+                opacity: 0.9;
+                transform: translate(-55%, -12px) rotate(-5deg) scale(0.9);
+            }
+            50% {
+                opacity: 0.7;
+                transform: translate(-48%, -5px) rotate(10deg) scale(1.1);
+            }
+            75% {
+                opacity: 0.4;
+                transform: translate(-52%, 3px) rotate(20deg) scale(0.75);
+            }
+        }
+
+        @keyframes pawWalk2 {
+            0%, 100% {
+                opacity: 0;
+                transform: translate(0, -50%) rotate(50deg) scale(0.55);
+            }
+            15% {
+                opacity: 1;
+                transform: translate(8px, -48%) rotate(65deg) scale(1.25);
+            }
+            30% {
+                opacity: 0.85;
+                transform: translate(12px, -52%) rotate(45deg) scale(1.05);
+            }
+            50% {
+                opacity: 0.7;
+                transform: translate(5px, -55%) rotate(58deg) scale(0.85);
+            }
+            75% {
+                opacity: 0.35;
+                transform: translate(-3px, -47%) rotate(40deg) scale(0.95);
+            }
+        }
+
+        @keyframes pawWalk3 {
+            0%, 100% {
+                opacity: 0;
+                transform: translate(0, -50%) rotate(35deg) scale(0.65);
+            }
+            15% {
+                opacity: 1;
+                transform: translate(10px, -53%) rotate(55deg) scale(1.15);
+            }
+            30% {
+                opacity: 0.8;
+                transform: translate(7px, -48%) rotate(42deg) scale(0.95);
+            }
+            50% {
+                opacity: 0.75;
+                transform: translate(-5px, -51%) rotate(48deg) scale(1.2);
+            }
+            75% {
+                opacity: 0.3;
+                transform: translate(4px, -49%) rotate(38deg) scale(0.8);
+            }
+        }
+
+        @keyframes pawWalk4 {
+            0%, 100% {
+                opacity: 0;
+                transform: translate(0, -50%) rotate(120deg) scale(0.7);
+            }
+            15% {
+                opacity: 1;
+                transform: translate(9px, -52%) rotate(135deg) scale(1.1);
+            }
+            30% {
+                opacity: 0.9;
+                transform: translate(6px, -48%) rotate(125deg) scale(0.9);
+            }
+            50% {
+                opacity: 0.65;
+                transform: translate(-4px, -50%) rotate(115deg) scale(1.25);
+            }
+            75% {
+                opacity: 0.4;
+                transform: translate(8px, -51%) rotate(128deg) scale(0.85);
+            }
+        }
+
+        @keyframes pawWalk5 {
+            0%, 100% {
+                opacity: 0;
+                transform: translate(-50%, 0) rotate(175deg) scale(0.6);
+            }
+            15% {
+                opacity: 1;
+                transform: translate(-52%, 10px) rotate(190deg) scale(1.2);
+            }
+            30% {
+                opacity: 0.85;
+                transform: translate(-48%, 8px) rotate(182deg) scale(1.0);
+            }
+            50% {
+                opacity: 0.7;
+                transform: translate(-54%, 5px) rotate(168deg) scale(0.9);
+            }
+            75% {
+                opacity: 0.35;
+                transform: translate(-50%, -3px) rotate(185deg) scale(1.15);
+            }
+        }
+
+        @keyframes pawWalk6 {
+            0%, 100% {
+                opacity: 0;
+                transform: translate(0, -50%) rotate(-50deg) scale(0.65);
+            }
+            15% {
+                opacity: 1;
+                transform: translate(-12px, -52%) rotate(-65deg) scale(1.3);
+            }
+            30% {
+                opacity: 0.8;
+                transform: translate(-8px, -48%) rotate(-55deg) scale(0.95);
+            }
+            50% {
+                opacity: 0.75;
+                transform: translate(-10px, -51%) rotate(-42deg) scale(1.05);
+            }
+            75% {
+                opacity: 0.4;
+                transform: translate(-6px, -49%) rotate(-58deg) scale(0.8);
+            }
         }
 
         @keyframes pulseGlow {
@@ -411,10 +620,28 @@
             }
         }
 
-        /* Roxana - Shimmer animation */
+        /* Roxana - Jump and flip animation */
         .roxana-contributor:hover {
-            transform: translateY(-6px) scale(1.03);
-            animation: shimmerEffect 1s ease-in-out infinite;
+            animation: jumpFlip 1.2s ease-in-out infinite;
+        }
+
+        @keyframes jumpFlip {
+            0%, 100% {
+                transform: translateY(0) rotateY(0deg) scale(1);
+                box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
+            }
+            25% {
+                transform: translateY(-15px) rotateY(90deg) scale(1.05);
+                box-shadow: 0 15px 35px rgba(255, 255, 255, 0.4);
+            }
+            50% {
+                transform: translateY(-20px) rotateY(180deg) scale(1.1);
+                box-shadow: 0 20px 45px rgba(255, 255, 255, 0.5);
+            }
+            75% {
+                transform: translateY(-15px) rotateY(270deg) scale(1.05);
+                box-shadow: 0 15px 35px rgba(255, 255, 255, 0.4);
+            }
         }
 
         @keyframes shimmerEffect {
@@ -783,8 +1010,18 @@
                 <div class="sparkle-top-left"></div>
                 <div class="sparkle-bottom-right"></div>
             </div>
-            <div class="contributor featured-contributor lucas-contributor">Lucas Eling</div>
-            <div class="contributor featured-contributor roxana-contributor">Roxana Wasilewska</div>
+            <div class="contributor featured-contributor lucas-contributor">
+                Lucas Eling
+                <div class="paw paw-1"></div>
+                <div class="paw paw-2"></div>
+                <div class="paw paw-3"></div>
+                <div class="paw paw-4"></div>
+                <div class="paw paw-5"></div>
+                <div class="paw paw-6"></div>
+            </div>
+            <div class="contributor featured-contributor roxana-contributor">
+                Roxana Wasilewska
+            </div>
         </div>
         <div class="contributors-list">
             <div class="contributor">Jed Longden</div>
