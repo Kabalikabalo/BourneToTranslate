@@ -50,63 +50,113 @@
         }
 
         .container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
-            padding: 80px 20px;
-            text-align: center;
-        }
-
-        .coming-soon-box {
-            background: white;
-            border-radius: 16px;
-            padding: 60px 40px;
-            box-shadow: 0 8px 32px rgba(221, 31, 37, 0.12);
-            border: 2px solid rgba(221, 31, 37, 0.1);
+            padding: 40px 20px;
         }
 
         .page-title {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             font-weight: 700;
             color: #DD1F25;
+            text-align: center;
             margin-bottom: 20px;
         }
 
-        .coming-soon-message {
-            font-size: 1.3rem;
-            color: #666;
-            line-height: 1.8;
-            margin-bottom: 15px;
-        }
-
-        .sub-message {
-            font-size: 1.1rem;
-            color: #888;
-            margin-top: 20px;
-        }
-
-        .icon {
-            font-size: 5rem;
+        .page-description {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
             margin-bottom: 30px;
-            color: #DD1F25;
-            opacity: 0.8;
+            box-shadow: 0 4px 14px rgba(221, 31, 37, 0.09);
+            text-align: center;
+            color: #444;
+            font-size: 1.05rem;
+            line-height: 1.6;
+        }
+
+        .downloads-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+
+        .download-card {
+            background: #DD1F25;
+            border-radius: 12px;
+            padding: 18px 14px;
+            box-shadow: 0 6px 26px rgba(221, 31, 37, 0.16);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            min-height: 62px;
+            opacity: 0;
+            transform: translateX(40px);
+            animation: slideIn 0.5s ease-out forwards;
+        }
+
+        .download-card:nth-child(1) { animation-delay: 0.1s; }
+        .download-card:nth-child(2) { animation-delay: 0.2s; }
+        .download-card:nth-child(3) { animation-delay: 0.3s; }
+        .download-card:nth-child(4) { animation-delay: 0.4s; }
+        .download-card:nth-child(5) { animation-delay: 0.5s; }
+        .download-card:nth-child(n+6) { animation-delay: 0.6s; }
+
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .download-card:hover {
+            transform: translateY(-2px) scale(1.01);
+            box-shadow: 0 10px 38px rgba(221, 31, 37, 0.22);
+            background: #c91a20;
+        }
+
+        .download-icon {
+            width: 36px;
+            height: 36px;
+            margin-right: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .download-svg {
+            display: block;
+            width: 28px;
+            height: 28px;
+        }
+
+        .download-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 3px;
+        }
+
+        .download-subtitle {
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.9);
+        }
+
+        .download-info {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
         }
 
         @media (max-width: 600px) {
-            .page-title { 
-                font-size: 1.8rem; 
-            }
-            .coming-soon-message { 
-                font-size: 1.1rem; 
-            }
-            .sub-message { 
-                font-size: 1rem; 
-            }
-            .coming-soon-box {
-                padding: 40px 25px;
-            }
-            .icon {
-                font-size: 4rem;
-            }
+            .page-title { font-size: 1.5rem; }
+            .page-description { font-size: 0.95rem; padding: 18px; }
+            .download-title { font-size: 1rem; }
+            .download-subtitle { font-size: 0.85rem; }
         }
     </style>
 </head>
@@ -117,16 +167,74 @@
     </div>
 
     <div class="container">
-        <div class="coming-soon-box">
-            <div class="icon">📝</div>
-            <h1 class="page-title">Coming Soon!</h1>
-            <p class="coming-soon-message">
-                Grammar worksheets for Year 7 Spanish are currently being developed.
-            </p>
-            <p class="sub-message">
-                Check back soon for exciting new resources!
-            </p>
+        <h1 class="page-title">Year 7 Spanish Grammar Worksheets</h1>
+        
+        <div class="page-description">
+            Download grammar worksheets to practice and strengthen your Spanish grammar skills.
+            Each worksheet focuses on key grammar concepts for Year 7 students.
         </div>
+
+        <div class="downloads-grid" id="worksheetsContainer"></div>
     </div>
+
+    <script>
+        // Data structure for worksheets - easy to modify and extend
+        const worksheets = [
+            {
+                title: "Articles",
+                subtitle: "Worksheet 1",
+                link: "../SpanishGrammarWorksheets/Year7/Year7SpanishGrammarWorksheetArticles.pdf"
+            },
+            {
+                title: "Adjective Agreement",
+                subtitle: "Worksheet 2",
+                link: "../SpanishGrammarWorksheets/Year7/Year7SpanishGrammarWorksheetAdjectiveAgreement.pdf"
+            },
+            {
+                title: "Present Tense - Regular Verbs",
+                subtitle: "Worksheet 3",
+                link: "../SpanishGrammarWorksheets/Year7/Year7SpanishGrammarWorksheetPresentTenseRegularVerbs.pdf"
+            },
+            {
+                title: "Present Tense - Irregular Verbs",
+                subtitle: "Worksheet 4",
+                link: "../SpanishGrammarWorksheets/Year7/Year7SpanishGrammarWorksheetPresentTenseIrregularVerbs.pdf"
+            },
+            {
+                title: "Near Future Tense",
+                subtitle: "Worksheet 5",
+                link: "../SpanishGrammarWorksheets/Year7/Year7SpanishGrammarWorksheetNearFutureTense.pdf"
+            }
+        ];
+
+        // Generate HTML for worksheets
+        function renderWorksheets() {
+            const container = document.getElementById('worksheetsContainer');
+            let html = '';
+
+            worksheets.forEach(worksheet => {
+                html += `
+                    <a href="${worksheet.link}" class="download-card" ${worksheet.link !== '#' ? 'download' : ''}>
+                        <span class="download-icon">
+                            <svg class="download-svg" viewBox="0 0 24 24" fill="none">
+                                <rect x="6" y="18" width="12" height="2" rx="1" fill="white"/>
+                                <path d="M12 5v9" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                                <path d="M8 12l4 4 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </span>
+                        <span class="download-info">
+                            <span class="download-title">${worksheet.title}</span>
+                            <span class="download-subtitle">${worksheet.subtitle}</span>
+                        </span>
+                    </a>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        // Initialize page
+        renderWorksheets();
+    </script>
 </body>
 </html>
