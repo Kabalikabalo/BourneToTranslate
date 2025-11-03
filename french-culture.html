@@ -677,7 +677,32 @@
 
     // Normalize text to remove accents for search
     function normalizeText(text) {
-        return text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+        // Remove accents using NFD normalization
+        const normalized = text.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+        
+        // Additional French character replacements as fallback
+        const accentMap = {
+            'á': 'a', 'à': 'a', 'â': 'a', 'ä': 'a',
+            'é': 'e', 'è': 'e', 'ê': 'e', 'ë': 'e',
+            'í': 'i', 'ì': 'i', 'î': 'i', 'ï': 'i',
+            'ó': 'o', 'ò': 'o', 'ô': 'o', 'ö': 'o',
+            'ú': 'u', 'ù': 'u', 'û': 'u', 'ü': 'u',
+            'Á': 'a', 'À': 'a', 'Â': 'a', 'Ä': 'a',
+            'É': 'e', 'È': 'e', 'Ê': 'e', 'Ë': 'e',
+            'Í': 'i', 'Ì': 'i', 'Î': 'i', 'Ï': 'i',
+            'Ó': 'o', 'Ò': 'o', 'Ô': 'o', 'Ö': 'o',
+            'Ú': 'u', 'Ù': 'u', 'Û': 'u', 'Ü': 'u',
+            'ç': 'c', 'Ç': 'c',
+            'œ': 'oe', 'Œ': 'oe',
+            'æ': 'ae', 'Æ': 'ae'
+        };
+        
+        let result = normalized.toLowerCase();
+        for (const [accented, plain] of Object.entries(accentMap)) {
+            result = result.replace(new RegExp(accented, 'g'), plain);
+        }
+        
+        return result;
     }
 
     function renderCulture(filter='') {

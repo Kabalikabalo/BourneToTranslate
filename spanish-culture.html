@@ -624,7 +624,23 @@
 
     // Normalize text to remove accents for search
     function normalizeText(text) {
-        return text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+        // Remove accents using NFD normalization
+        const normalized = text.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+        
+        // Additional Spanish character replacements as fallback
+        const accentMap = {
+            'á': 'a', 'é': 'e', 'í': 'i', 'ó': 'o', 'ú': 'u',
+            'Á': 'a', 'É': 'e', 'Í': 'i', 'Ó': 'o', 'Ú': 'u',
+            'ñ': 'n', 'Ñ': 'n',
+            'ü': 'u', 'Ü': 'u'
+        };
+        
+        let result = normalized.toLowerCase();
+        for (const [accented, plain] of Object.entries(accentMap)) {
+            result = result.replace(new RegExp(accented, 'g'), plain);
+        }
+        
+        return result;
     }
 
     function renderCulture(filter='') {
