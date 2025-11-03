@@ -1056,197 +1056,259 @@
     </div>
 
     <script>
-        function selectLanguage(language) {
-            console.log(`Selected language: ${language}`);
-            const buttons = document.querySelectorAll('.flag-button');
-            const clickedButton = event.currentTarget;
-            buttons.forEach(button => {
-                if (button !== clickedButton) {
-                    button.style.opacity = '0.3';
-                    button.style.filter = 'grayscale(100%)';
-                }
-            });
-            clickedButton.style.transform = 'scale(1.05)';
-            setTimeout(() => {
-                if (language === 'spanish') {
-                    window.location.href = 'spanish.html';
-                } else if (language === 'french') {
-                    window.location.href = 'french.html';
-                }
-            }, 400);
-        }
+    function selectLanguage(language) {
+        console.log(`Selected language: ${language}`);
+        const buttons = document.querySelectorAll('.flag-button');
+        const clickedButton = event.currentTarget;
+        buttons.forEach(button => {
+            if (button !== clickedButton) {
+                button.style.opacity = '0.3';
+                button.style.filter = 'grayscale(100%)';
+            }
+        });
+        clickedButton.style.transform = 'scale(1.05)';
+        setTimeout(() => {
+            if (language === 'spanish') {
+                window.location.href = 'spanish.html';
+            } else if (language === 'french') {
+                window.location.href = 'french.html';
+            }
+        }, 400);
+    }
 
-        // Reset flag button styles on page load
-        window.addEventListener('pageshow', function() {
-            document.querySelectorAll('.flag-button').forEach(button => {
-                button.style.opacity = '';
-                button.style.filter = '';
-                button.style.transform = '';
-            });
+    // Reset flag button styles on page load
+    window.addEventListener('pageshow', function() {
+        document.querySelectorAll('.flag-button').forEach(button => {
+            button.style.opacity = '';
+            button.style.filter = '';
+            button.style.transform = '';
+        });
+    });
+
+    document.addEventListener('touchstart', function() {}, {passive: true});
+
+    // Detect if device supports touch
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+    // Initialize Lottie animations for Sebastien's sparkles
+    const sebastienCard = document.querySelector('.sebastien-contributor');
+    const sparkleTopRight = sebastienCard.querySelector('.sparkle-top-right');
+    const sparkleBottomLeft = sebastienCard.querySelector('.sparkle-bottom-left');
+    const sparkleTopLeft = sebastienCard.querySelector('.sparkle-top-left');
+    const sparkleBottomRight = sebastienCard.querySelector('.sparkle-bottom-right');
+
+    let lottieTopRight = null;
+    let lottieBottomLeft = null;
+    let lottieTopLeft = null;
+    let lottieBottomRight = null;
+    let fadeOutTimers = [];
+    let sebastienActive = false;
+
+    // Load Lottie animations
+    if (sparkleTopRight && sparkleBottomLeft && sparkleTopLeft && sparkleBottomRight) {
+        lottieTopRight = lottie.loadAnimation({
+            container: sparkleTopRight,
+            renderer: 'svg',
+            loop: true,
+            autoplay: false,
+            path: 'animations/sparkle.json'
         });
 
-        document.addEventListener('touchstart', function() {}, {passive: true});
+        lottieBottomLeft = lottie.loadAnimation({
+            container: sparkleBottomLeft,
+            renderer: 'svg',
+            loop: true,
+            autoplay: false,
+            path: 'animations/sparkle.json'
+        });
 
-        // Initialize Lottie animations for Sebastien's sparkles
-        const sebastienCard = document.querySelector('.sebastien-contributor');
-        const sparkleTopRight = sebastienCard.querySelector('.sparkle-top-right');
-        const sparkleBottomLeft = sebastienCard.querySelector('.sparkle-bottom-left');
-        const sparkleTopLeft = sebastienCard.querySelector('.sparkle-top-left');
-        const sparkleBottomRight = sebastienCard.querySelector('.sparkle-bottom-right');
+        lottieTopLeft = lottie.loadAnimation({
+            container: sparkleTopLeft,
+            renderer: 'svg',
+            loop: true,
+            autoplay: false,
+            path: 'animations/sparkle.json'
+        });
 
-        let lottieTopRight = null;
-        let lottieBottomLeft = null;
-        let lottieTopLeft = null;
-        let lottieBottomRight = null;
-        let fadeOutTimers = [];
+        lottieBottomRight = lottie.loadAnimation({
+            container: sparkleBottomRight,
+            renderer: 'svg',
+            loop: true,
+            autoplay: false,
+            path: 'animations/sparkle.json'
+        });
 
-        // Load Lottie animations
-        if (sparkleTopRight && sparkleBottomLeft && sparkleTopLeft && sparkleBottomRight) {
-            lottieTopRight = lottie.loadAnimation({
-                container: sparkleTopRight,
-                renderer: 'svg',
-                loop: true,
-                autoplay: false,
-                path: 'animations/sparkle.json'
-            });
+        // Function to start Sebastien animations
+        function startSebastienAnimations() {
+            // Clear any existing timers
+            fadeOutTimers.forEach(timer => clearTimeout(timer));
+            fadeOutTimers = [];
 
-            lottieBottomLeft = lottie.loadAnimation({
-                container: sparkleBottomLeft,
-                renderer: 'svg',
-                loop: true,
-                autoplay: false,
-                path: 'animations/sparkle.json'
-            });
+            // Play with staggered delays
+            if (lottieTopRight) {
+                lottieTopRight.play();
+            }
 
-            lottieTopLeft = lottie.loadAnimation({
-                container: sparkleTopLeft,
-                renderer: 'svg',
-                loop: true,
-                autoplay: false,
-                path: 'animations/sparkle.json'
-            });
-
-            lottieBottomRight = lottie.loadAnimation({
-                container: sparkleBottomRight,
-                renderer: 'svg',
-                loop: true,
-                autoplay: false,
-                path: 'animations/sparkle.json'
-            });
-
-            // Play animations on hover with delays
-            sebastienCard.addEventListener('mouseenter', () => {
-                // Clear any existing timers
-                fadeOutTimers.forEach(timer => clearTimeout(timer));
-                fadeOutTimers = [];
-
-                // Play with staggered delays
-                if (lottieTopRight) {
-                    lottieTopRight.play();
+            fadeOutTimers.push(setTimeout(() => {
+                if (lottieTopLeft) {
+                    lottieTopLeft.play();
                 }
+            }, 150));
 
-                fadeOutTimers.push(setTimeout(() => {
-                    if (lottieTopLeft) {
-                        lottieTopLeft.play();
-                    }
-                }, 150));
+            fadeOutTimers.push(setTimeout(() => {
+                if (lottieBottomLeft) {
+                    lottieBottomLeft.play();
+                }
+            }, 300));
 
-                fadeOutTimers.push(setTimeout(() => {
-                    if (lottieBottomLeft) {
-                        lottieBottomLeft.play();
-                    }
-                }, 300));
+            fadeOutTimers.push(setTimeout(() => {
+                if (lottieBottomRight) {
+                    lottieBottomRight.play();
+                }
+            }, 450));
 
-                fadeOutTimers.push(setTimeout(() => {
-                    if (lottieBottomRight) {
-                        lottieBottomRight.play();
-                    }
-                }, 450));
-            });
-
-            sebastienCard.addEventListener('mouseleave', () => {
-                // Clear timers
-                fadeOutTimers.forEach(timer => clearTimeout(timer));
-                fadeOutTimers = [];
-
-                // Stop all animations
-                if (lottieTopRight) lottieTopRight.stop();
-                if (lottieBottomLeft) lottieBottomLeft.stop();
-                if (lottieTopLeft) lottieTopLeft.stop();
-                if (lottieBottomRight) lottieBottomRight.stop();
-            });
+            sebastienActive = true;
         }
 
-        // Initialize Lottie animations for Roxana's confetti
-        const roxanaCard = document.querySelector('.roxana-contributor');
-        const confetti1 = roxanaCard.querySelector('.confetti-1');
-        const confetti2 = roxanaCard.querySelector('.confetti-2');
-        const confetti3 = roxanaCard.querySelector('.confetti-3');
+        // Function to stop Sebastien animations
+        function stopSebastienAnimations() {
+            // Clear timers
+            fadeOutTimers.forEach(timer => clearTimeout(timer));
+            fadeOutTimers = [];
 
-        let lottieConfetti1 = null;
-        let lottieConfetti2 = null;
-        let lottieConfetti3 = null;
-        let confettiTimers = [];
+            // Stop all animations
+            if (lottieTopRight) lottieTopRight.stop();
+            if (lottieBottomLeft) lottieBottomLeft.stop();
+            if (lottieTopLeft) lottieTopLeft.stop();
+            if (lottieBottomRight) lottieBottomRight.stop();
 
-        if (confetti1 && confetti2 && confetti3) {
-            lottieConfetti1 = lottie.loadAnimation({
-                container: confetti1,
-                renderer: 'svg',
-                loop: true,
-                autoplay: false,
-                path: 'animations/confetti.json'
-            });
-
-            lottieConfetti2 = lottie.loadAnimation({
-                container: confetti2,
-                renderer: 'svg',
-                loop: true,
-                autoplay: false,
-                path: 'animations/confetti.json'
-            });
-
-            lottieConfetti3 = lottie.loadAnimation({
-                container: confetti3,
-                renderer: 'svg',
-                loop: true,
-                autoplay: false,
-                path: 'animations/confetti.json'
-            });
-
-            roxanaCard.addEventListener('mouseenter', () => {
-                // Clear any existing timers
-                confettiTimers.forEach(timer => clearTimeout(timer));
-                confettiTimers = [];
-
-                // Play confetti with staggered delays
-                if (lottieConfetti1) {
-                    lottieConfetti1.play();
-                }
-
-                confettiTimers.push(setTimeout(() => {
-                    if (lottieConfetti2) {
-                        lottieConfetti2.play();
-                    }
-                }, 200));
-
-                confettiTimers.push(setTimeout(() => {
-                    if (lottieConfetti3) {
-                        lottieConfetti3.play();
-                    }
-                }, 400));
-            });
-
-            roxanaCard.addEventListener('mouseleave', () => {
-                // Clear timers
-                confettiTimers.forEach(timer => clearTimeout(timer));
-                confettiTimers = [];
-
-                // Stop all confetti animations
-                if (lottieConfetti1) lottieConfetti1.stop();
-                if (lottieConfetti2) lottieConfetti2.stop();
-                if (lottieConfetti3) lottieConfetti3.stop();
-            });
+            sebastienActive = false;
         }
-    </script>
+
+        if (isTouchDevice) {
+            // Mobile: Toggle on click/touch
+            sebastienCard.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (sebastienActive) {
+                    stopSebastienAnimations();
+                } else {
+                    startSebastienAnimations();
+                }
+            });
+
+            // Close when clicking outside
+            document.addEventListener('click', () => {
+                if (sebastienActive) {
+                    stopSebastienAnimations();
+                }
+            });
+        } else {
+            // Desktop: Use hover
+            sebastienCard.addEventListener('mouseenter', startSebastienAnimations);
+            sebastienCard.addEventListener('mouseleave', stopSebastienAnimations);
+        }
+    }
+
+    // Initialize Lottie animations for Roxana's confetti
+    const roxanaCard = document.querySelector('.roxana-contributor');
+    const confetti1 = roxanaCard.querySelector('.confetti-1');
+    const confetti2 = roxanaCard.querySelector('.confetti-2');
+    const confetti3 = roxanaCard.querySelector('.confetti-3');
+
+    let lottieConfetti1 = null;
+    let lottieConfetti2 = null;
+    let lottieConfetti3 = null;
+    let confettiTimers = [];
+    let roxanaActive = false;
+
+    if (confetti1 && confetti2 && confetti3) {
+        lottieConfetti1 = lottie.loadAnimation({
+            container: confetti1,
+            renderer: 'svg',
+            loop: true,
+            autoplay: false,
+            path: 'animations/confetti.json'
+        });
+
+        lottieConfetti2 = lottie.loadAnimation({
+            container: confetti2,
+            renderer: 'svg',
+            loop: true,
+            autoplay: false,
+            path: 'animations/confetti.json'
+        });
+
+        lottieConfetti3 = lottie.loadAnimation({
+            container: confetti3,
+            renderer: 'svg',
+            loop: true,
+            autoplay: false,
+            path: 'animations/confetti.json'
+        });
+
+        // Function to start Roxana animations
+        function startRoxanaAnimations() {
+            // Clear any existing timers
+            confettiTimers.forEach(timer => clearTimeout(timer));
+            confettiTimers = [];
+
+            // Play confetti with staggered delays
+            if (lottieConfetti1) {
+                lottieConfetti1.play();
+            }
+
+            confettiTimers.push(setTimeout(() => {
+                if (lottieConfetti2) {
+                    lottieConfetti2.play();
+                }
+            }, 200));
+
+            confettiTimers.push(setTimeout(() => {
+                if (lottieConfetti3) {
+                    lottieConfetti3.play();
+                }
+            }, 400));
+
+            roxanaActive = true;
+        }
+
+        // Function to stop Roxana animations
+        function stopRoxanaAnimations() {
+            // Clear timers
+            confettiTimers.forEach(timer => clearTimeout(timer));
+            confettiTimers = [];
+
+            // Stop all confetti animations
+            if (lottieConfetti1) lottieConfetti1.stop();
+            if (lottieConfetti2) lottieConfetti2.stop();
+            if (lottieConfetti3) lottieConfetti3.stop();
+
+            roxanaActive = false;
+        }
+
+        if (isTouchDevice) {
+            // Mobile: Toggle on click/touch
+            roxanaCard.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (roxanaActive) {
+                    stopRoxanaAnimations();
+                } else {
+                    startRoxanaAnimations();
+                }
+            });
+
+            // Close when clicking outside
+            document.addEventListener('click', () => {
+                if (roxanaActive) {
+                    stopRoxanaAnimations();
+                }
+            });
+        } else {
+            // Desktop: Use hover
+            roxanaCard.addEventListener('mouseenter', startRoxanaAnimations);
+            roxanaCard.addEventListener('mouseleave', stopRoxanaAnimations);
+        }
+    }
+</script>
 </body>
 </html>
