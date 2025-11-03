@@ -1196,13 +1196,41 @@ Voy a ir - I am going to go
         function checkAnswer() {
             const input = document.getElementById('answerInput');
             const feedback = document.getElementById('feedback');
-            const userAnswer = normalizeAnswer(input.value);
+            let userAnswer = normalizeAnswer(input.value);
+
+            const replacements = {
+                "his": "his/her",
+                "her": "his/her",
+                "pe": "p.e.",
+                "a lot": "lots",
+                "lots of": "lots",
+                "tv": "television",
+                "dont": "do not",
+                "doesnt": "does not",
+                "don't": "do not",
+                "doesn't": "does not",
+                "im": "I am",
+                "i'm": "I am",
+                "ive": "I have",
+                "couldnt": "could not",
+                "couldn't": "could not",
+                "wouldnt": "would not",
+                "wouldn't": "would not",
+                "shouldnt": "should not",
+                "shouldn't": "should not"
+            };
+            // Replace each word in userAnswer if it matches a key in replacements
+            Object.keys(replacements).forEach(word => {
+                // Use regex to replace whole words only
+                userAnswer = userAnswer.replace(new RegExp(`\\b${word}\\b`, 'gi'), replacements[word]);
+            });
+
             const correctAnswer = normalizeAnswer(testQuestions[currentQuestion].answer);
-            
+
             // Handle multiple possible answers separated by /
             const possibleAnswers = correctAnswer.split('/').map(a => normalizeAnswer(a));
             const isCorrect = possibleAnswers.some(ans => userAnswer === ans);
-            
+
             if (isCorrect) {
                 correctAnswers++;
                 feedback.className = 'feedback correct';
@@ -1211,7 +1239,7 @@ Voy a ir - I am going to go
                 feedback.className = 'feedback incorrect';
                 feedback.innerHTML = `✗ Incorrect. The answer is: ${testQuestions[currentQuestion].answer}<br><button class="next-btn" onclick="nextQuestion()">Next</button>`;
             }
-            
+
             input.disabled = true;
         }
 
