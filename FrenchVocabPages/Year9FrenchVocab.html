@@ -1252,8 +1252,9 @@ Si j'étais riche – If I were rich
                 .replace(/¿/g, '')
                 .replace(/\!/g, '')
                 .replace(/¡/g, '')
-                .replace(/\./g, '')
-                .replace(/\.\.\./g, '')
+                .replace(/\.\.\./g, '') // Remove ... BEFORE removing single dots
+                .replace(/…/g, '') // Remove ellipsis character
+                .replace(/\./g, '') // Now remove single dots
                 .replace(/\(.*?\)/g, '')
                 .replace(/\s+/g, ' ')
                 .trim();

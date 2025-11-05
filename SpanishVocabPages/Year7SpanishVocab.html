@@ -500,14 +500,14 @@ Adiós - Goodbye
 Week 2:
 ¿Qué tipo de persona eres? - What sort of person are you?
 Soy... - I am...
-Sincero/a - Sincere
-Tímido/a - Shy
-Tranquilo/a - Calm/Quiet
-Divertido/a - Fun
-Serio/a - Serious
-Simpático/a - Nice/Kind
-Tonto/a - Silly
-Generoso/a - Generous
+Sincero / Sincera - Sincere
+Tímido / Tímida - Shy
+Tranquilo / Tranquila - Calm/Quiet
+Divertido / Divertida - Fun
+Serio / Seria - Serious
+Simpático / Simpática - Nice/Kind
+Tonto / Tonta - Silly
+Generoso / Generosa - Generous
 
 Week 3:
 ¿Tienes hermanos? - Do you have any siblings?
@@ -540,17 +540,17 @@ Un gato - A cat
 Un pez - A fish
 Un conejo - A rabbit
 Un ratón - A mouse
-Una Serpiente - A snake
+Una serpiente - A snake
 Una cobaya - A guinea pig
 Una tortuga - A tortoise/Turtle
 No tengo mascotas - I don't have any pets
 
 Week 6:
-Blanco/a - White
-Negro/a - Black
-Rojo/a - Red
+Blanco / Blanca - White
+Negro / Negra - Black
+Rojo / Roja - Red
 Azul - Blue
-Amarillo/a - Yellow
+Amarillo / Amarilla - Yellow
 Naranja - Orange
 Marrón - Brown
 Gris - Grey
@@ -633,10 +633,10 @@ Week 5:
 ¿Cómo? - How/What?
 ¿Cuántos? - How many?
 Hago - I do/make
-Haces - You do/make
-Hace - He/She/It does/makes
+Haces - You do/ You make
+Hace - He makes/ She makes/ It makes/ He does/ She does/ It does
 Hacemos - We do/make
-Hacéis - You (pl) do/make
+Hacéis - You (pl) do/ You (pl) make
 Hacen - They do/make
 Todos los días - Every day
 A veces - Sometimes
@@ -768,7 +768,7 @@ Week 3:
 Tener - To have
 Tengo - I have
 Tienes - You have
-Tiene - He/She/It has
+Tiene - He has/ She has/ It has
 Tenemos - We have
 Tenéis - You(pl) have
 Tienen - They have
@@ -782,7 +782,7 @@ Son - They are
 Además - Also/In addition
 
 Week 4:
-¿Cómo es? - What is he/she like?
+¿Cómo es? - What is he like? / What is she like?
 Alto - Tall
 Bajo - Short
 Joven - Young
@@ -827,9 +827,9 @@ Un polideportivo - A sports centre
 Una piscina - A swimming pool
 Unos museos - Some museums
 Unas plazas - Some squares
-Muchos parques - Many/Lots of parks
-Muchos restaurantes - Many/Lots of restaurants
-Muchas tiendas - Many/Lots of shops
+Muchos parques - Many parks/Lots of parks
+Muchos restaurantes - Many restaurants/Lots of restaurants
+Muchas tiendas - Many shops/Lots of shops
 No hay nada - There isn't anything
 
 Week 2:
@@ -861,7 +861,7 @@ Voy de paseo con mi familia - I go on a walk with my family
 Voy de compras - I go shopping
 No hago nada - I don't do anything
 Vas - You go
-Va - He/She/It goes
+Va - He goes/ She goes/ It goes
 Vamos - We go
 Vais - You(pl) go
 Van - They go
@@ -872,10 +872,10 @@ Quiero... - I want...
 Una bebida - A drink
 Un café - A coffee
 Un té - A tea
-Una fanta limón/naranja - A lemon/orange fanta
-Un batido de chocolate/fresa - A chocolate/strawberry milkshake
+Una fanta limón/naranja - A lemon fanta/ An orange fanta
+Un batido de chocolate/fresa - A chocolate milkshake/A strawberry milkshake
 Una Coca-Cola - A Coca-Cola
-Un granizado de limón - A lemon slush/snow cone
+Un granizado de limón - A lemon slush/ A lemon snow cone
 Una ración de... - A portion of...
 Gambas - Prawns
 Jamón - Ham
@@ -892,8 +892,8 @@ Bueno - Well...
 ¿Qué vas a hacer? - What are you going to do?
 Voy a jugar - I am going to play
 Vas a bailar - You are going to dance
-Va a ser - He/She/It is going to be
-Vamos a ver - We are going to see/watch
+Va a ser - He is going to be/ She is going to be/ It is going to be
+Vamos a ver - We are going to see/ We are going to watch
 Vais a ir - You(pl) are going to go
 Van a comer - They are going to eat
 Primero - First
@@ -1103,6 +1103,9 @@ Finalmente - Finally
         }
 
         function showTypingTest() {
+            // Remove any existing Enter listener from previous question
+            document.removeEventListener('keypress', handleTypingEnter);
+            
             const testContent = document.getElementById('testContent');
             const question = testQuestions[currentQuestion];
             
@@ -1116,11 +1119,20 @@ Finalmente - Finally
             `;
             
             document.getElementById('answerInput').focus();
-            document.getElementById('answerInput').addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') checkAnswer();
-            });
+            document.addEventListener('keypress', handleTypingEnter);
             
             updateProgress();
+        }
+
+        function handleTypingEnter(e) {
+            if (e.key === 'Enter') {
+                const input = document.getElementById('answerInput');
+                if (!input.disabled) {
+                    checkAnswer();
+                } else {
+                    nextQuestion();
+                }
+            }
         }
 
         function normalizeAnswer(text) {
@@ -1130,8 +1142,9 @@ Finalmente - Finally
                 .replace(/¿/g, '')
                 .replace(/\!/g, '')
                 .replace(/¡/g, '')
-                .replace(/\./g, '')
-                .replace(/\.\.\./g, '')
+                .replace(/\.\.\./g, '') // Remove ... BEFORE removing single dots
+                .replace(/…/g, '') // Remove ellipsis character
+                .replace(/\./g, '') // Now remove single dots
                 .replace(/\(.*?\)/g, '')
                 .replace(/\s+/g, ' ')
                 .trim();
@@ -1205,7 +1218,9 @@ Finalmente - Finally
 
             // Handle multiple possible answers separated by /
             const possibleAnswers = correctAnswer.split('/').map(a => normalizeAnswer(a));
-            const isCorrect = possibleAnswers.some(ans => userAnswer === ans);
+            // User answer is correct if it matches ANY of the individual parts OR contains all parts
+            const isCorrect = possibleAnswers.some(ans => userAnswer === ans) || 
+                              possibleAnswers.every(ans => userAnswer.includes(ans));
 
             if (isCorrect) {
                 correctAnswers++;

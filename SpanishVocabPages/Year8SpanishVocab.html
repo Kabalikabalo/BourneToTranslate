@@ -517,14 +517,14 @@ Fui a Escocia - I went to Scotland
 Fui con mi familia - I went with my family 
 ...con mi clase - with my class 
 ...con mis padres - with my parents 
-...con mi mejor amigo/a - with my best friend 
-...solo/a - alone 
+...con mi mejor amigo/ con mi mejor amiga - with my best friend 
+...solo/sola - alone 
 
 Week 3:
 
 Fui - I went 
 Fuiste - You went 
-Fue - He/She/It went 
+Fue - He went/ She went/ It went 
 Fuimos - We went 
 Fuisteis - You(pl) went 
 Fueron - They went 
@@ -561,10 +561,11 @@ Week 5:
 
 ¿Qué hiciste? - What did you do?
 Comí paella - I ate paella 
-Salí con mi amigo/a - I went out with my friend 
+Salí con mi amigo/Salí con mi amiga - I went out with my friend 
 Escribí SMS/mensajes - I wrote text messages 
 Vi un castillo - I saw a castle 
-Conocí a un(a) chico/a guapo/a - I met a good looking boy/girl 
+Conocí a un chico guapo - I met a good looking boy 
+Conocí a una chica guapa - I met a good looking girl
 Por la mañana - In the morning 
 Por la tarde - In the afternoon 
 Comí - I ate 
@@ -600,7 +601,7 @@ Week 1:
 Todos los días - Every day
 Saco fotos - I take photos
 Hablo por WhatsApp - I talk on WhatsApp
-Mando SMS / mensajes - I send text messages
+Mando SMS / Mando mensajes - I send text messages
 Juego - I play
 Leo mis SMS - I read my text messages
 Escucho música - I listen to music
@@ -621,7 +622,7 @@ A veces - Sometimes
 De vez en cuando - From time to time
 Nunca - Never
 ¿Qué hay en la foto? - What is there in the photo?
-En la foto hay... - In the photo there is/are...
+En la foto hay... - In the photo there is/ In the photo there are...
 Un chico / una chica - A boy/a girl
 Un hombre / una mujer - A man/a woman
 Una familia - A family
@@ -1159,6 +1160,9 @@ Voy a ir - I am going to go
         }
 
         function showTypingTest() {
+            // Remove any existing Enter listener from previous question
+            document.removeEventListener('keypress', handleTypingEnter);
+            
             const testContent = document.getElementById('testContent');
             const question = testQuestions[currentQuestion];
             
@@ -1172,11 +1176,20 @@ Voy a ir - I am going to go
             `;
             
             document.getElementById('answerInput').focus();
-            document.getElementById('answerInput').addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') checkAnswer();
-            });
+            document.addEventListener('keypress', handleTypingEnter);
             
             updateProgress();
+        }
+
+        function handleTypingEnter(e) {
+            if (e.key === 'Enter') {
+                const input = document.getElementById('answerInput');
+                if (!input.disabled) {
+                    checkAnswer();
+                } else {
+                    nextQuestion();
+                }
+            }
         }
 
         function normalizeAnswer(text) {
@@ -1186,8 +1199,9 @@ Voy a ir - I am going to go
                 .replace(/¿/g, '')
                 .replace(/\!/g, '')
                 .replace(/¡/g, '')
-                .replace(/\./g, '')
-                .replace(/\.\.\./g, '')
+                .replace(/\.\.\./g, '') // Remove ... BEFORE removing single dots
+                .replace(/…/g, '') // Remove ellipsis character
+                .replace(/\./g, '') // Now remove single dots
                 .replace(/\(.*?\)/g, '') // remove parentheses and contents
                 .replace(/\[.*?\]/g, '') // remove square brackets and contents
                 .replace(/\s+/g, ' ')
@@ -1197,6 +1211,8 @@ Voy a ir - I am going to go
         function checkAnswer() {
             const input = document.getElementById('answerInput');
             const feedback = document.getElementById('feedback');
+            
+            // First normalize the user's input
             let userAnswer = normalizeAnswer(input.value);
 
             const replacements = {
@@ -1209,9 +1225,9 @@ Voy a ir - I am going to go
                 "doesnt": "does not",
                 "don't": "do not",
                 "doesn't": "does not",
-                "im": "I am",
-                "i'm": "I am",
-                "ive": "I have",
+                "im": "i am",
+                "i'm": "i am",
+                "ive": "i have",
                 "couldnt": "could not",
                 "couldn't": "could not",
                 "wouldnt": "would not",
@@ -1248,10 +1264,9 @@ Voy a ir - I am going to go
                 "28":"twenty-eight",
                 "29":"twenty-nine",
                 "30":"thirty",
-                "gray":"grey",
-                "i":"I"
+                "gray":"grey"
             };
-            // Replace each word in userAnswer if it matches a key in replacements
+            // Replace each word in userAnswer if it matches a key in replacements (already lowercase)
             Object.keys(replacements).forEach(word => {
                 // Use regex to replace whole words only
                 userAnswer = userAnswer.replace(new RegExp(`\\b${word}\\b`, 'gi'), replacements[word]);
@@ -1260,8 +1275,10 @@ Voy a ir - I am going to go
             const correctAnswer = normalizeAnswer(testQuestions[currentQuestion].answer);
 
             // Handle multiple possible answers separated by /
-            const possibleAnswers = correctAnswer.split('/').map(a => normalizeAnswer(a));
-            const isCorrect = possibleAnswers.some(ans => userAnswer === ans);
+            const possibleAnswers = correctAnswer.split('/').map(a => a.trim());
+            // User answer is correct if it matches ANY of the individual parts OR contains all parts
+            const isCorrect = possibleAnswers.some(ans => userAnswer === ans) || 
+                              possibleAnswers.every(ans => userAnswer.includes(ans));
 
             if (isCorrect) {
                 correctAnswers++;
