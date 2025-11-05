@@ -1244,13 +1244,73 @@ Si j’étais riche – If I were rich
         function checkAnswer() {
             const input = document.getElementById('answerInput');
             const feedback = document.getElementById('feedback');
-            const userAnswer = normalizeAnswer(input.value);
+            let userAnswer = normalizeAnswer(input.value);
+
+            const replacements = {
+                "his": "his/her",
+                "her": "his/her",
+                "pe": "p.e.",
+                "a lot": "lots",
+                "tv": "television",
+                "dont": "do not",
+                "doesnt": "does not",
+                "don't": "do not",
+                "doesn't": "does not",
+                "im": "I am",
+                "i'm": "I am",
+                "ive": "I have",
+                "couldnt": "could not",
+                "couldn't": "could not",
+                "wouldnt": "would not",
+                "wouldn't": "would not",
+                "shouldnt": "should not",
+                "shouldn't": "should not",
+                "1":"one",
+                "2":"two",
+                "3":"three",
+                "4":"four",
+                "5":"five",
+                "6":"six",
+                "7":"seven",
+                "8":"eight",
+                "9":"nine",
+                "10":"ten",
+                "11":"eleven",
+                "12":"twelve",
+                "13":"thirteen",
+                "14":"fourteen",
+                "15":"fifteen",
+                "16":"sixteen",
+                "17":"seventeen",
+                "18":"eighteen",
+                "19":"nineteen",
+                "20":"twenty",
+                "21":"twenty-one",
+                "22":"twenty-two",
+                "23":"twenty-three",
+                "24":"twenty-four",
+                "25":"twenty-five",
+                "26":"twenty-six",
+                "27":"twenty-seven",
+                "28":"twenty-eight",
+                "29":"twenty-nine",
+                "30":"thirty",
+                "gray":"grey",
+                "i":"I"
+
+            };
+            // Replace each word in userAnswer if it matches a key in replacements
+            Object.keys(replacements).forEach(word => {
+                // Use regex to replace whole words only
+                userAnswer = userAnswer.replace(new RegExp(`\\b${word}\\b`, 'gi'), replacements[word]);
+            });
+
             const correctAnswer = normalizeAnswer(testQuestions[currentQuestion].answer);
-            
+
             // Handle multiple possible answers separated by /
             const possibleAnswers = correctAnswer.split('/').map(a => normalizeAnswer(a));
             const isCorrect = possibleAnswers.some(ans => userAnswer === ans);
-            
+
             if (isCorrect) {
                 correctAnswers++;
                 feedback.className = 'feedback correct';
@@ -1259,7 +1319,7 @@ Si j’étais riche – If I were rich
                 feedback.className = 'feedback incorrect';
                 feedback.innerHTML = `✗ Incorrect. The answer is: ${testQuestions[currentQuestion].answer}<br><button class="next-btn" onclick="nextQuestion()">Next</button>`;
             }
-            
+
             input.disabled = true;
         }
 
