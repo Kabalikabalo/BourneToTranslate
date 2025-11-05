@@ -1213,6 +1213,9 @@ Si j'étais riche – If I were rich
         }
 
         function showTypingTest() {
+            // Remove any existing Enter listener from previous question
+            document.removeEventListener('keypress', handleTypingEnter);
+            
             const testContent = document.getElementById('testContent');
             const question = testQuestions[currentQuestion];
             
@@ -1226,11 +1229,20 @@ Si j'étais riche – If I were rich
             `;
             
             document.getElementById('answerInput').focus();
-            document.getElementById('answerInput').addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') checkAnswer();
-            });
+            document.addEventListener('keypress', handleTypingEnter);
             
             updateProgress();
+        }
+
+        function handleTypingEnter(e) {
+            if (e.key === 'Enter') {
+                const input = document.getElementById('answerInput');
+                if (!input.disabled) {
+                    checkAnswer();
+                } else {
+                    nextQuestion();
+                }
+            }
         }
 
         function normalizeAnswer(text) {
