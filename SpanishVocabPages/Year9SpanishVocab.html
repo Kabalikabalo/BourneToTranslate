@@ -133,6 +133,42 @@
             font-weight: 700;
         }
 
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .select-all-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            user-select: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+
+        .select-all-checkbox:hover {
+            background: rgba(221, 31, 37, 0.05);
+        }
+
+        .select-all-checkbox input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: #DD1F25;
+        }
+
+        .select-all-checkbox label {
+            cursor: pointer;
+            font-weight: 600;
+            color: #DD1F25;
+            font-size: 0.9rem;
+        }
+
         .settings-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -422,12 +458,24 @@
             <h1 class="page-title">Vocabulary Practice</h1>
 
             <div class="section">
-                <h2 class="section-title">Select Modules</h2>
+                <div class="section-header">
+                    <h2 class="section-title" style="margin-bottom: 0;">Select Modules</h2>
+                    <div class="select-all-checkbox" onclick="selectAllModules()">
+                        <input type="checkbox" id="allModulesCheckbox" onclick="event.stopPropagation(); selectAllModules();">
+                        <label for="allModulesCheckbox" onclick="event.stopPropagation(); selectAllModules();">All Modules</label>
+                    </div>
+                </div>
                 <div class="module-grid" id="moduleSelection"></div>
             </div>
 
             <div class="section" id="weekSection" style="display: none;">
-                <h2 class="section-title">Select Weeks</h2>
+                <div class="section-header">
+                    <h2 class="section-title" style="margin-bottom: 0;">Select Weeks</h2>
+                    <div class="select-all-checkbox" onclick="selectAllWeeks()">
+                        <input type="checkbox" id="allWeeksCheckbox" onclick="event.stopPropagation(); selectAllWeeks();">
+                        <label for="allWeeksCheckbox" onclick="event.stopPropagation(); selectAllWeeks();">Select All</label>
+                    </div>
+                </div>
                 <div class="module-grid" id="weekSelection"></div>
             </div>
 
@@ -844,125 +892,125 @@ Me gusta (mucho) viajar al extranjero porque es sano - I (really) like to travel
 Set 4:
 No me gusta estar al aire libre porque es aburrido - I don't like to be outside because it is boring
 No me gusta estar al aire libre porque es horrible - I don't like to be outside because it is horrible
-No me gusta estar al aire libre porque no es emocionante - I don't like to be outside because it is not exciting
-No me gusta estar al aire libre porque no es sano - I don't like to be outside because it is not healthy
+No me gusta estar al aire libre porque no es emocionante - I don't like to be outside because it isn't exciting
+No me gusta estar al aire libre porque no es sano - I don't like to be outside because it isn't healthy
 No me gusta estar al aire libre ya que es aburrido - I don't like to be outside since it is boring
 No me gusta estar al aire libre ya que es horrible - I don't like to be outside since it is horrible
-No me gusta estar al aire libre ya que no es emocionante - I don't like to be outside since it is not exciting
-No me gusta estar al aire libre ya que no es sano - I don't like to be outside since it is not healthy
+No me gusta estar al aire libre ya que no es emocionante - I don't like to be outside since it isn't exciting
+No me gusta estar al aire libre ya que no es sano - I don't like to be outside since it isn't healthy
 No me gusta estar al aire libre dado que es aburrido - I don't like to be outside given that it is boring
 No me gusta estar al aire libre dado que es horrible - I don't like to be outside given that it is horrible
-No me gusta estar al aire libre dado que no es emocionante - I don't like to be outside given that it is not exciting
-No me gusta estar al aire libre dado que no es sano - I don't like to be outside given that it is not healthy
+No me gusta estar al aire libre dado que no es emocionante - I don't like to be outside given that it isn't exciting
+No me gusta estar al aire libre dado que no es sano - I don't like to be outside given that it isn't healthy
 No me gusta hacer deportes acuáticos porque es aburrido - I don't like to do water sports because it is boring
 No me gusta hacer deportes acuáticos porque es horrible - I don't like to do water sports because it is horrible
-No me gusta hacer deportes acuáticos porque no es emocionante - I don't like to do water sports because it is not exciting
-No me gusta hacer deportes acuáticos porque no es sano - I don't like to do water sports because it is not healthy
+No me gusta hacer deportes acuáticos porque no es emocionante - I don't like to do water sports because it isn't exciting
+No me gusta hacer deportes acuáticos porque no es sano - I don't like to do water sports because it isn't healthy
 No me gusta hacer deportes acuáticos ya que es aburrido - I don't like to do water sports since it is boring
 No me gusta hacer deportes acuáticos ya que es horrible - I don't like to do water sports since it is horrible
-No me gusta hacer deportes acuáticos ya que no es emocionante - I don't like to do water sports since it is not exciting
-No me gusta hacer deportes acuáticos ya que no es sano - I don't like to do water sports since it is not healthy
+No me gusta hacer deportes acuáticos ya que no es emocionante - I don't like to do water sports since it isn't exciting
+No me gusta hacer deportes acuáticos ya que no es sano - I don't like to do water sports since it isn't healthy
 No me gusta hacer deportes acuáticos dado que es aburrido - I don't like to do water sports given that it is boring
 No me gusta hacer deportes acuáticos dado que es horrible - I don't like to do water sports given that it is horrible
-No me gusta hacer deportes acuáticos dado que no es emocionante - I don't like to do water sports given that it is not exciting
-No me gusta hacer deportes acuáticos dado que no es sano - I don't like to do water sports given that it is not healthy
+No me gusta hacer deportes acuáticos dado que no es emocionante - I don't like to do water sports given that it isn't exciting
+No me gusta hacer deportes acuáticos dado que no es sano - I don't like to do water sports given that it isn't healthy
 No me gusta ir de compras porque es aburrido - I don't like to go shopping because it is boring
 No me gusta ir de compras porque es horrible - I don't like to go shopping because it is horrible
-No me gusta ir de compras porque no es emocionante - I don't like to go shopping because it is not exciting
-No me gusta ir de compras porque no es sano - I don't like to go shopping because it is not healthy
+No me gusta ir de compras porque no es emocionante - I don't like to go shopping because it isn't exciting
+No me gusta ir de compras porque no es sano - I don't like to go shopping because it isn't healthy
 No me gusta ir de compras ya que es aburrido - I don't like to go shopping since it is boring
 No me gusta ir de compras ya que es horrible - I don't like to go shopping since it is horrible
-No me gusta ir de compras ya que no es emocionante - I don't like to go shopping since it is not exciting
-No me gusta ir de compras ya que no es sano - I don't like to go shopping since it is not healthy
+No me gusta ir de compras ya que no es emocionante - I don't like to go shopping since it isn't exciting
+No me gusta ir de compras ya que no es sano - I don't like to go shopping since it isn't healthy
 No me gusta ir de compras dado que es aburrido - I don't like to go shopping given that it is boring
 No me gusta ir de compras dado que es horrible - I don't like to go shopping given that it is horrible
-No me gusta ir de compras dado que no es emocionante - I don't like to go shopping given that it is not exciting
-No me gusta ir de compras dado que no es sano - I don't like to go shopping given that it is not healthy
+No me gusta ir de compras dado que no es emocionante - I don't like to go shopping given that it isn't exciting
+No me gusta ir de compras dado que no es sano - I don't like to go shopping given that it isn't healthy
 No me gusta tomar el sol porque es aburrido - I don't like to sunbathe because it is boring
 No me gusta tomar el sol porque es horrible - I don't like to sunbathe because it is horrible
-No me gusta tomar el sol porque no es emocionante - I don't like to sunbathe because it is not exciting
-No me gusta tomar el sol porque no es sano - I don't like to sunbathe because it is not healthy
+No me gusta tomar el sol porque no es emocionante - I don't like to sunbathe because it isn't exciting
+No me gusta tomar el sol porque no es sano - I don't like to sunbathe because it isn't healthy
 No me gusta tomar el sol ya que es aburrido - I don't like to sunbathe since it is boring
 No me gusta tomar el sol ya que es horrible - I don't like to sunbathe since it is horrible
-No me gusta tomar el sol ya que no es emocionante - I don't like to sunbathe since it is not exciting
-No me gusta tomar el sol ya que no es sano - I don't like to sunbathe since it is not healthy
+No me gusta tomar el sol ya que no es emocionante - I don't like to sunbathe since it isn't exciting
+No me gusta tomar el sol ya que no es sano - I don't like to sunbathe since it isn't healthy
 No me gusta tomar el sol dado que es aburrido - I don't like to sunbathe given that it is boring
 No me gusta tomar el sol dado que es horrible - I don't like to sunbathe given that it is horrible
-No me gusta tomar el sol dado que no es emocionante - I don't like to sunbathe given that it is not exciting
-No me gusta tomar el sol dado que no es sano - I don't like to sunbathe given that it is not healthy
+No me gusta tomar el sol dado que no es emocionante - I don't like to sunbathe given that it isn't exciting
+No me gusta tomar el sol dado que no es sano - I don't like to sunbathe given that it isn't healthy
 No me gusta mirar los monumentos porque es aburrido - I don't like to look at monuments because it is boring
 No me gusta mirar los monumentos porque es horrible - I don't like to look at monuments because it is horrible
-No me gusta mirar los monumentos porque no es emocionante - I don't like to look at monuments because it is not exciting
-No me gusta mirar los monumentos porque no es sano - I don't like to look at monuments because it is not healthy
+No me gusta mirar los monumentos porque no es emocionante - I don't like to look at monuments because it isn't exciting
+No me gusta mirar los monumentos porque no es sano - I don't like to look at monuments because it isn't healthy
 No me gusta mirar los monumentos ya que es aburrido - I don't like to look at monuments since it is boring
 No me gusta mirar los monumentos ya que es horrible - I don't like to look at monuments since it is horrible
-No me gusta mirar los monumentos ya que no es emocionante - I don't like to look at monuments since it is not exciting
-No me gusta mirar los monumentos ya que no es sano - I don't like to look at monuments since it is not healthy
+No me gusta mirar los monumentos ya que no es emocionante - I don't like to look at monuments since it isn't exciting
+No me gusta mirar los monumentos ya que no es sano - I don't like to look at monuments since it isn't healthy
 No me gusta mirar los monumentos dado que es aburrido - I don't like to look at monuments given that it is boring
 No me gusta mirar los monumentos dado que es horrible - I don't like to look at monuments given that it is horrible
-No me gusta mirar los monumentos dado que no es emocionante - I don't like to look at monuments given that it is not exciting
-No me gusta mirar los monumentos dado que no es sano - I don't like to look at monuments given that it is not healthy
+No me gusta mirar los monumentos dado que no es emocionante - I don't like to look at monuments given that it isn't exciting
+No me gusta mirar los monumentos dado que no es sano - I don't like to look at monuments given that it isn't healthy
 Odio estar al aire libre porque es aburrido - I hate to be outside because it is boring
 Odio estar al aire libre porque es horrible - I hate to be outside because it is horrible
-Odio estar al aire libre porque no es emocionante - I hate to be outside because it is not exciting
-Odio estar al aire libre porque no es sano - I hate to be outside because it is not healthy
+Odio estar al aire libre porque no es emocionante - I hate to be outside because it isn't exciting
+Odio estar al aire libre porque no es sano - I hate to be outside because it isn't healthy
 Odio estar al aire libre ya que es aburrido - I hate to be outside since it is boring
 Odio estar al aire libre ya que es horrible - I hate to be outside since it is horrible
-Odio estar al aire libre ya que no es emocionante - I hate to be outside since it is not exciting
-Odio estar al aire libre ya que no es sano - I hate to be outside since it is not healthy
+Odio estar al aire libre ya que no es emocionante - I hate to be outside since it isn't exciting
+Odio estar al aire libre ya que no es sano - I hate to be outside since it isn't healthy
 Odio estar al aire libre dado que es aburrido - I hate to be outside given that it is boring
 Odio estar al aire libre dado que es horrible - I hate to be outside given that it is horrible
-Odio estar al aire libre dado que no es emocionante - I hate to be outside given that it is not exciting
-Odio estar al aire libre dado que no es sano - I hate to be outside given that it is not healthy
+Odio estar al aire libre dado que no es emocionante - I hate to be outside given that it isn't exciting
+Odio estar al aire libre dado que no es sano - I hate to be outside given that it isn't healthy
 Odio hacer deportes acuáticos porque es aburrido - I hate to do water sports because it is boring
 Odio hacer deportes acuáticos porque es horrible - I hate to do water sports because it is horrible
-Odio hacer deportes acuáticos porque no es emocionante - I hate to do water sports because it is not exciting
-Odio hacer deportes acuáticos porque no es sano - I hate to do water sports because it is not healthy
+Odio hacer deportes acuáticos porque no es emocionante - I hate to do water sports because it isn't exciting
+Odio hacer deportes acuáticos porque no es sano - I hate to do water sports because it isn't healthy
 Odio hacer deportes acuáticos ya que es aburrido - I hate to do water sports since it is boring
 Odio hacer deportes acuáticos ya que es horrible - I hate to do water sports since it is horrible
-Odio hacer deportes acuáticos ya que no es emocionante - I hate to do water sports since it is not exciting
-Odio hacer deportes acuáticos ya que no es sano - I hate to do water sports since it is not healthy
+Odio hacer deportes acuáticos ya que no es emocionante - I hate to do water sports since it isn't exciting
+Odio hacer deportes acuáticos ya que no es sano - I hate to do water sports since it isn't healthy
 Odio hacer deportes acuáticos dado que es aburrido - I hate to do water sports given that it is boring
 Odio hacer deportes acuáticos dado que es horrible - I hate to do water sports given that it is horrible
-Odio hacer deportes acuáticos dado que no es emocionante - I hate to do water sports given that it is not exciting
-Odio hacer deportes acuáticos dado que no es sano - I hate to do water sports given that it is not healthy
+Odio hacer deportes acuáticos dado que no es emocionante - I hate to do water sports given that it isn't exciting
+Odio hacer deportes acuáticos dado que no es sano - I hate to do water sports given that it isn't healthy
 Odio ir de compras porque es aburrido - I hate to go shopping because it is boring
 Odio ir de compras porque es horrible - I hate to go shopping because it is horrible
-Odio ir de compras porque no es emocionante - I hate to go shopping because it is not exciting
-Odio ir de compras porque no es sano - I hate to go shopping because it is not healthy
+Odio ir de compras porque no es emocionante - I hate to go shopping because it isn't exciting
+Odio ir de compras porque no es sano - I hate to go shopping because it isn't healthy
 Odio ir de compras ya que es aburrido - I hate to go shopping since it is boring
 Odio ir de compras ya que es horrible - I hate to go shopping since it is horrible
-Odio ir de compras ya que no es emocionante - I hate to go shopping since it is not exciting
-Odio ir de compras ya que no es sano - I hate to go shopping since it is not healthy
+Odio ir de compras ya que no es emocionante - I hate to go shopping since it isn't exciting
+Odio ir de compras ya que no es sano - I hate to go shopping since it isn't healthy
 Odio ir de compras dado que es aburrido - I hate to go shopping given that it is boring
 dado que es horrible - I hate to go shopping given that it is horrible
-Odio ir de compras dado que no es emocionante - I hate to go shopping given that it is not exciting
-Odio ir de compras dado que no es sano - I hate to go shopping given that it is not healthy
+Odio ir de compras dado que no es emocionante - I hate to go shopping given that it isn't exciting
+Odio ir de compras dado que no es sano - I hate to go shopping given that it isn't healthy
 Odio tomar el sol porque es aburrido - I hate to sunbathe because it is boring
 Odio tomar el sol porque es horrible - I hate to sunbathe because it is horrible
-Odio tomar el sol porque no es emocionante - I hate to sunbathe because it is not exciting
-Odio tomar el sol porque no es sano - I hate to sunbathe because it is not healthy
+Odio tomar el sol porque no es emocionante - I hate to sunbathe because it isn't exciting
+Odio tomar el sol porque no es sano - I hate to sunbathe because it isn't healthy
 Odio tomar el sol ya que es aburrido - I hate to sunbathe since it is boring
 Odio tomar el sol ya que es horrible - I hate to sunbathe since it is horribleERROR!
 
-Odio tomar el sol ya que no es emocionante - I hate to sunbathe since it is not exciting
-Odio tomar el sol ya que no es sano - I hate to sunbathe since it is not healthy
+Odio tomar el sol ya que no es emocionante - I hate to sunbathe since it isn't exciting
+Odio tomar el sol ya que no es sano - I hate to sunbathe since it isn't healthy
 Odio tomar el sol dado que es aburrido - I hate to sunbathe given that it is boring
 Odio tomar el sol dado que es horrible - I hate to sunbathe given that it is horrible
-Odio tomar el sol dado que no es emocionante - I hate to sunbathe given that it is not exciting
-Odio tomar el sol dado que no es sano - I hate to sunbathe given that it is not healthy
+Odio tomar el sol dado que no es emocionante - I hate to sunbathe given that it isn't exciting
+Odio tomar el sol dado que no es sano - I hate to sunbathe given that it isn't healthy
 Odio mirar los monumentos porque es aburrido - I hate to look at monuments because it is boring
 Odio mirar los monumentos porque es horrible - I hate to look at monuments because it is horrible
-Odio mirar los monumentos porque no es emocionante - I hate to look at monuments because it is not exciting
-o mirar los monumentos porque no es sano - I hate to look at monuments because it is not healthy
+Odio mirar los monumentos porque no es emocionante - I hate to look at monuments because it isn't exciting
+o mirar los monumentos porque no es sano - I hate to look at monuments because it isn't healthy
 Odio mirar los monumentos ya que es aburrido - I hate to look at monuments since it is boring
 Odio mirar los monumentos ya que es horrible - I hate to look at monuments since it is horrible
-Odio mirar los monumentos ya que no es emocionante - I hate to look at monuments since it is not exciting
-Odio mirar los monumentos ya que no es sano - I hate to look at monuments since it is not healthy
+Odio mirar los monumentos ya que no es emocionante - I hate to look at monuments since it isn't exciting
+Odio mirar los monumentos ya que no es sano - I hate to look at monuments since it isn't healthy
 Odio mirar los monumentos dado que es aburrido - I hate to look at monuments given that it is boring
 Odio mirar los monumentos dado que es horrible - I hate to look at monuments given that it is horrible
-Odio mirar los monumentos dado que no es emocionante - I hate to look at monuments given that it is not exciting
-Odio mirar los monumentos dado que no es sano - I hate to look at monuments given that it is not healthy
+Odio mirar los monumentos dado que no es emocionante - I hate to look at monuments given that it isn't exciting
+Odio mirar los monumentos dado que no es sano - I hate to look at monuments given that it isn't healthy
 Set 5:
 Hace dos años fui a España con mi insti y viajé en avión - Two years ago I went to spain with my school and I travelled by plane
 Hace dos años fui a España con mi insti y viajé en barco - Two years ago I went to spain with my school and I travelled by boat
@@ -1596,31 +1644,31 @@ Prefiero la química porque es bastante fácil - I prefer chemistry because it i
 Prefiero la química porque es un poco útil - I prefer chemistry because it is a bit useful
 No me gustan las ciencias porque son demasiado difíciles - I don't like science because they are too difficult
 No me gustan las ciencias porque son tan aburridas - I don't like science because they are so boring
-No me gustan las ciencias porque son poco importantes - I don't like science because they are not very important
+No me gustan las ciencias porque son poco importantes - I don't like science because they aren't very important
 No me gustan las empresariales porque son demasiado difíciles - I don't like business studies because they are too difficult
 No me gustan las empresariales porque son tan aburridas - I don't like business studies because they are so boring
-No me gustan las empresariales porque son poco importantes - I don't like business studies because they are not very important
+No me gustan las empresariales porque son poco importantes - I don't like business studies because they aren't very important
 No me gustan las matemáticas porque son demasiado difíciles - I don't like maths because they are too difficult
 No me gustan las matemáticas porque son tan aburridas - I don't like maths because they are so boring
-No me gustan las matemáticas porque son poco importantes - I don't like maths because they are not very important
+No me gustan las matemáticas porque son poco importantes - I don't like maths because they aren't very important
 Odio las ciencias porque son demasiado difíciles - I hate science because they are too difficult
 Odio las ciencias porque son tan aburridas - I hate science because they are so boring
-Odio las ciencias porque son poco importantes - I hate science because they are not very important
+Odio las ciencias porque son poco importantes - I hate science because they aren't very important
 Odio las empresariales porque son demasiado difíciles - I hate business studies because they are too difficult
 Odio las empresariales porque son tan aburridas - I hate business studies because they are so boring
-Odio las empresariales porque son poco importantes - I hate business studies because they are not very important
+Odio las empresariales porque son poco importantes - I hate business studies because they aren't very important
 Odio las matemáticas porque son demasiado difíciles - I hate maths because they are too difficult
 Odio las matemáticas porque son tan aburridas - I hate maths because they are so boring
-Odio las matemáticas porque son poco importantes - I hate maths because they are not very important
+Odio las matemáticas porque son poco importantes - I hate maths because they aren't very important
 No me interesan las ciencias porque son demasiado difíciles - I'm not interested in science because they are too difficult
 No me interesan las ciencias porque son tan aburridas - I'm not interested in science because they are so boring
-No me interesan las ciencias porque son poco importantes - I'm not interested in science because they are not very important
+No me interesan las ciencias porque son poco importantes - I'm not interested in science because they aren't very important
 No me interesan las empresariales porque son demasiado difíciles - I'm not interested in business studies because they are too difficult
 No me interesan las empresariales porque son tan aburridas - I'm not interested in business studies because they are so boring
-No me interesan las empresariales porque son poco importantes - I'm not interested in business studies because they are not very important
+No me interesan las empresariales porque son poco importantes - I'm not interested in business studies because they aren't very important
 No me interesan las matemáticas porque son demasiado difíciles - I'm not interested in maths because they are too difficult
 No me interesan las matemáticas porque son tan aburridas - I'm not interested in maths because they are so boring
-No me interesan las matemáticas porque son poco importantes - I'm not interested in maths because they are not very important
+No me interesan las matemáticas porque son poco importantes - I'm not interested in maths because they aren't very important
 Set 2:
 Mi profesor de matemáticas es más agradable que mi profesor de inglés - My maths teacher is more pleasant than my english teacher
 Mi profesor de matemáticas es más agradable que mi profesor de alemán - My maths teacher is more pleasant than my german teacher
@@ -2391,26 +2439,26 @@ no se debe ser agresivo y pienso que es justo - You must not be aggressive and I
 no se debe ser agresivo y creo que es injusto - You must not be aggressive and I think that it is unfair
 no se debe ser agresivo y es necesario - You must not be aggressive and it is necessary
 no se debe ser agresivo y es demasiado severo - You must not be aggressive and it is too strict
-no se puede comer chicle y estoy de acuerdo - You cannot chew gum and I agree
-no se puede comer chicle y pienso que es justo - You cannot chew gum and I think that it is fair
-no se puede comer chicle y creo que es injusto - You cannot chew gum and I think that it is unfair
-no se puede comer chicle y es necesario - You cannot chew gum and it is necessary
-no se puede comer chicle y es demasiado severo - You cannot chew gum and it is too strict
-no se puede usar el móvil en clase y estoy de acuerdo - You cannot use your phone in class and I agree
-no se puede usar el móvil en clase y pienso que es justo - You cannot use your phone in class and I think that it is fair
-no se puede usar el móvil en clase y creo que es injusto - You cannot use your phone in class and I think that it is unfair
-no se puede usar el móvil en clase y es necesario - You cannot use your phone in class and it is necessary
-no se puede usar el móvil en clase y es demasiado severo - You cannot use your phone in class and it is too strict
-no se puede llevar uniforme y estoy de acuerdo - You cannot wear uniform and I agree
+no se puede comer chicle y estoy de acuerdo - You can't chew gum and I agree
+no se puede comer chicle y pienso que es justo - You can't chew gum and I think that it is fair
+no se puede comer chicle y creo que es injusto - You can't chew gum and I think that it is unfair
+no se puede comer chicle y es necesario - You can't chew gum and it is necessary
+no se puede comer chicle y es demasiado severo - You can't chew gum and it is too strict
+no se puede usar el móvil en clase y estoy de acuerdo - You can't use your phone in class and I agree
+no se puede usar el móvil en clase y pienso que es justo - You can't use your phone in class and I think that it is fair
+no se puede usar el móvil en clase y creo que es injusto - You can't use your phone in class and I think that it is unfair
+no se puede usar el móvil en clase y es necesario - You can't use your phone in class and it is necessary
+no se puede usar el móvil en clase y es demasiado severo - You can't use your phone in class and it is too strict
+no se puede llevar uniforme y estoy de acuerdo - You can't wear uniform and I agree
 se puede llevar uniforme y pienso que es justo - You can wear uniform and I think that it is fair
 se puede llevar uniforme y creo que es injusto - You can wear uniform and I think that it is unfair
 se puede llevar uniforme y es necesario - You can wear uniform and it is necessary
 se puede llevar uniforme y es demasiado severo - You can wear uniform and it is too strict
 se puede correr en los pasillos y estoy de acuerdo - You can run in the corridors and I agree
-no se puede correr en los pasillos y pienso que es justo - You cannot run in the corridors and I think that it is fair
-no se puede correr en los pasillos y creo que es injusto - You cannot run in the corridors and I think that it is unfair
-no se puede correr en los pasillos y es necesario - You cannot run in the corridors and it is necessary
-no se puede correr en los pasillos y es demasiado severo - You cannot run in the corridors and it is too strict
+no se puede correr en los pasillos y pienso que es justo - You can't run in the corridors and I think that it is fair
+no se puede correr en los pasillos y creo que es injusto - You can't run in the corridors and I think that it is unfair
+no se puede correr en los pasillos y es necesario - You can't run in the corridors and it is necessary
+no se puede correr en los pasillos y es demasiado severo - You can't run in the corridors and it is too strict
 se puede ser puntual y estoy de acuerdo - You can be punctual and I agree
 se puede ser puntual y pienso que es justo - You can be punctual and I think that it is fair
 se puede ser puntual y creo que es injusto - You can be punctual and I think that it is unfair
@@ -2421,36 +2469,36 @@ se puede ser agresivo y pienso que es justo - You can be aggressive and I think 
 se puede ser agresivo y creo que es injusto - You can be aggressive and I think that it is unfair
 se puede ser agresivo y es necesario - You can be aggressive and it is necessary
 se puede ser agresivo y es demasiado severo - You can be aggressive and it is too strict
-No se permite comer chicle y estoy de acuerdo - You are not allowed to chew gum and I agree
-No se permite comer chicle y pienso que es justo - You are not allowed to chew gum and I think that it is fair
-No se permite comer chicle y creo que es injusto - You are not allowed to chew gum and I think that it is unfair
-No se permite comer chicle y es necesario - You are not allowed to chew gum and it is necessary
-No se permite comer chicle y es demasiado severo - You are not allowed to chew gum and it is too strict
-No se permite usar el móvil en clase y estoy de acuerdo - You are not allowed to use your phone in class and I agree
-No se permite usar el móvil en clase y pienso que es justo - You are not allowed to use your phone in class and I think that it is fair
-No se permite usar el móvil en clase y creo que es injusto - You are not allowed to use your phone in class and I think that it is unfair
-No se permite usar el móvil en clase y es necesario - You are not allowed to use your phone in class and it is necessary
-No se permite usar el móvil en clase y es demasiado severo - You are not allowed to use your phone in class and it is too strict
-No se permite llevar uniforme y estoy de acuerdo - You are not allowed to wear uniform and I agree
-No se permite llevar uniforme y pienso que es justo - You are not allowed to wear uniform and I think that it is fair
-No se permite llevar uniforme y creo que es injusto - You are not allowed to wear uniform and I think that it is unfair
-No se permite llevar uniforme y es necesario - You are not allowed to wear uniform and it is necessary
-No se permite llevar uniforme y es demasiado severo - You are not allowed to wear uniform and it is too strict
-No se permite correr en los pasillos y estoy de acuerdo - You are not allowed to run in the corridors and I agree
-No se permite correr en los pasillos y pienso que es justo - You are not allowed to run in the corridors and I think that it is fair
-No se permite correr en los pasillos y creo que es injusto - You are not allowed to run in the corridors and I think that it is unfair
-No se permite correr en los pasillos y es necesario - You are not allowed to run in the corridors and it is necessary
-No se permite correr en los pasillos y es demasiado severo - You are not allowed to run in the corridors and it is too strict
-No se permite ser puntual y estoy de acuerdo - You are not allowed to be punctual and I agree
-No se permite ser puntual y pienso que es justo - You are not allowed to be punctual and I think that it is fair
-No se permite ser puntual y creo que es injusto - You are not allowed to be punctual and I think that it is unfair
-No se permite ser puntual y es necesario - You are not allowed to be punctual and it is necessary
-No se permite ser puntual y es demasiado severo - You are not allowed to be punctual and it is too strict
-No se permite ser agresivo y estoy de acuerdo - You are not allowed to be aggressive and I agree
-No se permite ser agresivo y pienso que es justo - You are not allowed to be aggressive and I think that it is fair
-No se permite ser agresivo y creo que es injusto - You are not allowed to be aggressive and I think that it is unfair
-No se permite ser agresivo y es necesario - You are not allowed to be aggressive and it is necessary
-No se permite ser agresivo y es demasiado severo - You are not allowed to be aggressive and it is too strict
+No se permite comer chicle y estoy de acuerdo - You aren't allowed to chew gum and I agree
+No se permite comer chicle y pienso que es justo - You aren't allowed to chew gum and I think that it is fair
+No se permite comer chicle y creo que es injusto - You aren't allowed to chew gum and I think that it is unfair
+No se permite comer chicle y es necesario - You aren't allowed to chew gum and it is necessary
+No se permite comer chicle y es demasiado severo - You aren't allowed to chew gum and it is too strict
+No se permite usar el móvil en clase y estoy de acuerdo - You aren't allowed to use your phone in class and I agree
+No se permite usar el móvil en clase y pienso que es justo - You aren't allowed to use your phone in class and I think that it is fair
+No se permite usar el móvil en clase y creo que es injusto - You aren't allowed to use your phone in class and I think that it is unfair
+No se permite usar el móvil en clase y es necesario - You aren't allowed to use your phone in class and it is necessary
+No se permite usar el móvil en clase y es demasiado severo - You aren't allowed to use your phone in class and it is too strict
+No se permite llevar uniforme y estoy de acuerdo - You aren't allowed to wear uniform and I agree
+No se permite llevar uniforme y pienso que es justo - You aren't allowed to wear uniform and I think that it is fair
+No se permite llevar uniforme y creo que es injusto - You aren't allowed to wear uniform and I think that it is unfair
+No se permite llevar uniforme y es necesario - You aren't allowed to wear uniform and it is necessary
+No se permite llevar uniforme y es demasiado severo - You aren't allowed to wear uniform and it is too strict
+No se permite correr en los pasillos y estoy de acuerdo - You aren't allowed to run in the corridors and I agree
+No se permite correr en los pasillos y pienso que es justo - You aren't allowed to run in the corridors and I think that it is fair
+No se permite correr en los pasillos y creo que es injusto - You aren't allowed to run in the corridors and I think that it is unfair
+No se permite correr en los pasillos y es necesario - You aren't allowed to run in the corridors and it is necessary
+No se permite correr en los pasillos y es demasiado severo - You aren't allowed to run in the corridors and it is too strict
+No se permite ser puntual y estoy de acuerdo - You aren't allowed to be punctual and I agree
+No se permite ser puntual y pienso que es justo - You aren't allowed to be punctual and I think that it is fair
+No se permite ser puntual y creo que es injusto - You aren't allowed to be punctual and I think that it is unfair
+No se permite ser puntual y es necesario - You aren't allowed to be punctual and it is necessary
+No se permite ser puntual y es demasiado severo - You aren't allowed to be punctual and it is too strict
+No se permite ser agresivo y estoy de acuerdo - You aren't allowed to be aggressive and I agree
+No se permite ser agresivo y pienso que es justo - You aren't allowed to be aggressive and I think that it is fair
+No se permite ser agresivo y creo que es injusto - You aren't allowed to be aggressive and I think that it is unfair
+No se permite ser agresivo y es necesario - You aren't allowed to be aggressive and it is necessary
+No se permite ser agresivo y es demasiado severo - You aren't allowed to be aggressive and it is too strict
 Está prohibido comer chicle y estoy de acuerdo - It is forbidden to chew gum and I agree
 Está prohibido comer chicle y pienso que es justo - It is forbidden to chew gum and I think that it is fair
 Está prohibido comer chicle y creo que es injusto - It is forbidden to chew gum and I think that it is unfair
@@ -3062,12 +3110,12 @@ Mi padre es un poco tímido - My dad is a bit shy
 Mi padre es un poco hablador - My dad is a bit talkative
 Mi padre es un poco perezoso - My dad is a bit lazy
 Mi padre es un poco pesimista - My dad is a bit pessimistic
-Mi padre es poco trabajador - My dad is not very hard-working
-Mi padre es poco fiel - My dad is not very loyal
-Mi padre es poco tímido - My dad is not very shy
-Mi padre es poco hablador - My dad is not very talkative
-Mi padre es poco perezoso - My dad is not very lazy
-Mi padre es poco pesimista - My dad is not very pessimistic
+Mi padre es poco trabajador - My dad isn't very hard-working
+Mi padre es poco fiel - My dad isn't very loyal
+Mi padre es poco tímido - My dad isn't very shy
+Mi padre es poco hablador - My dad isn't very talkative
+Mi padre es poco perezoso - My dad isn't very lazy
+Mi padre es poco pesimista - My dad isn't very pessimistic
 Mi padre es demasiado trabajador - My dad is too hard-working
 Mi padre es demasiado fiel - My dad is too loyal
 Mi padre es demasiado tímido - My dad is too shy
@@ -3098,12 +3146,12 @@ Tu padre es un poco tímido - Your dad is a bit shy
 Tu padre es un poco hablador - Your dad is a bit talkative
 Tu padre es un poco perezoso - Your dad is a bit lazy
 Tu padre es un poco pesimista - Your dad is a bit pessimistic
-Tu padre es poco trabajador - Your dad is not very hard-working
-Tu padre es poco fiel - Your dad is not very loyal
-Tu padre es poco tímido - Your dad is not very shy
-Tu padre es poco hablador - Your dad is not very talkative
-Tu padre es poco perezoso - Your dad is not very lazy
-Tu padre es poco pesimista - Your dad is not very pessimistic
+Tu padre es poco trabajador - Your dad isn't very hard-working
+Tu padre es poco fiel - Your dad isn't very loyal
+Tu padre es poco tímido - Your dad isn't very shy
+Tu padre es poco hablador - Your dad isn't very talkative
+Tu padre es poco perezoso - Your dad isn't very lazy
+Tu padre es poco pesimista - Your dad isn't very pessimistic
 Tu padre es demasiado trabajador - Your dad is too hard-working
 Tu padre es demasiado fiel - Your dad is too loyal
 Tu padre es demasiado tímido - Your dad is too shy
@@ -3134,12 +3182,12 @@ Su mejor amigo es un poco tímido - his best friend is a bit shy
 Su mejor amigo es un poco hablador - his best friend is a bit talkative
 Su mejor amigo es un poco perezoso - his best friend is a bit lazy
 Su mejor amigo es un poco pesimista - his best friend is a bit pessimistic
-Su mejor amigo es poco trabajador - his best friend is not very hard-working
-Su mejor amigo es poco fiel - his best friend is not very loyal
-Su mejor amigo es poco tímido - his best friend is not very shy
-Su mejor amigo es poco hablador - his best friend is not very talkative
-Su mejor amigo es poco perezoso - his best friend is not very lazy
-Su mejor amigo es poco pesimista - his best friend is not very pessimistic
+Su mejor amigo es poco trabajador - his best friend isn't very hard-working
+Su mejor amigo es poco fiel - his best friend isn't very loyal
+Su mejor amigo es poco tímido - his best friend isn't very shy
+Su mejor amigo es poco hablador - his best friend isn't very talkative
+Su mejor amigo es poco perezoso - his best friend isn't very lazy
+Su mejor amigo es poco pesimista - his best friend isn't very pessimistic
 Su mejor amigo es demasiado trabajador - his best friend is too hard-working
 Su mejor amigo es demasiado fiel - his best friend is too loyal
 Su mejor amigo es demasiado tímido - his best friend is too shy
@@ -3170,12 +3218,12 @@ Nuestro abuelo es un poco tímido - Our grandad is a bit shy
 Nuestro abuelo es un poco hablador - Our grandad is a bit talkative
 Nuestro abuelo es un poco perezoso - Our grandad is a bit lazy
 Nuestro abuelo es un poco pesimista - Our grandad is a bit pessimistic
-Nuestro abuelo es poco trabajador - Our grandad is not very hard-working
-Nuestro abuelo es poco fiel - Our grandad is not very loyal
-Nuestro abuelo es poco tímido - Our grandad is not very shy
-Nuestro abuelo es poco hablador - Our grandad is not very talkative
-Nuestro abuelo es poco perezoso - Our grandad is not very lazy
-Nuestro abuelo es poco pesimista - Our grandad is not very pessimistic
+Nuestro abuelo es poco trabajador - Our grandad isn't very hard-working
+Nuestro abuelo es poco fiel - Our grandad isn't very loyal
+Nuestro abuelo es poco tímido - Our grandad isn't very shy
+Nuestro abuelo es poco hablador - Our grandad isn't very talkative
+Nuestro abuelo es poco perezoso - Our grandad isn't very lazy
+Nuestro abuelo es poco pesimista - Our grandad isn't very pessimistic
 Nuestro abuelo es demasiado trabajador - Our grandad is too hard-working
 Nuestro abuelo es demasiado fiel - Our grandad is too loyal
 Nuestro abuelo es demasiado tímido - Our grandad is too shy
@@ -3206,12 +3254,12 @@ Vuestro tío es un poco tímido - Your uncle is a bit shy
 Vuestro tío es un poco hablador - Your uncle is a bit talkative
 Vuestro tío es un poco perezoso - Your uncle is a bit lazy
 Vuestro tío es un poco pesimista - Your uncle is a bit pessimistic
-Vuestro tío es poco trabajador - Your uncle is not very hard-working
-Vuestro tío es poco fiel - Your uncle is not very loyal
-Vuestro tío es poco tímido - Your uncle is not very shy
-Vuestro tío es poco hablador - Your uncle is not very talkative
-Vuestro tío es poco perezoso - Your uncle is not very lazy
-Vuestro tío es poco pesimista - Your uncle is not very pessimistic
+Vuestro tío es poco trabajador - Your uncle isn't very hard-working
+Vuestro tío es poco fiel - Your uncle isn't very loyal
+Vuestro tío es poco tímido - Your uncle isn't very shy
+Vuestro tío es poco hablador - Your uncle isn't very talkative
+Vuestro tío es poco perezoso - Your uncle isn't very lazy
+Vuestro tío es poco pesimista - Your uncle isn't very pessimistic
 Vuestro tío es demasiado trabajador - Your uncle is too hard-working
 Vuestro tío es demasiado fiel - Your uncle is too loyal
 Vuestro tío es demasiado tímido - Your uncle is too shy
@@ -3242,12 +3290,12 @@ Su primo es un poco tímido - Their cousin is a bit shy
 Su primo es un poco hablador - Their cousin is a bit talkative
 Su primo es un poco perezoso - Their cousin is a bit lazy
 Su primo es un poco pesimista - Their cousin is a bit pessimistic
-Su primo es poco trabajador - Their cousin is not very hard-working
-Su primo es poco fiel - Their cousin is not very loyal
-Su primo es poco tímido - Their cousin is not very shy
-Su primo es poco hablador - Their cousin is not very talkative
-Su primo es poco perezoso - Their cousin is not very lazy
-Su primo es poco pesimista - Their cousin is not very pessimistic
+Su primo es poco trabajador - Their cousin isn't very hard-working
+Su primo es poco fiel - Their cousin isn't very loyal
+Su primo es poco tímido - Their cousin isn't very shy
+Su primo es poco hablador - Their cousin isn't very talkative
+Su primo es poco perezoso - Their cousin isn't very lazy
+Su primo es poco pesimista - Their cousin isn't very pessimistic
 Su primo es demasiado trabajador - Their cousin is too hard-working
 Su primo es demasiado fiel - Their cousin is too loyal
 Su primo es demasiado tímido - Their cousin is too shy
@@ -3528,86 +3576,86 @@ En la panadería se puede comprar fruta y verduras - In the bakery you can buy f
 En la panadería se puede comprar un llavero - In the bakery you can buy a keyring
 En la panadería se puede comprar una gorra - In the bakery you can buy a cap
 En la panadería se puede comprar mucha comida - In the bakery you can buy lots of food
-En la panadería no se puede comprar fruta y verduras - In the bakery you cannot buy fruit and vegetables
-En la panadería no se puede comprar un llavero - In the bakery you cannot buy a keyring
-En la panadería no se puede comprar una gorra - In the bakery you cannot buy a cap
-En la panadería no se puede comprar mucha comida - In the bakery you cannot buy lots of food
+En la panadería no se puede comprar fruta y verduras - In the bakery you can't buy fruit and vegetables
+En la panadería no se puede comprar un llavero - In the bakery you can't buy a keyring
+En la panadería no se puede comprar una gorra - In the bakery you can't buy a cap
+En la panadería no se puede comprar mucha comida - In the bakery you can't buy lots of food
 En la zapatería se puede comprar fruta y verduras - In the shoe shop you can buy fruit and vegetables
 En la zapatería se puede comprar un llavero - In the shoe shop you can buy a keyring
 En la zapatería se puede comprar una gorra - In the shoe shop you can buy a cap
 En la zapatería se puede comprar mucha comida - In the shoe shop you can buy lots of food
-En la zapatería no se puede comprar fruta y verduras - In the shoe shop you cannot buy fruit and vegetables
-En la zapatería no se puede comprar un llavero - In the shoe shop you cannot buy a keyring
-En la zapatería no se puede comprar una gorra - In the shoe shop you cannot buy a cap
-En la zapatería no se puede comprar mucha comida - In the shoe shop you cannot buy lots of food
+En la zapatería no se puede comprar fruta y verduras - In the shoe shop you can't buy fruit and vegetables
+En la zapatería no se puede comprar un llavero - In the shoe shop you can't buy a keyring
+En la zapatería no se puede comprar una gorra - In the shoe shop you can't buy a cap
+En la zapatería no se puede comprar mucha comida - In the shoe shop you can't buy lots of food
 En la frutería se puede comprar fruta y verduras - In the greengrocer's you can buy fruit and vegetables
 En la frutería se puede comprar un llavero - In the greengrocer's you can buy a keyring
 En la frutería se puede comprar una gorra - In the greengrocer's you can buy a cap
 En la frutería se puede comprar mucha comida - In the greengrocer's you can buy lots of food
-En la frutería no se puede comprar fruta y verduras - In the greengrocer's you cannot buy fruit and vegetables
-En la frutería no se puede comprar un llavero - In the greengrocer's you cannot buy a keyring
-En la frutería no se puede comprar una gorra - In the greengrocer's you cannot buy a cap
-En la frutería no se puede comprar mucha comida - In the greengrocer's you cannot buy lots of food
+En la frutería no se puede comprar fruta y verduras - In the greengrocer's you can't buy fruit and vegetables
+En la frutería no se puede comprar un llavero - In the greengrocer's you can't buy a keyring
+En la frutería no se puede comprar una gorra - In the greengrocer's you can't buy a cap
+En la frutería no se puede comprar mucha comida - In the greengrocer's you can't buy lots of food
 En la joyería se puede comprar fruta y verduras - In the jeweller's you can buy fruit and vegetables
 En la joyería se puede comprar un llavero - In the jeweller's you can buy a keyring
 En la joyería se puede comprar una gorra - In the jeweller's you can buy a cap
 En la joyería se puede comprar mucha comida - In the jeweller's you can buy lots of food
-En la joyería no se puede comprar fruta y verduras - In the jeweller's you cannot buy fruit and vegetables
-En la joyería no se puede comprar un llavero - In the jeweller's you cannot buy a keyring
-En la joyería no se puede comprar una gorra - In the jeweller's you cannot buy a cap
-En la joyería no se puede comprar mucha comida - In the jeweller's you cannot buy lots of food
+En la joyería no se puede comprar fruta y verduras - In the jeweller's you can't buy fruit and vegetables
+En la joyería no se puede comprar un llavero - In the jeweller's you can't buy a keyring
+En la joyería no se puede comprar una gorra - In the jeweller's you can't buy a cap
+En la joyería no se puede comprar mucha comida - In the jeweller's you can't buy lots of food
 En la tienda de regalos se puede comprar fruta y verduras - In the gift shop you can buy fruit and vegetables
 En la tienda de regalos se puede comprar un llavero - In the gift shop you can buy a keyring
 En la tienda de regalos se puede comprar una gorra - In the gift shop you can buy a cap
 En la tienda de regalos se puede comprar mucha comida - In the gift shop you can buy lots of food
-En la tienda de regalos no se puede comprar fruta y verduras - In the gift shop you cannot buy fruit and vegetables
-En la tienda de regalos no se puede comprar un llavero - In the gift shop you cannot buy a keyring
-En la tienda de regalos no se puede comprar una gorra - In the gift shop you cannot buy a cap
-En la tienda de regalos no se puede comprar mucha comida - In the gift shop you cannot buy lots of food
+En la tienda de regalos no se puede comprar fruta y verduras - In the gift shop you can't buy fruit and vegetables
+En la tienda de regalos no se puede comprar un llavero - In the gift shop you can't buy a keyring
+En la tienda de regalos no se puede comprar una gorra - In the gift shop you can't buy a cap
+En la tienda de regalos no se puede comprar mucha comida - In the gift shop you can't buy lots of food
 En el estanco se puede comprar fruta y verduras - In the tobacconist's you can buy fruit and vegetables
 En el estanco se puede comprar un llavero - In the tobacconist's you can buy a keyring
 En el estanco se puede comprar una gorra - In the tobacconist's you can buy a cap
 En el estanco se puede comprar mucha comida - In the tobacconist's you can buy lots of food
-En el estanco no se puede comprar fruta y verduras - In the tobacconist's you cannot buy fruit and vegetables
-En el estanco no se puede comprar un llavero - In the tobacconist's you cannot buy a keyring
-En el estanco no se puede comprar una gorra - In the tobacconist's you cannot buy a cap
-En el estanco no se puede comprar mucha comida - In the tobacconist's you cannot buy lots of food
+En el estanco no se puede comprar fruta y verduras - In the tobacconist's you can't buy fruit and vegetables
+En el estanco no se puede comprar un llavero - In the tobacconist's you can't buy a keyring
+En el estanco no se puede comprar una gorra - In the tobacconist's you can't buy a cap
+En el estanco no se puede comprar mucha comida - In the tobacconist's you can't buy lots of food
 En la panadería se pueden comprar unos pendientes - In the bakery you can buy some earrings
 En la panadería se pueden comprar unas zapatillas de deporte - In the bakery you can buy some trainers
 En la panadería se pueden comprar sellos - In the bakery you can buy stamps
-En la panadería no se pueden comprar unos pendientes - In the bakery you cannot buy some earrings
-En la panadería no se pueden comprar unas zapatillas de deporte - In the bakery you cannot buy some trainers
-En la panadería no se pueden comprar sellos - In the bakery you cannot buy stamps
+En la panadería no se pueden comprar unos pendientes - In the bakery you can't buy some earrings
+En la panadería no se pueden comprar unas zapatillas de deporte - In the bakery you can't buy some trainers
+En la panadería no se pueden comprar sellos - In the bakery you can't buy stamps
 En la zapatería se pueden comprar unos pendientes - In the shoe shop you can buy some earrings
 En la zapatería se pueden comprar unas zapatillas de deporte - In the shoe shop you can buy some trainers
 En la zapatería se pueden comprar sellos - In the shoe shop you can buy stamps
-En la zapatería no se pueden comprar unos pendientes - In the shoe shop you cannot buy some earrings
-En la zapatería no se pueden comprar unas zapatillas de deporte - In the shoe shop you cannot buy some trainers
-En la zapatería no se pueden comprar sellos - In the shoe shop you cannot buy stamps
+En la zapatería no se pueden comprar unos pendientes - In the shoe shop you can't buy some earrings
+En la zapatería no se pueden comprar unas zapatillas de deporte - In the shoe shop you can't buy some trainers
+En la zapatería no se pueden comprar sellos - In the shoe shop you can't buy stamps
 En la frutería se pueden comprar unos pendientes - In the greengrocer's you can buy some earrings
 En la frutería se pueden comprar unas zapatillas de deporte - In the greengrocer's you can buy some trainers
 En la frutería se pueden comprar sellos - In the greengrocer's you can buy stamps
-En la frutería no se pueden comprar unos pendientes - In the greengrocer's you cannot buy some earrings
-En la frutería no se pueden comprar unas zapatillas de deporte - In the greengrocer's you cannot buy some trainers
-En la frutería no se pueden comprar sellos - In the greengrocer's you cannot buy stamps
+En la frutería no se pueden comprar unos pendientes - In the greengrocer's you can't buy some earrings
+En la frutería no se pueden comprar unas zapatillas de deporte - In the greengrocer's you can't buy some trainers
+En la frutería no se pueden comprar sellos - In the greengrocer's you can't buy stamps
 En la joyería se pueden comprar unos pendientes - In the jeweller's you can buy some earrings
 En la joyería se pueden comprar unas zapatillas de deporte - In the jeweller's you can buy some trainers
 En la joyería se pueden comprar sellos - In the jeweller's you can buy stamps
-En la joyería no se pueden comprar unos pendientes - In the jeweller's you cannot buy some earrings
-En la joyería no se pueden comprar unas zapatillas de deporte - In the jeweller's you cannot buy some trainers
-En la joyería no se pueden comprar sellos - In the jeweller's you cannot buy stamps
+En la joyería no se pueden comprar unos pendientes - In the jeweller's you can't buy some earrings
+En la joyería no se pueden comprar unas zapatillas de deporte - In the jeweller's you can't buy some trainers
+En la joyería no se pueden comprar sellos - In the jeweller's you can't buy stamps
 En la tienda de regalos se pueden comprar unos pendientes - In the gift shop you can buy some earrings
 En la tienda de regalos se pueden comprar unas zapatillas de deporte - In the gift shop you can buy some trainers
 En la tienda de regalos se pueden comprar sellos - In the gift shop you can buy stamps
-En la tienda de regalos no se pueden comprar unos pendientes - In the gift shop you cannot buy some earrings
-En la tienda de regalos no se pueden comprar unas zapatillas de deporte - In the gift shop you cannot buy some trainers
-En la tienda de regalos no se pueden comprar sellos - In the gift shop you cannot buy stamps
+En la tienda de regalos no se pueden comprar unos pendientes - In the gift shop you can't buy some earrings
+En la tienda de regalos no se pueden comprar unas zapatillas de deporte - In the gift shop you can't buy some trainers
+En la tienda de regalos no se pueden comprar sellos - In the gift shop you can't buy stamps
 En el estanco se pueden comprar unos pendientes - In the tobacconist's you can buy some earrings
 En el estanco se pueden comprar unas zapatillas de deporte - In the tobacconist's you can buy some trainers
 En el estanco se pueden comprar sellos - In the tobacconist's you can buy stamps
-En el estanco no se pueden comprar unos pendientes - In the tobacconist's you cannot buy some earrings
-En el estanco no se pueden comprar unas zapatillas de deporte - In the tobacconist's you cannot buy some trainers
-En el estanco no se pueden comprar sellos - In the tobacconist's you cannot buy stamps
+En el estanco no se pueden comprar unos pendientes - In the tobacconist's you can't buy some earrings
+En el estanco no se pueden comprar unas zapatillas de deporte - In the tobacconist's you can't buy some trainers
+En el estanco no se pueden comprar sellos - In the tobacconist's you can't buy stamps
 ¿algo más? - Anything else?
 ¿cuánto es? - How much is it?
 ¿cuánto cuesta? - How much does it cost?
@@ -3621,11 +3669,11 @@ Me encanta el pescado porque es sano pero odio los pasteles - I love fish becaus
 Me encanta el pescado porque es sano pero casi nunca como galletas - I love fish because it is healthy but I almost never eat biscuits
 Me encanta el pescado porque es sano pero no me gustan nada las verduras - I love fish because it is healthy but I don't like vegetables at all
 Me encanta el pescado porque es sano pero no me gusta comer pan - I love fish because it is healthy but I don't like eating bread
-Me encanta el pescado porque no es malsano pero nunca como caramelos - I love fish because it is not unhealthy but I never eat sweets
-Me encanta el pescado porque no es malsano pero odio los pasteles - I love fish because it is not unhealthy but I hate cakes
-Me encanta el pescado porque no es malsano pero casi nunca como galletas - I love fish because it is not unhealthy but I almost never eat biscuits
-Me encanta el pescado porque no es malsano pero no me gustan nada las verduras - I love fish because it is not unhealthy but I don't like vegetables at all
-Me encanta el pescado porque no es malsano pero no me gusta comer pan - I love fish because it is not unhealthy but I don't like eating bread
+Me encanta el pescado porque no es malsano pero nunca como caramelos - I love fish because it isn't unhealthy but I never eat sweets
+Me encanta el pescado porque no es malsano pero odio los pasteles - I love fish because it isn't unhealthy but I hate cakes
+Me encanta el pescado porque no es malsano pero casi nunca como galletas - I love fish because it isn't unhealthy but I almost never eat biscuits
+Me encanta el pescado porque no es malsano pero no me gustan nada las verduras - I love fish because it isn't unhealthy but I don't like vegetables at all
+Me encanta el pescado porque no es malsano pero no me gusta comer pan - I love fish because it isn't unhealthy but I don't like eating bread
 Me encanta el pescado porque es rico pero nunca como caramelos - I love fish because it is tasty but I never eat sweets
 Me encanta el pescado porque es rico pero odio los pasteles - I love fish because it is tasty but I hate cakes
 Me encanta el pescado porque es rico pero casi nunca como galletas - I love fish because it is tasty but I almost never eat biscuits
@@ -3646,11 +3694,11 @@ Cada día como arroz porque es sano pero odio los pasteles - Every day I eat ric
 Cada día como arroz porque es sano pero casi nunca como galletas - Every day I eat rice because it is healthy but I almost never eat biscuits
 Cada día como arroz porque es sano pero no me gustan nada las verduras - Every day I eat rice because it is healthy but I don't like vegetables at all
 Cada día como arroz porque es sano pero no me gusta comer pan - Every day I eat rice because it is healthy but I don't like eating bread
-Cada día como arroz porque no es malsano pero nunca como caramelos - Every day I eat rice because it is not unhealthy but I never eat sweets
-Cada día como arroz porque no es malsano pero odio los pasteles - Every day I eat rice because it is not unhealthy but I hate cakes
-Cada día como arroz porque no es malsano pero casi nunca como galletas - Every day I eat rice because it is not unhealthy but I almost never eat biscuits
-Cada día como arroz porque no es malsano pero no me gustan nada las verduras - Every day I eat rice because it is not unhealthy but I don't like vegetables at all
-Cada día como arroz porque no es malsano pero no me gusta comer pan - Every day I eat rice because it is not unhealthy but I don't like eating bread
+Cada día como arroz porque no es malsano pero nunca como caramelos - Every day I eat rice because it isn't unhealthy but I never eat sweets
+Cada día como arroz porque no es malsano pero odio los pasteles - Every day I eat rice because it isn't unhealthy but I hate cakes
+Cada día como arroz porque no es malsano pero casi nunca como galletas - Every day I eat rice because it isn't unhealthy but I almost never eat biscuits
+Cada día como arroz porque no es malsano pero no me gustan nada las verduras - Every day I eat rice because it isn't unhealthy but I don't like vegetables at all
+Cada día como arroz porque no es malsano pero no me gusta comer pan - Every day I eat rice because it isn't unhealthy but I don't like eating bread
 Cada día como arroz porque es rico pero nunca como caramelos - Every day I eat rice because it is tasty but I never eat sweets
 Cada día como arroz porque es rico pero odio los pasteles - Every day I eat rice because it is tasty but I hate cakes
 Cada día como arroz porque es rico pero casi nunca como galletas - Every day I eat rice because it is tasty but I almost never eat biscuits
@@ -3671,11 +3719,11 @@ Me gusta la fruta porque es sana pero odio los pasteles - I like fruit because i
 Me gusta la fruta porque es sana pero casi nunca como galletas - I like fruit because it is healthy but I almost never eat biscuits
 Me gusta la fruta porque es sana pero no me gustan nada las verduras - I like fruit because it is healthy but I don't like vegetables at all
 Me gusta la fruta porque es sana pero no me gusta comer pan - I like fruit because it is healthy but I don't like eating bread
-Me gusta la fruta porque no es malsana pero nunca como caramelos - I like fruit because it is not unhealthy but I never eat sweets
-Me gusta la fruta porque no es malsana pero odio los pasteles - I like fruit because it is not unhealthy but I hate cakes
-Me gusta la fruta porque no es malsana pero casi nunca como galletas - I like fruit because it is not unhealthy but I almost never eat biscuits
-Me gusta la fruta porque no es malsana pero no me gustan nada las verduras - I like fruit because it is not unhealthy but I don't like vegetables at all
-Me gusta la fruta porque no es malsana pero no me gusta comer pan - I like fruit because it is not unhealthy but I don't like eating bread
+Me gusta la fruta porque no es malsana pero nunca como caramelos - I like fruit because it isn't unhealthy but I never eat sweets
+Me gusta la fruta porque no es malsana pero odio los pasteles - I like fruit because it isn't unhealthy but I hate cakes
+Me gusta la fruta porque no es malsana pero casi nunca como galletas - I like fruit because it isn't unhealthy but I almost never eat biscuits
+Me gusta la fruta porque no es malsana pero no me gustan nada las verduras - I like fruit because it isn't unhealthy but I don't like vegetables at all
+Me gusta la fruta porque no es malsana pero no me gusta comer pan - I like fruit because it isn't unhealthy but I don't like eating bread
 Me gusta la fruta porque es rica pero nunca como caramelos - I like fruit because it is tasty but I never eat sweets
 Me gusta la fruta porque es rica pero odio los pasteles - I like fruit because it is tasty but I hate cakes
 Me gusta la fruta porque es rica pero casi nunca como galletas - I like fruit because it is tasty but I almost never eat biscuits
@@ -3696,11 +3744,11 @@ Me gusta bastante comer pasta porque es sana pero odio los pasteles - I quite li
 Me gusta bastante comer pasta porque es sana pero casi nunca como galletas - I quite like eating pasta because it is healthy but I almost never eat biscuits
 Me gusta bastante comer pasta porque es sana pero no me gustan nada las verduras - I quite like eating pasta because it is healthy but I don't like vegetables at all
 Me gusta bastante comer pasta porque es sana pero no me gusta comer pan - I quite like eating pasta because it is healthy but I don't like eating bread
-Me gusta bastante comer pasta porque no es malsana pero nunca como caramelos - I quite like eating pasta because it is not unhealthy but I never eat sweets
-Me gusta bastante comer pasta porque no es malsana pero odio los pasteles - I quite like eating pasta because it is not unhealthy but I hate cakes
-Me gusta bastante comer pasta porque no es malsana pero casi nunca como galletas - I quite like eating pasta because it is not unhealthy but I almost never eat biscuits
-Me gusta bastante comer pasta porque no es malsana pero no me gustan nada las verduras - I quite like eating pasta because it is not unhealthy but I don't like vegetables at all
-Me gusta bastante comer pasta porque no es malsana pero no me gusta comer pan - I quite like eating pasta because it is not unhealthy but I don't like eating bread
+Me gusta bastante comer pasta porque no es malsana pero nunca como caramelos - I quite like eating pasta because it isn't unhealthy but I never eat sweets
+Me gusta bastante comer pasta porque no es malsana pero odio los pasteles - I quite like eating pasta because it isn't unhealthy but I hate cakes
+Me gusta bastante comer pasta porque no es malsana pero casi nunca como galletas - I quite like eating pasta because it isn't unhealthy but I almost never eat biscuits
+Me gusta bastante comer pasta porque no es malsana pero no me gustan nada las verduras - I quite like eating pasta because it isn't unhealthy but I don't like vegetables at all
+Me gusta bastante comer pasta porque no es malsana pero no me gusta comer pan - I quite like eating pasta because it isn't unhealthy but I don't like eating bread
 Me gusta bastante comer pasta porque es rica pero nunca como caramelos - I quite like eating pasta because it is tasty but I never eat sweets
 Me gusta bastante comer pasta porque es rica pero odio los pasteles - I quite like eating pasta because it is tasty but I hate cakes
 Me gusta bastante comer pasta porque es rica pero casi nunca como galletas - I quite like eating pasta because it is tasty but I almost never eat biscuits
@@ -3721,11 +3769,11 @@ Como mucha carne porque es sana pero odio los pasteles - I eat a lot of meat bec
 Como mucha carne porque es sana pero casi nunca como galletas - I eat a lot of meat because it is healthy but I almost never eat biscuits
 Como mucha carne porque es sana pero no me gustan nada las verduras - I eat a lot of meat because it is healthy but I don't like vegetables at all
 Como mucha carne porque es sana pero no me gusta comer pan - I eat a lot of meat because it is healthy but I don't like eating bread
-Como mucha carne porque no es malsana pero nunca como caramelos - I eat a lot of meat because it is not unhealthy but I never eat sweets
-Como mucha carne porque no es malsana pero odio los pasteles - I eat a lot of meat because it is not unhealthy but I hate cakes
-Como mucha carne porque no es malsana pero casi nunca como galletas - I eat a lot of meat because it is not unhealthy but I almost never eat biscuits
-Como mucha carne porque no es malsana pero no me gustan nada las verduras - I eat a lot of meat because it is not unhealthy but I don't like vegetables at all
-Como mucha carne porque no es malsana pero no me gusta comer pan - I eat a lot of meat because it is not unhealthy but I don't like eating bread
+Como mucha carne porque no es malsana pero nunca como caramelos - I eat a lot of meat because it isn't unhealthy but I never eat sweets
+Como mucha carne porque no es malsana pero odio los pasteles - I eat a lot of meat because it isn't unhealthy but I hate cakes
+Como mucha carne porque no es malsana pero casi nunca como galletas - I eat a lot of meat because it isn't unhealthy but I almost never eat biscuits
+Como mucha carne porque no es malsana pero no me gustan nada las verduras - I eat a lot of meat because it isn't unhealthy but I don't like vegetables at all
+Como mucha carne porque no es malsana pero no me gusta comer pan - I eat a lot of meat because it isn't unhealthy but I don't like eating bread
 Como mucha carne porque es rica pero nunca como caramelos - I eat a lot of meat because it is tasty but I never eat sweets
 Como mucha carne porque es rica pero odio los pasteles - I eat a lot of meat because it is tasty but I hate cakes
 Como mucha carne porque es rica pero casi nunca como galletas - I eat a lot of meat because it is tasty but I almost never eat biscuits
@@ -3742,195 +3790,195 @@ Como mucha carne porque llevo una dieta sana pero casi nunca como galletas - I e
 Como mucha carne porque llevo una dieta sana pero no me gustan nada las verduras - I eat a lot of meat because I have a healthy diet but I don't like vegetables at all
 Como mucha carne porque llevo una dieta sana pero no me gusta comer pan - I eat a lot of meat because I have a healthy diet but I don't like eating bread
 Set 2:
-Para estar en forma todos los días juego al baloncesto sin embargo no como comida rápida - In order to be in shape every day I play basketball however I do not eat fast food
+Para estar en forma todos los días juego al baloncesto sin embargo no como comida rápida - In order to be in shape every day I play basketball however I don't eat fast food
 Para estar en forma todos los días juego al baloncesto sin embargo prefiero hacer atletismo - In order to be in shape every day I play basketball however I prefer to do athletics
 Para estar en forma todos los días juego al baloncesto sin embargo nunca juego al rugby - In order to be in shape every day I play basketball however I never play rugby
 Para estar en forma todos los días juego al baloncesto sin embargo casi nunca voy al polideportivo - In order to be in shape every day I play basketball however I almost never go to the sports centre
-Para estar en forma todos los días juego al baloncesto no obstante no como comida rápida - In order to be in shape every day I play basketball however I do not eat fast food
+Para estar en forma todos los días juego al baloncesto no obstante no como comida rápida - In order to be in shape every day I play basketball however I don't eat fast food
 Para estar en forma todos los días juego al baloncesto no obstante prefiero hacer atletismo - In order to be in shape every day I play basketball however I prefer to do athletics
 Para estar en forma todos los días juego al baloncesto no obstante nunca juego al rugby - In order to be in shape every day I play basketball however I never play rugby
 Para estar en forma todos los días juego al baloncesto no obstante casi nunca voy al polideportivo - In order to be in shape every day I play basketball however I almost never go to the sports centre
-Para estar en forma todos los días juego al baloncesto pero no como comida rápida - In order to be in shape every day I play basketball but I do not eat fast food
+Para estar en forma todos los días juego al baloncesto pero no como comida rápida - In order to be in shape every day I play basketball but I don't eat fast food
 Para estar en forma todos los días juego al baloncesto pero prefiero hacer atletismo - In order to be in shape every day I play basketball but I prefer to do athletics
 Para estar en forma todos los días juego al baloncesto pero nunca juego al rugby - In order to be in shape every day I play basketball but I never play rugby
 Para estar en forma todos los días juego al baloncesto pero casi nunca voy al polideportivo - In order to be in shape every day I play basketball but I almost never go to the sports centre
-Para estar en forma todos los días juego al baloncesto aunque no como comida rápida - In order to be in shape every day I play basketball although I do not eat fast food
+Para estar en forma todos los días juego al baloncesto aunque no como comida rápida - In order to be in shape every day I play basketball although I don't eat fast food
 Para estar en forma todos los días juego al baloncesto aunque prefiero hacer atletismo - In order to be in shape every day I play basketball although I prefer to do athletics
 Para estar en forma todos los días juego al baloncesto aunque nunca juego al rugby - In order to be in shape every day I play basketball although I never play rugby
 Para estar en forma todos los días juego al baloncesto aunque casi nunca voy al polideportivo - In order to be in shape every day I play basketball although I almost never go to the sports centre
-Para estar en forma todos los días hago boxeo sin embargo no como comida rápida - In order to be in shape every day I do boxing however I do not eat fast food
+Para estar en forma todos los días hago boxeo sin embargo no como comida rápida - In order to be in shape every day I do boxing however I don't eat fast food
 Para estar en forma todos los días hago boxeo sin embargo prefiero hacer atletismo - In order to be in shape every day I do boxing however I prefer to do athletics
 Para estar en forma todos los días hago boxeo sin embargo nunca juego al rugby - In order to be in shape every day I do boxing however I never play rugby
 Para estar en forma todos los días hago boxeo sin embargo casi nunca voy al polideportivo - In order to be in shape every day I do boxing however I almost never go to the sports centre
-Para estar en forma todos los días hago boxeo no obstante no como comida rápida - In order to be in shape every day I do boxing however I do not eat fast food
+Para estar en forma todos los días hago boxeo no obstante no como comida rápida - In order to be in shape every day I do boxing however I don't eat fast food
 Para estar en forma todos los días hago boxeo no obstante prefiero hacer atletismo - In order to be in shape every day I do boxing however I prefer to do athletics
 Para estar en forma todos los días hago boxeo no obstante nunca juego al rugby - In order to be in shape every day I do boxing however I never play rugby
 Para estar en forma todos los días hago boxeo no obstante casi nunca voy al polideportivo - In order to be in shape every day I do boxing however I almost never go to the sports centre
-Para estar en forma todos los días hago boxeo pero no como comida rápida - In order to be in shape every day I do boxing but I do not eat fast food
+Para estar en forma todos los días hago boxeo pero no como comida rápida - In order to be in shape every day I do boxing but I don't eat fast food
 Para estar en forma todos los días hago boxeo pero prefiero hacer atletismo - In order to be in shape every day I do boxing but I prefer to do athletics
 Para estar en forma todos los días hago boxeo pero nunca juego al rugby - In order to be in shape every day I do boxing but I never play rugby
 Para estar en forma todos los días hago boxeo pero casi nunca voy al polideportivo - In order to be in shape every day I do boxing but I almost never go to the sports centre
-Para estar en forma todos los días hago boxeo aunque no como comida rápida - In order to be in shape every day I do boxing although I do not eat fast food
+Para estar en forma todos los días hago boxeo aunque no como comida rápida - In order to be in shape every day I do boxing although I don't eat fast food
 Para estar en forma todos los días hago boxeo aunque prefiero hacer atletismo - In order to be in shape every day I do boxing although I prefer to do athletics
 Para estar en forma todos los días hago boxeo aunque nunca juego al rugby - In order to be in shape every day I do boxing although I never play rugby
 Para estar en forma todos los días hago boxeo aunque casi nunca voy al polideportivo - In order to be in shape every day I do boxing although I almost never go to the sports centre
-Para estar en forma todos los días hago artes marciales sin embargo no como comida rápida - In order to be in shape every day I do martial arts however I do not eat fast food
+Para estar en forma todos los días hago artes marciales sin embargo no como comida rápida - In order to be in shape every day I do martial arts however I don't eat fast food
 Para estar en forma todos los días hago artes marciales sin embargo prefiero hacer atletismo - In order to be in shape every day I do martial arts however I prefer to do athletics
 Para estar en forma todos los días hago artes marciales sin embargo nunca juego al rugby - In order to be in shape every day I do martial arts however I never play rugby
 Para estar en forma todos los días hago artes marciales sin embargo casi nunca voy al polideportivo - In order to be in shape every day I do martial arts however I almost never go to the sports centre
-Para estar en forma todos los días hago artes marciales no obstante no como comida rápida - In order to be in shape every day I do martial arts however I do not eat fast food
+Para estar en forma todos los días hago artes marciales no obstante no como comida rápida - In order to be in shape every day I do martial arts however I don't eat fast food
 Para estar en forma todos los días hago artes marciales no obstante prefiero hacer atletismo - In order to be in shape every day I do martial arts however I prefer to do athletics
 Para estar en forma todos los días hago artes marciales no obstante nunca juego al rugby - In order to be in shape every day I do martial arts however I never play rugby
 Para estar en forma todos los días hago artes marciales no obstante casi nunca voy al polideportivo - In order to be in shape every day I do martial arts however I almost never go to the sports centre
-Para estar en forma todos los días hago artes marciales pero no como comida rápida - In order to be in shape every day I do martial arts but I do not eat fast food
+Para estar en forma todos los días hago artes marciales pero no como comida rápida - In order to be in shape every day I do martial arts but I don't eat fast food
 Para estar en forma todos los días hago artes marciales pero prefiero hacer atletismo - In order to be in shape every day I do martial arts but I prefer to do athletics
 Para estar en forma todos los días hago artes marciales pero nunca juego al rugby - In order to be in shape every day I do martial arts but I never play rugby
 Para estar en forma todos los días hago artes marciales pero casi nunca voy al polideportivo - In order to be in shape every day I do martial arts but I almost never go to the sports centre
-Para estar en forma todos los días hago artes marciales aunque no como comida rápida - In order to be in shape every day I do martial arts although I do not eat fast food
+Para estar en forma todos los días hago artes marciales aunque no como comida rápida - In order to be in shape every day I do martial arts although I don't eat fast food
 Para estar en forma todos los días hago artes marciales aunque prefiero hacer atletismo - In order to be in shape every day I do martial arts although I prefer to do athletics
 Para estar en forma todos los días hago artes marciales aunque nunca juego al rugby - In order to be in shape every day I do martial arts although I never play rugby
 Para estar en forma todos los días hago artes marciales aunque casi nunca voy al polideportivo - In order to be in shape every day I do martial arts although I almost never go to the sports centre
-Para estar en forma todos los días como fruta y verduras sin embargo no como comida rápida - In order to be in shape every day I eat fruit and vegetables however I do not eat fast food
+Para estar en forma todos los días como fruta y verduras sin embargo no como comida rápida - In order to be in shape every day I eat fruit and vegetables however I don't eat fast food
 Para estar en forma todos los días como fruta y verduras sin embargo prefiero hacer atletismo - In order to be in shape every day I eat fruit and vegetables however I prefer to do athletics
 Para estar en forma todos los días como fruta y verduras sin embargo nunca juego al rugby - In order to be in shape every day I eat fruit and vegetables however I never play rugby
 Para estar en forma todos los días como fruta y verduras sin embargo casi nunca voy al polideportivo - In order to be in shape every day I eat fruit and vegetables however I almost never go to the sports centre
-Para estar en forma todos los días como fruta y verduras no obstante no como comida rápida - In order to be in shape every day I eat fruit and vegetables however I do not eat fast food
+Para estar en forma todos los días como fruta y verduras no obstante no como comida rápida - In order to be in shape every day I eat fruit and vegetables however I don't eat fast food
 Para estar en forma todos los días como fruta y verduras no obstante prefiero hacer atletismo - In order to be in shape every day I eat fruit and vegetables however I prefer to do athletics
 Para estar en forma todos los días como fruta y verduras no obstante nunca juego al rugby - In order to be in shape every day I eat fruit and vegetables however I never play rugby
 Para estar en forma todos los días como fruta y verduras no obstante casi nunca voy al polideportivo - In order to be in shape every day I eat fruit and vegetables however I almost never go to the sports centre
-Para estar en forma todos los días como fruta y verduras pero no como comida rápida - In order to be in shape every day I eat fruit and vegetables but I do not eat fast food
+Para estar en forma todos los días como fruta y verduras pero no como comida rápida - In order to be in shape every day I eat fruit and vegetables but I don't eat fast food
 Para estar en forma todos los días como fruta y verduras pero prefiero hacer atletismo - In order to be in shape every day I eat fruit and vegetables but I prefer to do athletics
 Para estar en forma todos los días como fruta y verduras pero nunca juego al rugby - In order to be in shape every day I eat fruit and vegetables but I never play rugby
 Para estar en forma todos los días como fruta y verduras pero casi nunca voy al polideportivo - In order to be in shape every day I eat fruit and vegetables but I almost never go to the sports centre
-Para estar en forma todos los días como fruta y verduras aunque no como comida rápida - In order to be in shape every day I eat fruit and vegetables although I do not eat fast food
+Para estar en forma todos los días como fruta y verduras aunque no como comida rápida - In order to be in shape every day I eat fruit and vegetables although I don't eat fast food
 Para estar en forma todos los días como fruta y verduras aunque prefiero hacer atletismo - In order to be in shape every day I eat fruit and vegetables although I prefer to do athletics
 Para estar en forma todos los días como fruta y verduras aunque nunca juego al rugby - In order to be in shape every day I eat fruit and vegetables although I never play rugby
 Para estar en forma todos los días como fruta y verduras aunque casi nunca voy al polideportivo - In order to be in shape every day I eat fruit and vegetables although I almost never go to the sports centre
-Para estar en forma a veces juego al baloncesto sin embargo no como comida rápida - In order to be in shape sometimes I play basketball however I do not eat fast food
+Para estar en forma a veces juego al baloncesto sin embargo no como comida rápida - In order to be in shape sometimes I play basketball however I don't eat fast food
 Para estar en forma a veces juego al baloncesto sin embargo prefiero hacer atletismo - In order to be in shape sometimes I play basketball however I prefer to do athletics
 Para estar en forma a veces juego al baloncesto sin embargo nunca juego al rugby - In order to be in shape sometimes I play basketball however I never play rugby
 Para estar en forma a veces juego al baloncesto sin embargo casi nunca voy al polideportivo - In order to be in shape sometimes I play basketball however I almost never go to the sports centre
-Para estar en forma a veces juego al baloncesto no obstante no como comida rápida - In order to be in shape sometimes I play basketball however I do not eat fast food
+Para estar en forma a veces juego al baloncesto no obstante no como comida rápida - In order to be in shape sometimes I play basketball however I don't eat fast food
 Para estar en forma a veces juego al baloncesto no obstante prefiero hacer atletismo - In order to be in shape sometimes I play basketball however I prefer to do athletics
 Para estar en forma a veces juego al baloncesto no obstante nunca juego al rugby - In order to be in shape sometimes I play basketball however I never play rugby
 Para estar en forma a veces juego al baloncesto no obstante casi nunca voy al polideportivo - In order to be in shape sometimes I play basketball however I almost never go to the sports centre
-Para estar en forma a veces juego al baloncesto pero no como comida rápida - In order to be in shape sometimes I play basketball but I do not eat fast food
+Para estar en forma a veces juego al baloncesto pero no como comida rápida - In order to be in shape sometimes I play basketball but I don't eat fast food
 Para estar en forma a veces juego al baloncesto pero prefiero hacer atletismo - In order to be in shape sometimes I play basketball but I prefer to do athletics
 Para estar en forma a veces juego al baloncesto pero nunca juego al rugby - In order to be in shape sometimes I play basketball but I never play rugby
 Para estar en forma a veces juego al baloncesto pero casi nunca voy al polideportivo - In order to be in shape sometimes I play basketball but I almost never go to the sports centre
-Para estar en forma a veces juego al baloncesto aunque no como comida rápida - In order to be in shape sometimes I play basketball although I do not eat fast food
+Para estar en forma a veces juego al baloncesto aunque no como comida rápida - In order to be in shape sometimes I play basketball although I don't eat fast food
 Para estar en forma a veces juego al baloncesto aunque prefiero hacer atletismo - In order to be in shape sometimes I play basketball although I prefer to do athletics
 Para estar en forma a veces juego al baloncesto aunque nunca juego al rugby - In order to be in shape sometimes I play basketball although I never play rugby
 Para estar en forma a veces juego al baloncesto aunque casi nunca voy al polideportivo - In order to be in shape sometimes I play basketball although I almost never go to the sports centre
-Para estar en forma a veces hago boxeo sin embargo no como comida rápida - In order to be in shape sometimes I do boxing however I do not eat fast food
+Para estar en forma a veces hago boxeo sin embargo no como comida rápida - In order to be in shape sometimes I do boxing however I don't eat fast food
 Para estar en forma a veces hago boxeo sin embargo prefiero hacer atletismo - In order to be in shape sometimes I do boxing however I prefer to do athletics
 Para estar en forma a veces hago boxeo sin embargo nunca juego al rugby - In order to be in shape sometimes I do boxing however I never play rugby
 Para estar en forma a veces hago boxeo sin embargo casi nunca voy al polideportivo - In order to be in shape sometimes I do boxing however I almost never go to the sports centre
-Para estar en forma a veces hago boxeo no obstante no como comida rápida - In order to be in shape sometimes I do boxing however I do not eat fast food
+Para estar en forma a veces hago boxeo no obstante no como comida rápida - In order to be in shape sometimes I do boxing however I don't eat fast food
 Para estar en forma a veces hago boxeo no obstante prefiero hacer atletismo - In order to be in shape sometimes I do boxing however I prefer to do athletics
 Para estar en forma a veces hago boxeo no obstante nunca juego al rugby - In order to be in shape sometimes I do boxing however I never play rugby
 Para estar en forma a veces hago boxeo no obstante casi nunca voy al polideportivo - In order to be in shape sometimes I do boxing however I almost never go to the sports centre
-Para estar en forma a veces hago boxeo pero no como comida rápida - In order to be in shape sometimes I do boxing but I do not eat fast food
+Para estar en forma a veces hago boxeo pero no como comida rápida - In order to be in shape sometimes I do boxing but I don't eat fast food
 Para estar en forma a veces hago boxeo pero prefiero hacer atletismo - In order to be in shape sometimes I do boxing but I prefer to do athletics
 Para estar en forma a veces hago boxeo pero nunca juego al rugby - In order to be in shape sometimes I do boxing but I never play rugby
 Para estar en forma a veces hago boxeo pero casi nunca voy al polideportivo - In order to be in shape sometimes I do boxing but I almost never go to the sports centre
-Para estar en forma a veces hago boxeo aunque no como comida rápida - In order to be in shape sometimes I do boxing although I do not eat fast food
+Para estar en forma a veces hago boxeo aunque no como comida rápida - In order to be in shape sometimes I do boxing although I don't eat fast food
 Para estar en forma a veces hago boxeo aunque prefiero hacer atletismo - In order to be in shape sometimes I do boxing although I prefer to do athletics
 Para estar en forma a veces hago boxeo aunque nunca juego al rugby - In order to be in shape sometimes I do boxing although I never play rugby
 Para estar en forma a veces hago boxeo aunque casi nunca voy al polideportivo - In order to be in shape sometimes I do boxing although I almost never go to the sports centre
-Para estar en forma a veces hago artes marciales sin embargo no como comida rápida - In order to be in shape sometimes I do martial arts however I do not eat fast food
+Para estar en forma a veces hago artes marciales sin embargo no como comida rápida - In order to be in shape sometimes I do martial arts however I don't eat fast food
 Para estar en forma a veces hago artes marciales sin embargo prefiero hacer atletismo - In order to be in shape sometimes I do martial arts however I prefer to do athletics
 Para estar en forma a veces hago artes marciales sin embargo nunca juego al rugby - In order to be in shape sometimes I do martial arts however I never play rugby
 Para estar en forma a veces hago artes marciales sin embargo casi nunca voy al polideportivo - In order to be in shape sometimes I do martial arts however I almost never go to the sports centre
-Para estar en forma a veces hago artes marciales no obstante no como comida rápida - In order to be in shape sometimes I do martial arts however I do not eat fast food
+Para estar en forma a veces hago artes marciales no obstante no como comida rápida - In order to be in shape sometimes I do martial arts however I don't eat fast food
 Para estar en forma a veces hago artes marciales no obstante prefiero hacer atletismo - In order to be in shape sometimes I do martial arts however I prefer to do athletics
 Para estar en forma a veces hago artes marciales no obstante nunca juego al rugby - In order to be in shape sometimes I do martial arts however I never play rugby
 Para estar en forma a veces hago artes marciales no obstante casi nunca voy al polideportivo - In order to be in shape sometimes I do martial arts however I almost never go to the sports centre
-Para estar en forma a veces hago artes marciales pero no como comida rápida - In order to be in shape sometimes I do martial arts but I do not eat fast food
+Para estar en forma a veces hago artes marciales pero no como comida rápida - In order to be in shape sometimes I do martial arts but I don't eat fast food
 Para estar en forma a veces hago artes marciales pero prefiero hacer atletismo - In order to be in shape sometimes I do martial arts but I prefer to do athletics
 Para estar en forma a veces hago artes marciales pero nunca juego al rugby - In order to be in shape sometimes I do martial arts but I never play rugby
 Para estar en forma a veces hago artes marciales pero casi nunca voy al polideportivo - In order to be in shape sometimes I do martial arts but I almost never go to the sports centre
-Para estar en forma a veces hago artes marciales aunque no como comida rápida - In order to be in shape sometimes I do martial arts although I do not eat fast food
+Para estar en forma a veces hago artes marciales aunque no como comida rápida - In order to be in shape sometimes I do martial arts although I don't eat fast food
 Para estar en forma a veces hago artes marciales aunque prefiero hacer atletismo - In order to be in shape sometimes I do martial arts although I prefer to do athletics
 Para estar en forma a veces hago artes marciales aunque nunca juego al rugby - In order to be in shape sometimes I do martial arts although I never play rugby
 Para estar en forma a veces hago artes marciales aunque casi nunca voy al polideportivo - In order to be in shape sometimes I do martial arts although I almost never go to the sports centre
-Para estar en forma a veces como fruta y verduras sin embargo no como comida rápida - In order to be in shape sometimes I eat fruit and vegetables however I do not eat fast food
+Para estar en forma a veces como fruta y verduras sin embargo no como comida rápida - In order to be in shape sometimes I eat fruit and vegetables however I don't eat fast food
 Para estar en forma a veces como fruta y verduras sin embargo prefiero hacer atletismo - In order to be in shape sometimes I eat fruit and vegetables however I prefer to do athletics
 Para estar en forma a veces como fruta y verduras sin embargo nunca juego al rugby - In order to be in shape sometimes I eat fruit and vegetables however I never play rugby
 Para estar en forma a veces como fruta y verduras sin embargo casi nunca voy al polideportivo - In order to be in shape sometimes I eat fruit and vegetables however I almost never go to the sports centre
-Para estar en forma a veces como fruta y verduras no obstante no como comida rápida - In order to be in shape sometimes I eat fruit and vegetables however I do not eat fast food
+Para estar en forma a veces como fruta y verduras no obstante no como comida rápida - In order to be in shape sometimes I eat fruit and vegetables however I don't eat fast food
 Para estar en forma a veces como fruta y verduras no obstante prefiero hacer atletismo - In order to be in shape sometimes I eat fruit and vegetables however I prefer to do athletics
 Para estar en forma a veces como fruta y verduras no obstante nunca juego al rugby - In order to be in shape sometimes I eat fruit and vegetables however I never play rugby
 Para estar en forma a veces como fruta y verduras no obstante casi nunca voy al polideportivo - In order to be in shape sometimes I eat fruit and vegetables however I almost never go to the sports centre
-Para estar en forma a veces como fruta y verduras pero no como comida rápida - In order to be in shape sometimes I eat fruit and vegetables but I do not eat fast food
+Para estar en forma a veces como fruta y verduras pero no como comida rápida - In order to be in shape sometimes I eat fruit and vegetables but I don't eat fast food
 Para estar en forma a veces como fruta y verduras pero prefiero hacer atletismo - In order to be in shape sometimes I eat fruit and vegetables but I prefer to do athletics
 Para estar en forma a veces como fruta y verduras pero nunca juego al rugby - In order to be in shape sometimes I eat fruit and vegetables but I never play rugby
 Para estar en forma a veces como fruta y verduras pero casi nunca voy al polideportivo - In order to be in shape sometimes I eat fruit and vegetables but I almost never go to the sports centre
-Para estar en forma a veces como fruta y verduras aunque no como comida rápida - In order to be in shape sometimes I eat fruit and vegetables although I do not eat fast food
+Para estar en forma a veces como fruta y verduras aunque no como comida rápida - In order to be in shape sometimes I eat fruit and vegetables although I don't eat fast food
 Para estar en forma a veces como fruta y verduras aunque prefiero hacer atletismo - In order to be in shape sometimes I eat fruit and vegetables although I prefer to do athletics
 Para estar en forma a veces como fruta y verduras aunque nunca juego al rugby - In order to be in shape sometimes I eat fruit and vegetables although I never play rugby
 Para estar en forma a veces como fruta y verduras aunque casi nunca voy al polideportivo - In order to be in shape sometimes I eat fruit and vegetables although I almost never go to the sports centre
-Para estar en forma tres veces a la semana juego al baloncesto sin embargo no como comida rápida - In order to be in shape three times a week I play basketball however I do not eat fast food
+Para estar en forma tres veces a la semana juego al baloncesto sin embargo no como comida rápida - In order to be in shape three times a week I play basketball however I don't eat fast food
 Para estar en forma tres veces a la semana juego al baloncesto sin embargo prefiero hacer atletismo - In order to be in shape three times a week I play basketball however I prefer to do athletics
 Para estar en forma tres veces a la semana juego al baloncesto sin embargo nunca juego al rugby - In order to be in shape three times a week I play basketball however I never play rugby
 Para estar en forma tres veces a la semana juego al baloncesto sin embargo casi nunca voy al polideportivo - In order to be in shape three times a week I play basketball however I almost never go to the sports centre
-Para estar en forma tres veces a la semana juego al baloncesto no obstante no como comida rápida - In order to be in shape three times a week I play basketball however I do not eat fast food
+Para estar en forma tres veces a la semana juego al baloncesto no obstante no como comida rápida - In order to be in shape three times a week I play basketball however I don't eat fast food
 Para estar en forma tres veces a la semana juego al baloncesto no obstante prefiero hacer atletismo - In order to be in shape three times a week I play basketball however I prefer to do athletics
 Para estar en forma tres veces a la semana juego al baloncesto no obstante nunca juego al rugby - In order to be in shape three times a week I play basketball however I never play rugby
 Para estar en forma tres veces a la semana juego al baloncesto no obstante casi nunca voy al polideportivo - In order to be in shape three times a week I play basketball however I almost never go to the sports centre
-Para estar en forma tres veces a la semana juego al baloncesto pero no como comida rápida - In order to be in shape three times a week I play basketball but I do not eat fast food
+Para estar en forma tres veces a la semana juego al baloncesto pero no como comida rápida - In order to be in shape three times a week I play basketball but I don't eat fast food
 Para estar en forma tres veces a la semana juego al baloncesto pero prefiero hacer atletismo - In order to be in shape three times a week I play basketball but I prefer to do athletics
 Para estar en forma tres veces a la semana juego al baloncesto pero nunca juego al rugby - In order to be in shape three times a week I play basketball but I never play rugby
 Para estar en forma tres veces a la semana juego al baloncesto pero casi nunca voy al polideportivo - In order to be in shape three times a week I play basketball but I almost never go to the sports centre
-Para estar en forma tres veces a la semana juego al baloncesto aunque no como comida rápida - In order to be in shape three times a week I play basketball although I do not eat fast food
+Para estar en forma tres veces a la semana juego al baloncesto aunque no como comida rápida - In order to be in shape three times a week I play basketball although I don't eat fast food
 Para estar en forma tres veces a la semana juego al baloncesto aunque prefiero hacer atletismo - In order to be in shape three times a week I play basketball although I prefer to do athletics
 Para estar en forma tres veces a la semana juego al baloncesto aunque nunca juego al rugby - In order to be in shape three times a week I play basketball although I never play rugby
 Para estar en forma tres veces a la semana juego al baloncesto aunque casi nunca voy al polideportivo - In order to be in shape three times a week I play basketball although I almost never go to the sports centre
-Para estar en forma tres veces a la semana hago boxeo sin embargo no como comida rápida - In order to be in shape three times a week I do boxing however I do not eat fast food
+Para estar en forma tres veces a la semana hago boxeo sin embargo no como comida rápida - In order to be in shape three times a week I do boxing however I don't eat fast food
 Para estar en forma tres veces a la semana hago boxeo sin embargo prefiero hacer atletismo - In order to be in shape three times a week I do boxing however I prefer to do athletics
 Para estar en forma tres veces a la semana hago boxeo sin embargo nunca juego al rugby - In order to be in shape three times a week I do boxing however I never play rugby
 Para estar en forma tres veces a la semana hago boxeo sin embargo casi nunca voy al polideportivo - In order to be in shape three times a week I do boxing however I almost never go to the sports centre
-Para estar en forma tres veces a la semana hago boxeo no obstante no como comida rápida - In order to be in shape three times a week I do boxing however I do not eat fast food
+Para estar en forma tres veces a la semana hago boxeo no obstante no como comida rápida - In order to be in shape three times a week I do boxing however I don't eat fast food
 Para estar en forma tres veces a la semana hago boxeo no obstante prefiero hacer atletismo - In order to be in shape three times a week I do boxing however I prefer to do athletics
 Para estar en forma tres veces a la semana hago boxeo no obstante nunca juego al rugby - In order to be in shape three times a week I do boxing however I never play rugby
 Para estar en forma tres veces a la semana hago boxeo no obstante casi nunca voy al polideportivo - In order to be in shape three times a week I do boxing however I almost never go to the sports centre
-Para estar en forma tres veces a la semana hago boxeo pero no como comida rápida - In order to be in shape three times a week I do boxing but I do not eat fast food
+Para estar en forma tres veces a la semana hago boxeo pero no como comida rápida - In order to be in shape three times a week I do boxing but I don't eat fast food
 Para estar en forma tres veces a la semana hago boxeo pero prefiero hacer atletismo - In order to be in shape three times a week I do boxing but I prefer to do athletics
 Para estar en forma tres veces a la semana hago boxeo pero nunca juego al rugby - In order to be in shape three times a week I do boxing but I never play rugby
 Para estar en forma tres veces a la semana hago boxeo pero casi nunca voy al polideportivo - In order to be in shape three times a week I do boxing but I almost never go to the sports centre
-Para estar en forma tres veces a la semana hago boxeo aunque no como comida rápida - In order to be in shape three times a week I do boxing although I do not eat fast food
+Para estar en forma tres veces a la semana hago boxeo aunque no como comida rápida - In order to be in shape three times a week I do boxing although I don't eat fast food
 Para estar en forma tres veces a la semana hago boxeo aunque prefiero hacer atletismo - In order to be in shape three times a week I do boxing although I prefer to do athletics
 Para estar en forma tres veces a la semana hago boxeo aunque nunca juego al rugby - In order to be in shape three times a week I do boxing although I never play rugby
 Para estar en forma tres veces a la semana hago boxeo aunque casi nunca voy al polideportivo - In order to be in shape three times a week I do boxing although I almost never go to the sports centre
-Para estar en forma tres veces a la semana hago artes marciales sin embargo no como comida rápida - In order to be in shape three times a week I do martial arts however I do not eat fast food
+Para estar en forma tres veces a la semana hago artes marciales sin embargo no como comida rápida - In order to be in shape three times a week I do martial arts however I don't eat fast food
 Para estar en forma tres veces a la semana hago artes marciales sin embargo prefiero hacer atletismo - In order to be in shape three times a week I do martial arts however I prefer to do athletics
 Para estar en forma tres veces a la semana hago artes marciales sin embargo nunca juego al rugby - In order to be in shape three times a week I do martial arts however I never play rugby
 Para estar en forma tres veces a la semana hago artes marciales sin embargo casi nunca voy al polideportivo - In order to be in shape three times a week I do martial arts however I almost never go to the sports centre
-Para estar en forma tres veces a la semana hago artes marciales no obstante no como comida rápida - In order to be in shape three times a week I do martial arts however I do not eat fast food
+Para estar en forma tres veces a la semana hago artes marciales no obstante no como comida rápida - In order to be in shape three times a week I do martial arts however I don't eat fast food
 Para estar en forma tres veces a la semana hago artes marciales no obstante prefiero hacer atletismo - In order to be in shape three times a week I do martial arts however I prefer to do athletics
 Para estar en forma tres veces a la semana hago artes marciales no obstante nunca juego al rugby - In order to be in shape three times a week I do martial arts however I never play rugby
 Para estar en forma tres veces a la semana hago artes marciales no obstante casi nunca voy al polideportivo - In order to be in shape three times a week I do martial arts however I almost never go to the sports centre
-Para estar en forma tres veces a la semana hago artes marciales pero no como comida rápida - In order to be in shape three times a week I do martial arts but I do not eat fast food
+Para estar en forma tres veces a la semana hago artes marciales pero no como comida rápida - In order to be in shape three times a week I do martial arts but I don't eat fast food
 Para estar en forma tres veces a la semana hago artes marciales pero prefiero hacer atletismo - In order to be in shape three times a week I do martial arts but I prefer to do athletics
 Para estar en forma tres veces a la semana hago artes marciales pero nunca juego al rugby - In order to be in shape three times a week I do martial arts but I never play rugby
 Para estar en forma tres veces a la semana hago artes marciales pero casi nunca voy al polideportivo - In order to be in shape three times a week I do martial arts but I almost never go to the sports centre
-Para estar en forma tres veces a la semana hago artes marciales aunque no como comida rápida - In order to be in shape three times a week I do martial arts although I do not eat fast food
+Para estar en forma tres veces a la semana hago artes marciales aunque no como comida rápida - In order to be in shape three times a week I do martial arts although I don't eat fast food
 Para estar en forma tres veces a la semana hago artes marciales aunque prefiero hacer atletismo - In order to be in shape three times a week I do martial arts although I prefer to do athletics
 Para estar en forma tres veces a la semana hago artes marciales aunque nunca juego al rugby - In order to be in shape three times a week I do martial arts although I never play rugby
 Para estar en forma tres veces a la semana hago artes marciales aunque casi nunca voy al polideportivo - In order to be in shape three times a week I do martial arts although I almost never go to the sports centre
-Para estar en forma tres veces a la semana como fruta y verduras sin embargo no como comida rápida - In order to be in shape three times a week I eat fruit and vegetables however I do not eat fast food
+Para estar en forma tres veces a la semana como fruta y verduras sin embargo no como comida rápida - In order to be in shape three times a week I eat fruit and vegetables however I don't eat fast food
 Para estar en forma tres veces a la semana como fruta y verduras sin embargo prefiero hacer atletismo - In order to be in shape three times a week I eat fruit and vegetables however I prefer to do athletics
 Para estar en forma tres veces a la semana como fruta y verduras sin embargo nunca juego al rugby - In order to be in shape three times a week I eat fruit and vegetables however I never play rugby
 Para estar en forma tres veces a la semana como fruta y verduras sin embargo casi nunca voy al polideportivo - In order to be in shape three times a week I eat fruit and vegetables however I almost never go to the sports centre
-Para estar en forma tres veces a la semana como fruta y verduras no obstante no como comida rápida - In order to be in shape three times a week I eat fruit and vegetables however I do not eat fast food
+Para estar en forma tres veces a la semana como fruta y verduras no obstante no como comida rápida - In order to be in shape three times a week I eat fruit and vegetables however I don't eat fast food
 Para estar en forma tres veces a la semana como fruta y verduras no obstante prefiero hacer atletismo - In order to be in shape three times a week I eat fruit and vegetables however I prefer to do athletics
 Para estar en forma tres veces a la semana como fruta y verduras no obstante nunca juego al rugby - In order to be in shape three times a week I eat fruit and vegetables however I never play rugby
 Para estar en forma tres veces a la semana como fruta y verduras no obstante casi nunca voy al polideportivo - In order to be in shape three times a week I eat fruit and vegetables however I almost never go to the sports centre
-Para estar en forma tres veces a la semana como fruta y verduras pero no como comida rápida - In order to be in shape three times a week I eat fruit and vegetables but I do not eat fast food
+Para estar en forma tres veces a la semana como fruta y verduras pero no como comida rápida - In order to be in shape three times a week I eat fruit and vegetables but I don't eat fast food
 Para estar en forma tres veces a la semana como fruta y verduras pero prefiero hacer atletismo - In order to be in shape three times a week I eat fruit and vegetables but I prefer to do athletics
 Para estar en forma tres veces a la semana como fruta y verduras pero nunca juego al rugby - In order to be in shape three times a week I eat fruit and vegetables but I never play rugby
 Para estar en forma tres veces a la semana como fruta y verduras pero casi nunca voy al polideportivo - In order to be in shape three times a week I eat fruit and vegetables but I almost never go to the sports centre
-Para estar en forma tres veces a la semana como fruta y verduras aunque no como comida rápida - In order to be in shape three times a week I eat fruit and vegetables although I do not eat fast food
+Para estar en forma tres veces a la semana como fruta y verduras aunque no como comida rápida - In order to be in shape three times a week I eat fruit and vegetables although I don't eat fast food
 Para estar en forma tres veces a la semana como fruta y verduras aunque prefiero hacer atletismo - In order to be in shape three times a week I eat fruit and vegetables although I prefer to do athletics
 Para estar en forma tres veces a la semana como fruta y verduras aunque nunca juego al rugby - In order to be in shape three times a week I eat fruit and vegetables although I never play rugby
 Para estar en forma tres veces a la semana como fruta y verduras aunque casi nunca voy al polideportivo - In order to be in shape three times a week I eat fruit and vegetables although I almost never go to the sports centre
@@ -4417,6 +4465,9 @@ Tengo catarro porque me duele la pierna y me duelen los dientes - I have a cold 
                 btn.onclick = () => toggleWeek(currentModule, week, btn);
                 weekSelection.appendChild(btn);
             });
+            
+            // Update the Select All checkbox state
+            updateAllWeeksCheckbox();
         }
 
         function toggleWeek(module, week, btn) {
@@ -4434,11 +4485,13 @@ Tengo catarro porque me duele la pierna y me duelen los dientes - I have a cold 
             
             updateStartButton();
             updateModuleStates();
+            updateAllWeeksCheckbox();
+            updateAllModulesCheckbox();
         }
 
         function updateModuleStates() {
             // Update all module buttons to show has-selections state
-            const allModuleBtns = document.querySelectorAll('.module-btn');
+            const allModuleBtns = document.querySelectorAll('.module-btn:not(#selectAllModulesBtn)');
             allModuleBtns.forEach(btn => {
                 const moduleName = btn.textContent;
                 if ((moduleName !== currentModule) && selectedWeeksByModule[moduleName] && selectedWeeksByModule[moduleName].size > 0) {
@@ -4457,6 +4510,97 @@ Tengo catarro porque me duele la pierna y me duelen los dientes - I have a cold 
                 totalSelected += weekSet.size;
             });
             startBtn.disabled = totalSelected === 0;
+        }
+
+        function selectAllWeeks() {
+            if (!currentModule) return;
+            
+            const checkbox = document.getElementById('allWeeksCheckbox');
+            
+            // Initialize if needed
+            if (!selectedWeeksByModule[currentModule]) {
+                selectedWeeksByModule[currentModule] = new Set();
+            }
+            
+            // Get all weeks for current module
+            const weeks = Object.keys(vocabData[currentModule]);
+            
+            // Use checkbox state to determine action
+            if (checkbox && checkbox.checked) {
+                // Select all with smooth fade
+                weeks.forEach(week => {
+                    selectedWeeksByModule[currentModule].add(week);
+                    const btn = document.querySelector(`.week-btn[data-week="${week}"]`);
+                    if (btn) btn.classList.add('selected');
+                });
+            } else {
+                // Deselect all
+                weeks.forEach(week => {
+                    selectedWeeksByModule[currentModule].delete(week);
+                    const btn = document.querySelector(`.week-btn[data-week="${week}"]`);
+                    if (btn) btn.classList.remove('selected');
+                });
+            }
+            
+            updateStartButton();
+            updateModuleStates();
+        }
+
+        function selectAllModules() {
+            const checkbox = document.getElementById('allModulesCheckbox');
+            const modules = Object.keys(vocabData);
+            
+            // Use checkbox state to determine action
+            if (checkbox && checkbox.checked) {
+                // Select all weeks in all modules
+                modules.forEach(module => {
+                    if (!selectedWeeksByModule[module]) {
+                        selectedWeeksByModule[module] = new Set();
+                    }
+                    const weeks = Object.keys(vocabData[module]);
+                    weeks.forEach(week => {
+                        selectedWeeksByModule[module].add(week);
+                    });
+                });
+            } else {
+                // Deselect all
+                modules.forEach(module => {
+                    selectedWeeksByModule[module] = new Set();
+                });
+            }
+            
+            // Update UI
+            updateWeekSelection();
+            updateStartButton();
+            updateModuleStates();
+            updateAllModulesCheckbox();
+        }
+
+        function updateAllWeeksCheckbox() {
+            if (!currentModule) return;
+            
+            const checkbox = document.getElementById('allWeeksCheckbox');
+            if (!checkbox) return;
+            
+            const weeks = Object.keys(vocabData[currentModule]);
+            const allSelected = weeks.every(week => 
+                selectedWeeksByModule[currentModule] && selectedWeeksByModule[currentModule].has(week)
+            );
+            
+            checkbox.checked = allSelected;
+        }
+
+        function updateAllModulesCheckbox() {
+            const checkbox = document.getElementById('allModulesCheckbox');
+            if (!checkbox) return;
+            
+            const modules = Object.keys(vocabData);
+            const allFullySelected = modules.every(module => {
+                const weeks = Object.keys(vocabData[module]);
+                return selectedWeeksByModule[module] && weeks.every(week => selectedWeeksByModule[module].has(week));
+            });
+            
+            checkbox.checked = allFullySelected;
         }
 
         // Test functionality
@@ -4582,11 +4726,19 @@ Tengo catarro porque me duele la pierna y me duelen los dientes - I have a cold 
                 // Phrase replacements (multi-word - applied first, no word boundaries needed)
                 const phraseReplacements = {
                     "i often": "often i",
-                    "are not": "aren't"
+                    "are not": "aren't",
+                    "do not": "don't",
+                    "does not": "doesn't",
+                    "can not": "can't",
+                    "is not": "isn't",
                 };
                 
                 // Single word replacements (with word boundaries)
                 const wordReplacements = {
+                    "isnt": "isn't",
+                    "arent": "aren't",
+                    "cant": "can't",
+                    "cannot": "can't",
                     "its": "it is",
                     "it's": "it is",
                     "insta": "instagram",
@@ -4597,17 +4749,13 @@ Tengo catarro porque me duele la pierna y me duelen los dientes - I have a cold 
                     "her": "his",
                     "pe": "pe",
                     "tv": "television",
-                    "dont": "do not",
-                    "doesnt": "does not",
-                    "don't": "do not",
-                    "doesn't": "does not",
+                    "dont": "don't",
+                    "doesnt": "doesn't",
                     "im": "i am",
                     "i'm": "i am",
                     "ive": "i have",
                     "couldnt": "could not",
                     "couldn't": "could not",
-                    "wouldnt": "would not",
-                    "wouldn't": "would not",
                     "shouldnt": "should not",
                     "shouldn't": "should not",
                     "1":"one",

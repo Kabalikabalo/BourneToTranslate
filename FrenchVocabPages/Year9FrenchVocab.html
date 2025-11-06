@@ -179,6 +179,42 @@
             font-weight: 700;
         }
 
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .select-all-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            user-select: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+
+        .select-all-checkbox:hover {
+            background: rgba(0, 85, 164, 0.05);
+        }
+
+        .select-all-checkbox input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: #0055A4;
+        }
+
+        .select-all-checkbox label {
+            cursor: pointer;
+            font-weight: 600;
+            color: #0055A4;
+            font-size: 0.9rem;
+        }
+
         .settings-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -489,7 +525,13 @@
             <h1 class="page-title">French Vocabulary Practice</h1>
 
             <div class="section">
-                <h2 class="section-title">Select Topics</h2>
+                <div class="section-header">
+                    <h2 class="section-title" style="margin-bottom: 0;">Select Topics</h2>
+                    <div class="select-all-checkbox" onclick="selectAllTopics()">
+                        <input type="checkbox" id="allTopicsCheckbox" onclick="event.stopPropagation(); selectAllTopics();">
+                        <label for="allTopicsCheckbox" onclick="event.stopPropagation(); selectAllTopics();">All Topics</label>
+                    </div>
+                </div>
                 
                 <!-- Weekly Topics Category -->
                 <div class="topic-category">
@@ -498,6 +540,10 @@
                         <span class="category-arrow">▼</span>
                     </div>
                     <div class="category-content collapsed" id="weeksContent">
+                        <div class="select-all-checkbox" onclick="selectAllWeeks()" style="margin-bottom: 10px;">
+                            <input type="checkbox" id="allWeeksCheckbox" onclick="event.stopPropagation(); selectAllWeeks();">
+                            <label for="allWeeksCheckbox" onclick="event.stopPropagation(); selectAllWeeks();">Select All Weeks</label>
+                        </div>
                         <div class="module-grid" id="weeksSelection"></div>
                     </div>
                 </div>
@@ -509,6 +555,10 @@
                         <span class="category-arrow">▼</span>
                     </div>
                     <div class="category-content collapsed" id="themesContent">
+                        <div class="select-all-checkbox" onclick="selectAllThemes()" style="margin-bottom: 10px;">
+                            <input type="checkbox" id="allThemesCheckbox" onclick="event.stopPropagation(); selectAllThemes();">
+                            <label for="allThemesCheckbox" onclick="event.stopPropagation(); selectAllThemes();">Select All Themes</label>
+                        </div>
                         <div class="module-grid" id="themesSelection"></div>
                     </div>
                 </div>
@@ -1153,11 +1203,129 @@ Si j'étais riche – If I were rich
             }
             
             updateStartButton();
+            updateAllWeeksCheckbox();
+            updateAllThemesCheckbox();
+            updateAllTopicsCheckbox();
         }
 
         function updateStartButton() {
             const startBtn = document.getElementById('startBtn');
             startBtn.disabled = selectedTopics.size === 0;
+        }
+
+        function selectAllWeeks() {
+            const checkbox = document.getElementById('allWeeksCheckbox');
+            const weekTopics = Object.keys(vocabData).filter(topic => topic.match(/^Week\d+$/));
+            
+            // Use checkbox state to determine action
+            if (checkbox && checkbox.checked) {
+                // Select all weeks
+                weekTopics.forEach(topic => selectedTopics.add(topic));
+            } else {
+                // Deselect all weeks
+                weekTopics.forEach(topic => selectedTopics.delete(topic));
+            }
+            
+            // Update UI
+            document.querySelectorAll('#weeksSelection .module-btn').forEach(btn => {
+                const topic = btn.textContent.replace(/Week (\d+)/, 'Week$1');
+                if (selectedTopics.has(topic)) {
+                    btn.classList.add('selected');
+                } else {
+                    btn.classList.remove('selected');
+                }
+            });
+            
+            updateStartButton();
+            updateAllTopicsCheckbox();
+        }
+
+        function selectAllThemes() {
+            const checkbox = document.getElementById('allThemesCheckbox');
+            const themeTopics = Object.keys(vocabData).filter(topic => !topic.match(/^Week\d+$/));
+            
+            // Use checkbox state to determine action
+            if (checkbox && checkbox.checked) {
+                // Select all themes
+                themeTopics.forEach(topic => selectedTopics.add(topic));
+            } else {
+                // Deselect all themes
+                themeTopics.forEach(topic => selectedTopics.delete(topic));
+            }
+            
+            // Update UI
+            document.querySelectorAll('#themesSelection .module-btn').forEach(btn => {
+                const topic = btn.textContent;
+                if (selectedTopics.has(topic)) {
+                    btn.classList.add('selected');
+                } else {
+                    btn.classList.remove('selected');
+                }
+            });
+            
+            updateStartButton();
+            updateAllTopicsCheckbox();
+        }
+
+        function selectAllTopics() {
+            const checkbox = document.getElementById('allTopicsCheckbox');
+            const allTopics = Object.keys(vocabData);
+            
+            // Use checkbox state to determine action
+            if (checkbox && checkbox.checked) {
+                // Select all
+                allTopics.forEach(topic => selectedTopics.add(topic));
+            } else {
+                // Deselect all
+                selectedTopics.clear();
+            }
+            
+            // Update UI - all buttons
+            document.querySelectorAll('.module-btn').forEach(btn => {
+                // Skip the select all checkboxes themselves
+                if (btn.querySelector('input[type="checkbox"]')) return;
+                
+                const topic = btn.textContent.replace(/Week (\d+)/, 'Week$1');
+                if (selectedTopics.has(topic) || selectedTopics.has(btn.textContent)) {
+                    btn.classList.add('selected');
+                } else {
+                    btn.classList.remove('selected');
+                }
+            });
+            
+            updateStartButton();
+            updateAllWeeksCheckbox();
+            updateAllThemesCheckbox();
+        }
+
+        function updateAllWeeksCheckbox() {
+            const checkbox = document.getElementById('allWeeksCheckbox');
+            if (!checkbox) return;
+            
+            const weekTopics = Object.keys(vocabData).filter(topic => topic.match(/^Week\d+$/));
+            const allWeeksSelected = weekTopics.every(topic => selectedTopics.has(topic));
+            
+            checkbox.checked = allWeeksSelected && weekTopics.length > 0;
+        }
+
+        function updateAllThemesCheckbox() {
+            const checkbox = document.getElementById('allThemesCheckbox');
+            if (!checkbox) return;
+            
+            const themeTopics = Object.keys(vocabData).filter(topic => !topic.match(/^Week\d+$/));
+            const allThemesSelected = themeTopics.every(topic => selectedTopics.has(topic));
+            
+            checkbox.checked = allThemesSelected && themeTopics.length > 0;
+        }
+
+        function updateAllTopicsCheckbox() {
+            const checkbox = document.getElementById('allTopicsCheckbox');
+            if (!checkbox) return;
+            
+            const allTopics = Object.keys(vocabData);
+            const allSelected = allTopics.every(topic => selectedTopics.has(topic));
+            
+            checkbox.checked = allSelected && allTopics.length > 0;
         }
 
         // Test functionality

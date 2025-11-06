@@ -132,6 +132,42 @@
             font-weight: 700;
         }
 
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .select-all-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            user-select: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+
+        .select-all-checkbox:hover {
+            background: rgba(221, 31, 37, 0.05);
+        }
+
+        .select-all-checkbox input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: #DD1F25;
+        }
+
+        .select-all-checkbox label {
+            cursor: pointer;
+            font-weight: 600;
+            color: #DD1F25;
+            font-size: 0.9rem;
+        }
+
         .settings-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -421,12 +457,24 @@
             <h1 class="page-title">Vocabulary Practice</h1>
 
             <div class="section">
-                <h2 class="section-title">Select Modules</h2>
+                <div class="section-header">
+                    <h2 class="section-title" style="margin-bottom: 0;">Select Modules</h2>
+                    <div class="select-all-checkbox" onclick="selectAllModules()">
+                        <input type="checkbox" id="allModulesCheckbox" onclick="event.stopPropagation(); selectAllModules();">
+                        <label for="allModulesCheckbox" onclick="event.stopPropagation(); selectAllModules();">All Modules</label>
+                    </div>
+                </div>
                 <div class="module-grid" id="moduleSelection"></div>
             </div>
 
             <div class="section" id="weekSection" style="display: none;">
-                <h2 class="section-title">Select Weeks</h2>
+                <div class="section-header">
+                    <h2 class="section-title" style="margin-bottom: 0;">Select Weeks</h2>
+                    <div class="select-all-checkbox" onclick="selectAllWeeks()">
+                        <input type="checkbox" id="allWeeksCheckbox" onclick="event.stopPropagation(); selectAllWeeks();">
+                        <label for="allWeeksCheckbox" onclick="event.stopPropagation(); selectAllWeeks();">Select All</label>
+                    </div>
+                </div>
                 <div class="module-grid" id="weekSelection"></div>
             </div>
 
@@ -691,18 +739,18 @@ Week 1:
 ¿Qué te gusta comer? - What do you like to eat?
 ¿Qué te gusta beber? - What do you like to drink? 
 Me gusta(n) - I like... 
-El arroz - Rice 
-Los huevos - Eggs 
-La leche - Milk 
-El agua - Water 
-La carne - Meat 
-Las hamburguesas - Hamburgers  
-El marisco - Seafood 
-El pescado - Fish  
-Los caramelos - Sweets 
-El queso - Cheese 
-La fruta - Fruit 
-Las verduras - Vegetables 
+El arroz - The rice 
+Los huevos - The eggs 
+La leche - The milk 
+El agua - The water 
+La carne - The meat 
+Las hamburguesas - The hamburgers  
+El marisco - The seafood 
+El pescado - The fish  
+Los caramelos - The sweets 
+El queso - The cheese 
+La fruta - The fruit 
+Las verduras - The vegetables 
 
 Week 2:
 
@@ -1063,6 +1111,9 @@ Voy a ir - I am going to go
                 btn.onclick = () => toggleWeek(currentModule, week, btn);
                 weekSelection.appendChild(btn);
             });
+            
+            // Update the Select All checkbox state
+            updateAllWeeksCheckbox();
         }
 
         function toggleWeek(module, week, btn) {
@@ -1080,11 +1131,13 @@ Voy a ir - I am going to go
             
             updateStartButton();
             updateModuleStates();
+            updateAllWeeksCheckbox();
+            updateAllModulesCheckbox();
         }
 
         function updateModuleStates() {
             // Update all module buttons to show has-selections state
-            const allModuleBtns = document.querySelectorAll('.module-btn');
+            const allModuleBtns = document.querySelectorAll('.module-btn:not(#selectAllModulesBtn)');
             allModuleBtns.forEach(btn => {
                 const moduleName = btn.textContent;
                 if ((moduleName !== currentModule) && selectedWeeksByModule[moduleName] && selectedWeeksByModule[moduleName].size > 0) {
@@ -1103,6 +1156,97 @@ Voy a ir - I am going to go
                 totalSelected += weekSet.size;
             });
             startBtn.disabled = totalSelected === 0;
+        }
+
+        function selectAllWeeks() {
+            if (!currentModule) return;
+            
+            const checkbox = document.getElementById('allWeeksCheckbox');
+            
+            // Initialize if needed
+            if (!selectedWeeksByModule[currentModule]) {
+                selectedWeeksByModule[currentModule] = new Set();
+            }
+            
+            // Get all weeks for current module
+            const weeks = Object.keys(vocabData[currentModule]);
+            
+            // Use checkbox state to determine action
+            if (checkbox && checkbox.checked) {
+                // Select all with smooth fade
+                weeks.forEach(week => {
+                    selectedWeeksByModule[currentModule].add(week);
+                    const btn = document.querySelector(`.week-btn[data-week="${week}"]`);
+                    if (btn) btn.classList.add('selected');
+                });
+            } else {
+                // Deselect all
+                weeks.forEach(week => {
+                    selectedWeeksByModule[currentModule].delete(week);
+                    const btn = document.querySelector(`.week-btn[data-week="${week}"]`);
+                    if (btn) btn.classList.remove('selected');
+                });
+            }
+            
+            updateStartButton();
+            updateModuleStates();
+        }
+
+        function selectAllModules() {
+            const checkbox = document.getElementById('allModulesCheckbox');
+            const modules = Object.keys(vocabData);
+            
+            // Use checkbox state to determine action
+            if (checkbox && checkbox.checked) {
+                // Select all weeks in all modules
+                modules.forEach(module => {
+                    if (!selectedWeeksByModule[module]) {
+                        selectedWeeksByModule[module] = new Set();
+                    }
+                    const weeks = Object.keys(vocabData[module]);
+                    weeks.forEach(week => {
+                        selectedWeeksByModule[module].add(week);
+                    });
+                });
+            } else {
+                // Deselect all
+                modules.forEach(module => {
+                    selectedWeeksByModule[module] = new Set();
+                });
+            }
+            
+            // Update UI
+            updateWeekSelection();
+            updateStartButton();
+            updateModuleStates();
+            updateAllModulesCheckbox();
+        }
+
+        function updateAllWeeksCheckbox() {
+            if (!currentModule) return;
+            
+            const checkbox = document.getElementById('allWeeksCheckbox');
+            if (!checkbox) return;
+            
+            const weeks = Object.keys(vocabData[currentModule]);
+            const allSelected = weeks.every(week => 
+                selectedWeeksByModule[currentModule] && selectedWeeksByModule[currentModule].has(week)
+            );
+            
+            checkbox.checked = allSelected;
+        }
+
+        function updateAllModulesCheckbox() {
+            const checkbox = document.getElementById('allModulesCheckbox');
+            if (!checkbox) return;
+            
+            const modules = Object.keys(vocabData);
+            const allFullySelected = modules.every(module => {
+                const weeks = Object.keys(vocabData[module]);
+                return selectedWeeksByModule[module] && weeks.every(week => selectedWeeksByModule[module].has(week));
+            });
+            
+            checkbox.checked = allFullySelected;
         }
 
         // Test functionality
