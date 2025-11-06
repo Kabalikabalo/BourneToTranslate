@@ -696,8 +696,8 @@ Week 3:
 Me gusta... - I like...
 Me gusta mucho... - I really like...
 Me encanta... - I love...
-El rap - Rap music
-El rock - Rock music
+El rap - Rap music / Rap
+El rock - Rock music / Rock
 El R'n'B - R'n'B
 La música electrónica - Electronic music
 La música clásica - Classical music
@@ -1372,20 +1372,28 @@ Voy a ir - I am going to go
             let userAnswer = normalizeAnswer(input.value);
             const correctAnswer = normalizeAnswer(testQuestions[currentQuestion].answer);
 
+            console.log('=== ANSWER CHECK DEBUG ===');
+            console.log('Original input:', input.value);
+            console.log('Normalized user answer:', userAnswer);
+            console.log('Normalized correct answer:', correctAnswer);
+
             // Handle multiple possible answers separated by /
             const possibleAnswers = correctAnswer.split('/').map(a => a.trim());
+            console.log('Possible answers:', possibleAnswers);
             
             // First check: without replacements
             let isCorrect = possibleAnswers.some(ans => userAnswer === ans) || 
                             possibleAnswers.every(ans => userAnswer.includes(ans));
+            
+            console.log('Initial check (no replacements):', isCorrect);
 
             // Only apply replacements if the answer was incorrect
             if (!isCorrect) {
+                console.log('--- Applying replacements ---');
+                const beforeReplacements = userAnswer;
+                
                 const replacements = {
                     "gira":"dobla",
-                    "the": "",
-                    "a": "",
-                    "an": "",
                     "his": "his/her",
                     "her": "his/her",
                     "pe": "pe",
@@ -1434,18 +1442,31 @@ Voy a ir - I am going to go
                     "28":"twenty-eight",
                     "29":"twenty-nine",
                     "30":"thirty",
-                    "gray":"grey"
+                    "gray":"grey",
+                    "to":"on"
                 };
                 
                 // Replace each word in userAnswer if it matches a key in replacements
                 Object.keys(replacements).forEach(word => {
+                    const before = userAnswer;
                     userAnswer = userAnswer.replace(new RegExp(`\\b${word}\\b`, 'gi'), replacements[word]);
+                    if (before !== userAnswer) {
+                        console.log(`Word replacement: "${word}" -> "${replacements[word]}"`);
+                        console.log(`Result: "${before}" -> "${userAnswer}"`);
+                    }
                 });
+                
+                console.log('After word replacements:', userAnswer);
+                console.log('Checking against possible answers:', possibleAnswers);
                 
                 // Check again with replacements applied
                 isCorrect = possibleAnswers.some(ans => userAnswer === ans) || 
                             possibleAnswers.every(ans => userAnswer.includes(ans));
+                
+                console.log('Final check result:', isCorrect);
             }
+
+            console.log('=== END DEBUG ===');
 
             if (isCorrect) {
                 correctAnswers++;
