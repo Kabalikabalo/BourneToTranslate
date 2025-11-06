@@ -5,6 +5,7 @@
     <title>French Stories</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         * { -webkit-tap-highlight-color: transparent; }
@@ -89,14 +90,32 @@
             animation: scaleIn 0.5s ease-out 0.3s both;
         }
         
+        /* Search bar wrapper for icon */
+        .search-bar-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+        }
+        
+        /* Search icon */
+        .search-icon {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #0055A4;
+            font-size: 1.1rem;
+            pointer-events: none;
+            z-index: 10;
+        }
+        
         /* Search bar with gentle scale animation */
         .search-bar { 
             width: 100%; 
-            max-width: 400px; 
             font-size: 1.1rem; 
-            padding: 12px 18px; 
+            padding: 12px 18px 12px 45px; 
             border-radius: 30px; 
-            border: 1px solid #0055A4; 
+            border: 2px solid #0055A4; 
             outline: none; 
             box-shadow: 0 2px 12px rgba(0, 85, 164, 0.08); 
             transition: all 0.25s ease;
@@ -357,7 +376,10 @@
     </div>
     <div class="catalogue-container">
         <div class="search-filter-container">
-            <input type="text" class="search-bar" id="searchInput" placeholder="Search stories...">
+            <div class="search-bar-wrapper">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" class="search-bar" id="searchInput" placeholder="Search stories...">
+            </div>
             <div class="difficulty-filters">
                 <label class="difficulty-filter-label">
                     <input type="checkbox" id="difficulty1" value="1" checked>
