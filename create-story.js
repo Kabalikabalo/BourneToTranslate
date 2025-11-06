@@ -505,7 +505,7 @@ async function createAtomicCommit(token, files, commitMessage) {
 }
 
 // Get and update catalogue HTML content with new story
-async function getUpdatedCatalogueHTML(token, language, title, intro, yearGroupOrDifficulty, firstImage) {
+async function getUpdatedCatalogueHTML(token, language, title, intro, metadata, yearGroupOrDifficulty, firstImage) {
     const config = LANGUAGE_CONFIG[language];
     const filePath = config.catalogueFile;
     
@@ -547,7 +547,8 @@ async function getUpdatedCatalogueHTML(token, language, title, intro, yearGroupO
             intro: "${intro}",
             image: "${config.storiesDir}/${title}/${firstImage}",
             url: "${config.storiesDir}/${title}/index.html",
-            yearGroup: ${yearGroupOrDifficulty}
+            yearGroup: ${yearGroupOrDifficulty}${metadata ? `,
+            metadata: "${metadata}"` : ''}
         }`;
     } else {
         // French: uses difficulty
@@ -557,7 +558,8 @@ async function getUpdatedCatalogueHTML(token, language, title, intro, yearGroupO
             intro: "${intro}",
             image: "${config.storiesDir}/${title}/${firstImage}",
             url: "${config.storiesDir}/${title}/index.html",
-            difficulty: ${yearGroupOrDifficulty}
+            difficulty: ${yearGroupOrDifficulty}${metadata ? `,
+            metadata: "${metadata}"` : ''}
         }`;
     }
 
@@ -680,6 +682,7 @@ document.getElementById('storyForm').addEventListener('submit', async (e) => {
         const language = document.getElementById('language').value;
         const title = document.getElementById('storyTitle').value.trim();
         const intro = document.getElementById('storyIntro').value.trim();
+        const metadata = document.getElementById('storyMetadata').value.trim();
         const storyText = document.getElementById('storyText').value.trim();
 
         // Get year group or difficulty based on language
@@ -728,7 +731,7 @@ document.getElementById('storyForm').addEventListener('submit', async (e) => {
         const storyPath = `${config.storiesDir}/${title}/index.html`;
 
         // Get updated catalogue HTML
-        const updatedCatalogueHTML = await getUpdatedCatalogueHTML(token, language, title, intro, yearGroupOrDifficulty, firstImage);
+        const updatedCatalogueHTML = await getUpdatedCatalogueHTML(token, language, title, intro, metadata, yearGroupOrDifficulty, firstImage);
 
         // Prepare all files for atomic commit
         const allFiles = [

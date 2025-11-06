@@ -168,6 +168,12 @@
             gap: 35px; 
         }
         
+        /* Single story: limit width */
+        .stories-grid:has(.story-card:only-child) {
+            grid-template-columns: repeat(auto-fit, minmax(260px, 400px));
+            justify-content: center;
+        }
+        
         .story-card { 
             background: #fafafd; 
             border-radius: 16px; 
@@ -388,21 +394,24 @@
             intro: "Mi familia es grande...",
             image: "SpanishStories/La foto de familia/FamilyPhoto1.png",
             url: "SpanishStories/La foto de familia/index.html",
-            yearGroup: 7
+            yearGroup: 7,
+            metadata: "family photo relatives parents siblings grandmother grandfather descriptions"
         },
         {
             title: "El mono y el cocodrilo",
             intro: "Extension, fábula, Panchatantra",
             image: "SpanishStories/El mono y el cocodrilo/1000015451.jpg",
             url: "SpanishStories/El mono y el cocodrilo/index.html",
-            yearGroup: 8
+            yearGroup: 8,
+            metadata: "monkey crocodile fable Panchatantra fairy tale animals"
         },
         {
             title: "Tiddalik la rana sedienta",
             intro: "Extension, mitos, fábula",
             image: "SpanishStories/Tiddalik la rana sedienta/frog.png",
             url: "SpanishStories/Tiddalik la rana sedienta/index.html",
-            yearGroup: 8
+            yearGroup: 8,
+            metadata: "frog water drought Australia Aboriginal mythology"
         },
 
         {
@@ -410,147 +419,168 @@
             intro: "Extension, Polish, mitos, fábula",
             image: "SpanishStories/El Dragón de Wawel/dragon.jpeg",
             url: "SpanishStories/El Dragón de Wawel/index.html",
-            yearGroup: 9
+            yearGroup: 9,
+            metadata: "dragon Wawel castle Poland mythology"
         },
         {
             title: "Hansel y Gretel",
             intro: "Fábula, Extension",
             image: "SpanishStories/Hansel y Gretel/1000015766.jpg",
             url: "SpanishStories/Hansel y Gretel/index.html",
-            yearGroup: 9
+            yearGroup: 9,
+            metadata: "Hansel Gretel fairy tale children"
         },
         {
             title: "El Zodíaco Chino",
             intro: "Animales, Extension...",
             image: "SpanishStories/El zodiaco chino/ratbull.png",
             url: "SpanishStories/El zodiaco chino/index.html",
-            yearGroup: 9
+            yearGroup: 9,
+            metadata: "Chinese zodiac animals ox rat tiger"
         },
         {
             title: "Aventura en Escocia",
             intro: "El verano pasado...",
             image: "SpanishStories/Aventura en Escocia/MuddyFrog3.png",
             url: "SpanishStories/Aventura en Escocia/index.html",
-            yearGroup: 8
+            yearGroup: 8,
+            metadata: "Scotland adventure summer"
         },
         {
             title: "Nuestros Animales Favoritos",
             intro: "Animales, colores...",
             image: "SpanishStories/Nuestros Animales Favoritos/fish.png",
             url: "SpanishStories/Nuestros Animales Favoritos/index.html",
-            yearGroup: 7
+            yearGroup: 7,
+            metadata: "animals colors"
         },
         {
             title: "Mi familia divertida",
             intro: "Personalidad, animales...",
             image: "SpanishStories/Mi familia divertida/sisters.png",
             url: "SpanishStories/Mi familia divertida/index.html",
-            yearGroup: 7
+            yearGroup: 7,
+            metadata: "family fun personality animals"
         },
         {
             title: "El León de Nemea",
             intro: "Mitología, aventuras...",
             image: "SpanishStories/El leon de nemea/hercules.png",
             url: "SpanishStories/El leon de nemea/index.html",
-            yearGroup: 9
+            yearGroup: 9,
+            metadata: "Nemean lion Hercules mythology"
         },
         {
             title: "El chacal azul",
             intro: "Extension, fábula, Panchatantra",
             image: "SpanishStories/El chacal azul/1000015457.jpg",
             url: "SpanishStories/El chacal azul/index.html",
-            yearGroup: 7
+            yearGroup: 7,
+            metadata: "blue jackal fable Panchatantra"
         },
         {
             title: "La Serpiente del Arcoíris",
             intro: "Animales, mitos...",
             image: "SpanishStories/La Serpiente del Arcoíris/rainbowsnake.png",
             url: "SpanishStories/La Serpiente del Arcoíris/index.html",
-            yearGroup: 8
+            yearGroup: 8,
+            metadata: "rainbow snake mythology animals"
         },
         {
             title: "Un día en el parque",
             intro: "Tiempo, deportes...",
             image: "SpanishStories/Un dia en el parque/football.png",
             url: "SpanishStories/Un dia en el parque/index.html",
-            yearGroup: 7
+            yearGroup: 7,
+            metadata: "park day sports"
         },
         {
             title: "Un día lluvioso",
             intro: "El clima, El tiempo...",
             image: "SpanishStories/Un dia lluvioso/rainyday.png",
             url: "SpanishStories/Un dia lluvioso/index.html",
-            yearGroup: 7
+            yearGroup: 7,
+            metadata: "rainy day weather"
         },
         {
             title: "Beowulf",
             intro: "Aventura, mitos...",
             image: "SpanishStories/Beowulf/heorot.jpeg",
             url: "SpanishStories/Beowulf/index.html",
-            yearGroup: 9
+            yearGroup: 9,
+            metadata: "Beowulf mythology adventure"
         },
         {
             title: "Nuestro tiempo libre",
             intro: "Tiempo libre...",
             image: "SpanishStories/Nuestro tiempo libre/piano.png",
             url: "SpanishStories/Nuestro tiempo libre/index.html",
-            yearGroup: 7
+            yearGroup: 7,
+            metadata: "free time activities"
         },
         {
             title: "Mi semana escolar",
             intro: "La escuela, la rutina...",
             image: "SpanishStories/Mi semana escolar/swimming.png",
             url: "SpanishStories/Mi semana escolar/index.html",
-            yearGroup: 7
+            yearGroup: 7,
+            metadata: "school routine"
         },
         {
             title: "Mi rutina diaria",
             intro: "Rutina diaria...",
             image: "SpanishStories/Mi rutina diaria/television.png",
             url: "SpanishStories/Mi rutina diaria/index.html",
-            yearGroup: 7
+            yearGroup: 7,
+            metadata: "daily routine"
         },
         {
             title: "Mi nuevo instituto",
             intro: "Instituto, asignaturas...",
             image: "SpanishStories/Mi nuevo instituto/artlesson.png",
             url: "SpanishStories/Mi nuevo instituto/index.html",
-            yearGroup: 7
+            yearGroup: 7,
+            metadata: "school subjects"
         },
         {
             title: "El recreo",
             intro: "Comida, recreo...",
             image: "SpanishStories/El recreo/music.png",
             url: "SpanishStories/El recreo/index.html",
-            yearGroup: 7
+            yearGroup: 7,
+            metadata: "recess food"
         },
         {
             title: "Mi cumpleaños",
             intro: "tiempo libre",
             image: "SpanishStories/Mi cumpleaños/screen.png",
             url: "SpanishStories/Mi cumpleaños/index.html",
-            yearGroup: 7
+            yearGroup: 7,
+            metadata: "birthday celebration"
         },
         {
             title: "Mi fin de semana",
             intro: "Actividades, tiempo libre",
             image: "SpanishStories/Mi fin de semana/cafe.png",
             url: "SpanishStories/Mi fin de semana/index.html",
-            yearGroup: 7
+            yearGroup: 7,
+            metadata: "weekend activities"
         },
         {
             title: "Nuestras mascotas",
             intro: "Animales, descripciones...",
             image: "SpanishStories/Nuestras mascotas/cat2.png",
             url: "SpanishStories/Nuestras mascotas/index.html",
-            yearGroup: 7
+            yearGroup: 7,
+            metadata: "pets animals descriptions"
         },
         {
             title: "Baba Yaga",
             intro: "Extension, mitos...",
             image: "SpanishStories/Baba Yaga/house.png",
             url: "SpanishStories/Baba Yaga/index.html",
-            yearGroup: 9
+            yearGroup: 9,
+            metadata: "Baba Yaga folklore"
         }
     ,
         {
@@ -558,7 +588,8 @@
             intro: "Extension, mitos, fábula",
             image: "SpanishStories/El flautista de Hamelín/rats.png",
             url: "SpanishStories/El flautista de Hamelín/index.html",
-            yearGroup: 8
+            yearGroup: 8,
+            metadata: "El Flautista de Hamelín folklore"
         }
     ,
         {
@@ -566,7 +597,8 @@
             intro: "fábula",
             image: "SpanishStories/El Wendigo/wendigo.png",
             url: "SpanishStories/El Wendigo/index.html",
-            yearGroup: 8
+            yearGroup: 8,
+            metadata: "Wendigo mythology"
         }
     ];
 
@@ -609,7 +641,8 @@
         stories.forEach((story, index) => {
             const matchesFilter = !normalizedFilter ||
                 normalizeText(story.title).includes(normalizedFilter) ||
-                normalizeText(story.intro).includes(normalizedFilter);
+                normalizeText(story.intro).includes(normalizedFilter) ||
+                (story.metadata && normalizeText(story.metadata).includes(normalizedFilter));
             const matchesYear = selectedYears.length === 0 || selectedYears.includes(story.yearGroup);
             
             if (matchesFilter && matchesYear) {

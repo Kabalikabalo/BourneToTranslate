@@ -168,6 +168,12 @@
             gap: 35px; 
         }
         
+        /* Constrain single story width */
+        .stories-grid:has(.story-card:only-child) {
+            grid-template-columns: repeat(auto-fit, minmax(260px, 400px));
+            justify-content: center;
+        }
+        
         .story-card { 
             background: #fafafd; 
             border-radius: 16px; 
@@ -377,28 +383,32 @@
             intro: "La ferme est grande....",
             image: "FrenchStories/Les amis de la ferme/FarmPhoto1.png",
             url: "FrenchStories/Les amis de la ferme/index.html",
-            difficulty: 1
+            difficulty: 1,
+            metadata: "farm animals friends pig cow sheep chicken nature colors"
         },
         {
             title: "Nos animaux favoris",
             intro: "Animaux, couleurs...",
             image: "FrenchStories/Nos animaux favoris/banner.png",
             url: "FrenchStories/Nos animaux favoris/index.html",
-            difficulty: 1
+            difficulty: 1,
+            metadata: "favorite animals pets colors cat dog bird fish descriptions"
         },
         {
             title: "Le singe et le crocodile",
             intro: "Animaux, Panchatantra...",
             image: "FrenchStories/Le singe et le crocodile/monkey1.png",
             url: "FrenchStories/Le singe et le crocodile/index.html",
-            difficulty: 2
+            difficulty: 2,
+            metadata: "monkey crocodile friendship betrayal trust fable panchatantra moral lesson jungle river"
         },
         {
             title: "Le lion et la souris",
             intro: "Animaux, Panchatantra",
             image: "FrenchStories/Le lion et la souris/lion1.png",
             url: "FrenchStories/Le lion et la souris/index.html",
-            difficulty: 2
+            difficulty: 2,
+            metadata: "lion mouse kindness gratitude fable panchatantra moral lesson help hunter net"
         }
     ,
         {
@@ -406,7 +416,8 @@
             intro: "Fable, mitologie",
             image: "FrenchStories/Maui et le soleil/trap.png",
             url: "FrenchStories/Maui et le soleil/index.html",
-            difficulty: 3
+            difficulty: 3,
+            metadata: "maui sun mythology legend polynesian hero rope trap sky day night"
         }
     ,
         {
@@ -414,7 +425,8 @@
             intro: "animaux, fable, Aesop",
             image: "FrenchStories/Le lièvre et la tortue/1000015468.jpg",
             url: "FrenchStories/Le lièvre et la tortue/index.html",
-            difficulty: 2
+            difficulty: 2,
+            metadata: "hare turtle race speed slow steady aesop fable moral lesson pride"
         }
     ,
         {
@@ -422,7 +434,8 @@
             intro: "fable, Aesop",
             image: "FrenchStories/La Cigale et la Fourmi/cicada3.jpeg",
             url: "FrenchStories/La Cigale et la Fourmi/index.html",
-            difficulty: 3
+            difficulty: 3,
+            metadata: "cicada ant work lazy summer winter preparation aesop fable moral lesson"
         }
     ,
         {
@@ -430,7 +443,8 @@
             intro: "conte de fées",
             image: "FrenchStories/Boucle d'or et les Trois Ours/goldilocks.jpeg",
             url: "FrenchStories/Boucle d'or et les Trois Ours/index.html",
-            difficulty: 2
+            difficulty: 2,
+            metadata: "goldilocks three bears fairy tale porridge chairs beds just right forest"
         }
     ,
         {
@@ -438,7 +452,8 @@
             intro: "conte de fées",
             image: "FrenchStories/Les Trois Petits Cochons/pigs_and_mum.jpeg",
             url: "FrenchStories/Les Trois Petits Cochons/index.html",
-            difficulty: 2
+            difficulty: 2,
+            metadata: "three little pigs wolf houses straw wood brick fairy tale huffpuff blow"
         }
     ];
 
@@ -487,7 +502,8 @@
         stories.forEach((story, index) => {
             const matchesFilter = !normalizedFilter ||
                 normalizeText(story.title).includes(normalizedFilter) ||
-                normalizeText(story.intro).includes(normalizedFilter);
+                normalizeText(story.intro).includes(normalizedFilter) ||
+                (story.metadata && normalizeText(story.metadata).includes(normalizedFilter));
             const matchesDifficulty = selectedDifficulties.length === 0 || selectedDifficulties.includes(story.difficulty);
             
             if (matchesFilter && matchesDifficulty) {
