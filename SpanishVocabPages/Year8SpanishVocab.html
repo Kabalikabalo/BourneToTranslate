@@ -344,6 +344,7 @@
             border-radius: 12px;
             padding: 40px;
             box-shadow: 0 6px 24px rgba(221, 31, 37, 0.15);
+            position: relative;
         }
 
         .typing-question {
@@ -414,6 +415,15 @@
 
         .next-btn:hover {
             background: #c11a1f;
+        }
+
+        .running-total {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-size: 0.8rem;
+            color: #999;
+            font-weight: 500;
         }
 
         .results {
@@ -1316,6 +1326,7 @@ Voy a ir - I am going to go
                     <input type="text" class="typing-input" id="answerInput" placeholder="Type your answer..." autocomplete="off">
                     <button class="submit-btn" onclick="checkAnswer()">Submit</button>
                     <div id="feedback"></div>
+                    <div class="running-total" id="runningTotal"></div>
                 </div>
             `;
             
@@ -1323,6 +1334,7 @@ Voy a ir - I am going to go
             document.addEventListener('keypress', handleTypingEnter);
             
             updateProgress();
+            updateRunningTotal();
         }
 
         function handleTypingEnter(e) {
@@ -1370,6 +1382,7 @@ Voy a ir - I am going to go
             // Only apply replacements if the answer was incorrect
             if (!isCorrect) {
                 const replacements = {
+                    "gira":"dobla",
                     "the": "",
                     "a": "",
                     "an": "",
@@ -1444,6 +1457,7 @@ Voy a ir - I am going to go
             }
 
             input.disabled = true;
+            updateRunningTotal();
         }
 
         function nextQuestion() {
@@ -1465,6 +1479,23 @@ Voy a ir - I am going to go
             const progress = ((currentQuestion + 1) / testQuestions.length) * 100;
             document.getElementById('progressFill').style.width = progress + '%';
         }
+
+        function updateRunningTotal() {
+            const runningTotal = document.getElementById('runningTotal');
+            if (runningTotal) {
+                const feedback = document.getElementById('feedback');
+                let denominator;
+                // If feedback is visible, user has just answered
+                if (feedback && feedback.innerHTML.trim() !== "") {
+                    denominator = currentQuestion + 1;
+                } else {
+                    denominator = currentQuestion;
+                }
+                const percentage = denominator > 0 ? Math.round((correctAnswers / denominator) * 100) : 0;
+                runningTotal.innerHTML = `${correctAnswers}/${denominator} (${percentage}%)`;
+            }
+        }
+
 
         function showResults() {
             const testContent = document.getElementById('testContent');
