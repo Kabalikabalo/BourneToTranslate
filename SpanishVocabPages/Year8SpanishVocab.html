@@ -622,9 +622,9 @@ A veces - Sometimes
 De vez en cuando - From time to time
 Nunca - Never
 ¿Qué hay en la foto? - What is there in the photo?
-En la foto hay... - In the photo there is/ In the photo there are...
-Un chico / una chica - A boy/a girl
-Un hombre / una mujer - A man/a woman
+En la foto hay... - In the photo there is / In the photo there are...
+Un chico / una chica - A boy / a girl
+Un hombre / una mujer - A man / a woman
 Una familia - A family
 (Muchas) personas - (Many) people
 En el centro - In the centre
@@ -640,7 +640,7 @@ Me gusta mucho... - I really like...
 Me encanta... - I love...
 El rap - Rap music
 El rock - Rock music
-El R’n’B - R’n’B
+El R'n'B - R'n'B
 La música electrónica - Electronic music
 La música clásica - Classical music
 La música de... - ...'s music
@@ -1226,6 +1226,9 @@ Voy a ir - I am going to go
             // Only apply replacements if the answer was incorrect
             if (!isCorrect) {
                 const replacements = {
+                    "the": "",
+                    "a": "",
+                    "an": "",
                     "his": "his/her",
                     "her": "his/her",
                     "pe": "pe",
