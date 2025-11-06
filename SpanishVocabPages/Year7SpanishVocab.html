@@ -1324,6 +1324,10 @@ Finalmente - Finally
             // Only apply replacements if the answer is incorrect
             if (!isCorrect) {
                 const replacements = {
+                    "it's": "it is",
+                    "its": "it is",
+                    "i'm": "i am",
+                    "im": "i am",
                     "whats": "what is",
                     "what's": "what is",
                     "his": "his/her",
@@ -1331,19 +1335,6 @@ Finalmente - Finally
                     "pe": "pe",
                     "a lot": "lots",
                     "tv": "television",
-                    "dont": "do not",
-                    "doesnt": "does not",
-                    "don't": "do not",
-                    "doesn't": "does not",
-                    "im": "i am",
-                    "i'm": "i am",
-                    "ive": "i have",
-                    "couldnt": "could not",
-                    "couldn't": "could not",
-                    "wouldnt": "would not",
-                    "wouldn't": "would not",
-                    "shouldnt": "should not",
-                    "shouldn't": "should not",
                     "type": "sort",
                     "1":"one",
                     "2":"two",
@@ -1375,7 +1366,9 @@ Finalmente - Finally
                     "28":"twenty-eight",
                     "29":"twenty-nine",
                     "30":"thirty",
-                    "gray":"grey"
+                    "gray":"grey",
+                    "he's":"he is",
+                    "she's":"she is",
                 };
                 
                 // Apply replacements to user answer (already lowercase)
