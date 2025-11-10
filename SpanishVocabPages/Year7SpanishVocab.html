@@ -651,13 +651,13 @@ Es aburrido - It is boring
 Es divertido - It is fun
 
 Week 3:
-Hace buen tiempo - It's nice weather
-Hace mal tiempo - It's bad weather
-Hace calor - It's hot
-Hace frío - It's cold
-Hace sol - It's sunny
-Llueve - It's raining
-Nieva - It's snowing
+Hace buen tiempo - It is nice weather
+Hace mal tiempo - It is bad weather
+Hace calor - It is hot
+Hace frío - It is cold
+Hace sol - It is sunny
+Llueve - It is raining
+Nieva - It is snowing
 ¿Qué deportes haces? - What sports do you do?
 Hago gimnasia - I do gymnastics
 Hago artes marciales - I do martial arts
@@ -892,18 +892,18 @@ No hay nada - There isn't anything
 
 Week 2:
 ¿Qué hora es? - What time is it?
-Es la una - It's one o'clock
-Son las dos - It's two o'clock
-Son las tres y cuarto - It's quarter past three
-Son las cuatro y media - It's half past four
-Son las cinco menos cuarto - It's a quarter to five
-Son las seis y cinco - It's five past six
-Son las siete y diez - It's ten past seven
-Son las ocho y veinte - It's twenty past eight
-Son las nueve menos veinticinco - It's twenty-five to nine
-Son las diez menos cinco - It's five to ten
-Son las once menos diez - It's ten to eleven
-Son las doce menos veinte - It's twenty to twelve
+Es la una - It is one o'clock
+Son las dos - It is two o'clock
+Son las tres y cuarto - It is quarter past three
+Son las cuatro y media - It is half past four
+Son las cinco menos cuarto - It is a quarter to five
+Son las seis y cinco - It is five past six
+Son las siete y diez - It is ten past seven
+Son las ocho y veinte - It is twenty past eight
+Son las nueve menos veinticinco - It is twenty-five to nine
+Son las diez menos cinco - It is five to ten
+Son las once menos diez - It is ten to eleven
+Son las doce menos veinte - It is twenty to twelve
 ...de la mañana - ...In the morning (A.M.)
 ...de la tarde - ...In the afternoon (P.M.)
 
@@ -1324,8 +1324,10 @@ Finalmente - Finally
             // Only apply replacements if the answer is incorrect
             if (!isCorrect) {
                 const replacements = {
-                    "its": "it's",
-                    "dont": "don't",
+                    "its": "it is",
+                    "it's": "it is",
+                    "dont": "do not",
+                    "don't": "do not",
                     "i'm": "i am",
                     "im": "i am",
                     "whats": "what is",
