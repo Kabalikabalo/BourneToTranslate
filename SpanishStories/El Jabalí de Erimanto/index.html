@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>El Jabalí de Erimanto</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { -webkit-tap-highlight-color: transparent; }
+        body { 
+            font-family: Georgia, 'Times New Roman', serif;
+            background: #f5f5f5; 
+            color: #2a2a2a;
+            line-height: 1.8;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            background-color: #DD1F25;
+            height: 65px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .back-button {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 8px 18px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        .back-button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateX(-5px);
+        }
+        .back-arrow { font-size: 1.3rem; }
+
+        /* Toggle Container */
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .toggle-label { color: white; font-size: 0.95rem; font-weight: 400; }
+        .toggle-switch {
+            position: relative;
+            width: 55px;
+            height: 28px;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .toggle-switch.active { background-color: rgba(255, 255, 255, 0.5); }
+        .toggle-slider {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 22px;
+            height: 22px;
+            background-color: white;
+            border-radius: 50%;
+            transition: transform 0.3s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .toggle-switch.active .toggle-slider { transform: translateX(27px); }
+
+        /* Hero Banner */
+        .hero-banner {
+            position: relative;
+            width: 100%;
+            height: 320px;
+            background-image: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url('boar.jpeg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 50px;
+        }
+        .story-title {
+            font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+            font-size: 3.5rem;
+            font-weight: 400;
+            color: white;
+            text-align: center;
+            text-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            letter-spacing: 1px;
+        }
+
+        /* Story Content */
+        .container { 
+            max-width: 750px; 
+            margin: 0 auto; 
+            padding: 20px 30px 60px 30px; 
+        }
+        .story-block { 
+            margin-bottom: 1.8em;
+            position: relative;
+        }
+        .sentence { 
+            font-size: 1.25rem;
+            font-weight: 400;
+            color: #1a1a1a;
+            display: inline;
+        }
+        .translate-btn {
+            display: inline-block;
+            margin-left: 8px;
+            font-size: 0.75rem;
+            color: #DD1F25;
+            background: transparent;
+            border: 1px solid #DD1F25;
+            padding: 2px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Segoe UI', sans-serif;
+            font-weight: 500;
+            opacity: 0.7;
+        }
+        .translate-btn:hover {
+            opacity: 1;
+            background: #DD1F25;
+            color: white;
+        }
+        .translation { 
+            color: #666;
+            font-size: 1.05rem;
+            display: none;
+            margin-top: 6px;
+            font-style: italic;
+            padding-left: 20px;
+            border-left: 2px solid #DD1F25;
+        }
+        .translation.show { display: block; }
+        .story-image { 
+            display: block; 
+            margin: 3em auto; 
+            max-width: 100%; 
+            height: auto;
+            border-radius: 8px; 
+            box-shadow: 0 6px 24px rgba(0,0,0,0.12); 
+        }
+
+        @media (max-width: 768px) {
+            .navbar { height: 60px; padding: 0 20px; }
+            .hero-banner { height: 250px; }
+            .story-title { font-size: 2.5rem; }
+            .container { padding: 20px 20px 50px 20px; }
+            .sentence { font-size: 1.15rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <a href="../../spanish-stories.html" class="back-button">
+            <span class="back-arrow">←</span>
+            <span>Back</span>
+        </a>
+        <div class="toggle-container">
+            <span class="toggle-label">Show All Translations</span>
+            <div class="toggle-switch" id="toggleSwitch" onclick="toggleAllTranslations()">
+                <div class="toggle-slider"></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Banner with Story Title -->
+    <div class="hero-banner">
+        <h1 class="story-title">El Jabalí de Erimanto</h1>
+    </div>
+
+    <!-- Story Content -->
+    <div class="container">
+        <div class="story-block">
+            <span class="sentence">El cuarto trabajo de Hércules fue capturar al jabalí de Erimanto.</span>
+            <button class="translate-btn" onclick="toggleTranslation(0)">TRANSLATE</button>
+            <div class="translation" id="trans-0">Hercules’ fourth task was to capture the Erymanthian boar.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">Era un animal gigantesco que aterrorizaba a la gente de las montañas.</span>
+            <button class="translate-btn" onclick="toggleTranslation(1)">TRANSLATE</button>
+            <div class="translation" id="trans-1">It was a gigantic animal that terrified the people of the mountains.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">Corría destruyendo cosechas y atacando a los aldeanos.</span>
+            <button class="translate-btn" onclick="toggleTranslation(2)">TRANSLATE</button>
+            <div class="translation" id="trans-2">It ran through the fields destroying crops and attacking villagers.</div>
+        </div>
+        <img src="boar.jpeg" class="story-image" alt="Story illustration" loading="lazy">
+        <div class="story-block">
+            <span class="sentence">El rey Euristeo quería que Hércules lo trajera vivo.</span>
+            <button class="translate-btn" onclick="toggleTranslation(3)">TRANSLATE</button>
+            <div class="translation" id="trans-3">King Eurystheus wanted Hercules to bring it back alive.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">Hércules viajó hasta el monte Erimanto cubierto de nieve.</span>
+            <button class="translate-btn" onclick="toggleTranslation(4)">TRANSLATE</button>
+            <div class="translation" id="trans-4">Hercules travelled to snowy Mount Erymanthus.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">Por el camino visitó al centauro Folo, su viejo amigo.</span>
+            <button class="translate-btn" onclick="toggleTranslation(5)">TRANSLATE</button>
+            <div class="translation" id="trans-5">On the way he visited the centaur Pholus, his old friend.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">Folo le ofreció comida y vino mientras hablaban del jabalí.</span>
+            <button class="translate-btn" onclick="toggleTranslation(6)">TRANSLATE</button>
+            <div class="translation" id="trans-6">Pholus offered him food and wine while they talked about the boar.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">Pero el olor del vino atrajo a otros centauros salvajes.</span>
+            <button class="translate-btn" onclick="toggleTranslation(7)">TRANSLATE</button>
+            <div class="translation" id="trans-7">But the smell of the wine attracted other wild centaurs.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">Pronto comenzaron a pelear y Hércules tuvo que defenderse.</span>
+            <button class="translate-btn" onclick="toggleTranslation(8)">TRANSLATE</button>
+            <div class="translation" id="trans-8">Soon they began to fight, and Hercules had to defend himself.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">Después de escapar, siguió su camino hacia las montañas.</span>
+            <button class="translate-btn" onclick="toggleTranslation(9)">TRANSLATE</button>
+            <div class="translation" id="trans-9">After escaping, he continued his way into the mountains.</div>
+        </div>
+        <img src="centaur.jpeg" class="story-image" alt="Story illustration" loading="lazy">
+        <div class="story-block">
+            <span class="sentence">Cuando llegó, vio las huellas del jabalí en la nieve.</span>
+            <button class="translate-btn" onclick="toggleTranslation(10)">TRANSLATE</button>
+            <div class="translation" id="trans-10">When he arrived, he saw the boar’s tracks in the snow.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">Esperó escondido hasta que el animal salió rugiendo del bosque.</span>
+            <button class="translate-btn" onclick="toggleTranslation(11)">TRANSLATE</button>
+            <div class="translation" id="trans-11">He waited hidden until the beast came roaring out of the forest.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">Hércules lo persiguió colina arriba hasta cansarlo.</span>
+            <button class="translate-btn" onclick="toggleTranslation(12)">TRANSLATE</button>
+            <div class="translation" id="trans-12">Hercules chased it up the hill until it grew tired.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">Entonces lo atrapó con una gran red de hierro.</span>
+            <button class="translate-btn" onclick="toggleTranslation(13)">TRANSLATE</button>
+            <div class="translation" id="trans-13">Then he caught it with a large iron net.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">El jabalí luchó y gruñó, pero no pudo escapar.</span>
+            <button class="translate-btn" onclick="toggleTranslation(14)">TRANSLATE</button>
+            <div class="translation" id="trans-14">The boar struggled and grunted, but it could not escape.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">Hércules lo levantó sobre sus hombros y lo llevó al rey Euristeo.</span>
+            <button class="translate-btn" onclick="toggleTranslation(15)">TRANSLATE</button>
+            <div class="translation" id="trans-15">Hercules lifted it onto his shoulders and carried it to King Eurystheus.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">El rey se escondió en un gran jarrón del miedo que tenía.</span>
+            <button class="translate-btn" onclick="toggleTranslation(16)">TRANSLATE</button>
+            <div class="translation" id="trans-16">The king hid inside a huge jar from sheer fear.</div>
+        </div>
+        <div class="story-block">
+            <span class="sentence">Así terminó el cuarto trabajo de Hércules con fuerza y valor.</span>
+            <button class="translate-btn" onclick="toggleTranslation(17)">TRANSLATE</button>
+            <div class="translation" id="trans-17">And so Hercules’ fourth labour ended with strength and courage.</div>
+        </div>
+    </div>
+
+    <script>
+        let allTranslationsVisible = false;
+
+        function toggleTranslation(id) {
+            const trans = document.getElementById('trans-' + id);
+            trans.classList.toggle('show');
+        }
+
+        function toggleAllTranslations() {
+            const toggle = document.getElementById('toggleSwitch');
+            const translations = document.querySelectorAll('.translation');
+
+            allTranslationsVisible = !allTranslationsVisible;
+            toggle.classList.toggle('active');
+
+            translations.forEach(translation => {
+                if (allTranslationsVisible) {
+                    translation.classList.add('show');
+                } else {
+                    translation.classList.remove('show');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
