@@ -5,6 +5,7 @@
     <title>Culture Française</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
     <style>
@@ -68,20 +69,37 @@
             to   { opacity: 1; transform: translateY(0);}
         }
         
+        /* Search bar wrapper for icon */
+        .search-bar-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto 35px auto;
+            animation: scaleIn 0.5s ease-out 0.3s both;
+        }
+        
+        /* Search icon */
+        .search-icon {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #0055A4;
+            font-size: 1.1rem;
+            pointer-events: none;
+            z-index: 10;
+        }
+        
         /* Search bar with gentle scale animation */
         .search-bar { 
             width: 100%; 
-            max-width: 400px; 
-            margin: 0 auto 35px auto; 
-            display: block; 
             font-size: 1.1rem; 
-            padding: 12px 18px; 
+            padding: 12px 18px 12px 45px; 
             border-radius: 30px; 
-            border: 1px solid #0055A4; 
+            border: 2px solid #0055A4; 
             outline: none; 
             box-shadow: 0 2px 12px rgba(0, 85, 164, 0.08); 
             transition: all 0.25s ease;
-            animation: scaleIn 0.5s ease-out 0.3s both;
         }
         
         @keyframes scaleIn {
@@ -100,6 +118,12 @@
             display: grid; 
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); 
             gap: 35px; 
+        }
+        
+        /* Limit single card width */
+        .culture-grid.single-result {
+            grid-template-columns: minmax(260px, 400px);
+            justify-content: center;
         }
         
         .culture-card { 
@@ -440,7 +464,10 @@
         French Culture
     </div>
     <div class="catalogue-container">
-        <input type="text" class="search-bar" id="searchInput" placeholder="Search cultural themes...">
+        <div class="search-bar-wrapper">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" class="search-bar" id="searchInput" placeholder="Search cultural themes...">
+        </div>
 
         <!-- Map Section -->
         <button class="show-map-btn" onclick="initMapPreview()">Show Map</button>
@@ -755,6 +782,13 @@
         
         if (shown === 0) {
             newHTML = `<div class="no-results">Aucun thème culturel trouvé.</div>`;
+        }
+        
+        // Add or remove single-result class based on count
+        if (shown === 1) {
+            grid.classList.add('single-result');
+        } else {
+            grid.classList.remove('single-result');
         }
         
         grid.innerHTML = newHTML;
