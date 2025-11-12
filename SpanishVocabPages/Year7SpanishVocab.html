@@ -651,17 +651,17 @@ Es aburrido - It is boring
 Es divertido - It is fun
 
 Week 3:
-Hace buen tiempo - It's nice weather
-Hace mal tiempo - It's bad weather
-Hace calor - It's hot
-Hace frío - It's cold
-Hace sol - It's sunny
-Llueve - It's raining
-Nieva - It's snowing
+Hace buen tiempo - It is nice weather
+Hace mal tiempo - It is bad weather
+Hace calor - It is hot
+Hace frío - It is cold
+Hace sol - It is sunny
+Llueve - It is raining
+Nieva - It is snowing
 ¿Qué deportes haces? - What sports do you do?
 Hago gimnasia - I do gymnastics
 Hago artes marciales - I do martial arts
-Hago natación - I do/go swimming
+Hago natación - I do swimming
 Juego al fútbol - I play football
 Juego al tenis - I play tennis
 Juego al voleibol - I play volleyball
@@ -693,7 +693,7 @@ Week 5:
 Hago - I do/make
 Haces - You do/ You make
 Hace - He makes/ She makes/ It makes/ He does/ She does/ It does
-Hacemos - We do/make
+Hacemos - We do / We make
 Hacéis - You (pl) do/ You (pl) make
 Hacen - They do/make
 Todos los días - Every day
@@ -716,7 +716,7 @@ La educación física - P.E.
 La música - Music
 La religión - E.P.R
 La tecnología - Design Technology (D.E.)
-Las matemáticas - Mathematics
+Las matemáticas - Mathematics / Maths
 Las ciencias - Science
 
 Week 2:
@@ -739,7 +739,7 @@ No me gusta(n) nada... - I do not like at all...
 Week 3:
 ¿Te gusta el dibujo? - Do you like art?
 Me gusta el inglés - I like English
-Me gustan las matemáticas - I like mathematics
+Me gustan las matemáticas - I like mathematics / I like maths
 Es... - It is...
 Son... - They are...
 Aburrido - Boring
@@ -760,12 +760,12 @@ Un comedor - A dining room
 Un gimnasio - A gym
 Un patio - A playground
 Una clase de informática - A computing classroom
-Una piscina - A pool
+Una piscina - A (swimming) pool
 Una biblioteca - A library
 Unos laboratorios - Some laboratories
 Moderno - Modern
 Antiguo - Old
-Bonito - Nice (looking)
+Bonito - Pretty
 Feo - Ugly
 Pequeño - Small
 Grande - Big
@@ -785,7 +785,7 @@ Zumo (de naranja) - (Orange) juice
 Un refresco - A fizzy drink
 Escucho música - I listen to music
 Leo un libro - I read a book
-Escribo SMS/Mensajes - I write text messages
+Escribo SMS / Escribo mensajes - I write (text) messages
 
 Module 4:
 Week 1:
@@ -803,7 +803,7 @@ Mi bisabuela - My great grandma
 Se llama... - It is called
 Tiene ... años - He is ... years old / She is ... years old
 Tu(s) - Your
-Su(s) - His/Her
+Su(s) - His/Her/Their
 
 Week 2:
 ¿De qué color tienes los ojos? - What colour are your eyes?
@@ -892,18 +892,18 @@ No hay nada - There isn't anything
 
 Week 2:
 ¿Qué hora es? - What time is it?
-Es la una - It's one o'clock
-Son las dos - It's two o'clock
-Son las tres y cuarto - It's quarter past three
-Son las cuatro y media - It's half past four
-Son las cinco menos cuarto - It's a quarter to five
-Son las seis y cinco - It's five past six
-Son las siete y diez - It's ten past seven
-Son las ocho y veinte - It's twenty past eight
-Son las nueve menos veinticinco - It's twenty-five to nine
-Son las diez menos cinco - It's five to ten
-Son las once menos diez - It's ten to eleven
-Son las doce menos veinte - It's twenty to twelve
+Es la una - It is one o'clock
+Son las dos - It is two o'clock
+Son las tres y cuarto - It is quarter past three
+Son las cuatro y media - It is half past four
+Son las cinco menos cuarto - It is a quarter to five
+Son las seis y cinco - It is five past six
+Son las siete y diez - It is ten past seven
+Son las ocho y veinte - It is twenty past eight
+Son las nueve menos veinticinco - It is twenty-five to nine
+Son las diez menos cinco - It is five to ten
+Son las once menos diez - It is ten to eleven
+Son las doce menos veinte - It is twenty to twelve
 ...de la mañana - ...In the morning (A.M.)
 ...de la tarde - ...In the afternoon (P.M.)
 
@@ -1324,10 +1324,14 @@ Finalmente - Finally
             // Only apply replacements if the answer is incorrect
             if (!isCorrect) {
                 const replacements = {
-                    "it's": "it is",
+                    "oclock": "o'clock",
                     "its": "it is",
+                    "it's": "it is",
+                    "dont": "do not",
+                    "don't": "do not",
                     "i'm": "i am",
                     "im": "i am",
+                    "isnt": "isn't",
                     "whats": "what is",
                     "what's": "what is",
                     "his": "his/her",
@@ -1369,6 +1373,12 @@ Finalmente - Finally
                     "gray":"grey",
                     "he's":"he is",
                     "she's":"she is",
+                    "speak": "talk",
+                    "class": "classroom",
+                    "religion": "epr",
+                    "labs": "laboratories",
+                    "mother": "mum",
+                    "father": "dad",
                 };
                 
                 // Apply replacements to user answer (already lowercase)
